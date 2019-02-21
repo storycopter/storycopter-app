@@ -1,5 +1,5 @@
 import React from "react";
 
-import { ErrorTpl } from "ui/templates";
+import Error from "Error";
 
-export default props => <ErrorTpl {...props} />;
+export default props => <Error {...props} />;

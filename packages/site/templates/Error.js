@@ -1,7 +1,7 @@
 import {} from "prop-types";
 import React from "react";
 
-import { Helmet, Layout } from "ui/partials";
+import { Helmet, Layout } from "ofTemplates";
 
 const ErrorTpl = props => {
   return (

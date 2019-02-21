@@ -1,5 +1,5 @@
 import React from "react";
 
-import { HomeTpl } from "ui/templates";
+import Home from "Home";
 
-export default props => <HomeTpl {...props} />;
+export default props => <Home {...props} />;

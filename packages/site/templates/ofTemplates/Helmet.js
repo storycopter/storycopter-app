@@ -2,24 +2,26 @@ import { object, string } from "prop-types";
 import Helmet from "react-helmet";
 import React from "react";
 
-import meta from "config/meta";
 import { Favicon } from "@storycopter/styleguide";
 
 const CustomHelmet = props => {
-  const { description, location, keywords, title } = props;
+  const { location, title } = props;
+
   return (
     <Helmet
       encodeSpecialCharacters
       meta={[
-        { name: "designer", content: meta.designer },
-        { name: "author", content: meta.author },
-        { name: "owner", content: meta.owner },
-        { name: "title", content: title || meta.defaultTitle },
+        { name: "owner", content: "Storycopter — https://storycopter.com" },
+        { name: "title", content: title || "Storycopter" },
         {
           name: "description",
-          content: description || meta.description
+          content: "A new interactive documentary production suite for the Web."
         },
-        { name: "keywords", content: keywords || meta.keywords },
+        {
+          name: "keywords",
+          content:
+            "idoc, documentary, news, storytelling, media, editor, app, desktop, reportage, interactive"
+        },
         { name: "charset", content: "utf-8" },
         { name: "coverage", content: "Worldwide" },
         { name: "distribution", content: "Global" },
@@ -33,12 +35,12 @@ const CustomHelmet = props => {
             "width=device-width, minimum-scale = 1.0, initial-scale = 1.0, maximum-scale = 5.0, user-scalable=yes, shrink-to-fit=no"
         }
       ]}
-      defaultTitle={title || meta.defaultTitle}
+      defaultTitle={title || "Storycopter"}
       titleTemplate="%s"
     >
       <html lang="en" />
 
-      <title>{title || meta.defaultTitle}</title>
+      <title>{title || "Storycopter"}</title>
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary" />
@@ -48,32 +50,31 @@ const CustomHelmet = props => {
       {/* Facebook OG */}
       <meta
         property="og:description"
-        content={description || meta.description}
+        content="A new interactive documentary production suite for the Web."
       />
       {/* <meta property="og:image:alt" content="Storycopter" /> */}
       {/* <meta property="og:image" content={ogcover} /> */}
       <meta property="og:locale" content="en" />
-      <meta property="og:site_name" content={meta.siteName} />
-      <meta property="og:title" content={meta.defaultTitle} />
+      <meta property="og:site_name" content="Storycopter" />
+      <meta property="og:title" content="Storycopter" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={meta.url} />
+      <meta property="og:url" content="https://storycopter.com" />
 
       <link rel="icon" type="image/x-icon" href={Favicon} />
-      <link rel="canonical" href={`${meta.url}${location.pathname}`} />
+      <link
+        rel="canonical"
+        href={`${"https://storycopter.com"}${location.pathname}`}
+      />
     </Helmet>
   );
 };
 
 CustomHelmet.propTypes = {
-  description: string,
   location: object.isRequired,
-  keywords: string,
   title: string
 };
 
 CustomHelmet.defaultProps = {
-  description: null,
-  keywords: null,
   title: null
 };
 
