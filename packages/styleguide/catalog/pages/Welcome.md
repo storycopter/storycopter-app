@@ -1,3 +1,1 @@
-# Storycopter Styleguide
-
-Hello world.
+# Hello world.
