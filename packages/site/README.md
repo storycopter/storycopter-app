@@ -1,4 +1,4 @@
-# storycopter.com
+# Storycopter Site
 
 ## Development
 

@@ -3,14 +3,12 @@ import { array, oneOfType, object } from "prop-types";
 import { createGlobalStyle } from "styled-components";
 import React from "react";
 
-import { color } from "ui/settings";
-import { reset } from "assets/styles";
-import { setType } from "ui/mixins";
+import { color, ResetCSS, setType } from "@storycopter/styleguide";
 
 import { Footer, Main, Topbar } from "./ofLayout";
 
 const GlobalStyle = createGlobalStyle`
-  ${reset};
+  ${ResetCSS};
   html {
     background: #fff;
   }

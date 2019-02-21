@@ -1,12 +1,10 @@
 module.exports = {
-  pathPrefix: "/storycopter",
   siteMetadata: {
     siteUrl: `https://storycopter.com`
   },
   plugins: [
     "gatsby-plugin-catch-links",
     "gatsby-plugin-react-helmet",
-    `gatsby-plugin-netlify-cache`,
     `gatsby-plugin-offline`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
@@ -24,14 +22,6 @@ module.exports = {
         path: `${__dirname}/src/pages`,
         name: "pages"
       }
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/lib/assets`,
-        name: "assets"
-      }
-    },
-    `gatsby-plugin-netlify` // must come in last
+    }
   ]
 };

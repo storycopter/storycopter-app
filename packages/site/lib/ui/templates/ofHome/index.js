@@ -1,9 +1,1 @@
-export { default as About } from "./About";
-export { default as Contact } from "./Contact";
-export { default as Intro } from "./Intro";
-export { default as Signup } from "./Signup";
-export { default as What } from "./What";
-export { default as When } from "./When";
-export { default as Where } from "./Where";
-export { default as Who } from "./Who";
-export { default as Whom } from "./Whom";
+export { default as SignupForm } from "./SignupForm";
