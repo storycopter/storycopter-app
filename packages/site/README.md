@@ -3,18 +3,28 @@
 ## Development
 
 ```
-$ yarn start
+$ yarn start // runs gatsby on localhost
 ```
 
-or
+```
+$ yarn startlan // run gatsby host over lan
+```
+
+## Build
 
 ```
-$ yarn clear // clears local cache, builds (excludes node_modules)
-$ yarn clean // clears local cache, builds, node_modules, yarn logs and locks
+$ yarn build // creates site bundle
 ```
 
 ## Deployment
 
 ```
-$ yarn build // creates site bundle
+$ yarn deploy // pushes current build to gh-pages
+```
+
+# Spring cleaning
+
+```
+$ yarn clear // clears local cache, builds (excludes node_modules)
+$ yarn clean // clears local cache, builds, node_modules, yarn logs and locks
 ```

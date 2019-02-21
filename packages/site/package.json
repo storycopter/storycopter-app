@@ -4,8 +4,8 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "cross-env": "5.2.0",
     "babel-plugin-styled-components": "1.10.0",
+    "cross-env": "5.2.0",
     "gatsby": "2.1.13",
     "gatsby-cli": "2.4.11",
     "gatsby-image": "2.0.29",
@@ -35,12 +35,14 @@
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.12.4",
     "prettier": "1.16.4",
+    "gh-pages": "2.0.1",
     "prettier-eslint": "8.8.2"
   },
   "scripts": {
     "clean": "rm -rf ./.cache && rm -rf ./public && rm -rf ./node_modules && rm -f ./yarn.lock && rm -f ./yarn-error.log",
     "clear": "rm -rf ./.cache && rm -rf ./public",
     "startlan": "./node_modules/.bin/gatsby develop -o -H $HOSTNAME -p 8000",
+    "deploy": "gatsby build && gh-pages -d public",
     "start": "./node_modules/.bin/gatsby develop",
     "build": "./node_modules/.bin/gatsby build",
     "test": "echo 'it works!'"
