@@ -1,6 +1,7 @@
 {
   "name": "storycopter",
   "private": true,
+  "license": "BSD-3-Clause",
   "workspaces": {
     "packages": ["packages/*"]
   },
