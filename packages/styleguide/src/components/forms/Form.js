@@ -1,6 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const Form = styled(({ ...props }) => <form {...props} />)``;
+import { setSpace } from "@storycopter/styleguide/src/mixins";
+import FormItem from "./FormItem";
+
+const Form = styled(({ ...props }) => <form {...props} />)`
+  text-align: left;
+  ${FormItem} {
+    ${setSpace("mvm")};
+  }
+`;
 
 export default Form;

@@ -1,7 +1,7 @@
 import { markdown, ReactSpecimen } from "@catalog/core";
 import React from "react";
 
-import { Action } from "@storycopter/styleguide";
+import { Button } from "@storycopter/styleguide";
 
 export default () => markdown`
 
@@ -9,7 +9,7 @@ export default () => markdown`
 
 ${(
   <ReactSpecimen>
-    <Action onClick={() => console.log("onClick")}>Action</Action>
+    <Button onClick={() => console.log("onClick")}>Button</Button>
   </ReactSpecimen>
 )}
 

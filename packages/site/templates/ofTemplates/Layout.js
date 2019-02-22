@@ -11,11 +11,11 @@ import { Footer, Main, Topbar } from "./ofLayout";
 const GlobalStyle = createGlobalStyle`
   html,
   body {
-    background: #fff;
+    background: linear-gradient(to bottom, #4a4969 0%,#7072ab 50%,#cd82a0 100%); 
   }
   body {
     ${setType("m")};
-    color: ${color.mono600};
+    color: ${color.mono700};
     font-family: ${font.sans};
     min-height: 100vh;
     position: relative;
@@ -37,6 +37,10 @@ const GlobalStyle = createGlobalStyle`
   a,
   abbr {
     text-decoration: none;
+  }
+  a {
+    color: ${color.flare900};
+    text-decoration: underline;
   }
   *::selection { background: grey; }
   *::-moz-selection { background: grey; }
