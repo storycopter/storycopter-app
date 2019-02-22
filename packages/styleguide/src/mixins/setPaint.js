@@ -1,6 +1,6 @@
 import { darken, lighten } from "polished";
 
-export const paint = (hex, val) => {
+export const setPaint = (hex, val) => {
   switch (val) {
     case "Wt":
       return lighten(0.36, hex);

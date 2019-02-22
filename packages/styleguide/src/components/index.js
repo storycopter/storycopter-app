@@ -1,3 +1,5 @@
+export { default as Action } from "./actions/Action";
+
 export { default as Checkbox } from "./forms/Checkbox";
 export { default as Form } from "./forms/Form";
 export { default as FormItem } from "./forms/FormItem";

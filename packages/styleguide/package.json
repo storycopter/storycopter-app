@@ -12,7 +12,7 @@
     "@catalog/markdown-loader": "0.0.5",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
-    "cross-env": "5.2.0",
+    "babel-plugin-styled-components": "1.10.0",
     "css-loader": "2.1.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "4.0.0",

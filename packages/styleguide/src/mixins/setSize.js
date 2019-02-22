@@ -1,5 +1,5 @@
-import { sizes } from "@storycopter/styleguide";
-import fluidify from "./ofMixins/fluidify";
+import { sizes } from "@storycopter/styleguide/src/config";
+import fluidify from "./of/fluidify";
 
 export const setHeight = val =>
   fluidify([`height`], sizes[val][0], sizes[val][1]);

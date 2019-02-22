@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { setSpace } from "@storycopter/styleguide/src/mixins";
+import { setSpace } from "@storycopter/styleguide";
 
 const TopbarEl = styled.header`
   & > div {

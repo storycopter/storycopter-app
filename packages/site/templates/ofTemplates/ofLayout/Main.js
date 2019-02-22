@@ -2,7 +2,7 @@ import { array, object, oneOfType, string } from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-import { setSpace } from "@storycopter/styleguide/src/mixins";
+import { setSpace } from "@storycopter/styleguide";
 
 const MainEl = styled.main`
   & > div {

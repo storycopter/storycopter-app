@@ -8,7 +8,7 @@ import { SignupForm } from "./ofHome";
 const HomeTpl = props => {
   return (
     <>
-      <Helmet {...props} title="Roger!" />
+      <Helmet {...props} title="Storycopter ⋅ Preparing for take off." />
       <Layout {...props}>
         <h1>Storycopter. Preparing for take off.</h1>
         <SignupForm />

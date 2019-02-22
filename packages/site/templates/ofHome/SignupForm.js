@@ -2,12 +2,13 @@ import {} from "prop-types";
 import React, { useState } from "react";
 
 import {
+  Action,
   Checkbox,
   Form,
   FormItem,
   Input,
   Label
-} from "@storycopter/styleguide/src/components";
+} from "@storycopter/styleguide";
 
 const SignupForm = props => {
   const [email, setEmail] = useState("");
@@ -73,7 +74,7 @@ const SignupForm = props => {
         tabIndex="-1"
         type="text"
       />
-      <input name="subscribe" type="submit" value="Subscribe" />
+      <Action as="input" name="subscribe" type="submit" value="Subscribe" />
     </Form>
   );
 };

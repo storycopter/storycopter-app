@@ -3,14 +3,12 @@ import { array, oneOfType, object } from "prop-types";
 import { createGlobalStyle } from "styled-components";
 import React from "react";
 
-import { color, font } from "@storycopter/styleguide/src/settings";
-import { reset } from "@storycopter/styleguide/src/assets";
-import { setType } from "@storycopter/styleguide/src/mixins";
+import { color, font } from "@storycopter/styleguide/src/config";
+import { CSSReset, setType } from "@storycopter/styleguide";
 
 import { Footer, Main, Topbar } from "./ofLayout";
 
 const GlobalStyle = createGlobalStyle`
-  ${reset};
   html,
   body {
     background: #fff;
@@ -49,10 +47,11 @@ const Layout = props => {
 
   return (
     <>
+      <CSSReset />
+      <GlobalStyle />
       <Topbar />
       <Main>{children}</Main>
       <Footer />
-      <GlobalStyle />
     </>
   );
 };

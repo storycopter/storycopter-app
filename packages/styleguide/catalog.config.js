@@ -17,7 +17,7 @@ module.exports = {
             use: ["@catalog/markdown-loader", "raw-loader"]
           },
           {
-            test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+            test: /\.(png|woff|woff2|eot|ttf|svg|ico)$/,
             loader: "url-loader?limit=100000"
           },
           {

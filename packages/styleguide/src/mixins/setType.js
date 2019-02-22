@@ -1,13 +1,8 @@
-import { lead, fsize } from "@storycopter/styleguide";
-import fluidify from "./ofMixins/fluidify";
+import { lead, fsize } from "@storycopter/styleguide/src/config";
+import fluidify from "./of/fluidify";
 
-/* eslint import/prefer-default-export: 0 */
 export const setType = size => {
   switch (size) {
-    case "k":
-      return `${fluidify("font-size", fsize.k[0], fsize.k[1])}line-height: ${
-        lead.s
-      }`;
     case "h":
       return `${fluidify("font-size", fsize.h[0], fsize.h[1])}line-height: ${
         lead.m

@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Icon } from "@storycopter/styleguide/src/components";
-import { setSpace } from "@storycopter/styleguide/src/mixins";
+import { Icon, setSpace } from "@storycopter/styleguide";
 
 const FooterEl = styled.footer`
   & > div {

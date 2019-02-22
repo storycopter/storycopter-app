@@ -1,5 +1,5 @@
-import { space } from "@storycopter/styleguide";
-import fluidify from "./ofMixins/fluidify";
+import { space } from "@storycopter/styleguide/src/config";
+import fluidify from "./of/fluidify";
 
 /* eslint import/prefer-default-export: 0 */
 export const setSpace = (args, force) => {
@@ -22,13 +22,6 @@ export const setSpace = (args, force) => {
     case "a":
       return fluidify(
         `${properties[prop]}`,
-        space[size][0],
-        space[size][1],
-        isImportant
-      );
-    case "k":
-      return fluidify(
-        [`${properties[prop]}-left`, `${properties[prop]}-right`],
         space[size][0],
         space[size][1],
         isImportant

@@ -2,7 +2,7 @@ import { object, string } from "prop-types";
 import Helmet from "react-helmet";
 import React from "react";
 
-import { favicon } from "@storycopter/styleguide/src/assets";
+import { favicon } from "@storycopter/styleguide";
 
 const CustomHelmet = props => {
   const { location, title } = props;
