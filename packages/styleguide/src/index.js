@@ -1,3 +1,4 @@
 export * from "./assets";
-export * from "./settings";
+export * from "./components";
 export * from "./mixins";
+export * from "./settings";

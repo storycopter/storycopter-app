@@ -2,7 +2,16 @@ import { array, object, oneOfType, string } from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-const MainEl = styled.main``;
+import { setSpace } from "@storycopter/styleguide/src/mixins";
+
+const MainEl = styled.main`
+  & > div {
+    ${setSpace("phl")};
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
+  }
+`;
 
 const Main = props => {
   const { children } = props;

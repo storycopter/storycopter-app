@@ -1,3 +1,2 @@
-export { default as Favicon } from "./images/favicon.ico";
-
-export { default as ResetCSS } from "./styles/reset";
+export { default as favicon } from "./images/favicon.ico";
+export { default as reset } from "./styles/reset";

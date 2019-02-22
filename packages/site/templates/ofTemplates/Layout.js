@@ -3,22 +3,35 @@ import { array, oneOfType, object } from "prop-types";
 import { createGlobalStyle } from "styled-components";
 import React from "react";
 
-import { color, ResetCSS, setType } from "@storycopter/styleguide";
+import { color, font } from "@storycopter/styleguide/src/settings";
+import { reset } from "@storycopter/styleguide/src/assets";
+import { setType } from "@storycopter/styleguide/src/mixins";
 
 import { Footer, Main, Topbar } from "./ofLayout";
 
 const GlobalStyle = createGlobalStyle`
-  ${ResetCSS};
-  html {
+  ${reset};
+  html,
+  body {
     background: #fff;
   }
   body {
     ${setType("m")};
-    background-color: #f5f5f5;
     color: ${color.mono600};
+    font-family: ${font.sans};
     min-height: 100vh;
     position: relative;
     width: 100%;
+  }
+  body > div,
+  body > div > div {
+    min-height: 100vh;
+  }
+  body > div > div {
+    align-item: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   img {
     line-height: 0;

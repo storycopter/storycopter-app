@@ -2,7 +2,7 @@ import { object, string } from "prop-types";
 import Helmet from "react-helmet";
 import React from "react";
 
-import { Favicon } from "@storycopter/styleguide";
+import { favicon } from "@storycopter/styleguide/src/assets";
 
 const CustomHelmet = props => {
   const { location, title } = props;
@@ -60,7 +60,7 @@ const CustomHelmet = props => {
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://storycopter.com" />
 
-      <link rel="icon" type="image/x-icon" href={Favicon} />
+      <link rel="icon" type="image/x-icon" href={favicon} />
       <link
         rel="canonical"
         href={`${"https://storycopter.com"}${location.pathname}`}

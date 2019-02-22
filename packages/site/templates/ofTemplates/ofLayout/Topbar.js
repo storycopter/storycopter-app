@@ -1,12 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 
-const TopbarEl = styled.header``;
+import { setSpace } from "@storycopter/styleguide/src/mixins";
+
+const TopbarEl = styled.header`
+  & > div {
+    ${setSpace("pal")};
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
 
 const Topbar = props => {
   return (
     <TopbarEl {...props}>
-      <></>
+      <div>
+        <div>
+          <h1>Storycopter</h1>
+        </div>
+        <div>
+          <a>Contact</a>
+        </div>
+      </div>
     </TopbarEl>
   );
 };

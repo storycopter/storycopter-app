@@ -3,7 +3,7 @@ import React from "react";
 
 import { Helmet, Layout } from "ofTemplates";
 
-// import { SignupForm } from "./ofHome";
+import { SignupForm } from "./ofHome";
 
 const HomeTpl = props => {
   return (
@@ -11,7 +11,7 @@ const HomeTpl = props => {
       <Helmet {...props} title="Roger!" />
       <Layout {...props}>
         <h1>Storycopter. Preparing for take off.</h1>
-        {/* <SignupForm /> */}
+        <SignupForm />
       </Layout>
     </>
   );
