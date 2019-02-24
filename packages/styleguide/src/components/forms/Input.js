@@ -10,12 +10,13 @@ const Input = styled(({ ...props }) => <input {...props} />)`
   appearance: none;
   background: none;
   border-color: ${color.flare300};
+  border-radius: none;
   border-width: 0 0 1px 0;
   box-shadow: none;
   color: white;
   display: block;
-  font-weight: 300;
   font-family: ${font.sans};
+  font-weight: 300;
   outline: none;
   width: 100%;
   &::placeholder {
