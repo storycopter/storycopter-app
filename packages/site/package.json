@@ -41,7 +41,7 @@
     "clean": "rm -rf ./.cache && rm -rf ./public && rm -rf ./node_modules && rm -f ./yarn.lock && rm -f ./yarn-error.log",
     "clear": "rm -rf ./.cache && rm -rf ./public",
     "startlan": "./node_modules/.bin/gatsby develop -o -H $HOSTNAME -p 8000",
-    "deploy": "gatsby build && gh-pages -d public",
+    "deploy": "gatsby build && cp CNAME public/CNAME && gh-pages -d public",
     "start": "./node_modules/.bin/gatsby develop",
     "build": "./node_modules/.bin/gatsby build",
     "test": "echo 'it works!'"
