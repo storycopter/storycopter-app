@@ -51,7 +51,7 @@ const SignupPitch = styled.div`
 const HomeTpl = props => {
   return (
     <>
-      <Helmet {...props} title="Storycopter ⋅ Preparing for take off" />
+      <Helmet {...props} title="Preparing for take off" />
       <Layout {...props}>
         <SignupPitch>
           <h1>
