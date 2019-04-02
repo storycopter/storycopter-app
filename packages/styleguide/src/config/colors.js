@@ -1,8 +1,29 @@
 import { darken, lighten } from "polished";
 
 export const colors = {
-  brand: "#00a19a",
   accent: "#fc4e46",
+
+  brand: {
+    100: lighten(0.12, "#00a19a"),
+    200: lighten(0.09, "#00a19a"),
+    300: lighten(0.06, "#00a19a"),
+    400: lighten(0.03, "#00a19a"),
+    500: "#00a19a",
+    600: darken(0.03, "#00a19a"),
+    700: darken(0.06, "#00a19a"),
+    800: darken(0.09, "#00a19a"),
+    900: darken(0.12, "#00a19a")
+  },
+
+  brand100: lighten(0.12, "#00a19a"),
+  brand200: lighten(0.09, "#00a19a"),
+  brand300: lighten(0.06, "#00a19a"),
+  brand400: lighten(0.03, "#00a19a"),
+  brand500: "#00a19a",
+  brand600: darken(0.03, "#00a19a"),
+  brand700: darken(0.06, "#00a19a"),
+  brand800: darken(0.09, "#00a19a"),
+  brand900: darken(0.12, "#00a19a"),
 
   mono100: lighten(0.48, "#767269"),
   mono200: lighten(0.36, "#767269"),

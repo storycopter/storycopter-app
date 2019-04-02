@@ -1,16 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-import { color, font, radius, track } from "@storycopter/styleguide/src/config";
+import {
+  color,
+  font,
+  radius,
+  time,
+  track
+} from "@storycopter/styleguide/src/config";
 import { setSpace, setType } from "@storycopter/styleguide/src/mixins";
 
 const Button = styled(({ ...props }) => <button type="button" {...props} />)`
-  ${setSpace("phm")};
-  ${setSpace("pvs")};
+  ${setSpace("phl")};
+  ${setSpace("pvm")};
   ${setType("s")};
   appearance: none;
-  background: ${color.brand};
-  border-color: ${color.brand};
+  background: ${color.brand500};
+  border-color: ${color.brand500};
   border-radius: ${radius.x};
   border-style: solid;
   border-width: 1px;
@@ -21,6 +27,10 @@ const Button = styled(({ ...props }) => <button type="button" {...props} />)`
   letter-spacing: ${track.m};
   outline: none;
   text-transform: uppercase;
+  transition: background ${time.m};
+  &:hover {
+    background-color: ${color.brand600};
+  }
 `;
 
 export default Button;

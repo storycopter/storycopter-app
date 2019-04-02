@@ -1,19 +1,15 @@
-import {} from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 
 import { color, font } from "@storycopter/styleguide/src/config";
 import { setSpace, setType } from "@storycopter/styleguide/src/mixins";
-import {
-  Button,
-  Checkbox,
-  Form,
-  FormItem,
-  Input,
-  Label
-} from "@storycopter/styleguide";
+import { Button, Form } from "@storycopter/styleguide";
 
 import { Helmet, Layout } from "ofTemplates";
 
@@ -22,12 +18,12 @@ const SignupPitch = styled.div`
     left: -5000px;
     position: absolute;
   }
-  & > h1 {
+  & > span {
     ${setType("xh")};
     font-family: ${font.serif};
     font-weight: 800;
   }
-  & > h2 {
+  & > h1 {
     ${setType("h")};
   }
   & > p {
@@ -42,7 +38,7 @@ const SignupPitch = styled.div`
     color: ${color.mono600};
   }
   ${Form} {
-    ${setSpace("mvh")};
+    ${setSpace("mvl")};
     ${setType("s")};
   }
 `;
@@ -53,13 +49,12 @@ const HomeTpl = props => {
       <Helmet {...props} title="Preparing for take off" />
       <Layout {...props}>
         <SignupPitch>
-          <h1>Storycopter</h1>
-          <h2>
+          <span>Storycopter</span>
+          <h1>
             A new interactive documentary production suite for the Web is
             preparing for take off. Sign up to ensure it never drops off your
             radar.
-          </h2>
-          <p />
+          </h1>
           <Form
             action="https://storycopter.us20.list-manage.com/subscribe/post?u=5ebc4c99bea21505d9e8e506f&amp;id=7b7e05f45f"
             id="mc-embedded-subscribe-form"
@@ -69,22 +64,42 @@ const HomeTpl = props => {
           >
             <Grid container>
               <Grid item xs={12} sm={6}>
-                <FormItem>
-                  <Label htmlFor="mce-NAME">Name:</Label>
-                  <Input id="mce-NAME" name="NAME" type="text" />
-                </FormItem>
+                <FormGroup row>
+                  <TextField
+                    inputProps={{
+                      id: "mce-NAME",
+                      name: "NAME"
+                    }}
+                    fullWidth
+                    label="Name"
+                    required
+                    type="text"
+                  />
+                </FormGroup>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FormItem>
-                  <Label htmlFor="mce-EMAIL">Email:</Label>
-                  <Input id="mce-EMAIL" name="EMAIL" required type="email" />
-                </FormItem>
+                <FormGroup row>
+                  <TextField
+                    inputProps={{
+                      id: "mce-EMAIL",
+                      name: "EMAIL"
+                    }}
+                    fullWidth
+                    label="Email"
+                    required
+                    type="email"
+                  />
+                </FormGroup>
               </Grid>
             </Grid>
-            <Label htmlFor="gdpr_8591">
-              <Checkbox id="gdpr_8591" name="gdpr[8591]" value="Y" />
-              <span>Yes, I want to track Storycopter</span>
-            </Label>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox id="gdpr_8591" name="gdpr[8591]" value="Y" />
+                }
+                label="Yes, I want to track Storycopter"
+              />
+            </FormGroup>
             <p className="Footnotes">
               By signing up you agree to occassionaly hear abour Storycopter via
               email. You will be able to manage your subscription and

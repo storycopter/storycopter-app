@@ -5,7 +5,11 @@ import React from "react";
 
 import { backgr } from "@storycopter/styleguide/src/assets";
 import { breakpoint, color, font } from "@storycopter/styleguide/src/config";
-import { CSSReset, setType } from "@storycopter/styleguide";
+import { setType } from "@storycopter/styleguide/src/mixins";
+import {
+  SiteThemeProvider,
+  CSSReset
+} from "@storycopter/styleguide/src/helpers";
 
 import { Footer, Main, Topbar } from "./ofLayout";
 
@@ -49,8 +53,11 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
   a {
-    color: ${color.brand};
+    color: ${color.brand500};
     text-decoration: underline;
+  }
+  a:hover {
+    color: ${color.brand600};
   }
   *::selection { background: rgba(2, 161, 154, .3) }
   *::-moz-selection { background: rgba(2, 161, 154, .3) }
@@ -60,13 +67,13 @@ const Layout = props => {
   const { children } = props;
 
   return (
-    <>
+    <SiteThemeProvider>
       <CSSReset />
       <GlobalStyle />
       <Topbar />
       <Main>{children}</Main>
       <Footer />
-    </>
+    </SiteThemeProvider>
   );
 };
 

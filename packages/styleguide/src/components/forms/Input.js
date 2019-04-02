@@ -10,8 +10,8 @@ const Input = styled(({ ...props }) => <input {...props} />)`
   ${setType("s")};
   appearance: none;
   background: white;
-  border-color: ${color.brand};
-  border-radius: none;
+  border-color: ${color.brand500};
+  border-radius: 0;
   border-width: 0 0 1px 0;
   box-shadow: none;
   color: ${color.mono700};
@@ -24,7 +24,8 @@ const Input = styled(({ ...props }) => <input {...props} />)`
     color: ${color.mono300};
   }
   &:focus {
-    box-shadow: inset 0 -1px 0 0 ${color.brand};
+    border-color: ${color.brand600};
+    box-shadow: inset 0 -1px 0 0 ${color.brand600};
   }
 `;
 

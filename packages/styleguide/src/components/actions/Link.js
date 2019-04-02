@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { color, font } from "@storycopter/styleguide/src/config";
 
 const Link = styled(({ ...props }) => <a {...props}>{props.children}</a>)`
-  color: ${color.brand};
+  color: ${color.brand500};
   cursor: pointer;
   font-family: ${font.sans};
   outline: none;

@@ -9,7 +9,7 @@ import Input from "./Input";
 
 const FormItem = styled(({ ...props }) => <div {...props} />)`
   position: relative;
-  border-left: 1px solid ${color.brand};
+  border-left: 1px solid ${color.brand500};
   ${Label} {
     ${setSpace("mlm")}
     left: 0;
