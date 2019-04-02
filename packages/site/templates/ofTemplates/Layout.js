@@ -3,7 +3,8 @@ import { array, oneOfType, object } from "prop-types";
 import { createGlobalStyle } from "styled-components";
 import React from "react";
 
-import { color, font } from "@storycopter/styleguide/src/config";
+import { backgr } from "@storycopter/styleguide/src/assets";
+import { breakpoint, color, font } from "@storycopter/styleguide/src/config";
 import { CSSReset, setType } from "@storycopter/styleguide";
 
 import { Footer, Main, Topbar } from "./ofLayout";
@@ -11,12 +12,21 @@ import { Footer, Main, Topbar } from "./ofLayout";
 const GlobalStyle = createGlobalStyle`
   html,
   body {
-    background: linear-gradient(to bottom, #4a4969 0%,#7072ab 50%,#cd82a0 100%); 
+    background-color: white;
+    background-image: url(${backgr});
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-size: 200%;
+    ${breakpoint.phone} {
+      background-size: 600%;
+      background-position: 80% 50%;
+    }
   }
   body {
     ${setType("m")};
     color: ${color.mono700};
     font-family: ${font.sans};
+    font-weight: 300;
     min-height: 100vh;
     position: relative;
     width: 100%;
@@ -39,11 +49,11 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
   a {
-    color: ${color.flare900};
+    color: ${color.brand};
     text-decoration: underline;
   }
-  *::selection { background: grey; }
-  *::-moz-selection { background: grey; }
+  *::selection { background: rgba(2, 161, 154, .3) }
+  *::-moz-selection { background: rgba(2, 161, 154, .3) }
 `;
 
 const Layout = props => {

@@ -1,4 +1,5 @@
 export const fsizes = {
+  xh: ["63px", "126px"],
   h: ["21px", "42px"],
   l: ["19px", "24px"],
   m: ["17px", "19px"],

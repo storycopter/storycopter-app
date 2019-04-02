@@ -2,10 +2,11 @@ import {} from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-import { color } from "@storycopter/styleguide/src/config";
+import Grid from "@material-ui/core/Grid";
+
+import { color, font } from "@storycopter/styleguide/src/config";
 import { setSpace, setType } from "@storycopter/styleguide/src/mixins";
 import {
-  Actionbar,
   Button,
   Checkbox,
   Form,
@@ -22,29 +23,27 @@ const SignupPitch = styled.div`
     position: absolute;
   }
   & > h1 {
+    ${setType("xh")};
+    font-family: ${font.serif};
+    font-weight: 800;
+  }
+  & > h2 {
     ${setType("h")};
-    color: ${color.flare900};
-    text-align: center;
   }
   & > p {
     ${setSpace("mts")};
     ${setType("h")};
-    color: ${color.flare900};
     font-weight: 300;
-    text-align: center;
   }
   p.Footnotes {
     ${setSpace("mvl")};
     ${setType("x")};
     font-weight: 300;
-    color: ${color.flare700};
+    color: ${color.mono600};
   }
   ${Form} {
     ${setSpace("mvh")};
     ${setType("s")};
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 500px;
   }
 `;
 
@@ -54,11 +53,12 @@ const HomeTpl = props => {
       <Helmet {...props} title="Preparing for take off" />
       <Layout {...props}>
         <SignupPitch>
-          <h1>
+          <h1>Storycopter</h1>
+          <h2>
             A new interactive documentary production suite for the Web is
             preparing for take off. Sign up to ensure it never drops off your
             radar.
-          </h1>
+          </h2>
           <p />
           <Form
             action="https://storycopter.us20.list-manage.com/subscribe/post?u=5ebc4c99bea21505d9e8e506f&amp;id=7b7e05f45f"
@@ -67,14 +67,20 @@ const HomeTpl = props => {
             name="mc-embedded-subscribe-form"
             noValidate
           >
-            <FormItem>
-              <Label htmlFor="mce-NAME">Name:</Label>
-              <Input id="mce-NAME" name="NAME" type="text" />
-            </FormItem>
-            <FormItem>
-              <Label htmlFor="mce-EMAIL">Email:</Label>
-              <Input id="mce-EMAIL" name="EMAIL" required type="email" />
-            </FormItem>
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <FormItem>
+                  <Label htmlFor="mce-NAME">Name:</Label>
+                  <Input id="mce-NAME" name="NAME" type="text" />
+                </FormItem>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormItem>
+                  <Label htmlFor="mce-EMAIL">Email:</Label>
+                  <Input id="mce-EMAIL" name="EMAIL" required type="email" />
+                </FormItem>
+              </Grid>
+            </Grid>
             <Label htmlFor="gdpr_8591">
               <Checkbox id="gdpr_8591" name="gdpr[8591]" value="Y" />
               <span>Yes, I want to track Storycopter</span>
@@ -98,14 +104,7 @@ const HomeTpl = props => {
               tabIndex="-1"
               type="text"
             />
-            <Actionbar>
-              <Button
-                as="input"
-                name="subscribe"
-                type="submit"
-                value="Roger!"
-              />
-            </Actionbar>
+            <Button as="input" name="subscribe" type="submit" value="Roger!" />
           </Form>
         </SignupPitch>
       </Layout>

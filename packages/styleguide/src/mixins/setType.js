@@ -3,6 +3,10 @@ import fluidify from "./of/fluidify";
 
 export const setType = size => {
   switch (size) {
+    case "xh":
+      return `${fluidify("font-size", fsize.xh[0], fsize.xh[1])}line-height: ${
+        lead.m
+      }`;
     case "h":
       return `${fluidify("font-size", fsize.h[0], fsize.h[1])}line-height: ${
         lead.m

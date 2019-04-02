@@ -7,18 +7,18 @@ import { setSpace, setType } from "@storycopter/styleguide/src/mixins";
 const Button = styled(({ ...props }) => <button type="button" {...props} />)`
   ${setSpace("phl")};
   ${setSpace("pvs")};
-  ${setType("x")};
+  ${setType("l")};
   appearance: none;
-  background: transparent;
-  border: 2px solid ${color.flare900};
-  border-radius: ${radius.a};
-  color: ${color.flare900};
+  background: ${color.brand};
+  border-radius: 0;
+  border-color: ${color.brand};
+  border-style: solid;
+  border-width: 1px;
+  color: white;
   cursor: pointer;
-  font-family: ${font.sans};
-  font-weight: 700;
-  letter-spacing: ${track.s};
+  font-family: ${font.serif};
+  font-weight: 800;
   outline: none;
-  text-transform: uppercase;
 `;
 
 export default Button;

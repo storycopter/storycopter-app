@@ -9,9 +9,9 @@ import Input from "./Input";
 const FormItem = styled(({ ...props }) => <div {...props} />)`
   position: relative;
   ${Label} {
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
   }
   ${Input} {
     ${setSpace("pbs")};

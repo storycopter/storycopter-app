@@ -5,26 +5,26 @@ import { setType, setSpace } from "@storycopter/styleguide/src/mixins";
 import { color, font } from "@storycopter/styleguide/src/config";
 
 const Input = styled(({ ...props }) => <input {...props} />)`
+  ${setSpace("phn")};
   ${setSpace("pvs")};
-  ${setType("m")};
+  ${setType("s")};
   appearance: none;
-  background: none;
-  border-color: ${color.flare300};
+  background: white;
+  border-color: ${color.brand};
   border-radius: none;
   border-width: 0 0 1px 0;
   box-shadow: none;
-  color: white;
+  color: ${color.mono700};
   display: block;
   font-family: ${font.sans};
-  font-weight: 300;
+  font-weight: 400;
   outline: none;
   width: 100%;
   &::placeholder {
     color: ${color.mono300};
   }
   &:focus {
-    border-color: ${color.flare900};
-    box-shadow: inset 0 -1px 0 0 ${color.flare900};
+    box-shadow: inset 0 -1px 0 0 ${color.brand};
   }
 `;
 

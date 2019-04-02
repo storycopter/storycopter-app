@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-import { color } from "@storycopter/styleguide/src/config";
+import { color, font } from "@storycopter/styleguide/src/config";
 import { setType } from "@storycopter/styleguide/src/mixins";
 
 const Label = styled(({ ...props }) => <label {...props} />)`
-  ${setType("x")};
-  color: ${color.flare900};
-  font-weight: 400;
+  ${setType("s")};
+  color: ${color.mono700};
+  font-family: ${font.serif};
+  font-weight: 700;
+  letter-spacing: normal;
 `;
 
 export default Label;

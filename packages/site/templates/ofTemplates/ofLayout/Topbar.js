@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-import { color } from "@storycopter/styleguide/src/config";
+import { font } from "@storycopter/styleguide/src/config";
 import { Link, Icon } from "@storycopter/styleguide";
 import { setSpace, setType } from "@storycopter/styleguide/src/mixins";
 
 const TopbarEl = styled.header`
   & > div {
     ${setSpace("pal")};
-    ${setType("m")};
-    color: ${color.flare900};
+    ${setType("l")};
     display: flex;
     flex-direction: row;
+    font-family: ${font.serif};
+    font-weight: 800;
     justify-content: space-between;
   }
   h1 {
