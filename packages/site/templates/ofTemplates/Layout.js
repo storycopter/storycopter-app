@@ -18,8 +18,8 @@ const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-size: 200%;
     ${breakpoint.phone} {
-      background-size: 600%;
-      background-position: 80% 50%;
+      background-position: 66% 50%;
+      background-size: 500%;
     }
   }
   body {
