@@ -1,42 +1,29 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  webpack: catalogWebpackConfig => {
-    const modifiedWebpackConfig = {
-      ...catalogWebpackConfig,
-      resolveLoader: {
-        modules: [
-          "node_modules",
-          path.resolve(__dirname, "./../../node_modules")
-        ]
+  webpack: config => {
+    config.resolveLoader.modules.push(
+      path.resolve(__dirname, './../../node_modules')
+    );
+
+    config.module.rules[0].oneOf.splice(1, 1);
+    config.module.rules[0].oneOf.unshift(
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
-      module: {
-        rules: [
-          {
-            test: /\.md/,
-            use: ["@catalog/markdown-loader", "raw-loader"]
-          },
-          {
-            test: /\.(png|woff|woff2|eot|ttf|svg|ico)$/,
-            loader: "url-loader?limit=100000"
-          },
-          {
-            test: /\.css$/,
-            use: ["style-loader", "css-loader"]
-          },
-          {
-            test: /\.m?js$/,
-            exclude: /(node_modules)/,
-            use: {
-              loader: "babel-loader",
-              options: {
-                presets: ["@babel/preset-env", "@babel/preset-react"]
-              }
-            }
-          }
-        ]
+      // {
+      //   test: /\.mdx?$/,
+      //   use: ["babel-loader", "mdx-loader"]
+      // },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: ['babel-loader'],
       }
-    };
-    return modifiedWebpackConfig;
-  }
+    );
+
+    // console.log(JSON.stringify(config));
+    return config;
+  },
 };
