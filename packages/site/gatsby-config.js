@@ -1,25 +1,31 @@
+const path = require('path');
+
+// const config = path.resolve("settings/config.js");
+// const secrets = path.resolve("settings/secrets.js");
+
 module.exports = {
   siteMetadata: {
-    siteUrl: `https://storycopter.com`
+    // siteUrl: config.site.url
   },
   plugins: [
-    "gatsby-plugin-react-helmet",
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-sitemap`,
-    `gatsby-plugin-styled-components`,
-    `gatsby-transformer-sharp`,
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        fonts: [`Lato:300,400,700`, `Spectral:600,700,800`]
+        name: `theme`,
+        path: `${__dirname}/theme/`
       }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-        name: "pages"
+        name: `pages`,
+        path: `${__dirname}/pages/`
+      }
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: []
       }
     }
   ]
