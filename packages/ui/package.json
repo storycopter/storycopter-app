@@ -31,7 +31,7 @@
     "prettier": "1.18.2",
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",
-    "react-hot-loader": "4.12.6",
+    "react-hot-loader": "4.12.7",
     "style-loader": "0.23.1",
     "stylelint-prettier": "1.1.1"
   }
