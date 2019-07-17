@@ -5,7 +5,7 @@
   "workspaces": {
     "packages": ["packages/*"]
   },
-  "scripts": {
-    "cleanup": "rm -rf ./node_modules && rm -f ./yarn.lock && rm -f yarn-error.log && rm -rf ./packages/site/.cache && rm -rf ./packages/site/node_modules && rm -rf ./packages/site/public && rm -rf ./packages/styleguide/node_modules"
+  "devDependencies": {
+    "eslint-config-prettier": "6.0.0"
   }
 }

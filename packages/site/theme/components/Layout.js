@@ -8,15 +8,14 @@ import Typography from '@material-ui/core/Typography';
 
 import ThemeProvider from './ThemeProvider';
 
-
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
-  }
+    padding: theme.spacing(3),
+  },
 });
 
 const Layout = ({ children, classes }) => {

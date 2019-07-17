@@ -5,8 +5,8 @@ import Layout from 'components/Layout';
 
 const HomeTpl = ({
   data: {
-    markdownRemark: { frontmatter }
-  }
+    markdownRemark: { frontmatter },
+  },
 }) => {
   return (
     <Layout>

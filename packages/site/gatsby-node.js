@@ -3,8 +3,8 @@ const path = require('path');
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, 'theme'), 'node_modules']
-    }
+      modules: [path.resolve(__dirname, 'theme'), 'node_modules'],
+    },
   });
 };
 
@@ -13,7 +13,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const tpls = {
     home: path.resolve(__dirname, 'theme/templates/HomeTpl.js'),
-    error: path.resolve(__dirname, 'theme/templates/ErrorTpl.js')
+    error: path.resolve(__dirname, 'theme/templates/ErrorTpl.js'),
   };
 
   const pages = await graphql(`
@@ -36,8 +36,8 @@ exports.createPages = async ({ graphql, actions }) => {
   /* List creators */
   const creators = [
     {
-      src: pages
-    }
+      src: pages,
+    },
   ];
 
   creators.forEach(creator => {
@@ -46,7 +46,7 @@ exports.createPages = async ({ graphql, actions }) => {
       createPage({
         component: tpls[node.frontmatter.uid],
         context: { uid: node.frontmatter.uid },
-        path: node.frontmatter.path
+        path: node.frontmatter.path,
       });
     });
   });

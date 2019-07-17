@@ -12,10 +12,6 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-      // {
-      //   test: /\.mdx?$/,
-      //   use: ["babel-loader", "mdx-loader"]
-      // },
       {
         test: /\.js$/,
         exclude: /(node_modules)/,

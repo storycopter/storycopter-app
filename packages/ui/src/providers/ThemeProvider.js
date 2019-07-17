@@ -9,24 +9,19 @@ const mui = createMuiTheme();
 
 const theme = createMuiTheme({
   // Overrides
-  overrides: {
-  },
+  overrides: {},
 
   // Props
-  props: {
-  },
+  props: {},
 
   // Palette
-  palette: {
-  },
+  palette: {},
 
   // Shape
-  shape: {
-  },
+  shape: {},
 
   // Typography
-  typography: {
-  },
+  typography: {},
 });
 
 const CustomThemeProvider = ({ children }) => {

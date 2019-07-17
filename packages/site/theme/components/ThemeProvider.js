@@ -6,9 +6,9 @@ import 'fonts/iAWriterDuo.css';
 
 const greyjoyThm = createMuiTheme({
   typography: {
-    fontFamily: ['iAWriterDuo', 'sans-serif'].join(',')
+    fontFamily: ['iAWriterDuo', 'sans-serif'].join(','),
   },
-  overrides: {}
+  overrides: {},
 });
 
 const GreyjoyThemeProvider = props => (
