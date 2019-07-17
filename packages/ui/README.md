@@ -3,11 +3,11 @@
 ## Develop
 
 ```
-$ npm run start
+$ yarn start
 ```
 
 ## Create bundle
 
 ```
-$ npm run build
+$ yarn build
 ```

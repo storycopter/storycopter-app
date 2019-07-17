@@ -2,12 +2,14 @@ import { Catalog } from '@catalog/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import pages from './pages';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+// import ThemeProvider from '@storycopter/idoc-starter/theme/ThemeProvider';
+
+import pages from './pages';
 // import theme from './theme';
 
 import { version } from '../package.json';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 ReactDOM.render(
   <>
@@ -15,16 +17,11 @@ ReactDOM.render(
     <Catalog
       pages={[
         {
-          title: 'README',
+          title: 'Welcome',
           component: require('../README.md'),
           path: '/',
         },
-        {
-          title: 'Welcome',
-          component: require('./WELCOME.md'),
-          path: '/welcome',
-        },
-        // ...pages,
+        ...pages
       ]}
       // theme={theme}
       title={`Storycopter UI v.${version}`}

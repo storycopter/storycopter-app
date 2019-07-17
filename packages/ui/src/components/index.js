@@ -1,1 +1,1 @@
-// export { default as Something } from './something/something';
+export { default as Headline } from './Headline/Headline';
