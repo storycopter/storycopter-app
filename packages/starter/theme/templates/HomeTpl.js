@@ -1,15 +1,19 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import { Headline } from "@storycopter/ui";
+
+import Layout from 'components/Layout';
+
 const HomeTpl = ({
   data: {
     pagesJson: { data },
   },
 }) => {
   return (
-    <div>
-      <h1>{data.intro}</h1>
-    </div>
+    <Layout>
+      <Headline cover title={data.intro} subtitle={data.intro} />
+    </Layout>
   );
 };
 
