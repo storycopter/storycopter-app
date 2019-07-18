@@ -22,14 +22,12 @@ class Headline extends Component {
     this.state = {};
   }
   render() {
-    const { animate, cover, subtitle, title } = this.props;
+    const { animate, cover, fill, subtitle, title } = this.props;
     return (
       <Element
-        bgcolor="cyan"
-        color="text.primary"
-        //
-        cover={cover}
         animate={animate}
+        cover={cover}
+        fill={fill}
       >
         {title ? <h1>{title}</h1> : null}
         {subtitle ? <h2>{subtitle}</h2> : null}
@@ -42,13 +40,13 @@ export default Headline;
 
 Headline.propTypes = {
   animate: bool,
-  background: object,
+  fill: object,
   cover: bool,
   subtitle: string,
 };
 Headline.defaultProps = {
   animate: null,
-  background: null,
+  fill: null,
   cover: null,
   subtitle: null,
   title: null,

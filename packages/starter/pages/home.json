@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "path": "/",
+    "title": "Home",
+    "uid": "home"
+  },
+  "data": {
+    "intro": "Home"
+  }
+}

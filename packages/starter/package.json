@@ -23,25 +23,33 @@
     ]
   },
   "dependencies": {
-    "gatsby-cli": "2.7.15",
+    "@storycopter/ui": "1.0.0",
     "gatsby": "2.13.25",
-    "react-dom": "16.8.6",
+    "gatsby-cli": "2.7.15",
+    "gatsby-transformer-json": "2.2.2",
     "react": "16.8.6",
+    "react-dom": "16.8.6",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
     "babel-eslint": "10.0.2",
+    "eslint": "6.0.1",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-react": "7.14.2",
-    "eslint": "6.0.1",
     "husky": "3.0.0",
     "lint-staged": "9.2.0",
+    "prettier": "1.18.2",
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",
-    "prettier": "1.18.2",
     "pretty-quick": "1.11.1",
     "stylelint-prettier": "1.1.1"
   },
-  "scripts": {}
+  "scripts": {
+    "clean:all": "rm -rf ./.cache && rm -rf ./public && rm -rf ./node_modules && rm -f ./yarn.lock && rm -f ./yarn-error.log",
+    "clear:gatsby": "rm -rf ./.cache && rm -rf ./public",
+    "start:lan": "./node_modules/.bin/gatsby develop -o -H $HOSTNAME -p 8000",
+    "start": "./node_modules/.bin/gatsby develop",
+    "build": "./node_modules/.bin/gatsby build"
+  }
 }
