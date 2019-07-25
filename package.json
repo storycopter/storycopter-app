@@ -3,7 +3,9 @@
   "private": true,
   "license": "BSD-3-Clause",
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "devDependencies": {
     "eslint-config-prettier": "6.0.0"
