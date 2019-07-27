@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-// import ThemeProvider from '@storycopter/idoc-starter/theme/ThemeProvider';
-
 import pages from './pages';
 // import theme from './theme';
 
@@ -21,9 +19,14 @@ ReactDOM.render(
           component: require('../README.md'),
           path: '/',
         },
-        ...pages
+        ...pages,
       ]}
       // theme={theme}
+      responsiveSizes={[
+        { name: 'small', width: 360, height: 640 },
+        { name: 'medium', width: 1024, height: 768 },
+        { name: 'large', width: 1366, height: 768 },
+      ]}
       title={`Storycopter UI v.${version}`}
     />
   </>,

@@ -1,11 +1,16 @@
-import { bool, object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const Element = styled(({ animate, cover, ...props }) => <div {...props} />)`
+import Box from '@material-ui/core/Box';
+
+const Element = styled(({ animate, cover, background, ...props }) => (
+  <section {...props} />
+))`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   ${({ cover }) => {
     if (cover) {
       return `
@@ -13,24 +18,55 @@ const Element = styled(({ animate, cover, ...props }) => <div {...props} />)`
         min-width: 100vw;
       `;
     }
-  }}
+  }};
 `;
 
 class Headline extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { edit: null };
+    this.enterEditMode = this.enterEditMode.bind(this);
   }
+
+  enterEditMode(node) {
+    this.setState({ edit: node });
+  }
+
   render() {
-    const { animate, cover, fill, subtitle, title } = this.props;
+    const {
+      align,
+      animate,
+      color,
+      cover,
+      fill,
+      subtitle,
+      title,
+      updateSelf,
+    } = this.props;
+
     return (
-      <Element
-        animate={animate}
-        cover={cover}
-        fill={fill}
-      >
-        {title ? <h1>{title}</h1> : null}
-        {subtitle ? <h2>{subtitle}</h2> : null}
+      <Element animate={animate} cover={cover} fill={fill}>
+        <Box p={12}>
+          {title ? (
+            <h1
+              gutterBottom={subtitle ? true : false}
+              variant="h1"
+              // contentEditable={this.state.edit === 'title'}
+              // onClick={updateSelf ? () => this.enterEditMode('title') : null}
+            >
+              {title}
+            </h1>
+          ) : null}
+          {subtitle ? (
+            <h2
+              variant="h2"
+              // contentEditable={this.state.edit === 'subtitle'}
+              // onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
+            >
+              {subtitle}
+            </h2>
+          ) : null}
+        </Box>
       </Element>
     );
   }
@@ -39,15 +75,22 @@ class Headline extends Component {
 export default Headline;
 
 Headline.propTypes = {
+  align: string,
   animate: bool,
-  fill: object,
+  color: string,
   cover: bool,
+  fill: object,
   subtitle: string,
+  updateSelf: func,
+  theme: object,
 };
 Headline.defaultProps = {
+  align: 'left',
   animate: null,
-  fill: null,
+  color: 'primary',
   cover: null,
+  fill: null,
   subtitle: null,
   title: null,
+  updateSelf: null,
 };
