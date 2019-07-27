@@ -52,7 +52,7 @@
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",
     "pretty-quick": "1.11.1",
-    "react-hot-loader": "4.12.9",
+    "react-hot-loader": "4.12.10",
     "style-loader": "0.23.1",
     "stylelint-prettier": "1.1.1"
   },
