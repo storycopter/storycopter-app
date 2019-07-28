@@ -1,6 +1,7 @@
 export * from './src/animations';
 export * from './src/assets';
 export * from './src/components';
+export * from './src/maps';
 export * from './src/mixins';
 export * from './src/providers';
 export * from './src/settings';

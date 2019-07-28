@@ -1,18 +1,25 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
-import { Headline } from "@storycopter/ui";
+import { componentMap } from '@storycopter/ui';
 
 import Layout from 'components/Layout';
 
-const HomeTpl = ({
-  data: {
-    pagesJson: { data },
+const HomeTpl = (
+  {
+    data: {
+      pagesJson: { tree },
+    },
   },
-}) => {
+  props
+) => {
+  const { branches, branchIds } = tree;
   return (
     <Layout>
-      <Headline cover title={data.intro} subtitle={data.intro} />
+      {branches.map(branch => {
+        const Component = componentMap[branch.type];
+        return <Component key={branch.id} {...branch.data} />;
+      })}
     </Layout>
   );
 };
@@ -27,8 +34,19 @@ export const pageQuery = graphql`
         title
         uid
       }
-      data {
-        intro
+      tree {
+        branches {
+          component
+          data {
+            subtitle
+            title
+            cover
+          }
+          id
+          order
+          type
+        }
+        branchIds
       }
     }
   }

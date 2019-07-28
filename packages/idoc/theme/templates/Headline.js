@@ -43,15 +43,12 @@ class Headline extends Component {
       title,
     } = this.props;
 
-    console.group('Headline.js');
-    console.log(this.props);
-    console.groupEnd();
-
     return (
       <Element animate={animate} cover={cover}>
         <Box p={12}>
           {title ? (
             <h1
+              gutterBottom={subtitle ? true : false}
               variant="h1"
               // contentEditable={this.state.edit === 'title'}
               // onClick={updateSelf ? () => this.enterEditMode('title') : null}

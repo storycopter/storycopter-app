@@ -4,7 +4,23 @@
     "title": "Home",
     "uid": "home"
   },
-  "data": {
-    "intro": "An animate headline. Or maybe even a static one."
+  "tree": {
+    "branches": [
+      {
+        "component": "Headline",
+        "data": {
+          "align": "center",
+          "animate": true,
+          "background": "",
+          "cover": true,
+          "subtitle": "A subtitle",
+          "title": "A title"
+        },
+        "id": 0,
+        "order": 0,
+        "type": "headline"
+      }
+    ],
+    "branchIds": ["0"]
   }
 }
