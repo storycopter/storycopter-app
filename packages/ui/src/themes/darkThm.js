@@ -1,1 +1,3 @@
-export const darkThm = {};
+const darkThm = {};
+
+export default darkThm;

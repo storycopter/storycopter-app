@@ -1,1 +1,3 @@
-export const lightThm = {};
+const lightThm = {};
+
+export default lightThm;

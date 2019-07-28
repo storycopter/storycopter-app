@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
+import { defaultThm } from '@storycopter/ui';
+
 import Box from '@material-ui/core/Box';
 
 const Element = styled(({ animate, cover, background, theme, ...props }) => (
@@ -40,7 +42,9 @@ class Headline extends Component {
       color,
       cover,
       subtitle,
+      theme,
       title,
+      updateSelf,
     } = this.props;
 
     console.group('Headline.js');
@@ -52,18 +56,16 @@ class Headline extends Component {
         <Box p={12}>
           {title ? (
             <h1
-              variant="h1"
-              // contentEditable={this.state.edit === 'title'}
-              // onClick={updateSelf ? () => this.enterEditMode('title') : null}
+              contentEditable={this.state.edit === 'title'}
+              onClick={updateSelf ? () => this.enterEditMode('title') : null}
             >
               {title}
             </h1>
           ) : null}
           {subtitle ? (
             <h2
-              variant="h2"
-              // contentEditable={this.state.edit === 'subtitle'}
-              // onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
+              contentEditable={this.state.edit === 'subtitle'}
+              onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
             >
               {subtitle}
             </h2>

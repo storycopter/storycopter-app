@@ -1,10 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { lightThm, darkThm } from '@storycopter/ui';
+import { defaultThm } from '@storycopter/ui';
 
 const SCThemeProvider = ({ children }) => (
-  <ThemeProvider theme={lightThm}>{children}</ThemeProvider>
+  <ThemeProvider theme={defaultThm}>{children}</ThemeProvider>
 );
 
 export default SCThemeProvider;
