@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@storycopter/ui": "1.0.0",
-    "@material-ui/core": "4.2.1",
+    "@material-ui/core": "4.3.0",
     "@material-ui/icons": "4.2.1",
     "polished": "3.4.1",
     "react": "16.8.6",

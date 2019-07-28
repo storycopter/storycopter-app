@@ -1,4 +1,4 @@
-import { Headline } from '@storycopter/ui';
+import { Headline } from '@storycopter/ui/src/components';
 
 const pages = [
   {

@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
-import { componentMap } from '@storycopter/ui';
+import { map } from '@storycopter/ui/src/components';
 
 import Layout from 'components/Layout';
 
@@ -17,7 +17,7 @@ const HomeTpl = (
   return (
     <Layout>
       {branches.map(branch => {
-        const Component = componentMap[branch.type];
+        const Component = map[branch.type];
         return <Component key={branch.id} {...branch.data} />;
       })}
     </Layout>

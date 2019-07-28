@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
-import { defaultThm } from '@storycopter/ui';
+import { setType } from '@storycopter/ui/src/mixins';
 
 import Box from '@material-ui/core/Box';
 
@@ -12,7 +12,6 @@ const Element = styled(({ animate, cover, background, theme, ...props }) => (
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   ${({ cover }) => {
     if (cover) {
       return `
@@ -21,6 +20,15 @@ const Element = styled(({ animate, cover, background, theme, ...props }) => (
       `;
     }
   }};
+
+  .HeadlineH1 {
+    ${setType('k')};
+    font-family: ${({ theme }) => theme.typography.stack.primary};
+  }
+  .HeadlineH2 {
+    ${setType('h')};
+    font-family: ${({ theme }) => theme.typography.stack.secondary};
+  }
 `;
 
 class Headline extends Component {
@@ -58,6 +66,7 @@ class Headline extends Component {
             <h1
               contentEditable={this.state.edit === 'title'}
               onClick={updateSelf ? () => this.enterEditMode('title') : null}
+              className="HeadlineH1"
             >
               {title}
             </h1>
@@ -66,6 +75,7 @@ class Headline extends Component {
             <h2
               contentEditable={this.state.edit === 'subtitle'}
               onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
+              className="HeadlineH2"
             >
               {subtitle}
             </h2>
