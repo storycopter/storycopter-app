@@ -1,12 +1,12 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { SCThemeProvider } from '@storycopter/ui/providers';
+import { GlobalStyles } from '@storycopter/ui/partials';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <CssBaseline />
+      <GlobalStyles />
       <SCThemeProvider>
         <main>{children}</main>
       </SCThemeProvider>

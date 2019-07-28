@@ -1,9 +1,8 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import { Layout } from '@storycopter/ui/partials';
 import { map } from '@storycopter/ui/components';
-
-import Layout from 'components/Layout';
 
 const HomeTpl = (
   {

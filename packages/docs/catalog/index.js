@@ -2,7 +2,7 @@ import { Catalog } from '@catalog/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { GlobalStyles } from '@storycopter/ui/partials';
 import { SCThemeProvider } from '@storycopter/ui/providers';
 
 import pages from './pages';
@@ -12,7 +12,7 @@ import { version } from '../package.json';
 
 ReactDOM.render(
   <>
-    <CssBaseline />
+    <GlobalStyles />
     <SCThemeProvider>
       <Catalog
         pages={[

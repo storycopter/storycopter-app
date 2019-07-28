@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
-import { setType } from '@storycopter/ui/mixins';
+import { setType, setSpace } from '@storycopter/ui/mixins';
+import { breakpoint } from '@storycopter/ui/settings';
 
-import Box from '@material-ui/core/Box';
+const Title = styled.h1`
+  ${setType('k')};
+  font-family: ${({ theme }) => theme.typography.stack.primary};
+`;
+const Subtitle = styled.h2`
+  ${setType('h')};
+  font-family: ${({ theme }) => theme.typography.stack.secondary};
+`;
 
 const Element = styled(({ animate, cover, background, theme, ...props }) => (
   <section {...props} />
@@ -21,13 +29,19 @@ const Element = styled(({ animate, cover, background, theme, ...props }) => (
     }
   }};
 
-  .HeadlineH1 {
-    ${setType('k')};
-    font-family: ${({ theme }) => theme.typography.stack.primary};
+  ${breakpoint.phone} {
+    ${setSpace('pam')};
   }
-  .HeadlineH2 {
-    ${setType('h')};
-    font-family: ${({ theme }) => theme.typography.stack.secondary};
+  ${breakpoint.tablet} {
+    ${setSpace('pal')};
+  }
+  ${breakpoint.desktop} {
+    ${setSpace('pah')};
+  }
+
+  ${Title} {
+  }
+  ${Subtitle} {
   }
 `;
 
@@ -61,26 +75,22 @@ class Headline extends Component {
 
     return (
       <Element animate={animate} cover={cover}>
-        <Box p={12}>
-          {title ? (
-            <h1
-              contentEditable={this.state.edit === 'title'}
-              onClick={updateSelf ? () => this.enterEditMode('title') : null}
-              className="HeadlineH1"
-            >
-              {title}
-            </h1>
-          ) : null}
-          {subtitle ? (
-            <h2
-              contentEditable={this.state.edit === 'subtitle'}
-              onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
-              className="HeadlineH2"
-            >
-              {subtitle}
-            </h2>
-          ) : null}
-        </Box>
+        {title ? (
+          <Title
+            contentEditable={this.state.edit === 'title'}
+            onClick={updateSelf ? () => this.enterEditMode('title') : null}
+          >
+            {title}
+          </Title>
+        ) : null}
+        {subtitle ? (
+          <Subtitle
+            contentEditable={this.state.edit === 'subtitle'}
+            onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
+          >
+            {subtitle}
+          </Subtitle>
+        ) : null}
       </Element>
     );
   }
