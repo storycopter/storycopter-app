@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
-import { map } from '@storycopter/ui/src/components';
+import { map } from '@storycopter/ui/components';
 
 import Layout from 'components/Layout';
 

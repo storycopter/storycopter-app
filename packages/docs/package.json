@@ -1,5 +1,5 @@
 {
-  "name": "@storycopter/ui",
+  "name": "@storycopter/docs",
   "version": "1.0.0",
   "license": "BSD-3-Clause",
   "main": "index.js",
@@ -17,15 +17,13 @@
       ]
     },
     "ignore": [
-      ".cache",
       "node_modules",
       "public"
     ]
   },
   "dependencies": {
     "@material-ui/core": "4.3.0",
-    "@material-ui/icons": "4.2.1",
-    "polished": "3.4.1",
+    "@storycopter/ui": "1.0.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "styled-components": "4.3.2"
@@ -35,8 +33,11 @@
     "@babel/plugin-proposal-class-properties": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "@babel/preset-react": "7.0.0",
+    "@catalog/babel-preset": "0.0.5",
+    "@catalog/cli": "0.0.1",
     "babel-eslint": "10.0.2",
     "babel-loader": "8.0.6",
+    "babel-plugin-styled-components": "1.10.6",
     "css-loader": "3.1.0",
     "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
@@ -52,5 +53,8 @@
     "style-loader": "0.23.1",
     "stylelint-prettier": "1.1.1"
   },
-  "scripts": {}
+  "scripts": {
+    "start": "catalog start",
+    "build": "catalog build"
+  }
 }

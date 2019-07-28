@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
-import { setType } from '@storycopter/ui/src/mixins';
+import { setType } from '@storycopter/ui/mixins';
 
 import Box from '@material-ui/core/Box';
 

@@ -1,4 +1,5 @@
-import { Headline } from '@storycopter/ui/src/components';
+import { Headline } from '@storycopter/ui/components';
+import { SCThemeProvider } from '@storycopter/ui/providers';
 
 const pages = [
   {
@@ -10,6 +11,7 @@ const pages = [
         path: '/blocks/headline',
         imports: {
           Headline: Headline,
+          ThemeProvider: SCThemeProvider,
         },
       },
     ],

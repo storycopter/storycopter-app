@@ -1,4 +1,4 @@
-import { Headline } from '@storycopter/ui/src/components';
+import { Headline } from '@storycopter/ui/components';
 
 const componentMap = {
   headline: Headline,
