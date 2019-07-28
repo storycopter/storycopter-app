@@ -1,10 +1,10 @@
-import { bool, func, object, string } from 'prop-types';
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
+import { bool, func, object, string } from 'prop-types';
 
 import Box from '@material-ui/core/Box';
 
-const Element = styled(({ animate, cover, background, ...props }) => (
+const Element = styled(({ animate, cover, background, theme, ...props }) => (
   <section {...props} />
 ))`
   display: flex;
@@ -36,16 +36,15 @@ class Headline extends Component {
     const {
       align,
       animate,
+      background,
       color,
       cover,
-      fill,
       subtitle,
       title,
-      updateSelf,
     } = this.props;
 
     return (
-      <Element animate={animate} cover={cover} fill={fill}>
+      <Element animate={animate} cover={cover}>
         <Box p={12}>
           {title ? (
             <h1
@@ -72,7 +71,7 @@ class Headline extends Component {
   }
 }
 
-export default Headline;
+export default withTheme(Headline);
 
 Headline.propTypes = {
   align: string,
@@ -82,7 +81,6 @@ Headline.propTypes = {
   fill: object,
   subtitle: string,
   updateSelf: func,
-  theme: object,
 };
 Headline.defaultProps = {
   align: 'left',
