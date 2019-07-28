@@ -5,16 +5,16 @@
     "uid": "home"
   },
   "tree": {
-    "branches": [
+    "components": [
       {
         "component": "Headline",
         "data": {
-          "align": "center",
+          "align": "left",
           "animate": true,
           "background": "",
           "cover": true,
-          "subtitle": "A subtitle",
-          "title": "A title"
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "title": "A title of the Headline"
         },
         "id": 0,
         "order": 0,

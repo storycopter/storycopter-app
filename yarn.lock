@@ -592,7 +592,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-runtime@^7.0.0", "@babel/plugin-transform-runtime@^7.5.5":
+"@babel/plugin-transform-runtime@^7.0.0":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.5.5.tgz#a6331afbfc59189d2135b2e09474457a8e3d28bc"
   integrity sha512-6Xmeidsun5rkwnGfMOp6/z9nSzWpHFNVr2Jx7kwoq4mVatQfQx5S56drBgEHF+XQbKOdIaOiMIINvp/kAwMN+w==
@@ -2744,7 +2744,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -3586,6 +3586,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classnames@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 clean-css@4.2.x:
   version "4.2.1"
@@ -11594,7 +11599,7 @@ quick-lru@^1.0.0:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
   integrity sha1-Q2CxfGETatOAeDl/8RQW4Ybc+7g=
 
-raf@^3.3.2:
+raf@^3.3.2, raf@~3.4.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
@@ -11659,6 +11664,26 @@ raw-loader@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
   integrity sha1-DD0L6u2KAclm2Xh793goElKpeao=
+
+rc-texty@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/rc-texty/-/rc-texty-0.2.0.tgz#79af813523bfc314ba74af2bc086cda8b3296458"
+  integrity sha512-hGaXs8ZsSL/m7LEuCySxLWZtmFJ7bwldgtH5V90v6uBfy5eTLxSVLK5TpS2DPQHZrjl4sHXjRbKsCDk6v9x29A==
+  dependencies:
+    babel-runtime "6.x"
+    classnames "^2.2.6"
+    rc-tween-one "^2.2.0"
+
+rc-tween-one@^2.2.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/rc-tween-one/-/rc-tween-one-2.4.1.tgz#04354c59b0cf2cf5fab583b27878b9d6af23dcc3"
+  integrity sha512-sIHQtPIxN9sSc+rFG/niqQEZKsqo/kSNvLa3WM4imDTJ7HXOFU5MDeY8l0f+TwotbyyzTlpUCWo1mTQsj7b8XA==
+  dependencies:
+    babel-runtime "6.x"
+    prop-types "^15.6.1"
+    raf "~3.4.0"
+    style-utils "~0.2.0"
+    tween-functions "~1.2.0"
 
 rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
   version "1.2.8"
@@ -13366,6 +13391,11 @@ style-to-object@^0.2.1:
   dependencies:
     inline-style-parser "0.1.1"
 
+style-utils@~0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/style-utils/-/style-utils-0.2.0.tgz#3d8614931b8ff6e1eea0545f1dbfaf271bb1aa7e"
+  integrity sha512-XZkJdvmMK9DHaul0SW3FAOkDiTW9U+EoEtVctJBHEPVAsXbZC7RyIMuMgOB6a4DKdTO8JV3jvkkqCK+b6c1Cew==
+
 styled-components@4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.3.2.tgz#4ca81918c812d3006f60ac5fdec7d6b64a9509cc"
@@ -13865,6 +13895,11 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+tween-functions@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
+  integrity sha1-GuOlDnxguz3vd06scHrLynO7w/8=
 
 type-check@~0.3.2:
   version "0.3.2"

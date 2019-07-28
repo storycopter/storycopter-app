@@ -12,12 +12,15 @@ const HomeTpl = (
   },
   props
 ) => {
-  const { branches, branchIds } = tree;
+  const { components } = tree;
   return (
     <Layout>
-      {branches.map(branch => {
-        const Component = map[branch.type];
-        return <Component key={branch.id} {...branch.data} />;
+      {components.map(component => {
+        // console.group('Component');
+        // console.log(component);
+        // console.groupEnd();
+        const RenderedComponent = map[component.type];
+        return <RenderedComponent key={component.id} {...component.data} />;
       })}
     </Layout>
   );
@@ -34,18 +37,20 @@ export const pageQuery = graphql`
         uid
       }
       tree {
-        branches {
+        components {
           component
           data {
+            align
+            animate
+            cover
             subtitle
             title
-            cover
           }
           id
           order
           type
         }
-        branchIds
+        componentIds
       }
     }
   }

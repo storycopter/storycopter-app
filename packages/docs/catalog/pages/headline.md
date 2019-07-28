@@ -4,12 +4,13 @@
 
 ```react
 frame: false
+responsive: true
 showSource: false
 ---
 <ThemeProvider>
   <Headline
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
   />
 </ThemeProvider>
 ```
@@ -19,13 +20,14 @@ showSource: false
 
 ```react
 frame: false
+responsive: true
 showSource: false
 ---
 <ThemeProvider>
   <Headline
     background={null}
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
   />
 </ThemeProvider>
 ```
@@ -34,13 +36,14 @@ showSource: false
 
 ```react
 frame: false
+responsive: true
 showSource: false
 ---
 <ThemeProvider>
   <Headline
     animate={true}
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
   />
 </ThemeProvider>
 ```
@@ -49,48 +52,17 @@ showSource: false
 
 ```react
 frame: false
+responsive: true
 showSource: false
-span: 3
 ---
 <ThemeProvider>
   <Headline
     align="center"
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
   />
 </ThemeProvider>
 ```
-
-```react
-frame: false
-showSource: false
-span: 3
----
-<ThemeProvider>
-  <Headline
-    align="right"
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
-  />
-</ThemeProvider>
-```
-
-## Editable
-
-```react
-frame: false
-showSource: false
----
-<ThemeProvider>
-  <Headline
-    updateSelf={(payload) => console.log("updateSelf(): ", payload)}
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
-  />
-</ThemeProvider>
-```
-
-## Cover
 
 ```react
 frame: false
@@ -99,9 +71,41 @@ showSource: false
 ---
 <ThemeProvider>
   <Headline
+    align="right"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
+  />
+</ThemeProvider>
+```
+
+## Editable
+
+```react
+frame: false
+responsive: true
+showSource: false
+---
+<ThemeProvider>
+  <Headline
+    updateSelf={(payload) => console.log("updateSelf(): ", payload)}
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
+  />
+</ThemeProvider>
+```
+
+## Cover
+
+```react
+frame: true
+responsive: true
+showSource: false
+---
+<ThemeProvider>
+  <Headline
     cover={true}
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
   />
 </ThemeProvider>
 ```
@@ -119,8 +123,8 @@ showSource: false
     animate={true}
     background={null}
     cover={true}
-    subtitle="Subtitle of the highlight"
-    title="Title of the highlight"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
     updateSelf={(payload) => console.log("updateSelf(): ", payload)}
   />
 </ThemeProvider>
