@@ -1,8 +1,9 @@
 import 'rc-texty/assets/index.css';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
+import { withTheme } from '@material-ui/styles';
 
 import { breakpoint, color } from '@storycopter/ui/settings';
 import { setType, setSpace } from '@storycopter/ui/mixins';
@@ -10,21 +11,21 @@ import { setType, setSpace } from '@storycopter/ui/mixins';
 const Title = styled.div`
   .TitleText {
     ${setType('k')};
-    font-family: ${({ theme }) => theme.typography.stack.primary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.primary}; */}
   }
 `;
 const Subtitle = styled.div`
   ${setSpace('mtl')};
   .SubtitleText {
     ${setType('h')};
-    font-family: ${({ theme }) => theme.typography.stack.secondary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Text = styled.div`
   ${setSpace('mtl')};
   .TextText {
     ${setType('l')};
-    font-family: ${({ theme }) => theme.typography.stack.secondary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Child = styled.div`
@@ -47,8 +48,10 @@ const Element = styled(
   justify-content: center;
   position: relative;
 
+  ${'' /*
   background-color: ${({ theme }) => theme.colors.palette.accent};
   color: ${({ theme }) => theme.colors.palette.text};
+  */}
 
   ${breakpoint.phone} {
     ${setSpace('pal')};
@@ -162,9 +165,9 @@ class Headline extends Component {
       return c;
     };
 
-    console.group('Headline.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('Headline.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Element

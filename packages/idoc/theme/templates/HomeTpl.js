@@ -2,8 +2,8 @@ import { graphql } from 'gatsby';
 import React from 'react';
 import { sortBy } from 'lodash';
 
+import { IdocProvider } from '@storycopter/ui/providers';
 import { Layout } from '@storycopter/ui/partials';
-import { SCThemeProvider } from '@storycopter/ui/providers';
 import { map } from '@storycopter/ui/components';
 
 const HomeTpl = (
@@ -18,14 +18,14 @@ const HomeTpl = (
   return (
     <Layout>
       {sortBy(components, [o => o.order]).map(component => {
-        console.group('Component');
-        console.log(component);
-        console.groupEnd();
+        // console.group('Component');
+        // console.log(component);
+        // console.groupEnd();
         const RenderedComponent = map[component.type];
         return (
-          <SCThemeProvider invert={component.options.invert} key={component.id}>
+          <IdocProvider key={component.id}>
             <RenderedComponent {...component.options} />
-          </SCThemeProvider>
+          </IdocProvider>
         );
       })}
     </Layout>
