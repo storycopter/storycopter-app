@@ -126,6 +126,9 @@ class Headline extends Component {
     super(props);
     this.state = { edit: null };
     this.enterEditMode = this.enterEditMode.bind(this);
+    // this.titleRef = createRef();
+    // this.subtitleRef = createRef();
+    // this.textRef = createRef();
   }
 
   enterEditMode(node) {
@@ -179,6 +182,7 @@ class Headline extends Component {
               <Title
                 contentEditable={this.state.edit === 'title'}
                 onClick={updateSelf ? () => this.enterEditMode('title') : null}
+                // ref={this.titleRef}
               >
                 <h1 className="TitleText">
                   {animate ? (
@@ -203,6 +207,8 @@ class Headline extends Component {
                 onClick={
                   updateSelf ? () => this.enterEditMode('subtitle') : null
                 }
+                onChange={e => console.log(e)}
+                // ref={this.subtitleRef}
               >
                 <h2 className="SubtitleText">
                   {animate ? (
@@ -227,6 +233,7 @@ class Headline extends Component {
               <Text
                 contentEditable={this.state.edit === 'text'}
                 onClick={updateSelf ? () => this.enterEditMode('text') : null}
+                // ref={this.textRef}
               >
                 <h2 className="TextText">
                   {animate ? (
