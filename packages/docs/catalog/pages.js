@@ -1,9 +1,10 @@
+import { Topbar } from '@storycopter/ui/partials';
 import { Headline } from '@storycopter/ui/components';
-import { SCThemeProvider } from '@storycopter/ui/providers';
+import { IdocProvider } from '@storycopter/ui/providers';
 
 const pages = [
   {
-    title: 'Blocks',
+    title: 'Components',
     pages: [
       {
         title: 'Headline',
@@ -11,7 +12,21 @@ const pages = [
         path: '/blocks/headline',
         imports: {
           Headline: Headline,
-          ThemeProvider: SCThemeProvider,
+          ThemeProvider: IdocProvider,
+        },
+      },
+    ],
+  },
+  {
+    title: 'Partials',
+    pages: [
+      {
+        title: 'Topbar',
+        content: require('./pages/topbar.md'),
+        path: '/blocks/topbar',
+        imports: {
+          Topbar: Topbar,
+          ThemeProvider: IdocProvider,
         },
       },
     ],
