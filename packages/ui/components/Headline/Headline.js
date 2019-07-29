@@ -45,16 +45,13 @@ const Element = styled(({ align, animate, fill, cover, theme, ...props }) => (
   color: ${({ theme }) => theme.colors.palette.text};
 
   ${breakpoint.phone} {
-    ${setSpace('pvm')};
-    ${setSpace('phl')};
+    ${setSpace('pal')};
   }
   ${breakpoint.tablet} {
-    ${setSpace('pvl')};
-    ${setSpace('phh')};
+    ${setSpace('pah')};
   }
   ${breakpoint.desktopUp} {
-    ${setSpace('pvh')};
-    ${setSpace('phk')};
+    ${setSpace('pak')};
     ${Child} {
       flex: 0 0 ${(100 / 4) * 3}%;
     }

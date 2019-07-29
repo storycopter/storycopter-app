@@ -9,7 +9,7 @@
       {
         "component": "Headline",
         "data": {
-          "align": "left",
+          "align": "center",
           "animate": true,
           "cover": true,
           "fill": "url(static/sample.jpg)",
