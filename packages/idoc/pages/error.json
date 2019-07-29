@@ -1,11 +1,7 @@
 {
   "meta": {
-    "path": "/",
+    "path": "/404",
     "title": "Error",
     "uid": "error"
-  },
-  "tree": {
-    "branches": [],
-    "branchIds": []
   }
 }

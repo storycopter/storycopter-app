@@ -14,6 +14,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const tpls = {
     home: path.resolve(__dirname, 'theme/templates/HomeTpl.js'),
     error: path.resolve(__dirname, 'theme/templates/ErrorTpl.js'),
+    page: path.resolve(__dirname, 'theme/templates/PageTpl.js'),
   };
 
   const pages = await graphql(`
@@ -41,10 +42,11 @@ exports.createPages = async ({ graphql, actions }) => {
   creators.forEach(creator => {
     const { edges } = creator.src.data.allPagesJson;
     edges.forEach(({ node }) => {
+      const { path, uid } = node.meta;
       createPage({
-        component: tpls[node.meta.uid],
-        context: { uid: node.meta.uid },
-        path: node.meta.path,
+        component: uid.startsWith('page') ? tpls.page : tpls[uid],
+        context: { uid: uid },
+        path: path,
       });
     });
   });

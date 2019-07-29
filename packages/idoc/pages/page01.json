@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "path": "/intro",
+    "title": "Intro",
+    "uid": "page01"
+  },
+  "tree": {
+    "components": [
+      {
+        "options": {
+          "align": "right",
+          "anchor": null,
+          "animate": true,
+          "cover": true,
+          "fill": "url(static/sample.jpg)",
+          "invert": true,
+          "mask": "dark",
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "title": "A title of the Headline"
+        },
+        "id": 0,
+        "order": 0,
+        "type": "headline"
+      },
+      {
+        "options": {
+          "align": "center",
+          "anchor": "anchor1",
+          "animate": true,
+          "cover": true,
+          "fill": null,
+          "invert": false,
+          "mask": "bright",
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "title": "A title of the Headline"
+        },
+        "id": 2,
+        "order": 1,
+        "type": "headline"
+      },
+      {
+        "options": {
+          "align": "left",
+          "anchor": "anchor2",
+          "animate": true,
+          "cover": false,
+          "fill": null,
+          "invert": false,
+          "mask": null,
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text."
+        },
+        "id": 1,
+        "order": 2,
+        "type": "headline"
+      }
+    ],
+    "componentIds": ["0", "1", "2"]
+  }
+}
