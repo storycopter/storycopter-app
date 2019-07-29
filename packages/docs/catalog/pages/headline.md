@@ -10,23 +10,25 @@ showSource: false
 <ThemeProvider>
   <Headline
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
 ```
 
 
-## Background
+## Fill
 
 ```react
 frame: false
 responsive: true
 showSource: false
 ---
-<ThemeProvider>
+<ThemeProvider invert>
   <Headline
-    background={null}
+    fill="url(sample.jpg)"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -43,6 +45,7 @@ showSource: false
   <Headline
     animate={true}
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -59,6 +62,7 @@ showSource: false
   <Headline
     align="center"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -73,6 +77,7 @@ showSource: false
   <Headline
     align="right"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -89,6 +94,7 @@ showSource: false
   <Headline
     updateSelf={(payload) => console.log("updateSelf(): ", payload)}
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -105,6 +111,7 @@ showSource: false
   <Headline
     cover={true}
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
   />
 </ThemeProvider>
@@ -117,13 +124,14 @@ frame: true
 responsive: true
 showSource: false
 ---
-<ThemeProvider>
+<ThemeProvider invert>
   <Headline
     align="center"
     animate={true}
-    background={null}
     cover={true}
+    fill="url(sample.jpg)"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
     updateSelf={(payload) => console.log("updateSelf(): ", payload)}
   />

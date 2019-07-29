@@ -11,16 +11,18 @@
         "data": {
           "align": "left",
           "animate": true,
-          "background": "",
           "cover": true,
+          "fill": "url(static/sample.jpg)",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
           "title": "A title of the Headline"
         },
         "id": 0,
+        "invert": true,
         "order": 0,
         "type": "headline"
       }
     ],
-    "branchIds": ["0"]
+    "componentIds": ["0"]
   }
 }

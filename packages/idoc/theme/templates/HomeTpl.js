@@ -2,6 +2,7 @@ import { graphql } from 'gatsby';
 import React from 'react';
 
 import { Layout } from '@storycopter/ui/partials';
+import { SCThemeProvider } from '@storycopter/ui/providers';
 import { map } from '@storycopter/ui/components';
 
 const HomeTpl = (
@@ -16,11 +17,17 @@ const HomeTpl = (
   return (
     <Layout>
       {components.map(component => {
-        // console.group('Component');
-        // console.log(component);
-        // console.groupEnd();
+        {
+          /* console.group('Component');
+        console.log(component);
+        console.groupEnd(); */
+        }
         const RenderedComponent = map[component.type];
-        return <RenderedComponent key={component.id} {...component.data} />;
+        return (
+          <SCThemeProvider invert={component.invert} key={component.id}>
+            <RenderedComponent {...component.data} />
+          </SCThemeProvider>
+        );
       })}
     </Layout>
   );
@@ -43,10 +50,13 @@ export const pageQuery = graphql`
             align
             animate
             cover
+            fill
             subtitle
+            text
             title
           }
           id
+          invert
           order
           type
         }

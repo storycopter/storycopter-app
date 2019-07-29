@@ -5,7 +5,7 @@ import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
 import { setType, setSpace } from '@storycopter/ui/mixins';
-import { breakpoint } from '@storycopter/ui/settings';
+import { breakpoint, color } from '@storycopter/ui/settings';
 
 const Title = styled.div`
   .TitleText {
@@ -14,39 +14,52 @@ const Title = styled.div`
   }
 `;
 const Subtitle = styled.div`
+  ${setSpace('mtl')};
   .SubtitleText {
     ${setType('h')};
     font-family: ${({ theme }) => theme.typography.stack.secondary};
   }
 `;
-const Child = styled.div`
-  flex: 0 0 ${(100 / 3) * 2}%;
+const Text = styled.div`
+  ${setSpace('mtm')};
+  .TextText {
+    ${setType('l')};
+    font-family: ${({ theme }) => theme.typography.stack.secondary};
+  }
 `;
+const Child = styled.div``;
 const Parent = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: row;
 `;
-const Element = styled(
-  ({ align, animate, background, cover, theme, ...props }) => (
-    <section {...props} />
-  )
-)`
+const Element = styled(({ align, animate, fill, cover, theme, ...props }) => (
+  <section {...props} />
+))`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
+  background-color: ${({ theme }) => theme.colors.palette.accent};
+  color: ${({ theme }) => theme.colors.palette.text};
+
   ${breakpoint.phone} {
-    ${setSpace('pam')};
+    ${setSpace('pvm')};
+    ${setSpace('phl')};
   }
   ${breakpoint.tablet} {
-    ${setSpace('pal')};
+    ${setSpace('pvl')};
+    ${setSpace('phh')};
   }
-  ${breakpoint.desktop} {
-    ${setSpace('pah')};
+  ${breakpoint.desktopUp} {
+    ${setSpace('pvh')};
+    ${setSpace('phk')};
+    ${Child} {
+      flex: 0 0 ${(100 / 3) * 2}%;
+    }
   }
-  ${breakpoint.hdesktop} {
+  ${breakpoint.hdesktopUp} {
     ${setSpace('pak')};
   }
 
@@ -64,6 +77,18 @@ const Element = styled(
           justify-content: flex-end;
         }
       `;
+  }};
+
+  ${({ fill }) => {
+    if (fill) {
+      return `
+        background: ${fill};
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-shadow: 0 2px 2px ${color.shadow500};
+        `;
+    }
   }};
 
   ${({ cover }) => {
@@ -91,10 +116,11 @@ class Headline extends Component {
     const {
       align,
       animate,
-      background,
+      fill,
       cover,
       subtitle,
       theme,
+      text,
       title,
       updateSelf,
     } = this.props;
@@ -111,16 +137,16 @@ class Headline extends Component {
       return c;
     };
 
-    // console.group('Headline.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('Headline.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
       <Element
         align={align}
         animate={animate}
-        background={background}
         cover={cover}
+        fill={fill}
         theme={theme}
       >
         <Parent>
@@ -136,7 +162,7 @@ class Headline extends Component {
                       split={getSplit}
                       type="top"
                       mode="smooth"
-                      duration={450}
+                      duration={500}
                       component="span"
                     >
                       {title}
@@ -154,14 +180,14 @@ class Headline extends Component {
                   updateSelf ? () => this.enterEditMode('subtitle') : null
                 }
               >
-                <p className="SubtitleText">
+                <h2 className="SubtitleText">
                   {animate ? (
                     <Texty
-                      split={getSplit}
+                      split={t => [t]}
                       type="top"
                       mode="smooth"
-                      duration={450}
-                      delay={600}
+                      duration={500}
+                      delay={700}
                       exclusive={true}
                       component="span"
                     >
@@ -170,8 +196,32 @@ class Headline extends Component {
                   ) : (
                     subtitle
                   )}
-                </p>
+                </h2>
               </Subtitle>
+            ) : null}
+            {text ? (
+              <Text
+                contentEditable={this.state.edit === 'text'}
+                onClick={updateSelf ? () => this.enterEditMode('text') : null}
+              >
+                <h2 className="TextText">
+                  {animate ? (
+                    <Texty
+                      split={t => [t]}
+                      type="top"
+                      mode="smooth"
+                      duration={500}
+                      delay={800}
+                      exclusive={true}
+                      component="span"
+                    >
+                      {text}
+                    </Texty>
+                  ) : (
+                    text
+                  )}
+                </h2>
+              </Text>
             ) : null}
           </Child>
         </Parent>
@@ -187,8 +237,10 @@ Headline.propTypes = {
   animate: bool,
   color: string,
   cover: bool,
-  fill: object,
+  fill: string,
   subtitle: string,
+  text: string,
+  theme: object,
   updateSelf: func,
 };
 Headline.defaultProps = {
@@ -198,6 +250,8 @@ Headline.defaultProps = {
   cover: null,
   fill: null,
   subtitle: null,
+  text: null,
   title: null,
+  theme: null,
   updateSelf: null,
 };

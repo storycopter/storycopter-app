@@ -1,10 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { defaultThm } from '@storycopter/ui/themes';
+import { defaultThm, negativeThm } from '@storycopter/ui/themes';
 
-const SCThemeProvider = ({ children }) => (
-  <ThemeProvider theme={defaultThm}>{children}</ThemeProvider>
+const SCThemeProvider = ({ children, invert }) => (
+  <ThemeProvider theme={invert ? negativeThm : defaultThm}>
+    {children}
+  </ThemeProvider>
 );
 
 export default SCThemeProvider;
