@@ -7,9 +7,8 @@
   "tree": {
     "components": [
       {
-        "component": "Headline",
         "data": {
-          "align": "center",
+          "align": "left",
           "animate": true,
           "cover": true,
           "fill": "url(static/sample.jpg)",
@@ -21,8 +20,35 @@
         "invert": true,
         "order": 0,
         "type": "headline"
+      },
+      {
+        "data": {
+          "align": "center",
+          "animate": true,
+          "cover": true,
+          "fill": null,
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "title": "A title of the Headline"
+        },
+        "id": 2,
+        "invert": false,
+        "order": 1,
+        "type": "headline"
+      },
+      {
+        "data": {
+          "align": "right",
+          "animate": true,
+          "cover": false,
+          "fill": null,
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text."
+        },
+        "id": 1,
+        "invert": false,
+        "order": 2,
+        "type": "headline"
       }
     ],
-    "componentIds": ["0"]
+    "componentIds": ["0", "1", "2"]
   }
 }

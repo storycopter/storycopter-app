@@ -1,5 +1,6 @@
 import { graphql } from 'gatsby';
 import React from 'react';
+import { sortBy } from 'lodash';
 
 import { Layout } from '@storycopter/ui/partials';
 import { SCThemeProvider } from '@storycopter/ui/providers';
@@ -14,9 +15,10 @@ const HomeTpl = (
   props
 ) => {
   const { components } = tree;
+  const orderedComponents = sortBy(components, [o => o.order]);
   return (
     <Layout>
-      {components.map(component => {
+      {orderedComponents.map(component => {
         {
           /* console.group('Component');
         console.log(component);
