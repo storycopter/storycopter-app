@@ -1,18 +1,33 @@
 import { graphql } from 'gatsby';
 import React from 'react';
+import { sortBy } from 'lodash';
 
-import { Headline } from "@storycopter/ui";
+import { Layout } from '@storycopter/ui/partials';
+import { SCThemeProvider } from '@storycopter/ui/providers';
+import { map } from '@storycopter/ui/components';
 
-import Layout from 'components/Layout';
-
-const HomeTpl = ({
-  data: {
-    pagesJson: { data },
+const HomeTpl = (
+  {
+    data: {
+      pagesJson: { tree },
+    },
   },
-}) => {
+  props
+) => {
+  const { components } = tree;
   return (
     <Layout>
-      <Headline cover title={data.intro} subtitle={data.intro} />
+      {sortBy(components, [o => o.order]).map(component => {
+        console.group('Component');
+        console.log(component);
+        console.groupEnd();
+        const RenderedComponent = map[component.type];
+        return (
+          <SCThemeProvider invert={component.options.invert} key={component.id}>
+            <RenderedComponent {...component.options} />
+          </SCThemeProvider>
+        );
+      })}
     </Layout>
   );
 };
@@ -27,8 +42,25 @@ export const pageQuery = graphql`
         title
         uid
       }
-      data {
-        intro
+      tree {
+        components {
+          id
+          options {
+            align
+            anchor
+            animate
+            cover
+            fill
+            invert
+            mask
+            subtitle
+            text
+            title
+          }
+          order
+          type
+        }
+        componentIds
       }
     }
   }
