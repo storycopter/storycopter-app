@@ -16,7 +16,6 @@ showSource: false
 </ThemeProvider>
 ```
 
-
 ## Fill
 
 ```react
@@ -83,6 +82,38 @@ showSource: false
 </ThemeProvider>
 ```
 
+## Mask
+
+```react
+frame: false
+responsive: true
+showSource: false
+---
+<ThemeProvider >
+  <Headline
+    fill="url(sample.jpg)"
+    mask="bright"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
+  />
+</ThemeProvider>
+```
+
+```react
+frame: false
+responsive: true
+showSource: false
+---
+<ThemeProvider invert>
+  <Headline
+    fill="url(sample.jpg)"
+    mask="dark"
+    subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+    title="A title of the Headline"
+  />
+</ThemeProvider>
+```
+
 ## Editable
 
 ```react
@@ -130,6 +161,7 @@ showSource: false
     animate={true}
     cover={true}
     fill="url(sample.jpg)"
+    mask="dark"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
     text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"

@@ -4,8 +4,8 @@ import Texty from 'rc-texty';
 import styled, { withTheme } from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
 
-import { setType, setSpace } from '@storycopter/ui/mixins';
 import { breakpoint, color } from '@storycopter/ui/settings';
+import { setType, setSpace } from '@storycopter/ui/mixins';
 
 const Title = styled.div`
   .TitleText {
@@ -14,32 +14,38 @@ const Title = styled.div`
   }
 `;
 const Subtitle = styled.div`
-  ${setSpace('mtm')};
+  ${setSpace('mtl')};
   .SubtitleText {
     ${setType('h')};
     font-family: ${({ theme }) => theme.typography.stack.secondary};
   }
 `;
 const Text = styled.div`
-  ${setSpace('mtm')};
+  ${setSpace('mtl')};
   .TextText {
     ${setType('l')};
     font-family: ${({ theme }) => theme.typography.stack.secondary};
   }
 `;
-const Child = styled.div``;
+const Child = styled.div`
+  position: relative;
+  z-index: 2;
+`;
 const Parent = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: row;
 `;
-const Element = styled(({ align, animate, fill, cover, theme, ...props }) => (
-  <section {...props} />
-))`
+const Element = styled(
+  ({ align, animate, fill, cover, mask, theme, ...props }) => (
+    <section {...props} />
+  )
+)`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 
   background-color: ${({ theme }) => theme.colors.palette.accent};
   color: ${({ theme }) => theme.colors.palette.text};
@@ -83,7 +89,24 @@ const Element = styled(({ align, animate, fill, cover, theme, ...props }) => (
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        text-shadow: 0 2px 2px ${color.shadow500};
+        text-shadow: 0 2px 2px ${color.shadow300};
+        `;
+    }
+  }};
+
+  ${({ mask }) => {
+    if (mask) {
+      return `
+      &:before {
+        background: ${mask === 'dark' ? color.shadow500 : color.flare500};
+        bottom: 0;
+        content: " ";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+      }
         `;
     }
   }};
@@ -112,12 +135,14 @@ class Headline extends Component {
   render() {
     const {
       align,
+      anchor,
       animate,
-      fill,
       cover,
+      fill,
+      mask,
       subtitle,
-      theme,
       text,
+      theme,
       title,
       updateSelf,
     } = this.props;
@@ -144,6 +169,8 @@ class Headline extends Component {
         animate={animate}
         cover={cover}
         fill={fill}
+        id={anchor}
+        mask={mask}
         theme={theme}
       >
         <Parent>
@@ -231,10 +258,11 @@ export default withTheme(Headline);
 
 Headline.propTypes = {
   align: string,
+  anchor: string,
   animate: bool,
-  color: string,
   cover: bool,
   fill: string,
+  mask: string,
   subtitle: string,
   text: string,
   theme: object,
@@ -242,13 +270,14 @@ Headline.propTypes = {
 };
 Headline.defaultProps = {
   align: 'left',
+  anchor: null,
   animate: null,
-  color: 'primary',
   cover: null,
   fill: null,
+  mask: null,
   subtitle: null,
   text: null,
-  title: null,
   theme: null,
+  title: null,
   updateSelf: null,
 };

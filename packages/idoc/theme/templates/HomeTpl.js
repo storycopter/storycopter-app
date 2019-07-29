@@ -15,19 +15,16 @@ const HomeTpl = (
   props
 ) => {
   const { components } = tree;
-  const orderedComponents = sortBy(components, [o => o.order]);
   return (
     <Layout>
-      {orderedComponents.map(component => {
-        {
-          /* console.group('Component');
+      {sortBy(components, [o => o.order]).map(component => {
+        console.group('Component');
         console.log(component);
-        console.groupEnd(); */
-        }
+        console.groupEnd();
         const RenderedComponent = map[component.type];
         return (
-          <SCThemeProvider invert={component.invert} key={component.id}>
-            <RenderedComponent {...component.data} />
+          <SCThemeProvider invert={component.options.invert} key={component.id}>
+            <RenderedComponent {...component.options} />
           </SCThemeProvider>
         );
       })}
@@ -47,18 +44,19 @@ export const pageQuery = graphql`
       }
       tree {
         components {
-          component
-          data {
+          id
+          options {
             align
+            anchor
             animate
             cover
             fill
+            invert
+            mask
             subtitle
             text
             title
           }
-          id
-          invert
           order
           type
         }
