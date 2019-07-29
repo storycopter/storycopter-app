@@ -1,4 +1,4 @@
-const defaultThm = {
+const negativeThm = {
   typography: {
     stack: {
       primary: '"Helvetica"',
@@ -8,11 +8,11 @@ const defaultThm = {
   },
   colors: {
     palette: {
-      background: '#fff',
-      text: '#1a1a1a',
+      background: '#1a1a1a',
+      text: '#fff',
       accent: '#ffd520',
     },
   },
 };
 
-export default defaultThm;
+export default negativeThm;
