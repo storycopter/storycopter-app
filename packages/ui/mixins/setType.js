@@ -13,7 +13,7 @@ export const setType = size => {
       }`;
     case 'l':
       return `${fluidify('font-size', fsize.l[0], fsize.l[1])}line-height: ${
-        lead.s
+        lead.m
       }`;
     case 's':
       return `${fluidify('font-size', fsize.s[0], fsize.s[1])}line-height: ${

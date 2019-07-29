@@ -14,7 +14,7 @@ const Title = styled.div`
   }
 `;
 const Subtitle = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .SubtitleText {
     ${setType('h')};
     font-family: ${({ theme }) => theme.typography.stack.secondary};
@@ -56,7 +56,7 @@ const Element = styled(({ align, animate, fill, cover, theme, ...props }) => (
     ${setSpace('pvh')};
     ${setSpace('phk')};
     ${Child} {
-      flex: 0 0 ${(100 / 3) * 2}%;
+      flex: 0 0 ${(100 / 4) * 3}%;
     }
   }
   ${breakpoint.hdesktopUp} {
