@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { withTheme } from '@material-ui/styles';
 import {} from 'prop-types';
 
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -13,8 +13,9 @@ import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { breakpoint, color } from '@storycopter/ui/settings';
 import { setType, setSpace } from '@storycopter/ui/mixins';
 
-const Side = styled.div`
-  flex: 0 0 100px;
+const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
+  flex: 0 0 160px;
+  text-align: ${({ lx, rx }) => (rx ? 'right' : 'left')};
 `;
 const Main = styled.div`
   flex: 1 1 100%;
@@ -49,7 +50,7 @@ class Topbar extends Component {
 
     return (
       <Element theme={theme}>
-        <Side>
+        <Side lx>
           <Toolbar>
             <Tooltip title="Menu">
               <IconButton>
@@ -58,12 +59,12 @@ class Topbar extends Component {
             </Tooltip>
             <Tooltip title="Previous chapter">
               <IconButton>
-                <ArrowBackIosIcon />
+                <KeyboardArrowLeftIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Next chapter">
               <IconButton>
-                <ArrowForwardIosIcon />
+                <KeyboardArrowRightIcon />
               </IconButton>
             </Tooltip>
           </Toolbar>
@@ -72,7 +73,7 @@ class Topbar extends Component {
           <Preview>Preview</Preview>
           <Breadcrumbs>Breadcrumbs</Breadcrumbs>
         </Main>
-        <Side>
+        <Side rx>
           <Toolbar>
             <Tooltip title="Share">
               <IconButton>
