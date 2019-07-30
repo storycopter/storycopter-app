@@ -25,6 +25,7 @@
   "dependencies": {
     "@material-ui/core": "4.3.0",
     "@material-ui/icons": "4.2.1",
+    "material-ui-popup-state": "1.4.0",
     "polished": "3.4.1",
     "rc-texty": "0.2.0",
     "react": "16.8.6",

@@ -1,16 +1,19 @@
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { withTheme } from '@material-ui/styles';
 import { bool } from 'prop-types';
+import { withTheme } from '@material-ui/styles';
 
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
-import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 
+import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setType, setSpace } from '@storycopter/ui/mixins';
 
@@ -152,11 +155,33 @@ class Topbar extends Component {
           <Toolbar>
             <Grid container spacing={1}>
               <Grid item>
-                <Tooltip title="Share">
-                  <IconButton>
-                    <ShareIcon />
-                  </IconButton>
-                </Tooltip>
+                <PopupState variant="popover" popupId="demoPopover">
+                  {popupState => (
+                    <div>
+                      <Tooltip title="Share">
+                        <IconButton {...bindTrigger(popupState)}>
+                          <ShareIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        {...bindMenu(popupState)}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                      >
+                        <MenuItem onClick={popupState.close}>Facebook</MenuItem>
+                        <MenuItem onClick={popupState.close}>Twitter</MenuItem>
+                        <MenuItem onClick={popupState.close}>Email</MenuItem>
+                      </Menu>
+                    </div>
+                  )}
+                </PopupState>
               </Grid>
               <Grid item>
                 <Tooltip title="Take action">

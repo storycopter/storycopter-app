@@ -29,7 +29,7 @@ thm.palette = {
 thm.props = {
   ...thm.props,
   MuiButtonBase: {
-    // disableRipple: true,
+    disableRipple: true,
   },
 };
 
