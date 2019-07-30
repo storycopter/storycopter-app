@@ -164,7 +164,7 @@ class Headline extends Component {
     };
 
     console.group('Headline.js');
-    console.log(this.props);
+    console.log(this.props.theme.palette.text);
     console.groupEnd();
 
     return (

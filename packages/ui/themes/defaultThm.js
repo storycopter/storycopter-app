@@ -2,29 +2,33 @@ import { color } from '@storycopter/ui/settings';
 
 import thm from './thm';
 
-let defaultThm = thm;
+let defaultThm = { ...thm };
 
 defaultThm.palette = {
   ...thm.palette,
   primary: {
+    ...thm.palette.primary,
     light: '#ff6d01',
     main: '#ff6d01',
     dark: '#ff6d01',
     contrastText: '#fff',
   },
   secondary: {
+    ...thm.palette.secondary,
     light: '#212121',
     main: '#212121',
     dark: '#212121',
     contrastText: '#fff',
   },
   background: {
+    ...thm.palette.background,
     default: '#fafafa',
     paper: '#fff',
     accent: color.accent,
   },
   text: {
-    primary: color.mono100,
+    ...thm.palette.text,
+    primary: color.mono900,
     secondary: color.accent,
     disabled: color.mono500,
   },
@@ -34,10 +38,10 @@ defaultThm.overrides = {
   ...thm.overrides,
   MuiIconButton: {
     root: {
-      color: color.flare700,
+      color: color.shadow700,
       '&:hover': {
-        backgroundColor: color.shadow100,
-        color: color.flare900,
+        backgroundColor: color.flare100,
+        color: color.shadow900,
       },
     },
   },

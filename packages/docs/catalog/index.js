@@ -2,6 +2,7 @@ import { Catalog } from '@catalog/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { IdocProvider } from '@storycopter/ui/providers';
 import { GlobalStyles } from '@storycopter/ui/partials';
 
 import pages from './pages';
@@ -10,7 +11,7 @@ import pages from './pages';
 import { version } from '../package.json';
 
 ReactDOM.render(
-  <>
+  <IdocProvider>
     <GlobalStyles />
     <Catalog
       pages={[
@@ -29,6 +30,6 @@ ReactDOM.render(
       ]}
       title={`Storycopter UI v.${version}`}
     />
-  </>,
+  </IdocProvider>,
   document.getElementById('catalog')
 );

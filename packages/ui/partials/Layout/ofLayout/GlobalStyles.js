@@ -1,3 +1,4 @@
+import { color } from '@storycopter/ui/settings';
 import { createGlobalStyle } from 'styled-components';
 import { setType } from '@storycopter/ui/mixins';
 import { withTheme } from '@material-ui/styles';
@@ -75,6 +76,14 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  ::selection {
+    background: ${color.flare200};
+  }
+  ::-moz-selection {
+    background: ${color.flare200};
+  }
+
 `;
 
 export default withTheme(GlobalStyle);

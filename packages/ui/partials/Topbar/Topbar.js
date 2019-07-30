@@ -48,9 +48,9 @@ class Topbar extends Component {
   render() {
     const { allowPrev, allowNext, theme } = this.props;
 
-    console.group('Topbar.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('Topbar.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Element theme={theme}>
