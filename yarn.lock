@@ -1398,6 +1398,21 @@
     "@nodelib/fs.scandir" "2.1.1"
     fastq "^1.6.0"
 
+"@now/node-bridge@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@now/node-bridge/-/node-bridge-1.2.2.tgz#b4740d8806227b8dd1d4d8481e21b3b30ad299b4"
+  integrity sha512-E5xqal3QRN8RvcQ4Q82vtg/hvWmQWaIYp2bJHd550Ps/kemGabcwAAQsP/TUM/4b5oYlOmjrfuYPq9AhMvFqkQ==
+
+"@now/node@0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@now/node/-/node-0.11.0.tgz#70f020f9f7f7704bebdeba6e938853e9b6035abb"
+  integrity sha512-Nj/K0KQOf9K8FJpv7ZncCYtbHEhQDBkcZk3v9P/Sxcz9qTdGZuNWIgzNG2/2uUOoByoHpbvzOpflma3Z4ifMiw==
+  dependencies:
+    "@now/node-bridge" "1.2.2"
+    "@types/node" "*"
+    "@zeit/ncc" "0.18.5"
+    "@zeit/ncc-watcher" "1.0.3"
+
 "@pieh/friendly-errors-webpack-plugin@1.7.0-chalk-2":
   version "1.7.0-chalk-2"
   resolved "https://registry.yarnpkg.com/@pieh/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.7.0-chalk-2.tgz#2e9da9d3ade9d18d013333eb408c457d04eabac0"
@@ -1755,6 +1770,18 @@
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
   integrity sha512-FZdkNBDqBRHKQ2MEbSC17xnPFOhZxeJ2YGSfr2BKf3sujG49Qe3bB+rGCwQfIaA7WHnGeGkSijX4FuBCdrzW/g==
+
+"@zeit/ncc-watcher@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@zeit/ncc-watcher/-/ncc-watcher-1.0.3.tgz#c4569d13db7b80a96a7672047c069400e69913ae"
+  integrity sha512-367wm9bGMBCwT8kHQckw8UY/iYhC9rdzj357FBoM0SjVvWv53yziEmd12RkeF1EsBs0F2a1uBYdUaUvGo6LfkA==
+  dependencies:
+    "@zeit/ncc" "^0.18.5"
+
+"@zeit/ncc@0.18.5", "@zeit/ncc@^0.18.5":
+  version "0.18.5"
+  resolved "https://registry.yarnpkg.com/@zeit/ncc/-/ncc-0.18.5.tgz#5687df6c32f1a2e2486aa110b3454ccebda4fb9c"
+  integrity sha512-F+SbvEAh8rchiRXqQbmD1UmbePY7dCOKTbvfFtbVbK2xMH/tyri5YKfNxXKK7eL9EWkkbqB3NTVQO6nokApeBA==
 
 abbrev@1:
   version "1.1.1"
@@ -7115,7 +7142,7 @@ gatsby-plugin-page-creator@^2.1.5:
     lodash "^4.17.14"
     micromatch "^3.1.10"
 
-gatsby-plugin-sharp@^2.2.9:
+gatsby-plugin-sharp@2.2.9:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.2.9.tgz#9a5a4778e767c31621dd4cc46271b64a7af4b8de"
   integrity sha512-yFaBuV4G6NRl3ExkWOJFtQlUO5rA3guvuR+30GwwdiHTSYuIFBvoCDgKQ+4k2fpAM5tbG6BHaUr7r/ccxWUWYg==
@@ -7234,7 +7261,7 @@ gatsby-transformer-remark@2.6.9:
     unist-util-select "^1.5.0"
     unist-util-visit "^1.3.0"
 
-gatsby-transformer-sharp@^2.2.5:
+gatsby-transformer-sharp@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-sharp/-/gatsby-transformer-sharp-2.2.5.tgz#ec54982dcff3333a0f6b2a25da4967f5a4241caf"
   integrity sha512-Onyic4Nfx4874bY6iBIal11zMct2VFU613KRSfiJJPkNCEAEfWje9XiQbI9De3ivIM0Cj8en/eg2vn5QtUeoRg==

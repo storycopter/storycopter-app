@@ -29,16 +29,17 @@
     "gatsby": "2.13.41",
     "gatsby-cli": "2.7.20",
     "gatsby-plugin-material-ui": "2.1.4",
-    "gatsby-plugin-sharp": "^2.2.9",
+    "gatsby-plugin-sharp": "2.2.9",
     "gatsby-plugin-styled-components": "3.1.2",
     "gatsby-transformer-json": "2.2.2",
-    "gatsby-transformer-sharp": "^2.2.5",
+    "gatsby-transformer-sharp": "2.2.5",
     "lodash": "4.17.15",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
+    "@now/node": "0.11.0",
     "babel-eslint": "10.0.2",
     "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
@@ -57,6 +58,7 @@
     "clear:gatsby": "rm -rf ./.cache && rm -rf ./public",
     "start:lan": "./node_modules/.bin/gatsby develop -o -H $HOSTNAME -p 8000",
     "start": "./node_modules/.bin/gatsby develop",
-    "build": "./node_modules/.bin/gatsby build"
+    "build": "./node_modules/.bin/gatsby build",
+    "stage": "./node_modules/.bin/gatsby build && now ./public --name 'storycopter-idoc'"
   }
 }

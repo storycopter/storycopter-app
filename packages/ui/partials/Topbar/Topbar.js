@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { color, time, track } from '@storycopter/ui/settings';
+import { breakpoint, color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setType, setSpace } from '@storycopter/ui/mixins';
 import { ClickAwayListener } from '@material-ui/core';
 
@@ -32,6 +32,9 @@ const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
 `;
 const Main = styled.div`
   flex: 1 1 100%;
+  ${breakpoint.phone} {
+    display: none;
+  }
 `;
 const Toolbar = styled.div``;
 const Title = styled.h1`
