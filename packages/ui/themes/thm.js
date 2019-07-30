@@ -1,4 +1,4 @@
-import { color } from '@storycopter/ui/settings';
+import { color, radius } from '@storycopter/ui/settings';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 let thm = createMuiTheme();
@@ -14,6 +14,7 @@ thm.overrides = {
   MuiIconButton: {
     root: {
       padding: 6,
+      borderRadius: radius.x,
     },
   },
 };
@@ -34,7 +35,7 @@ thm.props = {
 
 thm.shape = {
   ...thm.shape,
-  borderRadius: 2,
+  borderRadius: radius.x,
 };
 
 export default thm;

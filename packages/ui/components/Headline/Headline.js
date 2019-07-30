@@ -33,7 +33,7 @@ const Child = styled.div`
   z-index: 2;
 `;
 const Parent = styled.div`
-  max-width: 1200px;
+  max-width: 1600px;
   display: flex;
   flex-direction: row;
 `;
@@ -60,7 +60,7 @@ const Element = styled(
   ${breakpoint.desktopUp} {
     ${setSpace('pak')};
     ${Child} {
-      flex: 0 0 ${(100 / 4) * 3}%;
+      flex: 0 0 ${(100 / 3) * 2}%;
     }
   }
   ${breakpoint.hdesktopUp} {
@@ -163,9 +163,9 @@ class Headline extends Component {
       return c;
     };
 
-    console.group('Headline.js');
-    console.log(this.props.theme.palette.text);
-    console.groupEnd();
+    // console.group('Headline.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Element
