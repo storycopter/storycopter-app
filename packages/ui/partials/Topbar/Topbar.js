@@ -16,6 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setType, setSpace } from '@storycopter/ui/mixins';
+import { ClickAwayListener } from '@material-ui/core';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -41,7 +42,7 @@ const Title = styled.h1`
   margin-right: auto;
   text-align: center;
   text-transform: uppercase;
-  transition: opacity ${time.s};
+  transition: opacity ${time.m};
   & > span {
     ${setType('x')};
     ${setSpace('phs')};
@@ -52,15 +53,17 @@ const Title = styled.h1`
 const Preview = styled.p`
   display: none;
   opacity: 0;
-  transition: opacity ${time.s};
+  transition: opacity ${time.m};
 `;
 const Breadcrumbs = styled.nav`
   display: none;
   opacity: 0;
-  transition: opacity ${time.s};
+  transition: opacity ${time.m};
 `;
 
-const Element = styled(({ theme, pin, ...props }) => <header {...props} />)`
+const Element = styled(({ isHovered, theme, ...props }) => (
+  <header {...props} />
+))`
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
@@ -72,9 +75,12 @@ const Element = styled(({ theme, pin, ...props }) => <header {...props} />)`
   position: fixed;
   right: 0;
   top: 0;
-  transition: background ${time.s}, box-shadow ${time.s}, height ${time.m};
+  transition: background ${time.m}, box-shadow ${time.m};
   z-index: ${({ theme }) => theme.zIndex.appBar};
-  &:hover {
+
+  ${({ isHovered }) =>
+    isHovered
+      ? `
     background-color: ${color.shadow900};
     box-shadow: 0 1px 5px ${color.shadow300};
     ${Breadcrumbs} {
@@ -89,111 +95,128 @@ const Element = styled(({ theme, pin, ...props }) => <header {...props} />)`
       display: none;
       opacity: 0;
     }
-  }
+  `
+      : ``};
 `;
 
 class Topbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isHovered: false,
+    };
+    this.toggleHoveredState = this.toggleHoveredState.bind(this);
+  }
+
+  toggleHoveredState(state) {
+    this.setState({ isHovered: state });
+  }
+  toggleSharePopover(state) {
+    this.setState({ isHovered: state });
   }
 
   render() {
-    const { allowPrev, allowNext, pin, theme } = this.props;
+    const { allowPrev, allowNext, theme } = this.props;
 
     console.group('Topbar.js');
-    console.log(this.props.theme);
+    console.log(this.props);
+    console.log(this.state);
     console.groupEnd();
 
     return (
-      <Element theme={theme} pin={pin}>
-        <Side lx>
-          <Toolbar>
-            <Grid container spacing={1}>
-              <Grid item>
-                <Tooltip title="Table of contents">
-                  <IconButton>
-                    <MenuIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Previous page">
-                  <IconButton
-                    disabled={!allowPrev}
-                    style={{
-                      borderBottomRightRadius: 0,
-                      borderTopRightRadius: 0,
-                    }}
-                  >
-                    <KeyboardArrowLeftIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Next page">
-                  <IconButton
-                    disabled={!allowNext}
-                    style={{
-                      borderBottomLeftRadius: 0,
-                      borderTopLeftRadius: 0,
-                    }}
-                  >
-                    <KeyboardArrowRightIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </Side>
-        <Main>
-          <Title theme={theme}>
-            <span>Title</span>
-          </Title>
-          <Preview>Preview</Preview>
-          <Breadcrumbs>Breadcrumbs</Breadcrumbs>
-        </Main>
-        <Side rx>
-          <Toolbar>
-            <Grid container spacing={1}>
-              <Grid item>
-                <PopupState variant="popover" popupId="demoPopover">
-                  {popupState => (
-                    <div>
+      <PopupState variant="popover" popupId="sharePopover">
+        {popupState => (
+          <>
+            <Element
+              isHovered={this.state.isHovered || popupState.isOpen}
+              onMouseOver={() => this.toggleHoveredState(true)}
+              onMouseOut={() => this.toggleHoveredState(false)}
+              theme={theme}
+            >
+              <Side lx>
+                <Toolbar>
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <Tooltip title="Table of contents">
+                        <IconButton>
+                          <MenuIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                    <Grid item>
+                      <Tooltip title="Previous page">
+                        <IconButton
+                          disabled={!allowPrev}
+                          style={{
+                            borderBottomRightRadius: 0,
+                            borderTopRightRadius: 0,
+                          }}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Next page">
+                        <IconButton
+                          disabled={!allowNext}
+                          style={{
+                            borderBottomLeftRadius: 0,
+                            borderTopLeftRadius: 0,
+                          }}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </Side>
+              <Main>
+                <Title theme={theme}>
+                  <span>Title</span>
+                </Title>
+                <Preview>Preview</Preview>
+                <Breadcrumbs>Breadcrumbs</Breadcrumbs>
+              </Main>
+              <Side rx>
+                <Toolbar>
+                  <Grid container spacing={1}>
+                    <Grid item>
                       <Tooltip title="Share">
                         <IconButton {...bindTrigger(popupState)}>
                           <ShareIcon />
                         </IconButton>
                       </Tooltip>
-                      <Menu
-                        {...bindMenu(popupState)}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'left',
-                        }}
-                      >
-                        <MenuItem onClick={popupState.close}>Facebook</MenuItem>
-                        <MenuItem onClick={popupState.close}>Twitter</MenuItem>
-                        <MenuItem onClick={popupState.close}>Email</MenuItem>
-                      </Menu>
-                    </div>
-                  )}
-                </PopupState>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Take action">
-                  <IconButton>
-                    <PointerIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </Side>
-      </Element>
+                    </Grid>
+                    <Grid item>
+                      <Tooltip title="Take action">
+                        <IconButton>
+                          <PointerIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </Side>
+            </Element>
+            <Menu
+              {...bindMenu(popupState)}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <MenuItem onClick={popupState.close}>Facebook</MenuItem>
+              <MenuItem onClick={popupState.close}>Twitter</MenuItem>
+              <MenuItem onClick={popupState.close}>Email</MenuItem>
+            </Menu>
+          </>
+        )}
+      </PopupState>
     );
   }
 }
@@ -205,12 +228,10 @@ Topbar.propTypes = {
   allowPrev: bool,
   isCredits: bool,
   isHome: bool,
-  pin: bool,
 };
 Topbar.defaultProps = {
   allowPrev: null,
   allowNext: null,
   isCredits: null,
   isHome: null,
-  pin: null,
 };

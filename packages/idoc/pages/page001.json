@@ -2,7 +2,8 @@
   "meta": {
     "path": "/intro",
     "title": "Intro",
-    "uid": "page01"
+    "uid": "page01",
+    "cover": "url(static/sample.jpg)"
   },
   "tree": {
     "components": [

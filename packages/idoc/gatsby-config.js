@@ -14,6 +14,8 @@ module.exports = {
       },
     },
     `gatsby-plugin-styled-components`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-transformer-json`,
       options: {},
@@ -30,6 +32,13 @@ module.exports = {
       options: {
         name: `pages`,
         path: `${__dirname}/pages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `static`,
+        path: `${__dirname}/public/static/`,
       },
     },
   ],

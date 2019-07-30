@@ -7,22 +7,22 @@ class Layout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasOffset: false,
+      // hasOffset: false,
     };
-    this.watchPageYOffset = this.watchPageYOffset.bind(this);
+    // this.watchPageYOffset = this.watchPageYOffset.bind(this);
   }
 
   componentDidMount() {
-    this.watchPageYOffset();
-    window.addEventListener('scroll', this.watchPageYOffset);
+    // this.watchPageYOffset();
+    // window.addEventListener('scroll', this.watchPageYOffset);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.watchPageYOffset);
+    // window.removeEventListener('scroll', this.watchPageYOffset);
   }
 
   watchPageYOffset() {
-    this.setState({ hasOffset: window.pageYOffset > 0 });
+    // this.setState({ hasOffset: window.pageYOffset > 0 });
   }
 
   render() {
@@ -36,7 +36,6 @@ class Layout extends Component {
             allowPrev={!isHome && !isCredits}
             isCredits={isCredits}
             isHome={isHome}
-            pin={this.state.hasOffset}
           />
         </IdocProvider>
         <main>{children}</main>

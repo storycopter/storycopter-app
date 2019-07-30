@@ -6,7 +6,8 @@ let thm = createMuiTheme();
 thm.overrides = {
   MuiTooltip: {
     tooltip: {
-      backgroundColor: color.mono900,
+      backgroundColor: color.mono100,
+      color: color.mono900,
       fontSize: thm.typography.pxToRem(13),
       fontWeight: thm.typography.fontWeightRegular,
     },
