@@ -16,14 +16,14 @@ const HomeTpl = (
 ) => {
   const { components } = tree;
   return (
-    <Layout>
+    <Layout isHome>
       {sortBy(components, [o => o.order]).map(component => {
         // console.group('Component');
         // console.log(component);
         // console.groupEnd();
         const RenderedComponent = map[component.type];
         return (
-          <IdocProvider key={component.id}>
+          <IdocProvider invert={component.options.invert} key={component.id}>
             <RenderedComponent {...component.options} />
           </IdocProvider>
         );

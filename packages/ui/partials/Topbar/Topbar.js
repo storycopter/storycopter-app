@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 
 import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType, setSpace } from '@storycopter/ui/mixins';
+import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   flex: 0 0 160px;
@@ -21,10 +21,14 @@ const Main = styled.div`
   flex: 1 1 100%;
 `;
 const Toolbar = styled.div``;
-const Preview = styled.h1``;
+const Title = styled.h1``;
+const Preview = styled.p``;
 const Breadcrumbs = styled.nav``;
 
 const Element = styled(({ theme, ...props }) => <header {...props} />)`
+  ${setHeight('h')};
+  ${setSpace('pam')};
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -42,7 +46,7 @@ class Topbar extends Component {
   }
 
   render() {
-    const { theme } = this.props;
+    const { allowPrev, allowNext, theme } = this.props;
 
     console.group('Topbar.js');
     console.log(this.props);
@@ -52,24 +56,25 @@ class Topbar extends Component {
       <Element theme={theme}>
         <Side lx>
           <Toolbar>
-            <Tooltip title="Menu">
+            <Tooltip title="Table of contents">
               <IconButton>
                 <MenuIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Previous chapter">
-              <IconButton>
+            <Tooltip title="Previous page">
+              <IconButton disabled={!allowPrev}>
                 <KeyboardArrowLeftIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Next chapter">
-              <IconButton>
+            <Tooltip title="Next page">
+              <IconButton disabled={!allowNext}>
                 <KeyboardArrowRightIcon />
               </IconButton>
             </Tooltip>
           </Toolbar>
         </Side>
         <Main>
+          <Title>Title</Title>
           <Preview>Preview</Preview>
           <Breadcrumbs>Breadcrumbs</Breadcrumbs>
         </Main>

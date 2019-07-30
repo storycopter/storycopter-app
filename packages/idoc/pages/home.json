@@ -8,7 +8,7 @@
     "components": [
       {
         "options": {
-          "align": "right",
+          "align": "center",
           "anchor": null,
           "animate": true,
           "cover": true,

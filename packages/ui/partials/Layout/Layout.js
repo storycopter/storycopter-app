@@ -3,12 +3,14 @@ import React from 'react';
 import { IdocProvider } from '@storycopter/ui/providers';
 import { GlobalStyles, Topbar } from '@storycopter/ui/partials';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isHome, isCredits }) => {
   return (
     <>
       <GlobalStyles />
       <IdocProvider>
-        <Topbar />
+        <IdocProvider invert>
+          <Topbar allowPrev={!isHome && !isCredits} allowNext={!isCredits} />
+        </IdocProvider>
         <main>{children}</main>
       </IdocProvider>
     </>
