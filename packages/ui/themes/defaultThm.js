@@ -1,83 +1,46 @@
-import grey from '@material-ui/core/colors/grey';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { color } from '@storycopter/ui/settings';
 
-const mui = createMuiTheme();
+import thm from './thm';
 
-const defaultThm = {
-  ...mui,
+let defaultThm = thm;
 
-  // Overrides
-  overrides: {
-    MuiTooltip: {
-      tooltip: {
-        backgroundColor: grey[900],
-        fontSize: mui.typography.pxToRem(13),
-        fontWeight: mui.typography.fontWeightRegular,
-      },
-    },
-    MuiIconButton: {
-      root: {
-        padding: 6,
-        '&:hover': {
-          backgroundColor: 'transparent',
-          '@media (hover: none)': {
-            backgroundColor: 'transparent',
-          },
-          '&$disabled': {
-            backgroundColor: 'transparent',
-          },
-        },
-      },
-      colorPrimary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
-      },
-      colorSecondary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
+defaultThm.palette = {
+  ...thm.palette,
+  primary: {
+    light: '#ff6d01',
+    main: '#ff6d01',
+    dark: '#ff6d01',
+    contrastText: '#fff',
+  },
+  secondary: {
+    light: '#212121',
+    main: '#212121',
+    dark: '#212121',
+    contrastText: '#fff',
+  },
+  background: {
+    default: '#fafafa',
+    paper: '#fff',
+    accent: color.accent,
+  },
+  text: {
+    primary: color.mono100,
+    secondary: color.accent,
+    disabled: color.mono500,
+  },
+};
+
+defaultThm.overrides = {
+  ...thm.overrides,
+  MuiIconButton: {
+    root: {
+      color: color.flare700,
+      '&:hover': {
+        backgroundColor: color.shadow100,
+        color: color.flare900,
       },
     },
   },
-
-  // Props
-  props: {
-    ...mui.props,
-    MuiButtonBase: {
-      disableRipple: true,
-    },
-  },
-
-  // Palette
-  palette: {
-    ...mui.palette,
-    common: {
-      black: '#212121',
-      white: '#fff',
-    },
-    primary: {
-      light: '#ff6d01',
-      main: '#ff6d01',
-      dark: '#ff6d01',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#212121',
-      main: '#212121',
-      dark: '#212121',
-      contrastText: '#fff',
-    },
-  },
-
-  // Shape
-  shape: {
-    ...mui.shape,
-    borderRadius: 2,
-  },
-
-  // Typography
-  // typography: {},
 };
 
 export default defaultThm;

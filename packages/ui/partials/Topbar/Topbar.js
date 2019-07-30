@@ -14,7 +14,7 @@ import { breakpoint, color } from '@storycopter/ui/settings';
 import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
-  flex: 0 0 160px;
+  flex: 0 0 200px;
   text-align: ${({ lx, rx }) => (rx ? 'right' : 'left')};
 `;
 const Main = styled.div`

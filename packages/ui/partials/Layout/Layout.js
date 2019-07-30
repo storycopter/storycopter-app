@@ -6,8 +6,8 @@ import { GlobalStyles, Topbar } from '@storycopter/ui/partials';
 const Layout = ({ children, isHome, isCredits }) => {
   return (
     <>
-      <GlobalStyles />
       <IdocProvider>
+        <GlobalStyles />
         <IdocProvider invert>
           <Topbar allowPrev={!isHome && !isCredits} allowNext={!isCredits} />
         </IdocProvider>

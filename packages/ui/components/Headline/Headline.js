@@ -48,10 +48,8 @@ const Element = styled(
   justify-content: center;
   position: relative;
 
-  ${'' /*
-  background-color: ${({ theme }) => theme.colors.palette.accent};
-  color: ${({ theme }) => theme.colors.palette.text};
-  */}
+  background-color: ${({ theme }) => theme.palette.background.accent};
+  color: ${({ theme }) => theme.palette.text.primary};
 
   ${breakpoint.phone} {
     ${setSpace('pal')};
@@ -165,9 +163,9 @@ class Headline extends Component {
       return c;
     };
 
-    // console.group('Headline.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('Headline.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
       <Element

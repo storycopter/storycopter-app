@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { setType } from '@storycopter/ui/mixins';
+import { withTheme } from '@material-ui/styles';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -55,6 +56,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     ${setType('m')};
+    ${({ theme }) => theme.typography.body2};
   }
   a {
     font-size: inherit;
@@ -75,4 +77,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export default withTheme(GlobalStyle);
