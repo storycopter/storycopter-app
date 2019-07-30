@@ -65,6 +65,9 @@ const Element = styled(
   }
   ${breakpoint.hdesktopUp} {
     ${setSpace('pak')};
+    ${Child} {
+      flex: 0 0 ${100 / 2}%;
+    }
   }
 
   ${({ align }) => {

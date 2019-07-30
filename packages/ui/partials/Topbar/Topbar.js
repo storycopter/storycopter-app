@@ -33,7 +33,7 @@ const Toolbar = styled.div``;
 const Title = styled.h1`
   color: ${({ theme }) => theme.palette.text.primary};
   font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
-  letter-spacing: ${track.m};
+  letter-spacing: ${track.l};
   margin-left: auto;
   margin-right: auto;
   text-align: center;
