@@ -42,9 +42,9 @@ const PageTpl = (
 
         const RenderedComponent = map[component.type];
         return (
-          <IdocProvider invert={component.options.invert} key={component.id}>
+          <IdocProvider invert={component.invert} key={component.id}>
             <RenderedComponent
-              {...component.options}
+              {...component.props}
               fill={fill ? fill.node.childImageSharp.resize.src : null}
             />
           </IdocProvider>
@@ -67,20 +67,20 @@ export const pageQuery = graphql`
       tree {
         components {
           id
-          options {
+          invert
+          order
+          type
+          props {
             align
             anchor
             animate
             cover
             fill
-            invert
             mask
             subtitle
             text
             title
           }
-          order
-          type
         }
       }
     }
