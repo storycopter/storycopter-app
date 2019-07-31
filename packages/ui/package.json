@@ -10,9 +10,12 @@
   },
   "lint-staged": {
     "linters": {
-      "*.{js}": [
-        "eslint",
-        "pretty-quick — staged",
+      "*.{js,jsx}": [
+        "prettier --write",
+        "git add"
+      ],
+      "*.{md,html}": [
+        "prettier --write",
         "git add"
       ]
     },
