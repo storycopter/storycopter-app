@@ -84,7 +84,7 @@ const Element = styled(({ isHovered, theme, ...props }) => (
   ${({ isHovered }) =>
     isHovered
       ? `
-    background-color: ${color.shadow900};
+    background-color: ${color.mono900};
     box-shadow: 0 1px 5px ${color.shadow300};
     ${Breadcrumbs} {
       display: block;

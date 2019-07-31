@@ -14,8 +14,18 @@ thm.overrides = {
   },
   MuiIconButton: {
     root: {
-      padding: 6,
+      backgroundColor: color.shadow200,
       borderRadius: radius.x,
+      color: color.flare700,
+      padding: 6,
+      '&:hover': {
+        backgroundColor: color.mono900,
+        color: color.flare900,
+      },
+      '&$disabled': {
+        backgroundColor: color.shadow200,
+        color: color.flare300,
+      },
     },
   },
 };
