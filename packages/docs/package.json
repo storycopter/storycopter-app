@@ -57,6 +57,6 @@
   "scripts": {
     "start": "catalog start",
     "build": "catalog build",
-    "stage": "catalog build && now catalog/build --name 'storycopter-docs"
+    "stage": "catalog build && now catalog/build --name 'storycopter-docs'"
   }
 }

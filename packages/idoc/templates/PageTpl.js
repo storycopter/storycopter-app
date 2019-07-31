@@ -40,8 +40,6 @@ const PageTpl = (
           )
         );
 
-        console.log(fill);
-
         const RenderedComponent = map[component.type];
         return (
           <IdocProvider invert={component.options.invert} key={component.id}>
