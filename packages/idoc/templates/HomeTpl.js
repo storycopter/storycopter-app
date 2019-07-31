@@ -71,7 +71,6 @@ export const pageQuery = graphql`
           order
           type
         }
-        componentIds
       }
     }
     allFile(filter: { relativeDirectory: { eq: $uid } }) {
