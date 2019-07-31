@@ -2,7 +2,7 @@
   "meta": {
     "path": "/intro",
     "title": "Intro",
-    "uid": "page01",
+    "uid": "page001",
     "cover": "url(static/sample.jpg)"
   },
   "tree": {
@@ -13,7 +13,7 @@
           "anchor": null,
           "animate": true,
           "cover": true,
-          "fill": "url(static/sample.jpg)",
+          "fill": "cover.jpg",
           "invert": true,
           "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",

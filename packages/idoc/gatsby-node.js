@@ -12,9 +12,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
   const tpls = {
-    home: path.resolve(__dirname, 'theme/templates/HomeTpl.js'),
-    error: path.resolve(__dirname, 'theme/templates/ErrorTpl.js'),
-    page: path.resolve(__dirname, 'theme/templates/PageTpl.js'),
+    home: path.resolve(__dirname, 'templates/HomeTpl.js'),
+    error: path.resolve(__dirname, 'templates/ErrorTpl.js'),
+    page: path.resolve(__dirname, 'templates/PageTpl.js'),
   };
 
   const pages = await graphql(`

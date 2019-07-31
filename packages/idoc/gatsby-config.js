@@ -24,7 +24,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `theme`,
-        path: `${__dirname}/theme/`,
+        path: `${__dirname}/templates/`,
       },
     },
     {
