@@ -3,7 +3,7 @@ const path = require('path');
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, 'theme'), 'node_modules'],
+      modules: [path.resolve(__dirname, 'templates'), 'node_modules'],
     },
   });
 };
@@ -12,14 +12,16 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
   const tpls = {
-    home: path.resolve(__dirname, 'templates/HomeTpl.js'),
+    chapter: path.resolve(__dirname, 'templates/ChapterTpl.js'),
+    credits: path.resolve(__dirname, 'templates/CreditsTpl.js'),
     error: path.resolve(__dirname, 'templates/ErrorTpl.js'),
-    page: path.resolve(__dirname, 'templates/PageTpl.js'),
+    home: path.resolve(__dirname, 'templates/HomeTpl.js'),
+    listing: path.resolve(__dirname, 'templates/ListingTpl.js'),
   };
 
-  const pages = await graphql(`
+  const essentials = await graphql(`
     {
-      allPagesJson {
+      allEssentialsJson {
         edges {
           node {
             meta {
@@ -31,20 +33,39 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `);
+  const chapters = await graphql(`
+    {
+      allChaptersJson {
+        edges {
+          node {
+            meta {
+              path
+              uid
+            }
+          }
+        }
+      }
+    }
+  `);
 
-  /* List creators */
   const creators = [
     {
-      src: pages,
+      gql: 'allEssentialsJson',
+      src: essentials,
+    },
+    {
+      gql: 'allChaptersJson',
+      src: chapters,
+      tpl: tpls.chapter,
     },
   ];
 
   creators.forEach(creator => {
-    const { edges } = creator.src.data.allPagesJson;
+    const { edges } = creator.src.data[creator.gql];
     edges.forEach(({ node }) => {
       const { path, uid } = node.meta;
       createPage({
-        component: uid.startsWith('page') ? tpls.page : tpls[uid],
+        component: creator.tpl ? creator.tpl : tpls[uid],
         context: { uid: uid },
         path: path,
       });

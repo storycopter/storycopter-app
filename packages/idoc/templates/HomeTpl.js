@@ -9,7 +9,7 @@ import { map } from '@storycopter/ui/components';
 const HomeTpl = (
   {
     data: {
-      pagesJson: { tree },
+      essentialsJson: { tree },
       allFile: { edges },
     },
   },
@@ -47,7 +47,7 @@ export default HomeTpl;
 
 export const pageQuery = graphql`
   query HomeTplQuery($uid: String!) {
-    pagesJson(meta: { uid: { eq: $uid } }) {
+    essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -61,7 +61,6 @@ export const pageQuery = graphql`
           type
           props {
             align
-            anchor
             animate
             cover
             fill

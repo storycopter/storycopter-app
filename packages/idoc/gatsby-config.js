@@ -23,22 +23,22 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `theme`,
+        name: `templates`,
         path: `${__dirname}/templates/`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `pages`,
-        path: `${__dirname}/pages/`,
+        name: `essentials`,
+        path: `${__dirname}/pages/essentials/`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `static`,
-        path: `${__dirname}/static/`,
+        name: `chapters`,
+        path: `${__dirname}/pages/chapters/`,
       },
     },
   ],
