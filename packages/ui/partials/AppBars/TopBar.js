@@ -102,7 +102,7 @@ const Element = styled(({ isHovered, theme, ...props }) => (
       : ``};
 `;
 
-class Topbar extends Component {
+class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -121,7 +121,7 @@ class Topbar extends Component {
   render() {
     const { allowPrev, allowNext, theme } = this.props;
 
-    // console.group('Topbar.js');
+    // console.group('TopBar.js');
     // console.log(this.props);
     // console.log(this.state);
     // console.groupEnd();
@@ -224,15 +224,15 @@ class Topbar extends Component {
   }
 }
 
-export default withTheme(Topbar);
+export default withTheme(TopBar);
 
-Topbar.propTypes = {
+TopBar.propTypes = {
   allowNext: bool,
   allowPrev: bool,
   isCredits: bool,
   isHome: bool,
 };
-Topbar.defaultProps = {
+TopBar.defaultProps = {
   allowPrev: null,
   allowNext: null,
   isCredits: null,

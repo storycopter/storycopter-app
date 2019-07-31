@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { GlobalStyles, Topbar } from '@storycopter/ui/partials';
+import { BottomBar, GlobalStyles, TopBar } from '@storycopter/ui/partials';
 
 class Layout extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Layout extends Component {
       <IdocProvider>
         <GlobalStyles />
         <IdocProvider invert>
-          <Topbar
+          <TopBar
             allowNext={!isCredits}
             allowPrev={!isHome && !isCredits}
             isCredits={isCredits}
@@ -39,6 +39,7 @@ class Layout extends Component {
           />
         </IdocProvider>
         <main>{children}</main>
+        <BottomBar></BottomBar>
       </IdocProvider>
     );
   }

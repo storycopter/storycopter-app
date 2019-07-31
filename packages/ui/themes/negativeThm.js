@@ -43,7 +43,7 @@ negativeThm.overrides = {
       backgroundColor: color.shadow200,
       color: color.flare700,
       '&:hover': {
-        backgroundColor: color.shadow100,
+        backgroundColor: color.mono900,
         color: color.flare900,
       },
       '&$disabled': {

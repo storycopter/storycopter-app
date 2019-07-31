@@ -37,11 +37,18 @@ defaultThm.palette = {
 defaultThm.overrides = {
   ...thm.overrides,
   MuiIconButton: {
+    ...thm.overrides.MuiIconButton,
     root: {
-      color: color.shadow700,
+      ...thm.overrides.MuiIconButton.root,
+      backgroundColor: color.shadow200,
+      color: color.flare700,
       '&:hover': {
-        backgroundColor: color.flare100,
-        color: color.shadow900,
+        backgroundColor: color.mono900,
+        color: color.flare900,
+      },
+      '&$disabled': {
+        backgroundColor: color.shadow200,
+        color: color.flare300,
       },
     },
   },
