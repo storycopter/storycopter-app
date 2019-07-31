@@ -15,7 +15,7 @@ thm.overrides = {
   MuiIconButton: {
     root: {
       padding: 6,
-      // borderRadius: radius.s,
+      borderRadius: radius.x,
     },
   },
 };
