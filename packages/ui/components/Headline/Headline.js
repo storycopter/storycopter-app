@@ -89,7 +89,7 @@ const Element = styled(
   ${({ fill }) => {
     if (fill) {
       return `
-        background: ${fill};
+        background: url(${fill});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

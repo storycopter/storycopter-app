@@ -1,6 +1,6 @@
 import { graphql } from 'gatsby';
 import React from 'react';
-import { sortBy } from 'lodash';
+import { sortBy, find } from 'lodash';
 
 import { IdocProvider } from '@storycopter/ui/providers';
 import { Layout } from '@storycopter/ui/partials';
@@ -18,17 +18,37 @@ const PageTpl = (
   const { components } = tree;
   console.group('PageTpl.js');
   console.log(edges);
+  console.log(edges);
   console.groupEnd();
+
+  // const fill = filter(edges, o => {
+  //   o.node.childImageSharp.resize.originalName.startsWith(
+  //     `${component.id}-fill`
+  //   );
+  // });
+  // console.log({ fill });
   return (
     <Layout>
       {sortBy(components, [o => o.order]).map(component => {
         // console.group('Component');
         // console.log(component);
         // console.groupEnd();
+
+        const fill = find(edges, o =>
+          o.node.childImageSharp.resize.originalName.startsWith(
+            `${component.id}-fill`
+          )
+        );
+
+        console.log(fill);
+
         const RenderedComponent = map[component.type];
         return (
           <IdocProvider invert={component.options.invert} key={component.id}>
-            <RenderedComponent {...component.options} />
+            <RenderedComponent
+              {...component.options}
+              fill={fill ? fill.node.childImageSharp.resize.src : null}
+            />
           </IdocProvider>
         );
       })}
@@ -70,11 +90,10 @@ export const pageQuery = graphql`
     allFile(filter: { relativeDirectory: { eq: $uid } }) {
       edges {
         node {
-          relativeDirectory
           childImageSharp {
-            id
-            fixed {
+            resize(quality: 100, width: 2000) {
               originalName
+              src
             }
           }
         }

@@ -121,10 +121,10 @@ class Topbar extends Component {
   render() {
     const { allowPrev, allowNext, theme } = this.props;
 
-    console.group('Topbar.js');
-    console.log(this.props);
-    console.log(this.state);
-    console.groupEnd();
+    // console.group('Topbar.js');
+    // console.log(this.props);
+    // console.log(this.state);
+    // console.groupEnd();
 
     return (
       <PopupState variant="popover" popupId="sharePopover">
