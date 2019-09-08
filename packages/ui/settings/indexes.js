@@ -1,5 +1,3 @@
-/** @format */
-
 export const zindexes = {
   z1: '100',
   z2: '200',

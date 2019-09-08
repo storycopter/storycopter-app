@@ -1,5 +1,3 @@
-/** @format */
-
 export const radii = {
   a: '100px',
   h: '20px',

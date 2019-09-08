@@ -1,5 +1,3 @@
-/** @format */
-
 export const times = {
   l: '.5s',
   m: '.3s',

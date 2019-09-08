@@ -1,5 +1,3 @@
-/** @format */
-
 import 'rc-texty/assets/index.css';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';

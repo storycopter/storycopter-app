@@ -1,5 +1,3 @@
-/** @format */
-
 export const breakpoints = {
   phone: '@media all and (max-width: 767px)',
   phoneUp: '@media all',

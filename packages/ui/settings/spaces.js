@@ -1,5 +1,3 @@
-/** @format */
-
 export const spaces = {
   k: ['50px', '100px'],
   h: ['38px', '64px'],

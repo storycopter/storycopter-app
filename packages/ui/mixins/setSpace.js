@@ -1,5 +1,3 @@
-/** @format */
-
 import { space } from '../settings';
 import fluidify from './ofMixins/fluidify';
 

@@ -1,5 +1,3 @@
-/** @format */
-
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import styled from 'styled-components';

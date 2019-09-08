@@ -1,5 +1,3 @@
-/** @format */
-
 export const tracking = {
   h: '.64em',
   l: '.32em',

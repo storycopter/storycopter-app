@@ -1,11 +1,9 @@
-/** @format */
-
-import { Catalog } from '@catalog/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Catalog } from '@catalog/core';
 
-import IdocProvider from '@storycopter/ui/providers/IdocProvider';
 import GlobalStyles from '@storycopter/ui/partials/Layout/ofLayout/GlobalStyles';
+import IdocProvider from '@storycopter/ui/providers/IdocProvider';
 
 import pages from './pages';
 // import theme from './theme';

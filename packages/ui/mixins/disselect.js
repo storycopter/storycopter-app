@@ -1,5 +1,3 @@
-/** @format */
-
 export const disselect = `
   &::selection { background: transparent; }
   &::-moz-selection { background: transparent; }

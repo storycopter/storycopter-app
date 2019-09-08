@@ -1,5 +1,3 @@
-/** @format */
-
 export const leading = {
   h: '1.8em',
   l: '1.6em',

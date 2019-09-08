@@ -1,5 +1,3 @@
-/** @format */
-
 export const fonts = {
   sans: "'Overpass', 'Helvetica Neue', Helvetica, Arial, sans-serif",
 };

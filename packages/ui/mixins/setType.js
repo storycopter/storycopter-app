@@ -1,5 +1,3 @@
-/** @format */
-
 import { lead, fsize } from '../settings';
 import fluidify from './ofMixins/fluidify';
 

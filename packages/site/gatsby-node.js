@@ -18,9 +18,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const pages = await graphql(`
     {
-      allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/pages/.*.md/" } }
-      ) {
+      allMarkdownRemark(filter: { fileAbsolutePath: { regex: "/pages/.*.md/" } }) {
         edges {
           node {
             frontmatter {

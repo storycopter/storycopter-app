@@ -9,6 +9,6 @@
   "jsxBracketSameLine": true,
   "arrowParens": "avoid",
   "requirePragma": false,
-  "insertPragma": true,
+  "insertPragma": false,
   "proseWrap": "always"
 }

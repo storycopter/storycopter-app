@@ -1,5 +1,3 @@
-/** @format */
-
 const getFluidStyles = (property, minValue, maxValue, isImportant) => {
   const screen = { min: 320, max: 1440 };
   const minVal = parseInt(minValue, 10);

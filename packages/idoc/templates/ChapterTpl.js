@@ -1,5 +1,3 @@
-/** @format */
-
 import { graphql } from 'gatsby';
 import React from 'react';
 import { sortBy, find } from 'lodash';

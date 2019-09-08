@@ -1,5 +1,3 @@
-/** @format */
-
 import { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`

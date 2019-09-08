@@ -1,8 +1,6 @@
-/** @format */
-
-import Headline from '@storycopter/ui/components/Headline/Headline';
-import IdocProvider from '@storycopter/ui/providers/IdocProvider';
 import { CreditsIcon, PointerIcon, ShareIcon } from '@storycopter/ui/elements';
+import { Headline } from '@storycopter/ui/components';
+import { IdocProvider } from '@storycopter/ui/providers';
 
 const pages = [
   {
