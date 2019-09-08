@@ -1,3 +1,5 @@
+/** @format */
+
 import { Headline } from '@storycopter/ui/components';
 
 const componentMap = {

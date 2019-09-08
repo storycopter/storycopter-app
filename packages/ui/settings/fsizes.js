@@ -1,3 +1,5 @@
+/** @format */
+
 export const fsizes = {
   k: ['48px', '80px'],
   h: ['28px', '46px'],

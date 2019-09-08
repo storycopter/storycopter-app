@@ -1,3 +1,5 @@
+/** @format */
+
 import { color, radius } from '@storycopter/ui/settings';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 

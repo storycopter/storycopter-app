@@ -1,3 +1,5 @@
+/** @format */
+
 import { array, bool, node, object, oneOfType, string } from 'prop-types';
 import React from 'react';
 
@@ -8,11 +10,7 @@ const CustomThemeProvider = ({ children, invert }) => {
   // console.group('CustomThemeProvider');
   // console.log({ invert });
   // console.groupEnd();
-  return (
-    <ThemeProvider theme={invert ? negativeThm : defaultThm}>
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={invert ? negativeThm : defaultThm}>{children}</ThemeProvider>;
 };
 
 CustomThemeProvider.propTypes = {

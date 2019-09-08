@@ -1,3 +1,5 @@
+/** @format */
+
 import { space } from '../settings';
 import fluidify from './ofMixins/fluidify';
 
@@ -19,12 +21,7 @@ export const setSpace = (args, force) => {
   const isImportant = force === 'force';
   switch (pos) {
     case 'a':
-      return fluidify(
-        `${properties[prop]}`,
-        space[size][0],
-        space[size][1],
-        isImportant
-      );
+      return fluidify(`${properties[prop]}`, space[size][0], space[size][1], isImportant);
     case 'k':
       return fluidify(
         [`${properties[prop]}-left`, `${properties[prop]}-right`],
@@ -47,11 +44,6 @@ export const setSpace = (args, force) => {
         isImportant
       );
     default:
-      return fluidify(
-        `${properties[prop]}-${positions[pos]}`,
-        space[size][0],
-        space[size][1],
-        isImportant
-      );
+      return fluidify(`${properties[prop]}-${positions[pos]}`, space[size][0], space[size][1], isImportant);
   }
 };

@@ -1,3 +1,5 @@
+/** @format */
+
 import { graphql } from 'gatsby';
 import React from 'react';
 import { sortBy, find } from 'lodash';
@@ -34,19 +36,12 @@ const ChapterTpl = (
         // console.log(component);
         // console.groupEnd();
 
-        const fill = find(edges, o =>
-          o.node.childImageSharp.resize.originalName.startsWith(
-            `${component.id}-fill`
-          )
-        );
+        const fill = find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-fill`));
 
         const RenderedComponent = map[component.type];
         return (
           <IdocProvider invert={component.invert} key={component.id}>
-            <RenderedComponent
-              {...component.props}
-              fill={fill ? fill.node.childImageSharp.resize.src : null}
-            />
+            <RenderedComponent {...component.props} fill={fill ? fill.node.childImageSharp.resize.src : null} />
           </IdocProvider>
         );
       })}

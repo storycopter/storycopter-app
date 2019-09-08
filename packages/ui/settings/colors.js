@@ -1,3 +1,5 @@
+/** @format */
+
 import { darken, lighten } from 'polished';
 
 export const colors = {

@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 
 import { IdocProvider } from '@storycopter/ui/providers';
@@ -31,12 +33,7 @@ class Layout extends Component {
       <IdocProvider>
         <GlobalStyles />
         <IdocProvider invert>
-          <TopBar
-            allowNext={!isCredits}
-            allowPrev={!isHome && !isCredits}
-            isCredits={isCredits}
-            isHome={isHome}
-          />
+          <TopBar allowNext={!isCredits} allowPrev={!isHome && !isCredits} isCredits={isCredits} isHome={isHome} />
         </IdocProvider>
         <main>{children}</main>
         <BottomBar></BottomBar>

@@ -1,3 +1,5 @@
+/** @format */
+
 import 'rc-texty/assets/index.css';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';
@@ -37,11 +39,7 @@ const Parent = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const Element = styled(
-  ({ align, animate, fill, cover, mask, theme, ...props }) => (
-    <section {...props} />
-  )
-)`
+const Element = styled(({ align, animate, fill, cover, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -140,19 +138,7 @@ class Headline extends Component {
   }
 
   render() {
-    const {
-      align,
-      anchor,
-      animate,
-      cover,
-      fill,
-      mask,
-      subtitle,
-      text,
-      theme,
-      title,
-      updateSelf,
-    } = this.props;
+    const { align, anchor, animate, cover, fill, mask, subtitle, text, theme, title, updateSelf } = this.props;
 
     const getSplit = e => {
       const t = e.split(' ');
@@ -171,15 +157,7 @@ class Headline extends Component {
     // console.groupEnd();
 
     return (
-      <Element
-        align={align}
-        animate={animate}
-        cover={cover}
-        fill={fill}
-        id={anchor}
-        mask={mask}
-        theme={theme}
-      >
+      <Element align={align} animate={animate} cover={cover} fill={fill} id={anchor} mask={mask} theme={theme}>
         <Parent>
           <Child>
             {title ? (
@@ -190,13 +168,7 @@ class Headline extends Component {
               >
                 <h1 className="TitleText">
                   {animate ? (
-                    <Texty
-                      split={getSplit}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
-                      component="span"
-                    >
+                    <Texty split={getSplit} type="top" mode="smooth" duration={500} component="span">
                       {title}
                     </Texty>
                   ) : (
@@ -208,9 +180,7 @@ class Headline extends Component {
             {subtitle ? (
               <Subtitle
                 contentEditable={this.state.edit === 'subtitle'}
-                onClick={
-                  updateSelf ? () => this.enterEditMode('subtitle') : null
-                }
+                onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
                 onChange={e => console.log(e)}
                 // ref={this.subtitleRef}
               >
@@ -223,8 +193,7 @@ class Headline extends Component {
                       duration={500}
                       delay={700}
                       exclusive={true}
-                      component="span"
-                    >
+                      component="span">
                       {subtitle}
                     </Texty>
                   ) : (
@@ -248,8 +217,7 @@ class Headline extends Component {
                       duration={500}
                       delay={800}
                       exclusive={true}
-                      component="span"
-                    >
+                      component="span">
                       {text}
                     </Texty>
                   ) : (

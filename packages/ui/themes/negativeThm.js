@@ -1,3 +1,5 @@
+/** @format */
+
 import { color } from '@storycopter/ui/settings';
 
 import thm from './thm';

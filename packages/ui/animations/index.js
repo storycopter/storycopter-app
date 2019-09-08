@@ -1,1 +1,3 @@
-export { default as fadeIn } from "./fadeIn";
+/** @format */
+
+export { default as fadeIn } from './fadeIn';

@@ -1,3 +1,5 @@
+/** @format */
+
 import { color } from '@storycopter/ui/settings';
 import { createGlobalStyle } from 'styled-components';
 import { setType } from '@storycopter/ui/mixins';

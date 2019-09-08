@@ -1,3 +1,5 @@
+/** @format */
+
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -64,9 +66,7 @@ const Breadcrumbs = styled.nav`
   transition: opacity ${time.m};
 `;
 
-const Element = styled(({ isHovered, theme, ...props }) => (
-  <header {...props} />
-))`
+const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />)`
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
@@ -134,8 +134,7 @@ class TopBar extends Component {
               isHovered={this.state.isHovered || popupState.isOpen}
               onMouseOver={() => this.toggleHoveredState(true)}
               onMouseOut={() => this.toggleHoveredState(false)}
-              theme={theme}
-            >
+              theme={theme}>
               <Side lx>
                 <Toolbar>
                   <Grid container spacing={1}>
@@ -153,8 +152,7 @@ class TopBar extends Component {
                           style={{
                             borderBottomRightRadius: 0,
                             borderTopRightRadius: 0,
-                          }}
-                        >
+                          }}>
                           <KeyboardArrowLeftIcon />
                         </IconButton>
                       </Tooltip>
@@ -164,8 +162,7 @@ class TopBar extends Component {
                           style={{
                             borderBottomLeftRadius: 0,
                             borderTopLeftRadius: 0,
-                          }}
-                        >
+                          }}>
                           <KeyboardArrowRightIcon />
                         </IconButton>
                       </Tooltip>
@@ -211,8 +208,7 @@ class TopBar extends Component {
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
-              }}
-            >
+              }}>
               <MenuItem onClick={popupState.close}>Facebook</MenuItem>
               <MenuItem onClick={popupState.close}>Twitter</MenuItem>
               <MenuItem onClick={popupState.close}>Email</MenuItem>
