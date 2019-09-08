@@ -3,53 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "BSD-3-Clause",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "linters": {
-      "*.{js,jsx}": [
-        "prettier --write",
-        "git add"
-      ],
-      "*.{md,html}": [
-        "prettier --write",
-        "git add"
-      ]
-    },
-    "ignore": [
-      ".cache",
-      "node_modules",
-      "public"
-    ]
-  },
   "dependencies": {
-    "@material-ui/core": "4.3.0",
-    "@material-ui/icons": "4.2.1",
+    "@material-ui/core": "4.4.1",
+    "@material-ui/icons": "4.4.1",
     "@storycopter/ui": "1.0.0",
-    "gatsby": "2.13.45",
-    "gatsby-cli": "2.7.21",
-    "gatsby-plugin-material-ui": "2.1.4",
-    "gatsby-plugin-sharp": "2.2.9",
-    "gatsby-plugin-styled-components": "3.1.2",
-    "gatsby-transformer-json": "2.2.2",
-    "gatsby-transformer-sharp": "2.2.5",
+    "gatsby": "2.15.9",
+    "gatsby-cli": "2.7.44",
+    "gatsby-plugin-material-ui": "2.1.6",
+    "gatsby-plugin-sharp": "2.2.20",
+    "gatsby-plugin-styled-components": "3.1.4",
+    "gatsby-transformer-json": "2.2.7",
+    "gatsby-transformer-sharp": "2.2.13",
     "lodash": "4.17.15",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
-    "@now/node": "0.12.2",
-    "babel-eslint": "10.0.2",
-    "eslint": "6.1.0",
-    "eslint-config-prettier": "6.0.0",
+    "@now/node": "1.0.0",
+    "babel-eslint": "10.0.3",
+    "eslint": "6.3.0",
+    "eslint-config-prettier": "6.2.0",
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-react": "7.14.3",
-    "husky": "3.0.2",
-    "lint-staged": "9.2.1",
     "prettier": "1.18.2",
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",

@@ -3,28 +3,6 @@
   "version": "1.0.0",
   "license": "BSD-3-Clause",
   "main": "index.js",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "linters": {
-      "*.{js,jsx}": [
-        "prettier --write",
-        "git add"
-      ],
-      "*.{md,html}": [
-        "prettier --write",
-        "git add"
-      ]
-    },
-    "ignore": [
-      ".cache",
-      "node_modules",
-      "public"
-    ]
-  },
   "dependencies": {
     "@material-ui/core": "4.3.0",
     "gatsby": "2.13.45",
@@ -43,8 +21,6 @@
     "eslint-plugin-react": "7.14.3",
     "eslint": "6.1.0",
     "gh-pages": "2.0.1",
-    "husky": "3.0.2",
-    "lint-staged": "9.2.1",
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",
     "prettier": "1.18.2",
