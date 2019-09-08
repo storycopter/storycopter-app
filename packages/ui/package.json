@@ -10,6 +10,7 @@
     "polished": "3.4.1",
     "rc-texty": "0.2.0",
     "react": "16.8.6",
+    "react-slick": "^0.25.2",
     "styled-components": "4.3.2"
   },
   "devDependencies": {

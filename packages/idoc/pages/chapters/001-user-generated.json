@@ -54,6 +54,19 @@
         "invert": false,
         "order": 2,
         "type": "headline"
+      },
+      {
+        "props": {
+          "images": [],
+          "anchor": "anchor3",
+          "cover": false,
+          "fill": null,
+          "mask": null
+        },
+        "id": "003",
+        "invert": false,
+        "order": 4,
+        "type": "gallery"
       }
     ]
   }

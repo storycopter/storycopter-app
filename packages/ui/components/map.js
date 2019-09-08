@@ -1,7 +1,8 @@
-import { Headline } from '@storycopter/ui/components';
+import { Headline, Gallery } from '@storycopter/ui/components';
 
 const componentMap = {
   headline: Headline,
+  gallery: Gallery,
 };
 
 export default componentMap;
