@@ -17,8 +17,7 @@ const ChapterTpl = (
 ) => {
   const { components } = tree;
   console.group('ChapterTpl.js');
-  console.log(edges);
-  console.log(edges);
+  console.log(components);
   console.groupEnd();
 
   // const fill = filter(edges, o => {
@@ -69,6 +68,11 @@ export const pageQuery = graphql`
             animate
             cover
             fill
+            images {
+              caption
+              order
+              src
+            }
             mask
             subtitle
             text

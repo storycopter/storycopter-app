@@ -1,5 +1,5 @@
 import { CreditsIcon, PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { Headline } from '@storycopter/ui/components';
+import { Headline, Gallery } from '@storycopter/ui/components';
 import { IdocProvider } from '@storycopter/ui/providers';
 
 const pages = [
@@ -27,6 +27,15 @@ const pages = [
         path: '/components/headline',
         imports: {
           Headline: Headline,
+          ThemeProvider: IdocProvider,
+        },
+      },
+      {
+        title: 'Galleries',
+        content: require('./pages/galleries.md'),
+        path: '/components/gallery',
+        imports: {
+          Gallery: Gallery,
           ThemeProvider: IdocProvider,
         },
       },

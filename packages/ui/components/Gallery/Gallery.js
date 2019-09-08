@@ -19,9 +19,9 @@ class Gallery extends Component {
   render() {
     const {} = this.props;
 
-    // console.group('Gallery.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('Gallery.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return <Element>Hello</Element>;
   }

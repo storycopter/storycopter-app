@@ -21,7 +21,7 @@
         },
         "id": "000",
         "invert": true,
-        "order": 0,
+        "order": 1,
         "type": "headline"
       },
       {
@@ -36,8 +36,8 @@
           "title": "A title of the Headline"
         },
         "id": "001",
-        "invert": false,
-        "order": 1,
+        "invert": null,
+        "order": 2,
         "type": "headline"
       },
       {
@@ -45,26 +45,42 @@
           "align": "left",
           "anchor": "anchor2",
           "animate": true,
-          "cover": false,
+          "cover": null,
           "fill": null,
           "mask": null,
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text."
         },
         "id": "002",
-        "invert": false,
-        "order": 2,
+        "invert": null,
+        "order": 3,
         "type": "headline"
       },
       {
         "props": {
-          "images": [],
-          "anchor": "anchor3",
-          "cover": false,
+          "images": [
+            {
+              "src": "gallery-item-001.jpg",
+              "order": 1,
+              "caption": "The first gallery item"
+            },
+            {
+              "src": "gallery-item-003.jpg",
+              "order": 3,
+              "caption": "The third gallery item"
+            },
+            {
+              "src": "gallery-item-002.jpg",
+              "order": 2,
+              "caption": "The second gallery item"
+            }
+          ],
+          "anchor": null,
+          "cover": null,
           "fill": null,
           "mask": null
         },
         "id": "003",
-        "invert": false,
+        "invert": null,
         "order": 4,
         "type": "gallery"
       }
