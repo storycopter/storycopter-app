@@ -12,11 +12,12 @@
     "gatsby-plugin-material-ui": "2.1.6",
     "gatsby-plugin-sharp": "2.2.20",
     "gatsby-plugin-styled-components": "3.1.4",
+    "gatsby-source-filesystem": "2.1.21",
     "gatsby-transformer-json": "2.2.7",
     "gatsby-transformer-sharp": "2.2.13",
     "lodash": "4.17.15",
-    "react": "16.9.0",
-    "react-dom": "16.9.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "styled-components": "4.3.2"
   },
   "devDependencies": {

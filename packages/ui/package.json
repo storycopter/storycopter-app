@@ -9,7 +9,7 @@
     "material-ui-popup-state": "1.4.1",
     "polished": "3.4.1",
     "rc-texty": "0.2.0",
-    "react": "16.9.0",
+    "react": "16.8.6",
     "styled-components": "4.3.2"
   },
   "devDependencies": {

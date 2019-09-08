@@ -18,7 +18,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { breakpoint, color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setType, setSpace } from '@storycopter/ui/mixins';
-import { ClickAwayListener } from '@material-ui/core';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -132,8 +131,8 @@ class TopBar extends Component {
           <>
             <Element
               isHovered={this.state.isHovered || popupState.isOpen}
-              onMouseOver={() => this.toggleHoveredState(true)}
               onMouseOut={() => this.toggleHoveredState(false)}
+              onMouseOver={() => this.toggleHoveredState(true)}
               theme={theme}>
               <Side lx>
                 <Toolbar>

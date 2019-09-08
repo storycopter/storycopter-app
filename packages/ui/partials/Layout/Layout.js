@@ -1,9 +1,10 @@
 /** @format */
 
 import React, { Component } from 'react';
+import { bool } from 'prop-types';
 
-import { IdocProvider } from '@storycopter/ui/providers';
 import { BottomBar, GlobalStyles, TopBar } from '@storycopter/ui/partials';
+import { IdocProvider } from '@storycopter/ui/providers';
 
 class Layout extends Component {
   constructor(props) {
@@ -14,18 +15,18 @@ class Layout extends Component {
     // this.watchPageYOffset = this.watchPageYOffset.bind(this);
   }
 
-  componentDidMount() {
-    // this.watchPageYOffset();
-    // window.addEventListener('scroll', this.watchPageYOffset);
-  }
+  // componentDidMount() {
+  //   this.watchPageYOffset();
+  //   window.addEventListener('scroll', this.watchPageYOffset);
+  // }
 
-  componentWillUnmount() {
-    // window.removeEventListener('scroll', this.watchPageYOffset);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('scroll', this.watchPageYOffset);
+  // }
 
-  watchPageYOffset() {
-    // this.setState({ hasOffset: window.pageYOffset > 0 });
-  }
+  // watchPageYOffset() {
+  //   // this.setState({ hasOffset: window.pageYOffset > 0 });
+  // }
 
   render() {
     const { children, isHome, isCredits } = this.props;
@@ -43,3 +44,13 @@ class Layout extends Component {
 }
 
 export default Layout;
+
+Layout.propTypes = {
+  isCredits: bool,
+  isHome: bool,
+};
+
+Layout.defaultProps = {
+  isCredits: null,
+  isHome: null,
+};

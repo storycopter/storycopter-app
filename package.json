@@ -18,15 +18,13 @@
     "lint-staged": "9.2.5"
   },
   "lint-staged": {
-    "linters": {
-      "*.{js,jsx}": [
-        "prettier --write",
-        "git add"
-      ],
-      "*.{md,html}": [
-        "prettier --write",
-        "git add"
-      ]
-    }
+    "*.{js,jsx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

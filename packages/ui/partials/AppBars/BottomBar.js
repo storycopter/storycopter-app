@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 import { withTheme } from '@material-ui/styles';
 
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import Tooltip from '@material-ui/core/Tooltip';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import { CreditsIcon } from '@storycopter/ui/elements';
 import { setHeight, setSpace } from '@storycopter/ui/mixins';

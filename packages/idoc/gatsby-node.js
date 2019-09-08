@@ -1,3 +1,5 @@
+/** @format */
+
 const path = require('path');
 
 exports.onCreateWebpackConfig = ({ actions }) => {
