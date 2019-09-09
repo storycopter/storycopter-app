@@ -15,9 +15,16 @@ import { withTheme } from '@material-ui/styles';
 import { breakpoint, color } from '@storycopter/ui/settings';
 import { setType, setSpace } from '@storycopter/ui/mixins';
 
-const Caption = styled(({ theme, ...props }) => <div {...props} />)`
-  ${setSpace('pal')};
+const CaptionCount = styled(({ ...props }) => <span {...props} />)`
   ${setType('x')};
+  display: block;
+`;
+const CaptionText = styled(({ ...props }) => <span {...props} />)`
+  ${setType('x')};
+  display: block;
+`;
+const Caption = styled(({ theme, ...props }) => <figcaption {...props} />)`
+  ${setSpace('pal')};
   bottom: 0;
   color: ${({ theme }) => theme.palette.text.primary};
   left: 0;
@@ -30,10 +37,8 @@ const Caption = styled(({ theme, ...props }) => <div {...props} />)`
     ${setSpace('max')};
   }
 `;
-
-const Slide = styled(({ cover, mask, theme, ...props }) => <div {...props} />)`
+const Slide = styled(({ cover, mask, theme, ...props }) => <figure {...props} />)`
   position: relative;
-
   ${({ cover }) => {
     if (cover) {
       return `
@@ -125,7 +130,7 @@ class Gallery extends Component {
               <Slide cover={cover} key={image.order} mask={mask} theme={theme}>
                 <Img fixed={image.fixed} cropFocus="cover" />
                 <Caption theme={theme}>
-                  <div>
+                  <CaptionCount>
                     <IconButton color="inherit" size="small" onClick={this.prevSlide} className={classes.SliderArrows}>
                       <ArrowBackIcon fontSize="inherit" />
                     </IconButton>{' '}
@@ -133,8 +138,8 @@ class Gallery extends Component {
                     <IconButton color="inherit" size="small" onClick={this.nextSlide} className={classes.SliderArrows}>
                       <ArrowForwardIcon fontSize="inherit" />
                     </IconButton>
-                  </div>
-                  <div>{image.caption}</div>
+                  </CaptionCount>
+                  <CaptionText>{image.caption ? image.caption : ' '}</CaptionText>
                 </Caption>
               </Slide>
             );
