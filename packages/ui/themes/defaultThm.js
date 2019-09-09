@@ -11,7 +11,7 @@ defaultThm.palette = {
     light: '#ff6d01',
     main: '#ff6d01',
     dark: '#ff6d01',
-    contrastText: '#fff',
+    contrastText: thm.palette.common.black,
   },
   secondary: {
     ...thm.palette.secondary,

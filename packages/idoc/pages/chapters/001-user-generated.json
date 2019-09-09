@@ -8,80 +8,84 @@
   "tree": {
     "components": [
       {
+        "id": "000",
+        "invert": true,
+        "order": 1,
         "props": {
           "align": "right",
           "anchor": null,
           "animate": true,
           "cover": true,
-          "fill": "fill.jpg",
+          "image": {
+            "name": "headline-image.jpg"
+          },
           "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
           "title": "A title of the Headline"
         },
-        "id": "000",
-        "invert": true,
-        "order": 1,
         "type": "headline"
       },
       {
+        "id": "001",
+        "invert": null,
+        "order": 2,
         "props": {
           "align": "center",
           "anchor": "anchor1",
           "animate": true,
           "cover": true,
-          "fill": null,
-          "mask": "bright",
+          "image": null,
+          "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "title": "A title of the Headline"
         },
-        "id": "001",
-        "invert": null,
-        "order": 2,
         "type": "headline"
       },
       {
+        "id": "002",
+        "invert": null,
+        "order": 3,
         "props": {
           "align": "left",
           "anchor": "anchor2",
           "animate": true,
           "cover": null,
-          "fill": null,
+          "image": null,
           "mask": null,
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text."
         },
-        "id": "002",
-        "invert": null,
-        "order": 3,
         "type": "headline"
       },
       {
+        "id": "003",
+        "invert": true,
+        "order": 0,
         "props": {
           "images": [
             {
-              "src": "gallery-item-001.jpg",
-              "order": 1,
-              "caption": "The first gallery item"
+              "alt": "Alt text",
+              "caption": "The first gallery item",
+              "name": "images-001.jpg",
+              "order": 1
             },
             {
-              "src": "gallery-item-003.jpg",
-              "order": 3,
-              "caption": "The third gallery item"
+              "alt": "Alt text",
+              "caption": "The third gallery item",
+              "name": "images-003.jpg",
+              "order": 3
             },
             {
-              "src": "gallery-item-002.jpg",
-              "order": 2,
-              "caption": "The second gallery item"
+              "alt": "Alt text",
+              "caption": "The second gallery item",
+              "name": "images-002.jpg",
+              "order": 2
             }
           ],
           "anchor": null,
-          "cover": null,
-          "fill": null,
-          "mask": null
+          "cover": false,
+          "mask": "dark"
         },
-        "id": "003",
-        "invert": null,
-        "order": 4,
         "type": "gallery"
       }
     ]

@@ -37,7 +37,7 @@ const Parent = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const Element = styled(({ align, animate, fill, cover, mask, theme, ...props }) => <section {...props} />)`
+const Element = styled(({ align, animate, image, cover, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -82,14 +82,13 @@ const Element = styled(({ align, animate, fill, cover, mask, theme, ...props }) 
       `;
   }};
 
-  ${({ fill }) => {
-    if (fill) {
+  ${({ image }) => {
+    if (image) {
       return `
-        background: url(${fill});
+        background: url(${image.fixed.src});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        text-shadow: 0 2px 2px ${color.shadow300};
         `;
     }
   }};
@@ -136,7 +135,7 @@ class Headline extends Component {
   }
 
   render() {
-    const { align, anchor, animate, cover, fill, mask, subtitle, text, theme, title, updateSelf } = this.props;
+    const { align, anchor, animate, cover, image, mask, subtitle, text, theme, title, updateSelf } = this.props;
 
     const getSplit = e => {
       const t = e.split(' ');
@@ -155,7 +154,7 @@ class Headline extends Component {
     // console.groupEnd();
 
     return (
-      <Element align={align} animate={animate} cover={cover} fill={fill} id={anchor} mask={mask} theme={theme}>
+      <Element align={align} animate={animate} cover={cover} image={image} id={anchor} mask={mask} theme={theme}>
         <Parent>
           <Child>
             {title ? (
@@ -238,7 +237,7 @@ Headline.propTypes = {
   anchor: string,
   animate: bool,
   cover: bool,
-  fill: string,
+  image: object,
   mask: string,
   subtitle: string,
   text: string,
@@ -250,7 +249,7 @@ Headline.defaultProps = {
   anchor: null,
   animate: null,
   cover: null,
-  fill: null,
+  image: null,
   mask: null,
   subtitle: null,
   text: null,

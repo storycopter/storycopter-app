@@ -31,7 +31,7 @@ const pages = [
         },
       },
       {
-        title: 'Galleries',
+        title: 'Gallery',
         content: require('./pages/galleries.md'),
         path: '/components/gallery',
         imports: {

@@ -25,7 +25,7 @@ showSource: false
 ---
 <ThemeProvider invert>
   <Headline
-    fill="sample.jpg"
+    image="sample.jpg"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
     text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     title="A title of the Headline"
@@ -91,7 +91,7 @@ showSource: false
 ---
 <ThemeProvider >
   <Headline
-    fill="sample.jpg"
+    image="sample.jpg"
     mask="bright"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
     title="A title of the Headline"
@@ -106,7 +106,7 @@ showSource: false
 ---
 <ThemeProvider invert>
   <Headline
-    fill="sample.jpg"
+    image="sample.jpg"
     mask="dark"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
     title="A title of the Headline"
@@ -160,7 +160,7 @@ showSource: false
     align="center"
     animate={true}
     cover={true}
-    fill="sample.jpg"
+    image="sample.jpg"
     mask="dark"
     subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
     text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."

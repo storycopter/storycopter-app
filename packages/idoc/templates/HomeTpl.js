@@ -1,10 +1,10 @@
-import { graphql } from 'gatsby';
 import React from 'react';
-import { sortBy, find } from 'lodash';
+import _ from 'lodash';
+import { graphql } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
 import { Layout } from '@storycopter/ui/partials';
-import { map } from '@storycopter/ui/components';
+import { componentMap } from '@storycopter/ui/components';
 
 const HomeTpl = (
   {
@@ -18,17 +18,47 @@ const HomeTpl = (
   const { components } = tree;
   return (
     <Layout isHome>
-      {sortBy(components, [o => o.order]).map(component => {
-        // console.group('Component');
-        // console.log(component);
-        // console.groupEnd();
+      {_.sortBy(components, [o => o.order]).map(component => {
+        const merger = (propValues, constValues) => {
+          if (_.isArray(propValues)) {
+            return propValues.concat(constValues);
+          }
+        };
 
-        const fill = find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-fill`));
+        // merge component.props.image object with actual graphql resolved image file
+        const image = _.mergeWith(
+          component.props.image,
+          _.get(
+            _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
+            'node.childImageSharp'
+          )
+        );
 
-        const RenderedComponent = map[component.type];
+        // merge component.props.images array with actual graphql resolved image files
+        const images = _.mergeWith(
+          _.sortBy(component.props.images, [o => o.order]),
+          _.sortBy(
+            _.map(
+              _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
+              o => _.get(o, 'node.childImageSharp')
+            ),
+            [o => o.order]
+          ),
+          merger
+        );
+
+        console.group('HomeTpl');
+        console.log(image, images);
+        console.groupEnd();
+
+        const RenderedComponent = componentMap[component.type];
         return (
           <IdocProvider invert={component.invert} key={component.id}>
-            <RenderedComponent {...component.props} fill={fill ? fill.node.childImageSharp.resize.src : null} />
+            <RenderedComponent
+              {...component.props}
+              image={component.props.image ? image : null}
+              images={component.props.images ? images : null}
+            />
           </IdocProvider>
         );
       })}
@@ -56,7 +86,9 @@ export const pageQuery = graphql`
             align
             animate
             cover
-            fill
+            image {
+              name
+            }
             mask
             subtitle
             text
@@ -69,9 +101,15 @@ export const pageQuery = graphql`
       edges {
         node {
           childImageSharp {
-            resize(quality: 100, width: 2000) {
+            resize(quality: 95, width: 2000) {
               originalName
               src
+            }
+            fluid(maxWidth: 2000, quality: 95, cropFocus: CENTER, fit: COVER) {
+              ...GatsbyImageSharpFluid
+            }
+            fixed(width: 2000, height: 1000, quality: 95, cropFocus: CENTER, fit: COVER) {
+              ...GatsbyImageSharpFixed
             }
           }
         }
