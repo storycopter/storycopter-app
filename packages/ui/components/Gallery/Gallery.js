@@ -5,6 +5,11 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import { array } from 'prop-types';
 import { sortBy } from 'lodash';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/styles';
 import { withTheme } from '@material-ui/styles';
 
 import { breakpoint, color } from '@storycopter/ui/settings';
@@ -20,6 +25,10 @@ const Caption = styled(({ theme, ...props }) => <div {...props} />)`
   right: 0;
   text-align: center;
   z-index: 2;
+  ${breakpoint.phone} {
+    ${setSpace('pam')};
+    ${setSpace('max')};
+  }
 `;
 
 const Slide = styled(({ cover, mask, theme, ...props }) => <div {...props} />)`
@@ -39,6 +48,7 @@ const Slide = styled(({ cover, mask, theme, ...props }) => <div {...props} />)`
     } else {
       return `
         .gatsby-image-wrapper {
+          max-height: 100vh !important;
           width: 100% !important;
         }
       `;
@@ -65,32 +75,67 @@ const Slide = styled(({ cover, mask, theme, ...props }) => <div {...props} />)`
 
 const Element = styled(({ mask, theme, ...props }) => <section {...props} />)``;
 
+const styles = {
+  SliderArrows: {
+    background: 'transparent',
+    margin: '0 5px',
+    '&:hover': {
+      background: 'transparent',
+    },
+  },
+};
+
 class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = { edit: null };
-    this.enterEditMode = this.enterEditMode.bind(this);
   }
 
-  enterEditMode(node) {
+  enterEditMode = node => {
     this.setState({ edit: node });
-  }
+  };
+
+  nextSlide = () => {
+    this.slider.slickNext();
+  };
+  prevSlide = () => {
+    this.slider.slickPrev();
+  };
 
   render() {
-    const { cover, images, mask, theme } = this.props;
+    const { cover, classes, images, mask, theme } = this.props;
 
     console.group('Gallery.js');
     console.log(images);
     console.groupEnd();
 
+    const settings = {
+      adaptiveHeight: false,
+      arrows: false,
+      dots: false,
+      slidesToShow: 1,
+      variableWidth: false,
+    };
+
     return (
       <Element theme={theme}>
-        <Slider settings={{ dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1 }}>
-          {sortBy(images, [o => o.order]).map(image => {
+        <Slider ref={c => (this.slider = c)} {...settings}>
+          {sortBy(images, [o => o.order]).map((image, i) => {
             return (
               <Slide cover={cover} key={image.order} mask={mask} theme={theme}>
                 <Img fixed={image.fixed} cropFocus="cover" />
-                <Caption theme={theme}>{image.caption}</Caption>
+                <Caption theme={theme}>
+                  <div>
+                    <IconButton color="inherit" size="small" onClick={this.prevSlide} className={classes.SliderArrows}>
+                      <ArrowBackIcon fontSize="inherit" />
+                    </IconButton>{' '}
+                    {i < 10 ? `0${i}` : i + 1} / {images.length < 10 ? `0${images.length}` : images.length}{' '}
+                    <IconButton color="inherit" size="small" onClick={this.nextSlide} className={classes.SliderArrows}>
+                      <ArrowForwardIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                  <div>{image.caption}</div>
+                </Caption>
               </Slide>
             );
           })}
@@ -100,7 +145,7 @@ class Gallery extends Component {
   }
 }
 
-export default withTheme(Gallery);
+export default withTheme(withStyles(styles)(Gallery));
 
 Gallery.propTypes = {
   images: array.isRequired,
