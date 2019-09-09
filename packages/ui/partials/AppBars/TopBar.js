@@ -35,7 +35,9 @@ const Main = styled.div`
     display: none;
   }
 `;
-const Toolbar = styled.div``;
+const Toolbar = styled.div`
+  pointer-events: auto;
+`;
 const Title = styled.h1`
   color: ${({ theme }) => theme.palette.text.primary};
   font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
@@ -50,6 +52,7 @@ const Title = styled.h1`
     ${setSpace('phs')};
     ${setSpace('pvx')};
     background-color: ${color.shadow200};
+    pointer-events: auto;
   }
 `;
 const Preview = styled.p`
@@ -72,6 +75,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
   flex-direction: row;
   justify-content: space-between;
   left: 0;
+  pointer-events: none;
   position: fixed;
   right: 0;
   top: 0;
@@ -83,6 +87,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
       ? `
     background-color: ${color.mono900};
     box-shadow: 0 1px 5px ${color.shadow300};
+    pointer-events: auto;
     ${Breadcrumbs} {
       display: block;
       opacity: 1;

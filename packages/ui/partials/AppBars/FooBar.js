@@ -25,20 +25,23 @@ const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   ${IconButton} {${setSpace('mlx')}}`
       : ``}
 `;
-const Toolbar = styled.div``;
+const Toolbar = styled.div`
+  pointer-events: auto;
+`;
 
 const Element = styled(({ theme, ...props }) => <footer {...props} />)`
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
+  bottom: 0;
   color: ${({ theme }) => theme.palette.text.primary};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   left: 0;
+  pointer-events: none;
   position: fixed;
   right: 0;
-  bottom: 0;
   z-index: ${({ theme }) => theme.zIndex.appBar};
 `;
 
