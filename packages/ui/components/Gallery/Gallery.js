@@ -129,7 +129,7 @@ class Gallery extends Component {
                     <IconButton color="inherit" size="small" onClick={this.prevSlide} className={classes.SliderArrows}>
                       <ArrowBackIcon fontSize="inherit" />
                     </IconButton>{' '}
-                    {i < 10 ? `0${i}` : i + 1} / {images.length < 10 ? `0${images.length}` : images.length}{' '}
+                    {i < 10 ? `0${i + 1}` : i + 1} / {images.length < 10 ? `0${images.length}` : images.length}{' '}
                     <IconButton color="inherit" size="small" onClick={this.nextSlide} className={classes.SliderArrows}>
                       <ArrowForwardIcon fontSize="inherit" />
                     </IconButton>
