@@ -78,9 +78,9 @@ class Image extends Component {
   render() {
     const { alt, caption, classes, fixed, i, images, mask, onNextImage, onPrevImage, theme } = this.props;
 
-    console.group('Image.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('Image.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Element mask={mask}>

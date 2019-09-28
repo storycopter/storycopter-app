@@ -53,9 +53,9 @@ class Gallery extends Component {
   render() {
     const { cover, images, mask } = this.props;
 
-    console.group('Gallery.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('Gallery.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     const settings = {
       adaptiveHeight: false,
