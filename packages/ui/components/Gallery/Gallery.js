@@ -1,43 +1,13 @@
 import './react-slick.css';
-import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
-import { array } from 'prop-types';
+import { array, string } from 'prop-types';
 import { sortBy } from 'lodash';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/styles';
-import { withTheme } from '@material-ui/styles';
+import Image from './Image';
 
-import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType, setSpace } from '@storycopter/ui/mixins';
-
-const CaptionCount = styled(({ ...props }) => <span {...props} />)`
-  ${setType('x')};
-  display: block;
-`;
-const CaptionText = styled(({ ...props }) => <span {...props} />)`
-  ${setType('x')};
-  display: block;
-`;
-const Caption = styled(({ theme, ...props }) => <figcaption {...props} />)`
-  ${setSpace('pal')};
-  bottom: 0;
-  color: ${({ theme }) => theme.palette.text.primary};
-  left: 0;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  z-index: 2;
-  ${breakpoint.phone} {
-    ${setSpace('pam')};
-    ${setSpace('max')};
-  }
-`;
-const Slide = styled(({ cover, mask, theme, ...props }) => <figure {...props} />)`
+const Slide = styled(({ cover, ...props }) => <figure {...props} />)`
   position: relative;
   ${({ cover }) => {
     if (cover) {
@@ -59,36 +29,9 @@ const Slide = styled(({ cover, mask, theme, ...props }) => <figure {...props} />
       `;
     }
   }};
-
-  ${({ mask }) => {
-    if (mask) {
-      return `
-      &:before {
-        background: ${mask === 'dark' ? color.shadow500 : color.flare500};
-        bottom: 0;
-        content: " ";
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
-      }
-        `;
-    }
-  }};
 `;
 
-const Element = styled(({ mask, theme, ...props }) => <section {...props} />)``;
-
-const styles = {
-  SliderArrows: {
-    background: 'transparent',
-    margin: '0 5px',
-    '&:hover': {
-      background: 'transparent',
-    },
-  },
-};
+const Element = styled(({ ...props }) => <div {...props} />)``;
 
 class Gallery extends Component {
   constructor(props) {
@@ -108,10 +51,10 @@ class Gallery extends Component {
   };
 
   render() {
-    const { cover, classes, images, mask, theme } = this.props;
+    const { cover, images, mask } = this.props;
 
     console.group('Gallery.js');
-    console.log(images);
+    console.log(this.props);
     console.groupEnd();
 
     const settings = {
@@ -123,36 +66,46 @@ class Gallery extends Component {
     };
 
     return (
-      <Element theme={theme}>
+      <Element>
         <Slider ref={c => (this.slider = c)} {...settings}>
-          {sortBy(images, [o => o.order]).map((image, i) => {
-            return (
-              <Slide cover={cover} key={image.order} mask={mask} theme={theme}>
-                <Img fixed={image.fixed} cropFocus="cover" />
-                <Caption theme={theme}>
-                  <CaptionCount>
-                    <IconButton color="inherit" size="small" onClick={this.prevSlide} className={classes.SliderArrows}>
-                      <ArrowBackIcon fontSize="inherit" />
-                    </IconButton>{' '}
-                    {i < 10 ? `0${i + 1}` : i + 1} / {images.length < 10 ? `0${images.length}` : images.length}{' '}
-                    <IconButton color="inherit" size="small" onClick={this.nextSlide} className={classes.SliderArrows}>
-                      <ArrowForwardIcon fontSize="inherit" />
-                    </IconButton>
-                  </CaptionCount>
-                  <CaptionText>{image.caption ? image.caption : ' '}</CaptionText>
-                </Caption>
-              </Slide>
-            );
-          })}
+          {images.length > 1 ? (
+            sortBy(images, [o => o.order]).map((image, i) => {
+              const imageProps = {
+                alt: image.alt,
+                caption: image.caption,
+                fixed: image.fixed,
+                images: images,
+                mask: mask,
+                onNextImage: this.nextSlide,
+                onPrevImage: this.prevSlide,
+              };
+              return (
+                <Slide cover={cover} key={i}>
+                  <Image {...imageProps} i={i}></Image>
+                </Slide>
+              );
+            })
+          ) : (
+            <Image
+              alt={images[0].alt}
+              caption={images[0].caption}
+              fixed={images[0].fixed}
+              images={images}
+              mask={mask}
+            />
+          )}
         </Slider>
       </Element>
     );
   }
 }
 
-export default withTheme(withStyles(styles)(Gallery));
+export default Gallery;
 
 Gallery.propTypes = {
   images: array.isRequired,
+  mask: string,
 };
-Gallery.defaultProps = {};
+Gallery.defaultProps = {
+  mask: null,
+};
