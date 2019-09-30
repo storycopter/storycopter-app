@@ -9,15 +9,21 @@ import { componentMap } from '@storycopter/ui/components';
 const HomeTpl = (
   {
     data: {
-      essentialsJson: { tree },
+      essentialsJson: { tree, site },
       allFile: { edges },
     },
   },
   props
 ) => {
   const { components } = tree;
+
+  // console.group('HomeTpl.js');
+  // console.log(tree);
+  // console.log(site);
+  // console.groupEnd();
+
   return (
-    <Layout isHome>
+    <Layout isHome site={site}>
       {_.sortBy(components, [o => o.order]).map(component => {
         const merger = (propValues, constValues) => {
           if (_.isArray(propValues)) {
@@ -47,10 +53,6 @@ const HomeTpl = (
           merger
         );
 
-        console.group('HomeTpl');
-        console.log(image, images);
-        console.groupEnd();
-
         const RenderedComponent = componentMap[component.type];
         return (
           <IdocProvider invert={component.invert} key={component.id}>
@@ -75,6 +77,15 @@ export const pageQuery = graphql`
         path
         title
         uid
+      }
+      site {
+        chapters {
+          cover
+          id
+          intro
+          order
+          title
+        }
       }
       tree {
         components {
@@ -101,14 +112,14 @@ export const pageQuery = graphql`
       edges {
         node {
           childImageSharp {
-            resize(quality: 95, width: 2000) {
+            resize(quality: 95, width: 1400) {
               originalName
               src
             }
             fluid(maxWidth: 2000, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFluid
             }
-            fixed(width: 2000, height: 1000, quality: 95, cropFocus: CENTER, fit: COVER) {
+            fixed(width: 1400, height: 900, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFixed
             }
           }

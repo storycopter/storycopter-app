@@ -25,8 +25,8 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              uid
               path
+              uid
             }
           }
         }
