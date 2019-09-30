@@ -18,14 +18,14 @@
     "gatsby-transformer-json": "2.2.11",
     "gatsby-transformer-sharp": "2.2.19",
     "lodash": "4.17.15",
-    "react": "16.9.0",
-    "react-dom": "16.9.0",
+    "react": "16.10.1",
+    "react-dom": "16.10.1",
     "styled-components": "4.4.0"
   },
   "devDependencies": {
     "@now/node": "1.0.0",
     "babel-eslint": "10.0.3",
-    "eslint": "6.4.0",
+    "eslint": "6.5.0",
     "eslint-config-prettier": "6.3.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.14.3",

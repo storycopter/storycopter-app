@@ -10,7 +10,7 @@
     "material-ui-popup-state": "1.4.1",
     "polished": "3.4.1",
     "rc-texty": "0.2.0",
-    "react": "16.9.0",
+    "react": "16.10.1",
     "react-slick": "0.25.2",
     "styled-components": "4.4.0"
   },
@@ -22,7 +22,7 @@
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
     "css-loader": "3.2.0",
-    "eslint": "6.4.0",
+    "eslint": "6.5.0",
     "eslint-config-prettier": "6.3.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.14.3",

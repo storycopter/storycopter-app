@@ -10,8 +10,8 @@
     "gatsby-source-filesystem": "2.1.28",
     "gatsby-transformer-remark": "2.6.26",
     "lodash": "4.17.15",
-    "react": "16.9.0",
-    "react-dom": "16.9.0",
+    "react": "16.10.1",
+    "react-dom": "16.10.1",
     "styled-components": "4.4.0"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
     "eslint-config-prettier": "6.3.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.14.3",
-    "eslint": "6.4.0",
+    "eslint": "6.5.0",
     "gh-pages": "2.1.1",
     "prettier-eslint": "9.0.0",
     "prettier-stylelint": "0.4.2",
