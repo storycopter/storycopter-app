@@ -1,7 +1,8 @@
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
+import { bool, object } from 'prop-types';
+import { navigate } from 'gatsby';
 import { withTheme } from '@material-ui/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { breakpoint, color, time, track } from '@storycopter/ui/settings';
-import { setHeight, setType, setSpace } from '@storycopter/ui/mixins';
+import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -60,10 +61,61 @@ const Preview = styled.p`
   opacity: 0;
   transition: opacity ${time.m};
 `;
+
+const BreadcrumbMarker = styled.a`
+  border-radius: 100px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1px;
+  height: 34px;
+  line-height: 34px;
+  position: relative;
+  transition: background ${time.m}, border ${time.m};
+  width: 34px;
+  &:hover {
+    border-color: ${color.flare500};
+    background: ${color.shadow500};
+  }
+  .bc-tick {
+    background: ${color.flare800};
+    box-shadow: 0 0 2px ${color.shadow300};
+    display: block;
+    height: 10px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+  }
+  .bc-title,
+  .bc-order {
+    height: 1px;
+    overflow: hidden;
+    visibility: hidden;
+    width: 1px;
+  }
+`;
+const Breadcrumb = styled.li`
+  text-align: center;
+`;
 const Breadcrumbs = styled.nav`
+  bottom: 0;
   display: none;
+  left: 0;
   opacity: 0;
+  position: absolute;
+  right: 0;
+  transform: translateY(50%);
   transition: opacity ${time.m};
+  & > ol {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  ${Breadcrumb} {
+    flex: 0 0 ${({ count }) => 100 / count};
+  }
 `;
 
 const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />)`
@@ -108,8 +160,10 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHovered: false,
+      isHovered: true,
     };
+    this.onBreadcrumbClick = this.onBreadcrumbClick.bind(this);
+    this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
   }
 
@@ -119,14 +173,18 @@ class TopBar extends Component {
   toggleSharePopover(state) {
     this.setState({ isHovered: state });
   }
+  onBreadcrumbClick(chapterId) {
+    console.log('onBreadcrumbClick', chapterId);
+    navigate(`/${chapterId}/`);
+  }
 
   render() {
-    const { allowPrev, allowNext, theme } = this.props;
+    const { allowPrev, allowNext, site, theme } = this.props;
+    const { chapters } = site;
 
-    // console.group('TopBar.js');
-    // console.log(this.props);
-    // console.log(this.state);
-    // console.groupEnd();
+    console.group('TopBar.js');
+    console.log(chapters);
+    console.groupEnd();
 
     return (
       <PopupState variant="popover" popupId="sharePopover">
@@ -177,7 +235,23 @@ class TopBar extends Component {
                   <span>Title</span>
                 </Title>
                 <Preview>Preview</Preview>
-                <Breadcrumbs>Breadcrumbs</Breadcrumbs>
+                <Breadcrumbs count={chapters.length}>
+                  <ol>
+                    {chapters.map((chapter, i) => {
+                      return (
+                        <Breadcrumb key={chapter.id}>
+                          <Tooltip title={chapter.title}>
+                            <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.id)}>
+                              <span className="bc-order">{chapter.id}</span>
+                              <span className="bc-title">{chapter.title}</span>
+                              <span className="bc-tick"></span>
+                            </BreadcrumbMarker>
+                          </Tooltip>
+                        </Breadcrumb>
+                      );
+                    })}
+                  </ol>
+                </Breadcrumbs>
               </Main>
               <Side rx>
                 <Toolbar>
@@ -229,6 +303,7 @@ TopBar.propTypes = {
   allowPrev: bool,
   isCredits: bool,
   isHome: bool,
+  site: object.isRequired,
 };
 TopBar.defaultProps = {
   allowPrev: null,

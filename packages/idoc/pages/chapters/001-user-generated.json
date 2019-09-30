@@ -1,4 +1,43 @@
 {
+  "site": {
+    "chapters": [
+      {
+        "cover": "",
+        "id": "intro",
+        "intro": "On that iconic day, plenty else happened besides Ali and Frazier’s legendary bout.",
+        "order": 1,
+        "title": "Intro"
+      },
+      {
+        "cover": "",
+        "id": "chapter1",
+        "intro": "On that iconic day, plenty else happened besides Ali and Frazier’s legendary bout.",
+        "order": 2,
+        "title": "The beginning"
+      },
+      {
+        "cover": "",
+        "id": "chapter2",
+        "intro": "On that iconic day, plenty else happened besides Ali and Frazier’s legendary bout.",
+        "order": 3,
+        "title": "The middle"
+      },
+      {
+        "cover": "",
+        "id": "chapter3",
+        "intro": "On that iconic day, plenty else happened besides Ali and Frazier’s legendary bout.",
+        "order": 4,
+        "title": "The end"
+      },
+      {
+        "cover": "",
+        "id": "outro",
+        "intro": "On that iconic day, plenty else happened besides Ali and Frazier’s legendary bout.",
+        "order": 5,
+        "title": "Outro"
+      }
+    ]
+  },
   "meta": {
     "cover": "cover.jpg",
     "path": "/user-generated",

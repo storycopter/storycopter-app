@@ -9,7 +9,7 @@ import { componentMap } from '@storycopter/ui/components';
 const ChapterTpl = (
   {
     data: {
-      chaptersJson: { tree },
+      chaptersJson: { tree, site },
       allFile: { edges },
     },
   },
@@ -17,8 +17,13 @@ const ChapterTpl = (
 ) => {
   const { components } = tree;
 
+  // console.group('ChapterTpl.js');
+  // console.log(tree);
+  // console.log(site);
+  // console.groupEnd();
+
   return (
-    <Layout>
+    <Layout site={site}>
       {_.sortBy(components, [o => o.order]).map(component => {
         const merger = (propValues, constValues) => {
           if (_.isArray(propValues)) {
@@ -72,6 +77,15 @@ export const pageQuery = graphql`
         path
         title
         uid
+      }
+      site {
+        chapters {
+          cover
+          id
+          intro
+          order
+          title
+        }
       }
       tree {
         components {
