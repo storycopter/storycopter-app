@@ -23,10 +23,10 @@ class ChapterTpl extends Component {
       pageContext: { toc },
     } = this.props;
 
-    console.group('ChapterTpl.js');
-    console.log(this.props.pageContext.toc);
-    console.log(toc);
-    console.groupEnd();
+    // console.group('ChapterTpl.js');
+    // console.log(this.props.pageContext.toc);
+    // console.log(toc);
+    // console.groupEnd();
 
     return (
       <Layout toc={toc}>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { graphql } from 'gatsby';
 
 import { Layout } from '@storycopter/ui/partials';
 
-class Credits extends Component {
+class CreditsTpl extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,9 +14,9 @@ class Credits extends Component {
       pageContext: { toc },
     } = this.props;
 
-    // console.group('Credits.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('CreditsTpl.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
       <Layout isCredits toc={toc}>
@@ -28,4 +27,4 @@ class Credits extends Component {
   }
 }
 
-export default Credits;
+export default CreditsTpl;

@@ -81,6 +81,7 @@ const BreadcrumbMarker = styled.a`
   }
   .bc-tick {
     background: ${color.flare800};
+    border-radius: 1px;
     box-shadow: 0 0 2px ${color.shadow300};
     display: block;
     height: 10px;
@@ -184,11 +185,10 @@ class TopBar extends Component {
 
   render() {
     const { allowPrev, allowNext, toc, theme } = this.props;
-    // const { chapters } = toc;
 
-    // console.group('TopBar.js');
-    // console.log(chapters);
-    // console.groupEnd();
+    console.group('TopBar.js');
+    console.log(toc);
+    console.groupEnd();
 
     return (
       <PopupState variant="popover" popupId="sharePopover">
