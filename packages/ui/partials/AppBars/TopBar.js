@@ -106,6 +106,8 @@ const Breadcrumbs = styled.nav`
   display: none;
   left: 0;
   opacity: 0;
+  padding-left: 160px;
+  padding-right: 160px;
   position: absolute;
   right: 0;
   transform: translateY(50%);
@@ -113,7 +115,7 @@ const Breadcrumbs = styled.nav`
   & > ol {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   ${Breadcrumb} {
     flex: 0 0 ${({ count }) => 100 / count};
