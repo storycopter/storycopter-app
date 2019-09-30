@@ -73,11 +73,12 @@ const BreadcrumbMarker = styled.a`
   height: 34px;
   line-height: 34px;
   position: relative;
-  transition: background-color ${time.m}, border-color ${time.m};
+  transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
   width: 34px;
   &:hover {
-    border-color: ${color.flare500};
-    background-color: ${color.shadow500};
+    background-color: ${color.shadow300};
+    border-color: ${color.flare300};
+    box-shadow: 0 0 5px ${color.shadow300};
   }
   .bc-tick {
     background: ${color.flare800};
@@ -89,7 +90,7 @@ const BreadcrumbMarker = styled.a`
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 2px;
+    width: 3px;
   }
   .bc-title,
   .bc-order {
@@ -186,9 +187,9 @@ class TopBar extends Component {
   render() {
     const { allowPrev, allowNext, toc, theme } = this.props;
 
-    console.group('TopBar.js');
-    console.log(toc);
-    console.groupEnd();
+    // console.group('TopBar.js');
+    // console.log(toc);
+    // console.groupEnd();
 
     return (
       <PopupState variant="popover" popupId="sharePopover">
