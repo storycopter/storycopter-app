@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
@@ -6,67 +6,74 @@ import { IdocProvider } from '@storycopter/ui/providers';
 import { Layout } from '@storycopter/ui/partials';
 import { componentMap } from '@storycopter/ui/components';
 
-const ChapterTpl = (
-  {
-    data: {
-      chaptersJson: { tree, site },
-      allFile: { edges },
-    },
-  },
-  props
-) => {
-  const { components } = tree;
+class ChapterTpl extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-  // console.group('ChapterTpl.js');
-  // console.log(tree);
-  // console.log(site);
-  // console.groupEnd();
+  render() {
+    const {
+      data: {
+        chaptersJson: {
+          tree: { components },
+        },
+        allFile: { edges },
+      },
+      pageContext: { toc },
+    } = this.props;
 
-  return (
-    <Layout site={site}>
-      {_.sortBy(components, [o => o.order]).map(component => {
-        const merger = (propValues, constValues) => {
-          if (_.isArray(propValues)) {
-            return propValues.concat(constValues);
-          }
-        };
+    console.group('ChapterTpl.js');
+    console.log(this.props.pageContext.toc);
+    console.log(toc);
+    console.groupEnd();
 
-        // merge component.props.image object with actual graphql resolved image file
-        const image = _.mergeWith(
-          component.props.image,
-          _.get(
-            _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
-            'node.childImageSharp'
-          )
-        );
+    return (
+      <Layout toc={toc}>
+        {_.sortBy(components, [o => o.order]).map(component => {
+          const merger = (propValues, constValues) => {
+            if (_.isArray(propValues)) {
+              return propValues.concat(constValues);
+            }
+          };
 
-        // merge component.props.images array with actual graphql resolved image files
-        const images = _.mergeWith(
-          _.sortBy(component.props.images, [o => o.order]),
-          _.sortBy(
-            _.map(
-              _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
-              o => _.get(o, 'node.childImageSharp')
+          // merge component.props.image object with actual graphql resolved image file
+          const image = _.mergeWith(
+            component.props.image,
+            _.get(
+              _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
+              'node.childImageSharp'
+            )
+          );
+
+          // merge component.props.images array with actual graphql resolved image files
+          const images = _.mergeWith(
+            _.sortBy(component.props.images, [o => o.order]),
+            _.sortBy(
+              _.map(
+                _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
+                o => _.get(o, 'node.childImageSharp')
+              ),
+              [o => o.order]
             ),
-            [o => o.order]
-          ),
-          merger
-        );
+            merger
+          );
 
-        const RenderedComponent = componentMap[component.type];
-        return (
-          <IdocProvider invert={component.invert} key={component.id}>
-            <RenderedComponent
-              {...component.props}
-              image={component.props.image ? image : null}
-              images={component.props.images ? images : null}
-            />
-          </IdocProvider>
-        );
-      })}
-    </Layout>
-  );
-};
+          const RenderedComponent = componentMap[component.type];
+          return (
+            <IdocProvider invert={component.invert} key={component.id}>
+              <RenderedComponent
+                {...component.props}
+                image={component.props.image ? image : null}
+                images={component.props.images ? images : null}
+              />
+            </IdocProvider>
+          );
+        })}
+      </Layout>
+    );
+  }
+}
 
 export default ChapterTpl;
 
@@ -77,15 +84,6 @@ export const pageQuery = graphql`
         path
         title
         uid
-      }
-      site {
-        chapters {
-          cover
-          id
-          intro
-          order
-          title
-        }
       }
       tree {
         components {

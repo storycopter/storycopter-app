@@ -1,7 +1,8 @@
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
+import _ from 'lodash';
 import styled from 'styled-components';
-import { bool, object } from 'prop-types';
+import { array, bool } from 'prop-types';
 import { navigate } from 'gatsby';
 import { withTheme } from '@material-ui/styles';
 
@@ -63,6 +64,7 @@ const Preview = styled.p`
 `;
 
 const BreadcrumbMarker = styled.a`
+  background-color: transparent;
   border-radius: 100px;
   border: 1px solid transparent;
   cursor: pointer;
@@ -71,11 +73,11 @@ const BreadcrumbMarker = styled.a`
   height: 34px;
   line-height: 34px;
   position: relative;
-  transition: background ${time.m}, border ${time.m};
+  transition: background-color ${time.m}, border-color ${time.m};
   width: 34px;
   &:hover {
     border-color: ${color.flare500};
-    background: ${color.shadow500};
+    background-color: ${color.shadow500};
   }
   .bc-tick {
     background: ${color.flare800};
@@ -173,18 +175,18 @@ class TopBar extends Component {
   toggleSharePopover(state) {
     this.setState({ isHovered: state });
   }
-  onBreadcrumbClick(chapterId) {
-    console.log('onBreadcrumbClick', chapterId);
-    navigate(`/${chapterId}/`);
+  onBreadcrumbClick(path) {
+    console.log('onBreadcrumbClick', path);
+    navigate(path);
   }
 
   render() {
-    const { allowPrev, allowNext, site, theme } = this.props;
-    const { chapters } = site;
+    const { allowPrev, allowNext, toc, theme } = this.props;
+    // const { chapters } = toc;
 
-    console.group('TopBar.js');
-    console.log(chapters);
-    console.groupEnd();
+    // console.group('TopBar.js');
+    // console.log(chapters);
+    // console.groupEnd();
 
     return (
       <PopupState variant="popover" popupId="sharePopover">
@@ -235,22 +237,24 @@ class TopBar extends Component {
                   <span>Title</span>
                 </Title>
                 <Preview>Preview</Preview>
-                <Breadcrumbs count={chapters.length}>
-                  <ol>
-                    {chapters.map((chapter, i) => {
-                      return (
-                        <Breadcrumb key={chapter.id}>
-                          <Tooltip title={chapter.title}>
-                            <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.id)}>
-                              <span className="bc-order">{chapter.id}</span>
-                              <span className="bc-title">{chapter.title}</span>
-                              <span className="bc-tick"></span>
-                            </BreadcrumbMarker>
-                          </Tooltip>
-                        </Breadcrumb>
-                      );
-                    })}
-                  </ol>
+                <Breadcrumbs count={toc.length}>
+                  {toc.length > 1 ? (
+                    <ol>
+                      {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
+                        return (
+                          <Breadcrumb key={chapter.uid}>
+                            <Tooltip title={chapter.title}>
+                              <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.path)}>
+                                <span className="bc-order">{chapter.id}</span>
+                                <span className="bc-title">{chapter.title}</span>
+                                <span className="bc-tick"></span>
+                              </BreadcrumbMarker>
+                            </Tooltip>
+                          </Breadcrumb>
+                        );
+                      })}
+                    </ol>
+                  ) : null}
                 </Breadcrumbs>
               </Main>
               <Side rx>
@@ -303,7 +307,7 @@ TopBar.propTypes = {
   allowPrev: bool,
   isCredits: bool,
   isHome: bool,
-  site: object.isRequired,
+  toc: array.isRequired,
 };
 TopBar.defaultProps = {
   allowPrev: null,

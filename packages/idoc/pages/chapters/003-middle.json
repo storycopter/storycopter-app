@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "cover": "cover.jpg",
+    "order": 3,
+    "path": "/middle",
+    "title": "Middle",
+    "uid": "003-middle"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "invert": true,
+        "order": 1,
+        "props": {
+          "align": "left",
+          "anchor": null,
+          "animate": true,
+          "cover": true,
+          "image": null,
+          "mask": "dark",
+          "subtitle": "Some text",
+          "text": "More text",
+          "title": "Middle"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

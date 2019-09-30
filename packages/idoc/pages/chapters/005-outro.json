@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "cover": "cover.jpg",
+    "order": 5,
+    "path": "/outro",
+    "title": "Outro",
+    "uid": "005-outro"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "invert": true,
+        "order": 1,
+        "props": {
+          "align": "left",
+          "anchor": null,
+          "animate": true,
+          "cover": true,
+          "image": null,
+          "mask": "dark",
+          "subtitle": "Some text",
+          "text": "More text",
+          "title": "Outro"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "cover": "cover.jpg",
+    "order": 4,
+    "path": "/end",
+    "title": "The End",
+    "uid": "004-end"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "invert": true,
+        "order": 1,
+        "props": {
+          "align": "left",
+          "anchor": null,
+          "animate": true,
+          "cover": true,
+          "image": null,
+          "mask": "dark",
+          "subtitle": "Some text",
+          "text": "More text",
+          "title": "End"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

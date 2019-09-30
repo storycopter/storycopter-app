@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, bool, object } from 'prop-types';
+import { array, bool } from 'prop-types';
 
 import { FooBar, GlobalStyles, TopBar } from '@storycopter/ui/partials';
 import { IdocProvider } from '@storycopter/ui/providers';
@@ -27,7 +27,7 @@ class Layout extends Component {
   // }
 
   render() {
-    const { children, isHome, isCredits, site } = this.props;
+    const { children, isHome, isCredits, toc } = this.props;
 
     // console.group('Layout.js');
     // console.log(this.props);
@@ -42,7 +42,7 @@ class Layout extends Component {
             allowPrev={!isHome && !isCredits}
             isCredits={isCredits}
             isHome={isHome}
-            site={site}
+            toc={toc}
           />
         </IdocProvider>
         <main>{children}</main>
@@ -58,7 +58,7 @@ Layout.propTypes = {
   children: array.isRequired,
   isCredits: bool,
   isHome: bool,
-  site: object.isRequired,
+  toc: array.isRequired,
 };
 
 Layout.defaultProps = {

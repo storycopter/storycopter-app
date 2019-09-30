@@ -33,9 +33,10 @@ const Child = styled.div`
   z-index: 2;
 `;
 const Parent = styled.div`
-  max-width: 1600px;
   display: flex;
   flex-direction: row;
+  max-width: 1600px;
+  width: 100%;
 `;
 const Element = styled(({ align, animate, image, cover, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
@@ -188,7 +189,7 @@ class Headline extends Component {
                       type="top"
                       mode="smooth"
                       duration={500}
-                      delay={700}
+                      delay={300}
                       exclusive={true}
                       component="span">
                       {subtitle}
@@ -212,7 +213,7 @@ class Headline extends Component {
                       type="top"
                       mode="smooth"
                       duration={500}
-                      delay={800}
+                      delay={600}
                       exclusive={true}
                       component="span">
                       {text}
