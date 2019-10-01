@@ -11,7 +11,7 @@
   "tree": {
     "components": [
       {
-        "id": "000",
+        "id": "001",
         "invert": true,
         "order": 2,
         "props": {
@@ -30,7 +30,7 @@
         "type": "headline"
       },
       {
-        "id": "001",
+        "id": "002",
         "invert": null,
         "order": 3,
         "props": {
@@ -46,7 +46,7 @@
         "type": "headline"
       },
       {
-        "id": "002",
+        "id": "003",
         "invert": null,
         "order": 4,
         "props": {
@@ -61,7 +61,7 @@
         "type": "headline"
       },
       {
-        "id": "003",
+        "id": "004",
         "invert": true,
         "order": 5,
         "props": {
