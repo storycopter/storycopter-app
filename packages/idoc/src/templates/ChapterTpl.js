@@ -29,9 +29,9 @@ class ChapterTpl extends Component {
       },
     } = this.props;
 
-    console.group('ChapterTpl.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('ChapterTpl.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Layout location={this.props.location} pageContext={this.props.pageContext} path={this.props.path}>

@@ -59,7 +59,7 @@ const Title = styled.h1`
     pointer-events: auto;
   }
 `;
-const Preview = styled.p`
+const Preview = styled.div`
   align-content: center;
   align-items: center;
   display: none;
@@ -146,7 +146,6 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
   position: fixed;
   right: 0;
   top: 0;
-  transition: background ${time.m}, box-shadow ${time.m};
   z-index: ${({ theme }) => theme.zIndex.appBar};
 
   ${({ isHovered }) =>
@@ -211,17 +210,17 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHovered: true,
+      isHovered: false,
     };
     this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
   }
 
   toggleHoveredState(state) {
-    // this.setState({ isHovered: state });
+    this.setState({ isHovered: state });
   }
   toggleSharePopover(state) {
-    // this.setState({ isHovered: state });
+    this.setState({ isHovered: state });
   }
 
   render() {
@@ -245,8 +244,12 @@ class TopBar extends Component {
               };
             });
 
+          // fetch active chapter
+          const thisChapter = _.find(toc, o => o.path === this.props.path);
+
           console.group('TopBar.js');
           console.log(toc);
+          console.log(thisChapter);
           console.log(this.props);
           console.groupEnd();
 
@@ -299,8 +302,8 @@ class TopBar extends Component {
                         <span>Title</span>
                       </Title>
                       <Preview>
-                        <Img fixed={toc[0].cover.childImageSharp.fixed} className="preview-thumb" />
-                        <h2 className="preview-title">{toc[0].title}</h2>
+                        <Img fixed={thisChapter.cover.childImageSharp.fixed} className="preview-thumb" />
+                        <h2 className="preview-title">{thisChapter.title}</h2>
                       </Preview>
                       <Breadcrumbs count={toc.length}>
                         {toc.length > 1 ? (
