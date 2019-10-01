@@ -10,16 +10,14 @@ class CreditsTpl extends Component {
   }
 
   render() {
-    const {
-      pageContext: { toc },
-    } = this.props;
+    const {} = this.props;
 
     console.group('CreditsTpl.js');
     console.log(this.props);
     console.groupEnd();
 
     return (
-      <Layout isCredits toc={toc}>
+      <Layout isCredits>
         <h1>Credits</h1>
         <p>Some text</p>
       </Layout>

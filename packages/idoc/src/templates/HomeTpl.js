@@ -21,7 +21,6 @@ class Home extends Component {
         },
         allFile: { edges },
       },
-      pageContext: { toc },
     } = this.props;
 
     // console.group('Home.js');
@@ -29,7 +28,7 @@ class Home extends Component {
     // console.groupEnd();
 
     return (
-      <Layout isHome toc={toc}>
+      <Layout isHome>
         {_.sortBy(components, [o => o.order]).map(component => {
           const merger = (propValues, constValues) => {
             if (_.isArray(propValues)) {

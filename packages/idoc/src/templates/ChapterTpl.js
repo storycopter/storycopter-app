@@ -27,7 +27,6 @@ class ChapterTpl extends Component {
         },
         allFile: { edges },
       },
-      pageContext: { toc },
     } = this.props;
 
     // console.group('ChapterTpl.js');
@@ -36,7 +35,7 @@ class ChapterTpl extends Component {
     // console.groupEnd();
 
     return (
-      <Layout toc={toc}>
+      <Layout>
         {_.sortBy(components, [o => o.order]).map(component => {
           // merge component.props.image object with actual graphql resolved image file
           const image = _.mergeWith(

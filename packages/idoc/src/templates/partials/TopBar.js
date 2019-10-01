@@ -1,8 +1,9 @@
+import Img from 'gatsby-image';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { array, bool } from 'prop-types';
+import { bool } from 'prop-types';
 import { graphql, navigate, StaticQuery } from 'gatsby';
 
 import { withTheme } from '@material-ui/styles';
@@ -23,7 +24,7 @@ import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
   flex-direction: row;
-  flex: 0 0 200px;
+  flex: 0 0 142px;
   justify-content: ${({ lx, rx }) => (rx ? 'flex-end' : 'flex-start')};
 
   ${({ lx, rx }) =>
@@ -59,29 +60,36 @@ const Title = styled.h1`
   }
 `;
 const Preview = styled.p`
+  align-content: center;
+  align-items: center;
   display: none;
+  flex-direction: row;
+  justify-content: flex-start;
   opacity: 0;
   transition: opacity ${time.m};
+  .preview-thumb {
+    ${setSpace('mrm')};
+  }
+  .preview-title {
+  }
 `;
 
 const BreadcrumbMarker = styled.a`
   background-color: transparent;
   border-radius: 100px;
-  border: 1px solid transparent;
   cursor: pointer;
   display: inline-block;
   font-size: 1px;
-  height: 34px;
-  line-height: 34px;
+  height: 32px;
+  line-height: 32px;
   position: relative;
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
-  width: 34px;
+  width: 32px;
   &:hover {
-    background-color: ${color.shadow300};
-    border-color: ${color.flare300};
+    background-color: ${color.flare100};
     box-shadow: 0 0 5px ${color.shadow300};
   }
-  .bc-tick {
+  .breadcrumb-tick {
     background: ${color.flare800};
     border-radius: 1px;
     box-shadow: 0 0 2px ${color.shadow300};
@@ -93,8 +101,8 @@ const BreadcrumbMarker = styled.a`
     transform: translate(-50%, -50%);
     width: 3px;
   }
-  .bc-title,
-  .bc-order {
+  .breadcrumb-title,
+  .breadcrumb-order {
     height: 1px;
     overflow: hidden;
     visibility: hidden;
@@ -152,7 +160,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
       opacity: 1;
     }
     ${Preview} {
-      display: block;
+      display: flex;
       opacity: 1;
     }
     ${Title} {
@@ -184,11 +192,11 @@ const TopBarQuery = graphql`
       edges {
         node {
           childImageSharp {
-            resize(quality: 95, width: 50, height: 60) {
+            resize(quality: 95, width: 40, height: 40) {
               originalName
               src
             }
-            fixed(width: 50, height: 60, quality: 95, cropFocus: CENTER, fit: COVER) {
+            fixed(width: 40, height: 40, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFixed
             }
           }
@@ -210,10 +218,10 @@ class TopBar extends Component {
   }
 
   toggleHoveredState(state) {
-    this.setState({ isHovered: state });
+    // this.setState({ isHovered: state });
   }
   toggleSharePopover(state) {
-    this.setState({ isHovered: state });
+    // this.setState({ isHovered: state });
   }
 
   render() {
@@ -236,6 +244,10 @@ class TopBar extends Component {
                 },
               };
             });
+
+          console.group('TopBar.js');
+          console.log(toc);
+          console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
@@ -285,7 +297,10 @@ class TopBar extends Component {
                       <Title theme={theme}>
                         <span>Title</span>
                       </Title>
-                      <Preview>Preview</Preview>
+                      <Preview>
+                        <Img fixed={toc[0].cover.childImageSharp.fixed} className="preview-thumb" />
+                        <h2 className="preview-title">{toc[0].title}</h2>
+                      </Preview>
                       <Breadcrumbs count={toc.length}>
                         {toc.length > 1 ? (
                           <ol>
@@ -294,9 +309,9 @@ class TopBar extends Component {
                                 <Breadcrumb key={chapter.uid}>
                                   <Tooltip title={chapter.title}>
                                     <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
-                                      <span className="bc-order">{chapter.id}</span>
-                                      <span className="bc-title">{chapter.title}</span>
-                                      <span className="bc-tick"></span>
+                                      <span className="breadcrumb-order">{chapter.id}</span>
+                                      <span className="breadcrumb-title">{chapter.title}</span>
+                                      <span className="breadcrumb-tick"></span>
                                     </BreadcrumbMarker>
                                   </Tooltip>
                                 </Breadcrumb>

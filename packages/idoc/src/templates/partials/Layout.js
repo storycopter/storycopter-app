@@ -61,7 +61,6 @@ Layout.propTypes = {
   children: array.isRequired,
   isCredits: bool,
   isHome: bool,
-  toc: array.isRequired,
 };
 
 Layout.defaultProps = {

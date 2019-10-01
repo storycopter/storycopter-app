@@ -10,16 +10,14 @@ class ErrorTpl extends Component {
   }
 
   render() {
-    const {
-      pageContext: { toc },
-    } = this.props;
+    const {} = this.props;
 
     console.group('ErrorTpl.js');
     console.log(this.props);
     console.groupEnd();
 
     return (
-      <Layout toc={toc}>
+      <Layout>
         <h1>Error</h1>
         <p>Some text</p>
       </Layout>

@@ -10,16 +10,14 @@ class ListingTpl extends Component {
   }
 
   render() {
-    const {
-      pageContext: { toc },
-    } = this.props;
+    const {} = this.props;
 
     console.group('ListingTpl.js');
     console.log(this.props);
     console.groupEnd();
 
     return (
-      <Layout toc={toc}>
+      <Layout>
         <h1>Listing</h1>
         <p>Some text</p>
       </Layout>
