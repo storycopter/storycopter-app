@@ -19,7 +19,9 @@
           "anchor": null,
           "animate": true,
           "cover": true,
-          "image": null,
+          "image": {
+            "name": "headline-image.jpg"
+          },
           "mask": "dark",
           "subtitle": "Some text",
           "text": "More text",

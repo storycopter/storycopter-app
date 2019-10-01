@@ -302,8 +302,12 @@ class TopBar extends Component {
                         <span>Title</span>
                       </Title>
                       <Preview>
-                        <Img fixed={thisChapter.cover.childImageSharp.fixed} className="preview-thumb" />
-                        <h2 className="preview-title">{thisChapter.title}</h2>
+                        {thisChapter ? (
+                          <>
+                            <Img fixed={thisChapter.cover.childImageSharp.fixed} className="preview-thumb" />
+                            <h2 className="preview-title">{thisChapter.title}</h2>
+                          </>
+                        ) : null}
                       </Preview>
                       <Breadcrumbs count={toc.length}>
                         {toc.length > 1 ? (
