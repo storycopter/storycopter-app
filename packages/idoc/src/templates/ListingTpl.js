@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
-import { Layout } from '@storycopter/ui/partials';
+import Layout from './partials/Layout';
 
 class ListingTpl extends Component {
   constructor(props) {

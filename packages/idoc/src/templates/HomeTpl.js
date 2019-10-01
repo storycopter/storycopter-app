@@ -3,16 +3,11 @@ import _ from 'lodash';
 import { graphql } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { Layout } from '@storycopter/ui/partials';
 import { componentMap } from '@storycopter/ui/components';
 
-const merger = (someValues, otherValues) => {
-  if (_.isArray(someValues)) {
-    return someValues.concat(otherValues);
-  }
-};
+import Layout from './partials/Layout';
 
-class ChapterTpl extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -21,7 +16,7 @@ class ChapterTpl extends Component {
   render() {
     const {
       data: {
-        chaptersJson: {
+        essentialsJson: {
           tree: { components },
         },
         allFile: { edges },
@@ -29,14 +24,19 @@ class ChapterTpl extends Component {
       pageContext: { toc },
     } = this.props;
 
-    // console.group('ChapterTpl.js');
-    // console.log(this.props.pageContext.toc);
-    // console.log(toc);
+    // console.group('Home.js');
+    // console.log(this.props);
     // console.groupEnd();
 
     return (
-      <Layout toc={toc}>
+      <Layout isHome toc={toc}>
         {_.sortBy(components, [o => o.order]).map(component => {
+          const merger = (propValues, constValues) => {
+            if (_.isArray(propValues)) {
+              return propValues.concat(constValues);
+            }
+          };
+
           // merge component.props.image object with actual graphql resolved image file
           const image = _.mergeWith(
             component.props.image,
@@ -75,11 +75,11 @@ class ChapterTpl extends Component {
   }
 }
 
-export default ChapterTpl;
+export default Home;
 
 export const pageQuery = graphql`
-  query ChapterTplQuery($uid: String!) {
-    chaptersJson(meta: { uid: { eq: $uid } }) {
+  query HomeQuery($uid: String!) {
+    essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -93,17 +93,10 @@ export const pageQuery = graphql`
           type
           props {
             align
-            anchor
             animate
             cover
             image {
               name
-            }
-            images {
-              alt
-              caption
-              name
-              order
             }
             mask
             subtitle

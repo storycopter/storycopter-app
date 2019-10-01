@@ -3,10 +3,17 @@ import _ from 'lodash';
 import { graphql } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { Layout } from '@storycopter/ui/partials';
 import { componentMap } from '@storycopter/ui/components';
 
-class Home extends Component {
+import Layout from './partials/Layout';
+
+const merger = (someValues, otherValues) => {
+  if (_.isArray(someValues)) {
+    return someValues.concat(otherValues);
+  }
+};
+
+class ChapterTpl extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,7 +22,7 @@ class Home extends Component {
   render() {
     const {
       data: {
-        essentialsJson: {
+        chaptersJson: {
           tree: { components },
         },
         allFile: { edges },
@@ -23,19 +30,14 @@ class Home extends Component {
       pageContext: { toc },
     } = this.props;
 
-    // console.group('Home.js');
-    // console.log(this.props);
+    // console.group('ChapterTpl.js');
+    // console.log(this.props.pageContext.toc);
+    // console.log(toc);
     // console.groupEnd();
 
     return (
-      <Layout isHome toc={toc}>
+      <Layout toc={toc}>
         {_.sortBy(components, [o => o.order]).map(component => {
-          const merger = (propValues, constValues) => {
-            if (_.isArray(propValues)) {
-              return propValues.concat(constValues);
-            }
-          };
-
           // merge component.props.image object with actual graphql resolved image file
           const image = _.mergeWith(
             component.props.image,
@@ -74,11 +76,11 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ChapterTpl;
 
 export const pageQuery = graphql`
-  query HomeQuery($uid: String!) {
-    essentialsJson(meta: { uid: { eq: $uid } }) {
+  query ChapterTplQuery($uid: String!) {
+    chaptersJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -92,10 +94,17 @@ export const pageQuery = graphql`
           type
           props {
             align
+            anchor
             animate
             cover
             image {
               name
+            }
+            images {
+              alt
+              caption
+              name
+              order
             }
             mask
             subtitle

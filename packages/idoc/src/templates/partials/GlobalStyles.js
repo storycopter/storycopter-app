@@ -1,7 +1,8 @@
-import { color } from '@storycopter/ui/settings';
 import { createGlobalStyle } from 'styled-components';
-import { setType } from '@storycopter/ui/mixins';
 import { withTheme } from '@material-ui/styles';
+
+import { color } from '@storycopter/ui/settings';
+import { setType } from '@storycopter/ui/mixins';
 
 const GlobalStyle = createGlobalStyle`
 

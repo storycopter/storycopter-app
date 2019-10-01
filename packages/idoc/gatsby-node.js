@@ -3,7 +3,7 @@ const path = require('path');
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, 'templates'), 'node_modules'],
+      modules: [path.resolve(__dirname, 'src/templates'), 'node_modules'],
     },
   });
 };
@@ -12,11 +12,11 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
   const tpls = {
-    chapter: path.resolve(__dirname, 'templates/ChapterTpl.js'),
-    credits: path.resolve(__dirname, 'templates/CreditsTpl.js'),
-    error: path.resolve(__dirname, 'templates/ErrorTpl.js'),
-    home: path.resolve(__dirname, 'templates/HomeTpl.js'),
-    listing: path.resolve(__dirname, 'templates/ListingTpl.js'),
+    chapter: path.resolve(__dirname, 'src/templates/ChapterTpl.js'),
+    credits: path.resolve(__dirname, 'src/templates/CreditsTpl.js'),
+    error: path.resolve(__dirname, 'src/templates/ErrorTpl.js'),
+    home: path.resolve(__dirname, 'src/templates/HomeTpl.js'),
+    listing: path.resolve(__dirname, 'src/templates/ListingTpl.js'),
   };
 
   const essentials = await graphql(`

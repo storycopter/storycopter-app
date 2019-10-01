@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import { array, bool } from 'prop-types';
-import { navigate } from 'gatsby';
+import { graphql, navigate, StaticQuery } from 'gatsby';
+
 import { withTheme } from '@material-ui/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -192,113 +193,129 @@ class TopBar extends Component {
     // console.groupEnd();
 
     return (
-      <PopupState variant="popover" popupId="sharePopover">
-        {popupState => (
+      <StaticQuery
+        query={graphql`
+          query TopBarQuery {
+            site {
+              siteMetadata {
+                title
+              }
+            }
+          }
+        `}
+        render={data => (
           <>
-            <Element
-              isHovered={this.state.isHovered || popupState.isOpen}
-              onMouseOut={() => this.toggleHoveredState(false)}
-              onMouseOver={() => this.toggleHoveredState(true)}
-              theme={theme}>
-              <Side lx>
-                <Toolbar>
-                  <Grid container spacing={1}>
-                    <Grid item>
-                      <Tooltip title="Table of contents">
-                        <IconButton>
-                          <MenuIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Grid>
-                    <Grid item>
-                      <Tooltip title="Previous page">
-                        <IconButton
-                          disabled={!allowPrev}
-                          style={{
-                            borderBottomRightRadius: 0,
-                            borderTopRightRadius: 0,
-                          }}>
-                          <KeyboardArrowLeftIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Next page">
-                        <IconButton
-                          disabled={!allowNext}
-                          style={{
-                            borderBottomLeftRadius: 0,
-                            borderTopLeftRadius: 0,
-                          }}>
-                          <KeyboardArrowRightIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Grid>
-                  </Grid>
-                </Toolbar>
-              </Side>
-              <Main>
-                <Title theme={theme}>
-                  <span>Title</span>
-                </Title>
-                <Preview>Preview</Preview>
-                <Breadcrumbs count={toc.length}>
-                  {toc.length > 1 ? (
-                    <ol>
-                      {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
-                        return (
-                          <Breadcrumb key={chapter.uid}>
-                            <Tooltip title={chapter.title}>
-                              <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.path)}>
-                                <span className="bc-order">{chapter.id}</span>
-                                <span className="bc-title">{chapter.title}</span>
-                                <span className="bc-tick"></span>
-                              </BreadcrumbMarker>
+            <h1>{data.site.siteMetadata.title}</h1>
+            <PopupState variant="popover" popupId="sharePopover">
+              {popupState => (
+                <>
+                  <Element
+                    isHovered={this.state.isHovered || popupState.isOpen}
+                    onMouseOut={() => this.toggleHoveredState(false)}
+                    onMouseOver={() => this.toggleHoveredState(true)}
+                    theme={theme}>
+                    <Side lx>
+                      <Toolbar>
+                        <Grid container spacing={1}>
+                          <Grid item>
+                            <Tooltip title="Table of contents">
+                              <IconButton>
+                                <MenuIcon />
+                              </IconButton>
                             </Tooltip>
-                          </Breadcrumb>
-                        );
-                      })}
-                    </ol>
-                  ) : null}
-                </Breadcrumbs>
-              </Main>
-              <Side rx>
-                <Toolbar>
-                  <Grid container spacing={1}>
-                    <Grid item>
-                      <Tooltip title="Share">
-                        <IconButton {...bindTrigger(popupState)}>
-                          <ShareIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Grid>
-                    <Grid item>
-                      <Tooltip title="Take action">
-                        <IconButton>
-                          <PointerIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Grid>
-                  </Grid>
-                </Toolbar>
-              </Side>
-            </Element>
-            <Menu
-              {...bindMenu(popupState)}
-              getContentAnchorEl={null}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}>
-              <MenuItem onClick={popupState.close}>Facebook</MenuItem>
-              <MenuItem onClick={popupState.close}>Twitter</MenuItem>
-              <MenuItem onClick={popupState.close}>Email</MenuItem>
-            </Menu>
+                          </Grid>
+                          <Grid item>
+                            <Tooltip title="Previous page">
+                              <IconButton
+                                disabled={!allowPrev}
+                                style={{
+                                  borderBottomRightRadius: 0,
+                                  borderTopRightRadius: 0,
+                                }}>
+                                <KeyboardArrowLeftIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Next page">
+                              <IconButton
+                                disabled={!allowNext}
+                                style={{
+                                  borderBottomLeftRadius: 0,
+                                  borderTopLeftRadius: 0,
+                                }}>
+                                <KeyboardArrowRightIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </Grid>
+                        </Grid>
+                      </Toolbar>
+                    </Side>
+                    <Main>
+                      <Title theme={theme}>
+                        <span>Title</span>
+                      </Title>
+                      <Preview>Preview</Preview>
+                      <Breadcrumbs count={toc.length}>
+                        {toc.length > 1 ? (
+                          <ol>
+                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
+                              return (
+                                <Breadcrumb key={chapter.uid}>
+                                  <Tooltip title={chapter.title}>
+                                    <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.path)}>
+                                      <span className="bc-order">{chapter.id}</span>
+                                      <span className="bc-title">{chapter.title}</span>
+                                      <span className="bc-tick"></span>
+                                    </BreadcrumbMarker>
+                                  </Tooltip>
+                                </Breadcrumb>
+                              );
+                            })}
+                          </ol>
+                        ) : null}
+                      </Breadcrumbs>
+                    </Main>
+                    <Side rx>
+                      <Toolbar>
+                        <Grid container spacing={1}>
+                          <Grid item>
+                            <Tooltip title="Share">
+                              <IconButton {...bindTrigger(popupState)}>
+                                <ShareIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item>
+                            <Tooltip title="Take action">
+                              <IconButton>
+                                <PointerIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </Grid>
+                        </Grid>
+                      </Toolbar>
+                    </Side>
+                  </Element>
+                  <Menu
+                    {...bindMenu(popupState)}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}>
+                    <MenuItem onClick={popupState.close}>Facebook</MenuItem>
+                    <MenuItem onClick={popupState.close}>Twitter</MenuItem>
+                    <MenuItem onClick={popupState.close}>Email</MenuItem>
+                  </Menu>
+                </>
+              )}
+            </PopupState>
           </>
         )}
-      </PopupState>
+      />
     );
   }
 }

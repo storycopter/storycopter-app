@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { array, bool } from 'prop-types';
 
-import { FooBar, GlobalStyles, TopBar } from '@storycopter/ui/partials';
 import { IdocProvider } from '@storycopter/ui/providers';
+
+import FooBar from './FooBar';
+import GlobalStyles from './GlobalStyles';
+import TopBar from './TopBar';
 
 class Layout extends Component {
   constructor(props) {
