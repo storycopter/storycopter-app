@@ -65,15 +65,13 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   ];
 
-  const toc = chapters.data.allChaptersJson.edges.map(el => el.node.meta);
-
   creators.forEach(creator => {
     const { edges } = creator.src.data[creator.gql];
     edges.forEach(({ node }) => {
       const { path, uid } = node.meta;
       createPage({
         component: creator.tpl ? creator.tpl : tpls[uid],
-        context: { uid: uid, toc: toc },
+        context: { uid: uid },
         path: path,
       });
     });

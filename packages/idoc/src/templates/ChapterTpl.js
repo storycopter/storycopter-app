@@ -29,13 +29,12 @@ class ChapterTpl extends Component {
       },
     } = this.props;
 
-    // console.group('ChapterTpl.js');
-    // console.log(this.props.pageContext.toc);
-    // console.log(toc);
-    // console.groupEnd();
+    console.group('ChapterTpl.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
-      <Layout>
+      <Layout location={this.props.location} pageContext={this.props.pageContext} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
           // merge component.props.image object with actual graphql resolved image file
           const image = _.mergeWith(

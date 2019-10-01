@@ -24,7 +24,7 @@ import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
   flex-direction: row;
-  flex: 0 0 142px;
+  flex: 0 0 143px;
   justify-content: ${({ lx, rx }) => (rx ? 'flex-end' : 'flex-start')};
 
   ${({ lx, rx }) =>
@@ -80,11 +80,11 @@ const BreadcrumbMarker = styled.a`
   cursor: pointer;
   display: inline-block;
   font-size: 1px;
-  height: 32px;
-  line-height: 32px;
+  height: 34px;
+  line-height: 34px;
   position: relative;
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
-  width: 32px;
+  width: 34px;
   &:hover {
     background-color: ${color.flare100};
     box-shadow: 0 0 5px ${color.shadow300};
@@ -153,7 +153,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
     isHovered
       ? `
     background-color: ${color.mono900};
-    box-shadow: 0 1px 5px ${color.shadow300};
+    box-shadow: 0 0 0 10px ${color.shadow300};
     pointer-events: auto;
     ${Breadcrumbs} {
       display: block;
@@ -247,6 +247,7 @@ class TopBar extends Component {
 
           console.group('TopBar.js');
           console.log(toc);
+          console.log(this.props);
           console.groupEnd();
 
           return (

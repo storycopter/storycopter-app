@@ -30,7 +30,7 @@ class Layout extends Component {
   // }
 
   render() {
-    const { children, isHome, isCredits, toc } = this.props;
+    const { children, isHome, isCredits } = this.props;
 
     // console.group('Layout.js');
     // console.log(this.props);
@@ -45,7 +45,7 @@ class Layout extends Component {
             allowPrev={!isHome && !isCredits}
             isCredits={isCredits}
             isHome={isHome}
-            toc={toc}
+            {...this.props}
           />
         </IdocProvider>
         <main>{children}</main>
