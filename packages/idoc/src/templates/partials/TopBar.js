@@ -180,6 +180,22 @@ const TopBarQuery = graphql`
         }
       }
     }
+    allFile(filter: { sourceInstanceName: { eq: "chapters" }, name: { eq: "cover" } }) {
+      edges {
+        node {
+          childImageSharp {
+            resize(quality: 95, width: 50, height: 60) {
+              originalName
+              src
+            }
+            fixed(width: 50, height: 60, quality: 95, cropFocus: CENTER, fit: COVER) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+          relativePath
+        }
+      }
+    }
   }
 `;
 
@@ -189,7 +205,6 @@ class TopBar extends Component {
     this.state = {
       isHovered: true,
     };
-    this.onBreadcrumbClick = this.onBreadcrumbClick.bind(this);
     this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
   }
@@ -200,10 +215,6 @@ class TopBar extends Component {
   toggleSharePopover(state) {
     this.setState({ isHovered: state });
   }
-  onBreadcrumbClick(path) {
-    console.log('onBreadcrumbClick', path);
-    navigate(path);
-  }
 
   render() {
     const { allowPrev, allowNext, theme } = this.props;
@@ -212,11 +223,20 @@ class TopBar extends Component {
       <StaticQuery
         query={TopBarQuery}
         render={data => {
-          const toc = data.allChaptersJson.edges.map(el => el.node.meta);
+          // fetch cover images by name
+          const covers = data.allFile.edges.map(el => el.node);
+          const toc = data.allChaptersJson.edges
+            .map(el => el.node.meta)
+            .map(el => {
+              return {
+                ...el,
+                cover: {
+                  ...el.cover,
+                  ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
+                },
+              };
+            });
 
-          console.group('TopBar.js');
-          console.log(toc);
-          console.groupEnd();
           return (
             <PopupState variant="popover" popupId="sharePopover">
               {popupState => (
@@ -273,7 +293,7 @@ class TopBar extends Component {
                               return (
                                 <Breadcrumb key={chapter.uid}>
                                   <Tooltip title={chapter.title}>
-                                    <BreadcrumbMarker onClick={() => this.onBreadcrumbClick(chapter.path)}>
+                                    <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
                                       <span className="bc-order">{chapter.id}</span>
                                       <span className="bc-title">{chapter.title}</span>
                                       <span className="bc-tick"></span>
