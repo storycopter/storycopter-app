@@ -163,6 +163,26 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
       : ``};
 `;
 
+const TopBarQuery = graphql`
+  query TopBarQuery {
+    allChaptersJson {
+      edges {
+        node {
+          meta {
+            cover {
+              name
+            }
+            order
+            path
+            title
+            uid
+          }
+        }
+      }
+    }
+  }
+`;
+
 class TopBar extends Component {
   constructor(props) {
     super(props);
@@ -186,26 +206,18 @@ class TopBar extends Component {
   }
 
   render() {
-    const { allowPrev, allowNext, toc, theme } = this.props;
-
-    // console.group('TopBar.js');
-    // console.log(toc);
-    // console.groupEnd();
+    const { allowPrev, allowNext, theme } = this.props;
 
     return (
       <StaticQuery
-        query={graphql`
-          query TopBarQuery {
-            site {
-              siteMetadata {
-                title
-              }
-            }
-          }
-        `}
-        render={data => (
-          <>
-            <h1>{data.site.siteMetadata.title}</h1>
+        query={TopBarQuery}
+        render={data => {
+          const toc = data.allChaptersJson.edges.map(el => el.node.meta);
+
+          console.group('TopBar.js');
+          console.log(toc);
+          console.groupEnd();
+          return (
             <PopupState variant="popover" popupId="sharePopover">
               {popupState => (
                 <>
@@ -313,8 +325,8 @@ class TopBar extends Component {
                 </>
               )}
             </PopupState>
-          </>
-        )}
+          );
+        }}
       />
     );
   }
@@ -327,7 +339,6 @@ TopBar.propTypes = {
   allowPrev: bool,
   isCredits: bool,
   isHome: bool,
-  toc: array.isRequired,
 };
 TopBar.defaultProps = {
   allowPrev: null,
