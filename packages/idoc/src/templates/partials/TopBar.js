@@ -247,11 +247,11 @@ class TopBar extends Component {
           // fetch active chapter
           const thisChapter = _.find(toc, o => o.path === this.props.path);
 
-          console.group('TopBar.js');
-          console.log(toc);
-          console.log(thisChapter);
-          console.log(this.props);
-          console.groupEnd();
+          // console.group('TopBar.js');
+          // console.log(toc);
+          // console.log(thisChapter);
+          // console.log(this.props);
+          // console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
