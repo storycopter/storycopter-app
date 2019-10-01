@@ -6,6 +6,12 @@ import { IdocProvider } from '@storycopter/ui/providers';
 import { Layout } from '@storycopter/ui/partials';
 import { componentMap } from '@storycopter/ui/components';
 
+const merger = (someValues, otherValues) => {
+  if (_.isArray(someValues)) {
+    return someValues.concat(otherValues);
+  }
+};
+
 class ChapterTpl extends Component {
   constructor(props) {
     super(props);
@@ -31,12 +37,6 @@ class ChapterTpl extends Component {
     return (
       <Layout toc={toc}>
         {_.sortBy(components, [o => o.order]).map(component => {
-          const merger = (propValues, constValues) => {
-            if (_.isArray(propValues)) {
-              return propValues.concat(constValues);
-            }
-          };
-
           // merge component.props.image object with actual graphql resolved image file
           const image = _.mergeWith(
             component.props.image,

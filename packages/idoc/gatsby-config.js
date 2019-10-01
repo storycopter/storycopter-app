@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   siteMetadata: {
-    // siteUrl: config.site.url
+    title: 'Storycopter',
   },
   plugins: [
     {

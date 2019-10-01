@@ -1,5 +1,4 @@
 const path = require('path');
-const flattenDeep = require('lodash/flattenDeep');
 
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
@@ -40,7 +39,9 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              cover
+              cover {
+                name
+              }
               order
               path
               title

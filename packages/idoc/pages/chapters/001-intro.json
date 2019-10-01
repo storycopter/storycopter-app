@@ -1,6 +1,8 @@
 {
   "meta": {
-    "cover": "cover.jpg",
+    "cover": {
+      "name": "cover.jpg"
+    },
     "order": 1,
     "path": "/intro",
     "title": "Intro",

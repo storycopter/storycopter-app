@@ -1,6 +1,8 @@
 {
   "meta": {
-    "cover": "cover.jpg",
+    "cover": {
+      "name": "cover.jpg"
+    },
     "order": 4,
     "path": "/end",
     "title": "The End",
