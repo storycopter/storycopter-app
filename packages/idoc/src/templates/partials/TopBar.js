@@ -144,7 +144,7 @@ const Breadcrumbs = styled.nav`
   transform: translateY(50%);
   transition: opacity ${time.m};
   &:before {
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.background.accent};
     content: ' ';
     display: block;
     height: 2px;
