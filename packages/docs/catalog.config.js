@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
   webpack: config => {
     config.resolveLoader.modules.push(path.resolve(__dirname, './../../node_modules'));
-
     config.module.rules[0].oneOf.splice(1, 1);
     config.module.rules[0].oneOf.unshift(
       {
@@ -25,7 +24,7 @@ module.exports = {
       }
     );
 
-    // console.log(JSON.stringify(config));
+    console.log(JSON.stringify(config));
     return config;
   },
 };

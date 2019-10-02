@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   siteMetadata: {
-    // siteUrl: config.site.url
+    title: 'Storycopter',
   },
   plugins: [
     {
@@ -24,21 +24,21 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `templates`,
-        path: `${__dirname}/templates/`,
+        path: `${__dirname}/src/templates`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `essentials`,
-        path: `${__dirname}/pages/essentials/`,
+        path: `${__dirname}/src/essentials/`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `chapters`,
-        path: `${__dirname}/pages/chapters/`,
+        path: `${__dirname}/src/chapters/`,
       },
     },
   ],
