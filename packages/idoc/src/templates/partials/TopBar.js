@@ -237,11 +237,6 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = { tooltip: null };
-    this.onBreadcrumbClick = this.onBreadcrumbClick.bind(this);
-  }
-
-  onBreadcrumbClick() {
-    this.setState({ tooltip: null });
   }
 
   render() {
@@ -274,7 +269,7 @@ class TopBar extends Component {
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
           // console.group('TopBar.js');
-          // console.log(this.state);
+          // console.log(this.state.tooltip);
           // console.groupEnd();
 
           return (
@@ -369,7 +364,7 @@ class TopBar extends Component {
                               const camelId = _.camelCase(`str${chapter.uid}`);
                               const breadcrumb = (
                                 <div style={{ display: 'inline-block' }}>
-                                  <BreadcrumbLink to={chapter.path} onClick={this.onBreadcrumbClick}>
+                                  <BreadcrumbLink to={chapter.path} onClick={() => this.setState({ tooltip: null })}>
                                     <span className="breadcrumb-order">{chapter.id}</span>
                                     <span className="breadcrumb-title">{chapter.title}</span>
                                     <span className="breadcrumb-tick"></span>
