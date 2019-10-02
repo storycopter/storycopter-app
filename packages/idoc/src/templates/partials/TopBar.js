@@ -268,7 +268,7 @@ class TopBar extends Component {
   }
 
   render() {
-    const { allowPrev, allowNext, theme } = this.props;
+    const { allowPrev, allowNext, theme, isHome, isCredits } = this.props;
 
     return (
       <StaticQuery
@@ -289,10 +289,15 @@ class TopBar extends Component {
             });
 
           // fetch active chapter
-          const thisChapter = _.find(toc, o => o.path === this.props.path);
+          const currentChapter = _.find(toc, o => o.path === this.props.path);
+          const currentChapterI = _.findIndex(toc, o => o.path === this.props.path);
+          const isLastChapter = currentChapterI === toc.length - 1;
+          const isFirstChapter = currentChapterI === 0;
+          const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
+          const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
           // console.group('TopBar.js');
-          // console.log(toc);
+          // console.log(toc.length);
           // console.groupEnd();
 
           return (
@@ -316,24 +321,26 @@ class TopBar extends Component {
                           </Grid>
                           <Grid item>
                             <Tooltip title="Previous page">
-                              <IconButton
-                                disabled={!allowPrev}
-                                style={{
-                                  borderBottomRightRadius: 0,
-                                  borderTopRightRadius: 0,
-                                }}>
-                                <KeyboardArrowLeftIcon />
-                              </IconButton>
+                              <AniLink fade duration={0.5} to={isHome ? '/credits' : prevPath}>
+                                <IconButton
+                                  style={{
+                                    borderBottomRightRadius: 0,
+                                    borderTopRightRadius: 0,
+                                  }}>
+                                  <KeyboardArrowLeftIcon />
+                                </IconButton>
+                              </AniLink>
                             </Tooltip>
                             <Tooltip title="Next page">
-                              <IconButton
-                                disabled={!allowNext}
-                                style={{
-                                  borderBottomLeftRadius: 0,
-                                  borderTopLeftRadius: 0,
-                                }}>
-                                <KeyboardArrowRightIcon />
-                              </IconButton>
+                              <AniLink fade duration={0.5} to={isCredits ? '/' : nextPath}>
+                                <IconButton
+                                  style={{
+                                    borderBottomLeftRadius: 0,
+                                    borderTopLeftRadius: 0,
+                                  }}>
+                                  <KeyboardArrowRightIcon />
+                                </IconButton>
+                              </AniLink>
                             </Tooltip>
                           </Grid>
                         </Grid>
@@ -344,7 +351,7 @@ class TopBar extends Component {
                         <span>Hiking Cima dell’Uomo</span>
                       </Title>
                       <Summary>
-                        {thisChapter ? (
+                        {currentChapter ? (
                           <>
                             <Typography
                               className="summary-title"
@@ -360,12 +367,12 @@ class TopBar extends Component {
                               display="block"
                               noWrap
                               variant="subtitle2">
-                              {thisChapter.title}
+                              {currentChapter.title}
                             </Typography>
                           </>
                         ) : null}
                       </Summary>
-                      <Breadcrumbs count={toc.length} current={thisChapter ? thisChapter.order : null}>
+                      <Breadcrumbs count={toc.length} current={currentChapter ? currentChapter.order : null}>
                         {toc.length > 1 ? (
                           <ol>
                             {_.sortBy(toc, [o => o.order]).map((chapter, i) => (
@@ -393,7 +400,7 @@ class TopBar extends Component {
                                     </Preview>
                                   }>
                                   <div style={{ display: 'inline-block' }}>
-                                    <BreadcrumbMarker fade={0.5} to={chapter.path}>
+                                    <BreadcrumbMarker fade duration={0.5} to={chapter.path}>
                                       <span className="breadcrumb-order">{chapter.id}</span>
                                       <span className="breadcrumb-title">{chapter.title}</span>
                                       <span className="breadcrumb-tick"></span>
