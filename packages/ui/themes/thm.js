@@ -7,7 +7,7 @@ thm.overrides = {
   MuiTooltip: {
     tooltip: {
       backgroundColor: color.mono100,
-      color: color.mono900,
+      color: color.mono800,
       fontSize: thm.typography.pxToRem(13),
       fontWeight: thm.typography.fontWeightRegular,
     },
