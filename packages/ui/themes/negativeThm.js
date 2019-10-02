@@ -36,14 +36,6 @@ negativeThm.palette = {
 
 negativeThm.overrides = {
   ...thm.overrides,
-  MuiTooltip: {
-    tooltip: {
-      backgroundColor: color.mono900,
-      color: color.mono100,
-      fontSize: thm.typography.pxToRem(13),
-      fontWeight: thm.typography.fontWeightRegular,
-    },
-  },
 };
 
 export default negativeThm;
