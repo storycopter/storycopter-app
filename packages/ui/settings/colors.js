@@ -2,6 +2,7 @@ import { darken, lighten } from 'polished';
 
 export const colors = {
   accent: '#c23232',
+  white: '#fff',
 
   mono100: lighten(0.48, '#767269'),
   mono200: lighten(0.36, '#767269'),

@@ -55,10 +55,13 @@ const Title = styled.h1`
   & > span {
     ${setSpace('phs')};
     ${setSpace('pvx')};
-    ${setType('x')};
-    background-color: ${color.shadow200};
+    background-color: ${color.shadow500};
     border-radius: 1px;
+    color: ${color.white};
+    letter-spacing: ${track.l};
     pointer-events: auto;
+    position: relative;
+    text-transform: uppercase;
   }
 `;
 const Summary = styled.div`
@@ -141,13 +144,14 @@ const Breadcrumbs = styled.nav`
   transform: translateY(50%);
   transition: opacity ${time.m};
   &:before {
-    background: white;
+    background: ${({ theme }) => theme.palette.primary.main};
     content: ' ';
     display: block;
-    height: 1px;
+    height: 2px;
     left: 0;
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
     width: ${({ count, current }) => (100 / count) * current - 100 / count / 2}%;
   }
   & > ol {
@@ -178,7 +182,7 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
     isHovered
       ? `
     background-color: ${color.mono900};
-    box-shadow: 0 0 0 10px ${color.shadow200};
+    box-shadow: 0 0 0 10px ${color.shadow400};
     pointer-events: auto;
     ${Breadcrumbs} {
       display: block;
@@ -295,9 +299,9 @@ class TopBar extends Component {
           const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
-          // console.group('TopBar.js');
-          // console.log(toc.length);
-          // console.groupEnd();
+          console.group('TopBar.js');
+          console.log(theme);
+          console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
@@ -349,9 +353,11 @@ class TopBar extends Component {
                       </Toolbar>
                     </Side>
                     <Main>
-                      {isHome ? (
+                      {isHome || isCredits ? (
                         <Title theme={theme}>
-                          <span>Hiking Cima dell’Uomo</span>
+                          <Typography component="span" noWrap variant="caption">
+                            Hiking Cima dell’Uomo
+                          </Typography>
                         </Title>
                       ) : null}
                       <Summary>
@@ -376,7 +382,10 @@ class TopBar extends Component {
                           </>
                         ) : null}
                       </Summary>
-                      <Breadcrumbs count={toc.length} current={currentChapter ? currentChapter.order : null}>
+                      <Breadcrumbs
+                        count={toc.length}
+                        current={currentChapter ? currentChapterI + 1 : isCredits ? toc.length + 1 : null}
+                        theme={theme}>
                         {toc.length > 1 ? (
                           <ol>
                             {_.sortBy(toc, [o => o.order]).map((chapter, i) => (
