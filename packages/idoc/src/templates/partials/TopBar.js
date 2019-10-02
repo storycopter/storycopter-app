@@ -1,4 +1,3 @@
-import AniLink from 'gatsby-plugin-transition-link/AniLink';
 import Img from 'gatsby-image';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
@@ -21,6 +20,8 @@ import { withTheme } from '@material-ui/styles';
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { breakpoint, color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
+
+import AniLink from '../components/AniLink';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -92,7 +93,7 @@ const Preview = styled.div`
   }
 `;
 
-const BreadcrumbMarker = styled(AniLink)`
+const BreadcrumbLink = styled(AniLink)`
   background-color: transparent;
   border-radius: 100px;
   cursor: pointer;
@@ -299,9 +300,9 @@ class TopBar extends Component {
           const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
-          console.group('TopBar.js');
-          console.log(theme);
-          console.groupEnd();
+          // console.group('TopBar.js');
+          // console.log(theme);
+          // console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
@@ -324,10 +325,7 @@ class TopBar extends Component {
                           </Grid>
                           <Grid item>
                             <Tooltip title="Previous page">
-                              <AniLink
-                                fade
-                                duration={0.5}
-                                to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
+                              <AniLink to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
                                 <IconButton
                                   style={{
                                     borderBottomRightRadius: 0,
@@ -338,7 +336,7 @@ class TopBar extends Component {
                               </AniLink>
                             </Tooltip>
                             <Tooltip title="Next page">
-                              <AniLink fade duration={0.5} to={isCredits ? '/' : nextPath}>
+                              <AniLink to={isCredits ? '/' : nextPath}>
                                 <IconButton
                                   style={{
                                     borderBottomLeftRadius: 0,
@@ -413,11 +411,11 @@ class TopBar extends Component {
                                     </Preview>
                                   }>
                                   <div style={{ display: 'inline-block' }}>
-                                    <BreadcrumbMarker fade duration={0.5} to={chapter.path}>
+                                    <BreadcrumbLink to={chapter.path}>
                                       <span className="breadcrumb-order">{chapter.id}</span>
                                       <span className="breadcrumb-title">{chapter.title}</span>
                                       <span className="breadcrumb-tick"></span>
-                                    </BreadcrumbMarker>
+                                    </BreadcrumbLink>
                                   </div>
                                 </Tooltip>
                               </Breadcrumb>
