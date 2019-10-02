@@ -353,7 +353,7 @@ class TopBar extends Component {
                       </Toolbar>
                     </Side>
                     <Main>
-                      {isHome || isCredits ? (
+                      {isHome ? (
                         <Title theme={theme}>
                           <Typography component="span" noWrap variant="caption">
                             Hiking Cima dell’Uomo
@@ -361,7 +361,7 @@ class TopBar extends Component {
                         </Title>
                       ) : null}
                       <Summary>
-                        {currentChapter ? (
+                        {currentChapter || isCredits ? (
                           <>
                             <Typography
                               className="summary-title"
@@ -377,7 +377,7 @@ class TopBar extends Component {
                               display="block"
                               noWrap
                               variant="subtitle2">
-                              {currentChapter.title}
+                              {isCredits ? 'Credits' : currentChapter.title}
                             </Typography>
                           </>
                         ) : null}
