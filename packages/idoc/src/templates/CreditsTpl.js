@@ -12,9 +12,9 @@ class CreditsTpl extends Component {
   render() {
     const {} = this.props;
 
-    console.group('CreditsTpl.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('CreditsTpl.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <Layout isCredits>

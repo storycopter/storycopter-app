@@ -320,7 +320,10 @@ class TopBar extends Component {
                           </Grid>
                           <Grid item>
                             <Tooltip title="Previous page">
-                              <AniLink fade duration={0.5} to={isHome ? '/credits' : prevPath}>
+                              <AniLink
+                                fade
+                                duration={0.5}
+                                to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
                                 <IconButton
                                   style={{
                                     borderBottomRightRadius: 0,
