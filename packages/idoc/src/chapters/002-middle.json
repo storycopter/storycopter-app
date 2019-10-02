@@ -3,18 +3,18 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 4,
-    "path": "/end",
+    "order": 2,
+    "path": "/middle",
     "text": "Some text",
-    "title": "The End",
-    "uid": "004-end"
+    "title": "Middle",
+    "uid": "002-middle"
   },
   "tree": {
     "components": [
       {
-        "id": "001",
+        "id": "000",
         "invert": true,
-        "order": 1,
+        "order": 0,
         "props": {
           "align": "left",
           "anchor": null,
@@ -26,7 +26,7 @@
           "mask": "dark",
           "subtitle": "Some text",
           "text": "More text",
-          "title": "End"
+          "title": "Middle"
         },
         "type": "headline"
       }

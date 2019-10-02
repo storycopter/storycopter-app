@@ -3,18 +3,18 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 1,
+    "order": 0,
     "path": "/intro",
     "text": "Some text",
     "title": "Intro",
-    "uid": "001-intro"
+    "uid": "000-intro"
   },
   "tree": {
     "components": [
       {
-        "id": "001",
+        "id": "000",
         "invert": true,
-        "order": 2,
+        "order": 0,
         "props": {
           "align": "right",
           "anchor": null,
@@ -31,9 +31,9 @@
         "type": "headline"
       },
       {
-        "id": "002",
+        "id": "001",
         "invert": null,
-        "order": 3,
+        "order": 1,
         "props": {
           "align": "center",
           "anchor": "anchor1",
@@ -47,9 +47,9 @@
         "type": "headline"
       },
       {
-        "id": "003",
+        "id": "002",
         "invert": null,
-        "order": 4,
+        "order": 2,
         "props": {
           "align": "left",
           "anchor": "anchor2",
@@ -62,21 +62,21 @@
         "type": "headline"
       },
       {
-        "id": "004",
+        "id": "003",
         "invert": true,
-        "order": 5,
+        "order": 3,
         "props": {
           "images": [
             {
               "alt": "Alt text",
               "caption": "The first gallery item",
-              "name": "images-001.jpg",
+              "name": "images-000.jpg",
               "order": 1
             },
             {
               "alt": "Alt text",
               "caption": "The third gallery item",
-              "name": "images-003.jpg",
+              "name": "images-001.jpg",
               "order": 3
             },
             {

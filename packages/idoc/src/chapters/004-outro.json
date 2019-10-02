@@ -3,18 +3,18 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 2,
-    "path": "/beginning",
+    "order": 4,
+    "path": "/outro",
     "text": "Some text",
-    "title": "Beginning",
-    "uid": "002-beginning"
+    "title": "Outro",
+    "uid": "004-outro"
   },
   "tree": {
     "components": [
       {
-        "id": "001",
+        "id": "000",
         "invert": true,
-        "order": 1,
+        "order": 0,
         "props": {
           "align": "left",
           "anchor": null,
@@ -26,7 +26,7 @@
           "mask": "dark",
           "subtitle": "Some text",
           "text": "More text",
-          "title": "Beginning"
+          "title": "Outro"
         },
         "type": "headline"
       }
