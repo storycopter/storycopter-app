@@ -29,10 +29,6 @@ class ChapterTpl extends Component {
       },
     } = this.props;
 
-    // console.group('ChapterTpl.js');
-    // console.log(this.props);
-    // console.groupEnd();
-
     return (
       <Layout location={this.props.location} pageContext={this.props.pageContext} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
@@ -59,6 +55,14 @@ class ChapterTpl extends Component {
           );
 
           const RenderedComponent = componentMap[component.type];
+
+          {
+            /* console.group('ChapterTpl.js');
+          console.log({ image });
+          console.log({ images });
+          console.groupEnd(); */
+          }
+
           return (
             <IdocProvider invert={component.invert} key={component.id}>
               <RenderedComponent
