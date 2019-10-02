@@ -67,8 +67,11 @@ const Summary = styled.div`
   transition: opacity ${time.m};
   text-align: center;
   .summary-title {
+    letter-spacing: ${track.l};
     position: relative;
+    text-transform: uppercase;
     top: -2px;
+    color: ${color.mono400};
   }
   .summary-text {
     position: relative;
@@ -157,7 +160,7 @@ const Breadcrumbs = styled.nav`
   }
 `;
 
-const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />)`
+const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...props} />)`
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
@@ -175,7 +178,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
     isHovered
       ? `
     background-color: ${color.mono900};
-    box-shadow: 0 0 0 10px ${color.shadow300};
+    box-shadow: 0 0 0 10px ${color.shadow200};
     pointer-events: auto;
     ${Breadcrumbs} {
       display: block;
@@ -184,10 +187,6 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
     ${Summary} {
       display: block;
       opacity: 1;
-    }
-    ${Title} {
-      display: none;
-      opacity: 0;
     }
   `
       : ``};
@@ -347,9 +346,11 @@ class TopBar extends Component {
                       </Toolbar>
                     </Side>
                     <Main>
-                      <Title theme={theme}>
-                        <span>Hiking Cima dell’Uomo</span>
-                      </Title>
+                      {isHome ? (
+                        <Title theme={theme}>
+                          <span>Hiking Cima dell’Uomo</span>
+                        </Title>
+                      ) : null}
                       <Summary>
                         {currentChapter ? (
                           <>
@@ -362,7 +363,7 @@ class TopBar extends Component {
                               Hiking Cima dell’Uomo
                             </Typography>
                             <Typography
-                              className="summary-title"
+                              className="summary-text"
                               component="p"
                               display="block"
                               noWrap
