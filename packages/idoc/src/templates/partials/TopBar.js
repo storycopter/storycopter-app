@@ -1,12 +1,11 @@
+import AniLink from 'gatsby-plugin-transition-link/AniLink';
 import Img from 'gatsby-image';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import { bool } from 'prop-types';
-import { graphql, navigate, StaticQuery } from 'gatsby';
-
-import { withTheme } from '@material-ui/styles';
+import { graphql, StaticQuery } from 'gatsby';
 
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,9 +16,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { withTheme } from '@material-ui/styles';
 
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { breakpoint, color, time, zindex, track } from '@storycopter/ui/settings';
+import { breakpoint, color, time, track } from '@storycopter/ui/settings';
 import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
@@ -86,7 +86,7 @@ const Preview = styled.div`
   }
 `;
 
-const BreadcrumbMarker = styled.a`
+const BreadcrumbMarker = styled(AniLink)`
   background-color: transparent;
   border-radius: 100px;
   cursor: pointer;
@@ -237,6 +237,7 @@ class TopBar extends Component {
     };
     this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
+    this.verticalAnimation = this.verticalAnimation.bind(this);
   }
 
   toggleHoveredState(state) {
@@ -244,6 +245,26 @@ class TopBar extends Component {
   }
   toggleSharePopover(state) {
     this.setState({ isHovered: state });
+  }
+
+  verticalAnimation({ length }, direction) {
+    const directionTo = direction === 'up' ? '-100%' : '100%';
+    const directionFrom = direction === 'up' ? '100%' : '-100%';
+
+    // convert ms to s for gsap
+    const seconds = length;
+
+    return new TimelineMax()
+      .set(this.props.transitionCover, { y: directionFrom })
+      .to(this.props.transitionCover, seconds / 2, {
+        y: '0%',
+        ease: Power1.easeInOut,
+      })
+      .set(this.props.layoutContents, { opacity: 0 })
+      .to(this.props.transitionCover, seconds / 2, {
+        y: directionTo,
+        ease: Power1.easeIn,
+      });
   }
 
   render() {
@@ -371,11 +392,13 @@ class TopBar extends Component {
                                       </Typography>
                                     </Preview>
                                   }>
-                                  <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
-                                    <span className="breadcrumb-order">{chapter.id}</span>
-                                    <span className="breadcrumb-title">{chapter.title}</span>
-                                    <span className="breadcrumb-tick"></span>
-                                  </BreadcrumbMarker>
+                                  <div>
+                                    <BreadcrumbMarker duration={0.5} fade to={chapter.path}>
+                                      <span className="breadcrumb-order">{chapter.id}</span>
+                                      <span className="breadcrumb-title">{chapter.title}</span>
+                                      <span className="breadcrumb-tick"></span>
+                                    </BreadcrumbMarker>
+                                  </div>
                                 </Tooltip>
                               </Breadcrumb>
                             ))}
