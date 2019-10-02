@@ -5,6 +5,7 @@
     },
     "order": 1,
     "path": "/intro",
+    "text": "Some text",
     "title": "Intro",
     "uid": "001-intro"
   },

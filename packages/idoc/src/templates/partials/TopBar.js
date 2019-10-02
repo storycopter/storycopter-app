@@ -16,9 +16,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { breakpoint, color, time, track } from '@storycopter/ui/settings';
+import { breakpoint, color, time, zindex, track } from '@storycopter/ui/settings';
 import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
@@ -52,25 +53,36 @@ const Title = styled.h1`
   text-transform: uppercase;
   transition: opacity ${time.m};
   & > span {
-    ${setType('x')};
     ${setSpace('phs')};
     ${setSpace('pvx')};
+    ${setType('x')};
     background-color: ${color.shadow200};
+    border-radius: 1px;
     pointer-events: auto;
   }
 `;
-const Preview = styled.div`
-  align-content: center;
-  align-items: center;
+const Summary = styled.div`
   display: none;
-  flex-direction: row;
-  justify-content: flex-start;
   opacity: 0;
   transition: opacity ${time.m};
+  text-align: center;
+  .summary-title {
+    position: relative;
+    top: -2px;
+  }
+  .summary-text {
+    position: relative;
+    top: -2px;
+  }
+`;
+const Preview = styled.div`
   .preview-thumb {
-    ${setSpace('mrm')};
+    ${setSpace('mtx')};
   }
   .preview-title {
+  }
+  .preview-text {
+    ${setSpace('mbx')};
   }
 `;
 
@@ -110,8 +122,9 @@ const BreadcrumbMarker = styled.a`
   }
 `;
 const Breadcrumb = styled.li`
+  position: relative;
   text-align: center;
-  flex: 0 0 ${({ count }) => 100 / count}%;
+  z-index: 1;
 `;
 const Breadcrumbs = styled.nav`
   bottom: 0;
@@ -122,10 +135,9 @@ const Breadcrumbs = styled.nav`
   opacity: 0;
   position: absolute;
   right: 0;
-  right: 0;
   transform: translateY(50%);
   transition: opacity ${time.m};
-  &:after {
+  &:before {
     background: white;
     content: ' ';
     display: block;
@@ -141,7 +153,7 @@ const Breadcrumbs = styled.nav`
     justify-content: space-between;
   }
   ${Breadcrumb} {
-    flex: 0 0 ${({ count }) => 100 / count};
+    flex: 0 0 ${({ count }) => 100 / count}%;
   }
 `;
 
@@ -159,7 +171,6 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
   right: 0;
   top: 0;
   z-index: ${({ theme }) => theme.zIndex.appBar};
-
   ${({ isHovered }) =>
     isHovered
       ? `
@@ -170,8 +181,8 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
       display: block;
       opacity: 1;
     }
-    ${Preview} {
-      display: flex;
+    ${Summary} {
+      display: block;
       opacity: 1;
     }
     ${Title} {
@@ -193,6 +204,7 @@ const TopBarQuery = graphql`
             }
             order
             path
+            text
             title
             uid
           }
@@ -203,11 +215,10 @@ const TopBarQuery = graphql`
       edges {
         node {
           childImageSharp {
-            resize(quality: 95, width: 40, height: 40) {
-              originalName
-              src
+            thumb: fixed(width: 40, height: 40, quality: 95, cropFocus: CENTER, fit: COVER) {
+              ...GatsbyImageSharpFixed
             }
-            fixed(width: 40, height: 40, quality: 95, cropFocus: CENTER, fit: COVER) {
+            preview: fixed(width: 160, height: 80, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFixed
             }
           }
@@ -222,7 +233,7 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHovered: false,
+      isHovered: sfalse,
     };
     this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
@@ -260,7 +271,7 @@ class TopBar extends Component {
           const thisChapter = _.find(toc, o => o.path === this.props.path);
 
           // console.group('TopBar.js');
-          // console.log(thisChapterI);
+          // console.log(toc);
           // console.groupEnd();
 
           return (
@@ -309,32 +320,65 @@ class TopBar extends Component {
                     </Side>
                     <Main>
                       <Title theme={theme}>
-                        <span>Title</span>
+                        <span>Hiking Cima dell’Uomo</span>
                       </Title>
-                      <Preview>
+                      <Summary>
                         {thisChapter ? (
                           <>
-                            <Img fixed={thisChapter.cover.childImageSharp.fixed} className="preview-thumb" />
-                            <h2 className="preview-title">{thisChapter.title}</h2>
+                            <Typography
+                              className="summary-title"
+                              component="h2"
+                              display="block"
+                              noWrap
+                              variant="caption">
+                              Hiking Cima dell’Uomo
+                            </Typography>
+                            <Typography
+                              className="summary-title"
+                              component="p"
+                              display="block"
+                              noWrap
+                              variant="subtitle2">
+                              {thisChapter.title}
+                            </Typography>
                           </>
                         ) : null}
-                      </Preview>
+                      </Summary>
                       <Breadcrumbs count={toc.length} current={thisChapter ? thisChapter.order : null}>
                         {toc.length > 1 ? (
                           <ol>
-                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
-                              return (
-                                <Breadcrumb key={chapter.uid} count={toc.length}>
-                                  <Tooltip title={chapter.title}>
-                                    <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
-                                      <span className="breadcrumb-order">{chapter.id}</span>
-                                      <span className="breadcrumb-title">{chapter.title}</span>
-                                      <span className="breadcrumb-tick"></span>
-                                    </BreadcrumbMarker>
-                                  </Tooltip>
-                                </Breadcrumb>
-                              );
-                            })}
+                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => (
+                              <Breadcrumb key={chapter.uid}>
+                                <Tooltip
+                                  title={
+                                    <Preview>
+                                      <Img fixed={chapter.cover.childImageSharp.preview} className="preview-thumb" />
+                                      <Typography
+                                        className="preview-title"
+                                        component="h2"
+                                        display="block"
+                                        noWrap
+                                        variant="subtitle1">
+                                        {chapter.title}
+                                      </Typography>
+                                      <Typography
+                                        className="preview-text"
+                                        component="p"
+                                        display="block"
+                                        noWrap
+                                        variant="caption">
+                                        {chapter.text}
+                                      </Typography>
+                                    </Preview>
+                                  }>
+                                  <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
+                                    <span className="breadcrumb-order">{chapter.id}</span>
+                                    <span className="breadcrumb-title">{chapter.title}</span>
+                                    <span className="breadcrumb-tick"></span>
+                                  </BreadcrumbMarker>
+                                </Tooltip>
+                              </Breadcrumb>
+                            ))}
                           </ol>
                         ) : null}
                       </Breadcrumbs>
