@@ -195,7 +195,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
 
 const TopBarQuery = graphql`
   query TopBarQuery {
-    allChaptersJson {
+    allChaptersJson(sort: { fields: meta___order }) {
       edges {
         node {
           meta {
