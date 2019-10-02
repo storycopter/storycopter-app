@@ -19,7 +19,7 @@ import { withTheme } from '@material-ui/styles';
 
 import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
 import { breakpoint, color, time, track } from '@storycopter/ui/settings';
-import { setHeight, setSpace, setType } from '@storycopter/ui/mixins';
+import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
 
@@ -236,43 +236,16 @@ const TopBarQuery = graphql`
 class TopBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isHovered: false,
-    };
-    this.toggleSharePopover = this.toggleSharePopover.bind(this);
-    this.toggleHoveredState = this.toggleHoveredState.bind(this);
-    this.verticalAnimation = this.verticalAnimation.bind(this);
+    this.state = { tooltip: null };
+    this.onBreadcrumbClick = this.onBreadcrumbClick.bind(this);
   }
 
-  toggleHoveredState(state) {
-    this.setState({ isHovered: state });
-  }
-  toggleSharePopover(state) {
-    this.setState({ isHovered: state });
-  }
-
-  verticalAnimation({ length }, direction) {
-    const directionTo = direction === 'up' ? '-100%' : '100%';
-    const directionFrom = direction === 'up' ? '100%' : '-100%';
-
-    // convert ms to s for gsap
-    const seconds = length;
-
-    return new TimelineMax()
-      .set(this.props.transitionCover, { y: directionFrom })
-      .to(this.props.transitionCover, seconds / 2, {
-        y: '0%',
-        ease: Power1.easeInOut,
-      })
-      .set(this.props.layoutContents, { opacity: 0 })
-      .to(this.props.transitionCover, seconds / 2, {
-        y: directionTo,
-        ease: Power1.easeIn,
-      });
+  onBreadcrumbClick() {
+    this.setState({ tooltip: null });
   }
 
   render() {
-    const { allowPrev, allowNext, theme, isHome, isCredits } = this.props;
+    const { theme, isHome, isCredits } = this.props;
 
     return (
       <StaticQuery
@@ -301,7 +274,7 @@ class TopBar extends Component {
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
           // console.group('TopBar.js');
-          // console.log(theme);
+          // console.log(this.state);
           // console.groupEnd();
 
           return (
@@ -310,41 +283,47 @@ class TopBar extends Component {
                 <>
                   <Element
                     isHovered={this.state.isHovered || popupState.isOpen}
-                    onMouseOut={() => this.toggleHoveredState(false)}
-                    onMouseOver={() => this.toggleHoveredState(true)}
+                    onMouseOut={() => this.setState({ isHovered: false })}
+                    onMouseOver={() => this.setState({ isHovered: true })}
                     theme={theme}>
                     <Side lx>
                       <Toolbar>
                         <Grid container spacing={1}>
                           <Grid item>
                             <Tooltip title="Table of contents">
-                              <IconButton>
-                                <MenuIcon />
-                              </IconButton>
+                              <div style={{ display: 'inline-block' }}>
+                                <IconButton>
+                                  <MenuIcon />
+                                </IconButton>
+                              </div>
                             </Tooltip>
                           </Grid>
                           <Grid item>
-                            <Tooltip title="Previous page">
-                              <AniLink to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
-                                <IconButton
-                                  style={{
-                                    borderBottomRightRadius: 0,
-                                    borderTopRightRadius: 0,
-                                  }}>
-                                  <KeyboardArrowLeftIcon />
-                                </IconButton>
-                              </AniLink>
+                            <Tooltip title="Previous chapter">
+                              <div style={{ display: 'inline-block' }}>
+                                <AniLink to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
+                                  <IconButton
+                                    style={{
+                                      borderBottomRightRadius: 0,
+                                      borderTopRightRadius: 0,
+                                    }}>
+                                    <KeyboardArrowLeftIcon />
+                                  </IconButton>
+                                </AniLink>
+                              </div>
                             </Tooltip>
-                            <Tooltip title="Next page">
-                              <AniLink to={isCredits ? '/' : nextPath}>
-                                <IconButton
-                                  style={{
-                                    borderBottomLeftRadius: 0,
-                                    borderTopLeftRadius: 0,
-                                  }}>
-                                  <KeyboardArrowRightIcon />
-                                </IconButton>
-                              </AniLink>
+                            <Tooltip title="Next chapter">
+                              <div style={{ display: 'inline-block' }}>
+                                <AniLink to={isCredits ? '/' : nextPath}>
+                                  <IconButton
+                                    style={{
+                                      borderBottomLeftRadius: 0,
+                                      borderTopLeftRadius: 0,
+                                    }}>
+                                    <KeyboardArrowRightIcon />
+                                  </IconButton>
+                                </AniLink>
+                              </div>
                             </Tooltip>
                           </Grid>
                         </Grid>
@@ -386,40 +365,49 @@ class TopBar extends Component {
                         theme={theme}>
                         {toc.length > 1 ? (
                           <ol>
-                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => (
-                              <Breadcrumb key={chapter.uid}>
-                                <Tooltip
-                                  title={
-                                    <Preview>
-                                      <Img fixed={chapter.cover.childImageSharp.preview} className="preview-thumb" />
-                                      <Typography
-                                        className="preview-title"
-                                        component="h2"
-                                        display="block"
-                                        noWrap
-                                        variant="subtitle1">
-                                        {chapter.title}
-                                      </Typography>
-                                      <Typography
-                                        className="preview-text"
-                                        component="p"
-                                        display="block"
-                                        noWrap
-                                        variant="caption">
-                                        {chapter.text}
-                                      </Typography>
-                                    </Preview>
-                                  }>
-                                  <div style={{ display: 'inline-block' }}>
-                                    <BreadcrumbLink to={chapter.path}>
-                                      <span className="breadcrumb-order">{chapter.id}</span>
-                                      <span className="breadcrumb-title">{chapter.title}</span>
-                                      <span className="breadcrumb-tick"></span>
-                                    </BreadcrumbLink>
-                                  </div>
-                                </Tooltip>
-                              </Breadcrumb>
-                            ))}
+                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
+                              const camelId = _.camelCase(`str${chapter.uid}`);
+                              const breadcrumb = (
+                                <div style={{ display: 'inline-block' }}>
+                                  <BreadcrumbLink to={chapter.path} onClick={this.onBreadcrumbClick}>
+                                    <span className="breadcrumb-order">{chapter.id}</span>
+                                    <span className="breadcrumb-title">{chapter.title}</span>
+                                    <span className="breadcrumb-tick"></span>
+                                  </BreadcrumbLink>
+                                </div>
+                              );
+                              return (
+                                <Breadcrumb key={chapter.uid}>
+                                  <Tooltip
+                                    open={this.state.tooltip === camelId}
+                                    onClose={() => this.setState({ tooltip: null })}
+                                    onOpen={() => this.setState({ tooltip: camelId })}
+                                    title={
+                                      <Preview>
+                                        <Img fixed={chapter.cover.childImageSharp.preview} className="preview-thumb" />
+                                        <Typography
+                                          className="preview-title"
+                                          component="h2"
+                                          display="block"
+                                          noWrap
+                                          variant="subtitle1">
+                                          {chapter.title}
+                                        </Typography>
+                                        <Typography
+                                          className="preview-text"
+                                          component="p"
+                                          display="block"
+                                          noWrap
+                                          variant="caption">
+                                          {chapter.text}
+                                        </Typography>
+                                      </Preview>
+                                    }>
+                                    {breadcrumb}
+                                  </Tooltip>
+                                </Breadcrumb>
+                              );
+                            })}
                           </ol>
                         ) : null}
                       </Breadcrumbs>
@@ -429,16 +417,20 @@ class TopBar extends Component {
                         <Grid container spacing={1}>
                           <Grid item>
                             <Tooltip title="Share">
-                              <IconButton {...bindTrigger(popupState)}>
-                                <ShareIcon />
-                              </IconButton>
+                              <div style={{ display: 'inline-block' }}>
+                                <IconButton {...bindTrigger(popupState)}>
+                                  <ShareIcon />
+                                </IconButton>
+                              </div>
                             </Tooltip>
                           </Grid>
                           <Grid item>
                             <Tooltip title="Take action">
-                              <IconButton>
-                                <PointerIcon />
-                              </IconButton>
+                              <div style={{ display: 'inline-block' }}>
+                                <IconButton>
+                                  <PointerIcon />
+                                </IconButton>
+                              </div>
                             </Tooltip>
                           </Grid>
                         </Grid>

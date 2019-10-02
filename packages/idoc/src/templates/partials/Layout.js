@@ -40,13 +40,7 @@ class Layout extends Component {
       <IdocProvider>
         <GlobalStyles />
         <IdocProvider invert>
-          <TopBar
-            allowNext={!isCredits}
-            allowPrev={!isHome && !isCredits}
-            isCredits={isCredits}
-            isHome={isHome}
-            {...this.props}
-          />
+          <TopBar isCredits={isCredits} isHome={isHome} {...this.props} />
         </IdocProvider>
         <main>{children}</main>
         <FooBar></FooBar>
