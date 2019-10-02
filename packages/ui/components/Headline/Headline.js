@@ -1,8 +1,10 @@
 import 'rc-texty/assets/index.css';
+import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';
 import styled from 'styled-components';
 import { bool, func, object, string } from 'prop-types';
+
 import { withTheme } from '@material-ui/styles';
 
 import { breakpoint, color } from '@storycopter/ui/settings';
@@ -126,9 +128,6 @@ class Headline extends Component {
     super(props);
     this.state = { edit: null };
     this.enterEditMode = this.enterEditMode.bind(this);
-    // this.titleRef = createRef();
-    // this.subtitleRef = createRef();
-    // this.textRef = createRef();
   }
 
   enterEditMode(node) {
@@ -151,11 +150,14 @@ class Headline extends Component {
     };
 
     // console.group('Headline.js');
-    // console.log(this.props);
+    // console.log(image);
     // console.groupEnd();
 
     return (
       <Element align={align} animate={animate} cover={cover} image={image} id={anchor} mask={mask} theme={theme}>
+        {image ? (
+          <Img fixed={image.fixed} style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }} />
+        ) : null}
         <Parent>
           <Child>
             {title ? (

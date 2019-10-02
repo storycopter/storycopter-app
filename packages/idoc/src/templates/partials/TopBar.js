@@ -392,8 +392,8 @@ class TopBar extends Component {
                                       </Typography>
                                     </Preview>
                                   }>
-                                  <div>
-                                    <BreadcrumbMarker duration={0.5} fade to={chapter.path}>
+                                  <div style={{ display: 'inline-block' }}>
+                                    <BreadcrumbMarker fade={0.5} to={chapter.path}>
                                       <span className="breadcrumb-order">{chapter.id}</span>
                                       <span className="breadcrumb-title">{chapter.title}</span>
                                       <span className="breadcrumb-tick"></span>
