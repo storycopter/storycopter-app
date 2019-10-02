@@ -111,18 +111,30 @@ const BreadcrumbMarker = styled.a`
 `;
 const Breadcrumb = styled.li`
   text-align: center;
+  flex: 0 0 ${({ count }) => 100 / count}%;
 `;
 const Breadcrumbs = styled.nav`
   bottom: 0;
+  display: flex;
   display: none;
+  flex-direction: row;
   left: 0;
   opacity: 0;
-  padding-left: 160px;
-  padding-right: 160px;
   position: absolute;
+  right: 0;
   right: 0;
   transform: translateY(50%);
   transition: opacity ${time.m};
+  &:after {
+    background: white;
+    content: ' ';
+    display: block;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    width: ${({ count, current }) => (100 / count) * current - 100 / count / 2}%;
+  }
   & > ol {
     display: flex;
     flex-direction: row;
@@ -248,9 +260,7 @@ class TopBar extends Component {
           const thisChapter = _.find(toc, o => o.path === this.props.path);
 
           // console.group('TopBar.js');
-          // console.log(toc);
-          // console.log(thisChapter);
-          // console.log(this.props);
+          // console.log(thisChapterI);
           // console.groupEnd();
 
           return (
@@ -309,12 +319,12 @@ class TopBar extends Component {
                           </>
                         ) : null}
                       </Preview>
-                      <Breadcrumbs count={toc.length}>
+                      <Breadcrumbs count={toc.length} current={thisChapter ? thisChapter.order : null}>
                         {toc.length > 1 ? (
                           <ol>
                             {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
                               return (
-                                <Breadcrumb key={chapter.uid}>
+                                <Breadcrumb key={chapter.uid} count={toc.length}>
                                   <Tooltip title={chapter.title}>
                                     <BreadcrumbMarker onClick={() => navigate(chapter.path)}>
                                       <span className="breadcrumb-order">{chapter.id}</span>

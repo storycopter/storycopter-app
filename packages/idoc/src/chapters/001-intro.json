@@ -86,7 +86,7 @@
             }
           ],
           "anchor": null,
-          "cover": false,
+          "cover": true,
           "mask": "dark"
         },
         "type": "gallery"
