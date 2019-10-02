@@ -233,7 +233,7 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHovered: sfalse,
+      isHovered: false,
     };
     this.toggleSharePopover = this.toggleSharePopover.bind(this);
     this.toggleHoveredState = this.toggleHoveredState.bind(this);
