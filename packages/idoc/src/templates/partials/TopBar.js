@@ -41,9 +41,7 @@ const Main = styled.div`
     display: none;
   }
 `;
-const Toolbar = styled.div`
-  pointer-events: auto;
-`;
+const Toolbar = styled.div``;
 const Title = styled.h1`
   color: ${({ theme }) => theme.palette.text.primary};
   font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
@@ -60,7 +58,6 @@ const Title = styled.h1`
     border-radius: 1px;
     color: ${color.white};
     letter-spacing: ${track.l};
-    pointer-events: auto;
     position: relative;
     text-transform: uppercase;
   }
@@ -134,16 +131,22 @@ const Breadcrumb = styled.li`
   z-index: 1;
 `;
 const Breadcrumbs = styled.nav`
-  bottom: 0;
+  ${({ isHovered }) =>
+    isHovered
+      ? `
+    bottom: 0;
+  `
+      : `
+  top: 1px;
+  `}
   display: flex;
-  display: none;
   flex-direction: row;
   left: 0;
-  opacity: 0;
-  position: absolute;
+  position: ${({ isHovered }) => (isHovered ? 'absolute' : 'fixed')};
   right: 0;
-  transform: translateY(50%);
+  transform: ${({ isHovered }) => (isHovered ? 'translateY(50%)' : 'translateY(-50%)')};
   transition: opacity ${time.m};
+  width: 100%;
   &:before {
     background: ${({ theme }) => theme.palette.background.accent};
     content: ' ';
@@ -159,6 +162,7 @@ const Breadcrumbs = styled.nav`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
   }
   ${Breadcrumb} {
     flex: 0 0 ${({ count }) => 100 / count}%;
@@ -176,18 +180,15 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
   flex-direction: row;
   justify-content: space-between;
   left: 0;
-  pointer-events: none;
   position: fixed;
   right: 0;
   top: 0;
-  transition: background-color ${time.l}, box-shadow ${time.l};
   z-index: ${({ theme }) => theme.zIndex.appBar};
   ${({ isHovered }) =>
     isHovered
       ? `
     background-color: ${color.mono900};
     box-shadow: 0 0 0 10px ${color.shadow400};
-    pointer-events: auto;
     ${Breadcrumbs} {
       display: block;
       opacity: 1;
@@ -391,6 +392,7 @@ class TopBar extends Component {
                       <Breadcrumbs
                         count={toc.length}
                         current={currentChapter ? currentChapterI + 1 : isCredits ? toc.length + 1 : null}
+                        isHovered={this.state.isHovered}
                         theme={theme}>
                         {toc.length > 1 ? (
                           <ol>
