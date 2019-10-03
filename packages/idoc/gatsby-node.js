@@ -1,6 +1,13 @@
 const path = require('path');
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ actions, getConfig, stage }) => {
+  const config = getConfig();
+  if (stage.startsWith('develop') && config.resolve) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'react-dom': '@hot-loader/react-dom',
+    };
+  }
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src/templates'), 'node_modules'],
