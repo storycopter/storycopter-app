@@ -169,6 +169,8 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
+  background-color: transparent;
+  box-shadow: 0 0 0 10px transparent;
   color: ${({ theme }) => theme.palette.text.primary};
   display: flex;
   flex-direction: row;
@@ -178,6 +180,7 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
   position: fixed;
   right: 0;
   top: 0;
+  transition: background-color ${time.l}, box-shadow ${time.l};
   z-index: ${({ theme }) => theme.zIndex.appBar};
   ${({ isHovered }) =>
     isHovered
