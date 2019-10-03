@@ -300,6 +300,7 @@ class TopBar extends Component {
                         <Grid container spacing={1}>
                           <Grid item>
                             <Tooltip
+                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'toc' })}
                               open={!this.state.isTransitioning && this.state.tooltip === 'toc'}
@@ -313,6 +314,7 @@ class TopBar extends Component {
                           </Grid>
                           <Grid item>
                             <Tooltip
+                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'prev' })}
                               open={!this.state.isTransitioning && this.state.tooltip === 'prev'}
@@ -332,6 +334,7 @@ class TopBar extends Component {
                               </div>
                             </Tooltip>
                             <Tooltip
+                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'next' })}
                               open={!this.state.isTransitioning && this.state.tooltip === 'next'}
@@ -440,6 +443,7 @@ class TopBar extends Component {
                         <Grid container spacing={1}>
                           <Grid item>
                             <Tooltip
+                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'share' })}
                               open={!this.state.isTransitioning && this.state.tooltip === 'share'}
@@ -453,6 +457,7 @@ class TopBar extends Component {
                           </Grid>
                           <Grid item>
                             <Tooltip
+                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'cta' })}
                               open={!this.state.isTransitioning && this.state.tooltip === 'cta'}
