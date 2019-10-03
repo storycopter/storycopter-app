@@ -102,8 +102,8 @@ const BreadcrumbLink = styled(AniLink)`
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
   width: 34px;
   &:hover {
-    background-color: ${color.flare100};
-    box-shadow: 0 0 5px ${color.shadow300};
+    background-color: ${color.flare200};
+    box-shadow: 0 0 5px ${color.shadow200};
   }
   .breadcrumb-tick {
     background: ${color.flare800};
@@ -161,7 +161,7 @@ const Breadcrumbs = styled.nav`
   &:after {
     background: ${({ theme }) => theme.palette.background.accent};
     content: ' ';
-    display: block;
+    display: ${({ count }) => (count > 1 ? 'block' : 'none')};
     height: 2px;
     left: 0;
     position: absolute;
@@ -249,16 +249,13 @@ const TopBarQuery = graphql`
 class TopBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      //  tooltip: null
-      // isTransitioning: null
-    };
+    this.state = {};
     this.onLinkWTransitionClick = this.onLinkWTransitionClick.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.tooltip && prevState.path !== this.state.path) {
-      this.setState({ isTransitioning: false });
+    if (prevState.tooltip && prevProps.path !== this.props.path) {
+      this.setState({ isTransitioning: null });
     }
   }
 
@@ -267,7 +264,8 @@ class TopBar extends Component {
   }
 
   render() {
-    const { theme, isHome, isCredits } = this.props;
+    const { theme, isHome, isCredits, path } = this.props;
+    const { isHovered, isTransitioning, tooltip } = this.state;
 
     return (
       <StaticQuery
@@ -288,15 +286,15 @@ class TopBar extends Component {
             });
 
           // fetch active chapter
-          const currentChapter = _.find(toc, o => o.path === this.props.path);
-          const currentChapterI = _.findIndex(toc, o => o.path === this.props.path);
+          const currentChapter = _.find(toc, o => o.path === path);
+          const currentChapterI = _.findIndex(toc, o => o.path === path);
           const isLastChapter = currentChapterI === toc.length - 1;
           const isFirstChapter = currentChapterI === 0;
           const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
           // console.group('TopBar.js');
-          // console.log(this.state.tooltip);
+          // console.log(tooltip);
           // console.groupEnd();
 
           return (
@@ -304,34 +302,36 @@ class TopBar extends Component {
               {popupState => (
                 <>
                   <Element
-                    isHovered={this.state.isHovered || popupState.isOpen}
+                    isHovered={isHovered || popupState.isOpen}
                     onMouseOut={() => this.setState({ isHovered: false })}
                     onMouseOver={() => this.setState({ isHovered: true })}
                     theme={theme}>
                     <Side lx>
                       <Toolbar>
                         <Grid container spacing={1}>
-                          <Grid item>
-                            <Tooltip
-                              enterDelay={500}
-                              onClose={() => this.setState({ tooltip: null })}
-                              onOpen={() => this.setState({ tooltip: 'toc' })}
-                              open={!this.state.isTransitioning && this.state.tooltip === 'toc'}
-                              title="Table of contents">
-                              <div style={{ display: 'inline-block' }}>
-                                <IconButton>
-                                  <MenuIcon />
-                                </IconButton>
-                              </div>
-                            </Tooltip>
-                          </Grid>
+                          {toc.length > 1 ? (
+                            <Grid item>
+                              <Tooltip
+                                enterDelay={500}
+                                onClose={() => this.setState({ tooltip: null })}
+                                onOpen={() => this.setState({ tooltip: 'toc' })}
+                                open={!isTransitioning && tooltip === 'toc'}
+                                title="Table of contents">
+                                <div style={{ display: 'inline-block' }}>
+                                  <IconButton>
+                                    <MenuIcon />
+                                  </IconButton>
+                                </div>
+                              </Tooltip>
+                            </Grid>
+                          ) : null}
                           <Grid item>
                             <Tooltip
                               enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'prev' })}
-                              open={!this.state.isTransitioning && this.state.tooltip === 'prev'}
-                              title="Previous chapter">
+                              open={!isTransitioning && tooltip === 'prev'}
+                              title="Previous page">
                               <div style={{ display: 'inline-block' }}>
                                 <AniLink
                                   onClick={this.onLinkWTransitionClick}
@@ -350,8 +350,8 @@ class TopBar extends Component {
                               enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'next' })}
-                              open={!this.state.isTransitioning && this.state.tooltip === 'next'}
-                              title="Next chapter">
+                              open={!isTransitioning && tooltip === 'next'}
+                              title="Next page">
                               <div style={{ display: 'inline-block' }}>
                                 <AniLink onClick={this.onLinkWTransitionClick} to={isCredits ? '/' : nextPath}>
                                   <IconButton
@@ -401,7 +401,7 @@ class TopBar extends Component {
                       <Breadcrumbs
                         count={toc.length}
                         current={currentChapter ? currentChapterI + 1 : isCredits ? toc.length + 1 : null}
-                        isHovered={this.state.isHovered}
+                        isHovered={isHovered}
                         theme={theme}>
                         {toc.length > 1 ? (
                           <ol>
@@ -409,7 +409,7 @@ class TopBar extends Component {
                               const camelId = _.camelCase(`str${chapter.uid}`);
                               const breadcrumb = (
                                 <div style={{ display: 'inline-block' }}>
-                                  <BreadcrumbLink to={chapter.path} onClick={this.onLinkWTransitionClick}>
+                                  <BreadcrumbLink onClick={this.onLinkWTransitionClick} theme={theme} to={chapter.path}>
                                     <span className="breadcrumb-order">{chapter.id}</span>
                                     <span className="breadcrumb-title">{chapter.title}</span>
                                     <span className="breadcrumb-tick"></span>
@@ -421,7 +421,7 @@ class TopBar extends Component {
                                   <Tooltip
                                     onClose={() => this.setState({ tooltip: null })}
                                     onOpen={() => this.setState({ tooltip: camelId })}
-                                    open={!this.state.isTransitioning && this.state.tooltip === camelId}
+                                    open={!isTransitioning && tooltip === camelId}
                                     title={
                                       <Preview>
                                         <Img fixed={chapter.cover.childImageSharp.preview} className="preview-thumb" />
@@ -460,7 +460,7 @@ class TopBar extends Component {
                               enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'share' })}
-                              open={!this.state.isTransitioning && this.state.tooltip === 'share'}
+                              open={!isTransitioning && tooltip === 'share'}
                               title="Share">
                               <div style={{ display: 'inline-block' }}>
                                 <IconButton {...bindTrigger(popupState)}>
@@ -474,7 +474,7 @@ class TopBar extends Component {
                               enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: 'cta' })}
-                              open={!this.state.isTransitioning && this.state.tooltip === 'cta'}
+                              open={!isTransitioning && tooltip === 'cta'}
                               title="Take action">
                               <div style={{ display: 'inline-block' }}>
                                 <IconButton>
