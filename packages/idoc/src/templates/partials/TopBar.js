@@ -148,6 +148,17 @@ const Breadcrumbs = styled.nav`
   transition: opacity ${time.m};
   width: 100%;
   &:before {
+    background: ${color.shadow400};
+    content: ' ';
+    display: block;
+    height: 16px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+  }
+  &:after {
     background: ${({ theme }) => theme.palette.background.accent};
     content: ' ';
     display: block;
@@ -174,7 +185,6 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
   ${setSpace('pam')};
   align-items: center;
   background-color: transparent;
-  box-shadow: 0 0 0 10px transparent;
   color: ${({ theme }) => theme.palette.text.primary};
   display: flex;
   flex-direction: row;
@@ -188,7 +198,6 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
     isHovered
       ? `
     background-color: ${color.mono900};
-    box-shadow: 0 0 0 10px ${color.shadow400};
     ${Breadcrumbs} {
       display: block;
       opacity: 1;
