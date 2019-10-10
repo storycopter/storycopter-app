@@ -148,7 +148,7 @@ const Breadcrumbs = styled.nav`
   transition: opacity ${time.m};
   width: 100%;
   &:before {
-    background: ${color.shadow400};
+    background: ${color.shadow300};
     content: ' ';
     display: block;
     height: 16px;
@@ -251,6 +251,7 @@ class TopBar extends Component {
     super(props);
     this.state = {};
     this.onLinkWTransitionClick = this.onLinkWTransitionClick.bind(this);
+    this.elRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -259,8 +260,24 @@ class TopBar extends Component {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('mousemove', this.onMouseMove.bind(this));
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.onMouseMove.bind(this));
+  }
+
   onLinkWTransitionClick() {
     this.setState({ isTransitioning: true });
+  }
+
+  onMouseMove(e) {
+    if (!e) return null;
+    const coords = { x: e.pageX, y: e.pageY };
+    console.log(e);
+    console.log(coords);
+    return null;
   }
 
   render() {
@@ -293,14 +310,15 @@ class TopBar extends Component {
           const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
-          // console.group('TopBar.js');
+          console.group('TopBar.js');
+          console.log(this.elRef);
           // console.log(tooltip);
-          // console.groupEnd();
+          console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
               {popupState => (
-                <>
+                <div ref={this.elRef}>
                   <Element
                     isHovered={isHovered || popupState.isOpen}
                     onMouseOut={() => this.setState({ isHovered: false })}
@@ -401,7 +419,7 @@ class TopBar extends Component {
                       <Breadcrumbs
                         count={toc.length}
                         current={currentChapter ? currentChapterI + 1 : isCredits ? toc.length + 1 : null}
-                        isHovered={isHovered}
+                        isHovered={isHovered || popupState.isOpen}
                         theme={theme}>
                         {toc.length > 1 ? (
                           <ol>
@@ -502,7 +520,7 @@ class TopBar extends Component {
                     <MenuItem onClick={popupState.close}>Twitter</MenuItem>
                     <MenuItem onClick={popupState.close}>Email</MenuItem>
                   </Menu>
-                </>
+                </div>
               )}
             </PopupState>
           );

@@ -13,6 +13,8 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { CreditsIcon } from '@storycopter/ui/elements';
 import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
+import AniLink from '../components/AniLink';
+
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
   flex-direction: row;
@@ -49,10 +51,21 @@ class FooBar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.onLinkWTransitionClick = this.onLinkWTransitionClick.bind(this);
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.tooltip && prevProps.path !== this.props.path) {
+      this.setState({ isTransitioning: null });
+    }
+  }
+
+  onLinkWTransitionClick() {
+    this.setState({ isTransitioning: true });
   }
 
   render() {
     const { theme } = this.props;
+    const { isTransitioning, tooltip } = this.state;
 
     return (
       <Element theme={theme}>
@@ -60,12 +73,17 @@ class FooBar extends Component {
           <Toolbar>
             <Grid container spacing={1}>
               <Grid item>
-                <Tooltip title="Credits">
-                  <Link to="/credits">
+                <Tooltip
+                  title="Credits"
+                  enterDelay={500}
+                  onClose={() => this.setState({ tooltip: null })}
+                  onOpen={() => this.setState({ tooltip: 'credits' })}
+                  open={!isTransitioning && tooltip === 'credits'}>
+                  <AniLink to="/credits" onClick={this.onLinkWTransitionClick}>
                     <IconButton>
                       <CreditsIcon />
                     </IconButton>
-                  </Link>
+                  </AniLink>
                 </Tooltip>
               </Grid>
             </Grid>

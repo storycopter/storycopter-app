@@ -43,7 +43,7 @@ class Layout extends Component {
           <TopBar isCredits={isCredits} isHome={isHome} {...this.props} />
         </IdocProvider>
         <main>{children}</main>
-        <FooBar></FooBar>
+        <FooBar isCredits={isCredits} isHome={isHome} {...this.props}></FooBar>
       </IdocProvider>
     );
   }
