@@ -13,7 +13,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withTheme } from '@material-ui/styles';
 
-import { breakpoint, color, time, track } from '@storycopter/ui/settings';
+import { breakpoint, color, radius, time, track } from '@storycopter/ui/settings';
 import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
@@ -35,7 +35,9 @@ const TileLink = styled(AniLink)`
   position: relative;
   text-align: center;
   .gatsby-image-wrapper {
+    border-radius: 1px;
     opacity: 0.25;
+    overflow: hidden;
     transition: opacity ${time.m};
   }
   &:hover {
@@ -65,7 +67,7 @@ const Tile = styled.div`
     ${setSpace('prh')};
     ${TileArrow} {
       left: 0;
-      transform: translate(-100%, -50%);
+      transform: translate(-50%, -50%);
     }
     &:hover {
       ${TileArrow} {
@@ -77,7 +79,7 @@ const Tile = styled.div`
     ${setSpace('plh')};
     ${TileArrow} {
       right: 0;
-      transform: translate(100%, -50%);
+      transform: translate(50%, -50%);
     }
     &:hover {
       ${TileArrow} {
@@ -97,6 +99,7 @@ const Element = styled(({ isHome, theme, ...props }) => <nav {...props} />)`
   justify-content: space-between;
   position: relative;
   width: 100%;
+  min-height: 75vh;
 `;
 
 const ShortcutsQuery = graphql`
@@ -205,11 +208,11 @@ class Shortcuts extends Component {
                           <KeyboardArrowLeftIcon />
                         </TileArrow>
                         <h2>
-                          <TileSub component="span" display="block" variant="overline" noWrap>
+                          {/* <TileSub component="span" display="block" variant="overline" noWrap>
                             Previous page
-                          </TileSub>
+                          </TileSub> */}
                           <TileTitle component="span" display="block" variant="h6" noWrap>
-                            {prevChapter ? prevChapter.title : 'Opening Titles'}
+                            {prevChapter !== '/' ? prevChapter.title : 'Opening Titles'}
                           </TileTitle>
                         </h2>
                       </div>
@@ -217,7 +220,10 @@ class Shortcuts extends Component {
                   </TileLink>
                 </Tile>
                 <Tile theme={theme} next>
-                  <TileLink onClick={this.onLinkWTransitionClick} to={isCredits ? '/' : nextChapter.path} theme={theme}>
+                  <TileLink
+                    onClick={this.onLinkWTransitionClick}
+                    to={nextChapter !== '/credits' ? nextChapter.path : '/credits'}
+                    theme={theme}>
                     {nextChapter && nextChapter.cover ? (
                       <Img fluid={nextChapter.cover.childImageSharp.preview} />
                     ) : null}
@@ -227,11 +233,11 @@ class Shortcuts extends Component {
                           <KeyboardArrowRightIcon />
                         </TileArrow>
                         <h2>
-                          <TileSub component="span" display="block" variant="overline" noWrap>
+                          {/* <TileSub component="span" display="block" variant="overline" noWrap>
                             Next page
-                          </TileSub>
+                          </TileSub> */}
                           <TileTitle component="span" display="block" variant="h6" noWrap>
-                            {nextChapter ? nextChapter.title : null}
+                            {nextChapter !== '/credits' ? nextChapter.title : 'Credits'}
                           </TileTitle>
                         </h2>
                       </div>
