@@ -275,8 +275,8 @@ class TopBar extends Component {
   onMouseMove(e) {
     if (!e) return null;
     const coords = { x: e.pageX, y: e.pageY };
-    console.log(e);
-    console.log(coords);
+    // console.log(e);
+    // console.log(coords);
     return null;
   }
 
@@ -310,10 +310,10 @@ class TopBar extends Component {
           const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
           const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
 
-          console.group('TopBar.js');
-          console.log(this.elRef);
+          // console.group('TopBar.js');
+          // console.log(this.elRef);
           // console.log(tooltip);
-          console.groupEnd();
+          // console.groupEnd();
 
           return (
             <PopupState variant="popover" popupId="sharePopover">
