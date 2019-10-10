@@ -197,7 +197,7 @@ class Shortcuts extends Component {
                 <Tile theme={theme} prev>
                   <TileLink
                     onClick={this.onLinkWTransitionClick}
-                    to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevChapter.path}
+                    to={prevChapter && prevChapter.path ? prevChapter.path : '/'}
                     theme={theme}>
                     {prevChapter && prevChapter.cover ? (
                       <Img fluid={prevChapter.cover.childImageSharp.preview} />
@@ -212,7 +212,7 @@ class Shortcuts extends Component {
                             Previous page
                           </TileSub> */}
                           <TileTitle component="span" display="block" variant="h6" noWrap>
-                            {prevChapter !== '/' ? prevChapter.title : 'Opening Titles'}
+                            {prevChapter && prevChapter.title ? prevChapter.title : 'Opening Titles'}
                           </TileTitle>
                         </h2>
                       </div>
@@ -222,7 +222,7 @@ class Shortcuts extends Component {
                 <Tile theme={theme} next>
                   <TileLink
                     onClick={this.onLinkWTransitionClick}
-                    to={nextChapter !== '/credits' ? nextChapter.path : '/credits'}
+                    to={nextChapter !== '/credits' ? nextChapter.path : nextChapter}
                     theme={theme}>
                     {nextChapter && nextChapter.cover ? (
                       <Img fluid={nextChapter.cover.childImageSharp.preview} />
