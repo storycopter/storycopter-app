@@ -5,39 +5,39 @@ import styled from 'styled-components';
 import { bool } from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
 
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { withTheme } from '@material-ui/styles';
+import Button from '@material-ui/core/Button';
 
-import { breakpoint, color, radius, time, track } from '@storycopter/ui/settings';
-import { setHeight, setSpace } from '@storycopter/ui/mixins';
+import { color, radius, time } from '@storycopter/ui/settings';
+import { setSpace, setType } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
 
-const TileArrow = styled.div`
-  position: absolute;
-  top: 50%;
-  transition: transform ${time.m};
-`;
 const TileSub = styled(Typography)`
   color: ${color.flare500};
 `;
 const TileTitle = styled(Typography)``;
 
+const TileText = styled(Typography)``;
+
+const TileButton = styled(Button)`
+  ${setSpace('mtl')};
+  ${setSpace('pan')};
+  color: ${color.mono100};
+`;
+
 const TileLink = styled(AniLink)`
-  background-color: ${({ theme }) => theme.palette.common.black};
+  background: ${color.mono900};
+  border-radius: ${radius.x};
   color: ${({ theme }) => theme.palette.common.white};
   display: block;
+  max-width: 50vw;
+  overflow: hidden;
   position: relative;
-  text-align: center;
   .gatsby-image-wrapper {
-    border-radius: 1px;
     opacity: 0.25;
-    overflow: hidden;
     transition: opacity ${time.m};
   }
   &:hover {
@@ -47,7 +47,7 @@ const TileLink = styled(AniLink)`
   }
 `;
 
-const TileText = styled.div`
+const TileContent = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -61,30 +61,33 @@ const TileText = styled.div`
 const Tile = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 0 0 50%;
-  justify-content: center;
   &:first-child {
-    ${setSpace('prh')};
-    ${TileArrow} {
-      left: 0;
-      transform: translate(-50%, -50%);
+    ${setSpace('pll')};
+    flex: 0 0 ${100 / 3}%;
+    justify-content: flex-end;
+    align-self: flex-end;
+    ${TileContent} {
+      ${setSpace('pah')};
     }
-    &:hover {
-      ${TileArrow} {
-        transform: translate(-150%, -50%);
-      }
+    ${TileTitle} {
+      ${setType('l')};
+    }
+    ${TileButton} {
+      ${setType('x')};
     }
   }
   &:last-child {
-    ${setSpace('plh')};
-    ${TileArrow} {
-      right: 0;
-      transform: translate(50%, -50%);
+    ${setSpace('mbk')};
+    flex: 0 0 ${(100 / 3) * 2}%;
+    justify-content: flex-start;
+    ${TileContent} {
+      ${setSpace('pak')};
     }
-    &:hover {
-      ${TileArrow} {
-        transform: translate(150%, -50%);
-      }
+    ${TileTitle} {
+      ${setType('h')};
+    }
+    ${TileButton} {
+      ${setType('s')};
     }
   }
 `;
@@ -92,14 +95,13 @@ const Tile = styled.div`
 const Element = styled(({ isHome, theme, ...props }) => <nav {...props} />)`
   ${setSpace('pak')};
   align-items: stretch;
-  background-color: ${color.mono900};
+  background-color: ${({ theme }) => theme.palette.common.white};
   color: ${({ theme }) => theme.palette.text.primary};
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: space-between;
   position: relative;
   width: 100%;
-  min-height: 75vh;
 `;
 
 const ShortcutsQuery = graphql`
@@ -124,7 +126,10 @@ const ShortcutsQuery = graphql`
       edges {
         node {
           childImageSharp {
-            preview: fluid(maxWidth: 600, maxHeight: 400, quality: 95, cropFocus: CENTER, fit: COVER) {
+            horizontal: fluid(maxWidth: 600, maxHeight: 450, quality: 95, cropFocus: CENTER, fit: COVER) {
+              ...GatsbyImageSharpFluid
+            }
+            vertical: fluid(maxWidth: 400, maxHeight: 500, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFluid
             }
           }
@@ -200,23 +205,21 @@ class Shortcuts extends Component {
                     to={prevChapter && prevChapter.path ? prevChapter.path : '/'}
                     theme={theme}>
                     {prevChapter && prevChapter.cover ? (
-                      <Img fluid={prevChapter.cover.childImageSharp.preview} />
+                      <Img fluid={prevChapter.cover.childImageSharp.vertical} />
                     ) : null}
-                    <TileText>
+                    <TileContent>
                       <div>
-                        <TileArrow>
-                          <KeyboardArrowLeftIcon />
-                        </TileArrow>
+                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
+                          Previously
+                        </TileSub>
                         <h2>
-                          {/* <TileSub component="span" display="block" variant="overline" noWrap>
-                            Previous page
-                          </TileSub> */}
-                          <TileTitle component="span" display="block" variant="h6" noWrap>
+                          <TileTitle component="span" display="block" variant="h6" noWrap gutterBottom>
                             {prevChapter && prevChapter.title ? prevChapter.title : 'Opening Titles'}
                           </TileTitle>
                         </h2>
+                        <TileButton>Return</TileButton>
                       </div>
-                    </TileText>
+                    </TileContent>
                   </TileLink>
                 </Tile>
                 <Tile theme={theme} next>
@@ -225,23 +228,25 @@ class Shortcuts extends Component {
                     to={nextChapter !== '/credits' ? nextChapter.path : nextChapter}
                     theme={theme}>
                     {nextChapter && nextChapter.cover ? (
-                      <Img fluid={nextChapter.cover.childImageSharp.preview} />
+                      <Img fluid={nextChapter.cover.childImageSharp.horizontal} />
                     ) : null}
-                    <TileText>
+                    <TileContent>
                       <div>
-                        <TileArrow>
-                          <KeyboardArrowRightIcon />
-                        </TileArrow>
+                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
+                          Next
+                        </TileSub>
                         <h2>
-                          {/* <TileSub component="span" display="block" variant="overline" noWrap>
-                            Next page
-                          </TileSub> */}
-                          <TileTitle component="span" display="block" variant="h6" noWrap>
+                          <TileTitle component="span" display="block" variant="h4" noWrap gutterBottom>
                             {nextChapter !== '/credits' ? nextChapter.title : 'Credits'}
                           </TileTitle>
                         </h2>
+                        <TileText component="p" display="block" variant="p1" noWrap gutterBottom>
+                          {nextChapter !== '/credits' ? nextChapter.text : null}
+                        </TileText>
+
+                        <TileButton endIcon={<ArrowRightAltIcon />}>Continue</TileButton>
                       </div>
-                    </TileText>
+                    </TileContent>
                   </TileLink>
                 </Tile>
               </Element>

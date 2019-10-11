@@ -22,9 +22,9 @@ defaultThm.palette = {
   },
   background: {
     ...thm.palette.background,
-    default: '#fafafa',
-    paper: '#fff',
     accent: color.accent,
+    default: thm.palette.common.white,
+    paper: color.mono100,
   },
   text: {
     ...thm.palette.text,
