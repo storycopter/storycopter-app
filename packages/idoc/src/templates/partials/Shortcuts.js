@@ -33,7 +33,7 @@ const TileLink = styled(AniLink)`
   border-radius: ${radius.x};
   color: ${({ theme }) => theme.palette.common.white};
   display: block;
-  max-width: 50vw;
+  max-width: 1000px;
   overflow: hidden;
   position: relative;
   .gatsby-image-wrapper {
@@ -62,21 +62,6 @@ const Tile = styled.div`
   display: flex;
   flex-direction: column;
   &:first-child {
-    ${setSpace('pll')};
-    flex: 0 0 ${100 / 3}%;
-    justify-content: flex-end;
-    align-self: flex-end;
-    ${TileContent} {
-      ${setSpace('pah')};
-    }
-    ${TileTitle} {
-      ${setType('l')};
-    }
-    ${TileButton} {
-      ${setType('x')};
-    }
-  }
-  &:last-child {
     ${setSpace('mbk')};
     flex: 0 0 ${(100 / 3) * 2}%;
     justify-content: flex-start;
@@ -88,6 +73,21 @@ const Tile = styled.div`
     }
     ${TileButton} {
       ${setType('s')};
+    }
+  }
+  &:last-child {
+    ${setSpace('prh')};
+    flex: 0 0 ${100 / 3}%;
+    justify-content: flex-end;
+    align-self: flex-end;
+    ${TileContent} {
+      ${setSpace('pah')};
+    }
+    ${TileTitle} {
+      ${setType('l')};
+    }
+    ${TileButton} {
+      ${setType('x')};
     }
   }
 `;
@@ -199,29 +199,6 @@ class Shortcuts extends Component {
           return (
             <aside>
               <Element theme={theme}>
-                <Tile theme={theme} prev>
-                  <TileLink
-                    onClick={this.onLinkWTransitionClick}
-                    to={prevChapter && prevChapter.path ? prevChapter.path : '/'}
-                    theme={theme}>
-                    {prevChapter && prevChapter.cover ? (
-                      <Img fluid={prevChapter.cover.childImageSharp.vertical} />
-                    ) : null}
-                    <TileContent>
-                      <div>
-                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
-                          Previously
-                        </TileSub>
-                        <h2>
-                          <TileTitle component="span" display="block" variant="h6" noWrap gutterBottom>
-                            {prevChapter && prevChapter.title ? prevChapter.title : 'Opening Titles'}
-                          </TileTitle>
-                        </h2>
-                        <TileButton>Return</TileButton>
-                      </div>
-                    </TileContent>
-                  </TileLink>
-                </Tile>
                 <Tile theme={theme} next>
                   <TileLink
                     onClick={this.onLinkWTransitionClick}
@@ -245,6 +222,29 @@ class Shortcuts extends Component {
                         </TileText>
 
                         <TileButton endIcon={<ArrowRightAltIcon />}>Continue</TileButton>
+                      </div>
+                    </TileContent>
+                  </TileLink>
+                </Tile>
+                <Tile theme={theme} prev>
+                  <TileLink
+                    onClick={this.onLinkWTransitionClick}
+                    to={prevChapter && prevChapter.path ? prevChapter.path : '/'}
+                    theme={theme}>
+                    {prevChapter && prevChapter.cover ? (
+                      <Img fluid={prevChapter.cover.childImageSharp.vertical} />
+                    ) : null}
+                    <TileContent>
+                      <div>
+                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
+                          Previously
+                        </TileSub>
+                        <h2>
+                          <TileTitle component="span" display="block" variant="h6" noWrap gutterBottom>
+                            {prevChapter && prevChapter.title ? prevChapter.title : 'Opening Titles'}
+                          </TileTitle>
+                        </h2>
+                        <TileButton>Return</TileButton>
                       </div>
                     </TileContent>
                   </TileLink>
