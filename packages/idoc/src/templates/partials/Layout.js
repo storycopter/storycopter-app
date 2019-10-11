@@ -5,6 +5,7 @@ import { IdocProvider } from '@storycopter/ui/providers';
 
 import FooBar from './FooBar';
 import GlobalStyles from './GlobalStyles';
+import Shortcuts from './Shortcuts';
 import TopBar from './TopBar';
 
 class Layout extends Component {
@@ -43,6 +44,7 @@ class Layout extends Component {
           <TopBar isCredits={isCredits} isHome={isHome} {...this.props} />
         </IdocProvider>
         <main>{children}</main>
+        {!isCredits && !isHome ? <Shortcuts isCredits={isCredits} isHome={isHome} {...this.props}></Shortcuts> : null}
         <FooBar isCredits={isCredits} isHome={isHome} {...this.props}></FooBar>
       </IdocProvider>
     );
