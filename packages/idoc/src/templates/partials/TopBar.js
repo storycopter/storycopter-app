@@ -54,7 +54,7 @@ const Title = styled.h1`
   & > span {
     ${setSpace('phs')};
     ${setSpace('pvx')};
-    background-color: ${color.shadow500};
+    background-color: ${color.shadow300};
     border-radius: 1px;
     color: ${color.white};
     letter-spacing: ${track.l};
