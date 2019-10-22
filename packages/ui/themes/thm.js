@@ -1,4 +1,4 @@
-import { color, radius } from '@storycopter/ui/settings';
+import { color, radius, time } from '@storycopter/ui/settings';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 let thm = createMuiTheme();
@@ -14,13 +14,14 @@ thm.overrides = {
   },
   MuiIconButton: {
     root: {
-      backgroundColor: color.shadow500,
+      backgroundColor: color.shadow300,
       borderRadius: radius.x,
       color: color.mono100,
+      transition: `none`,
       padding: 6,
       '&:hover': {
         backgroundColor: color.mono900,
-        color: color.white,
+        color: color.mono100,
       },
       '&$disabled': {
         backgroundColor: color.shadow500,

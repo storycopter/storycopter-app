@@ -101,21 +101,17 @@ const BreadcrumbLink = styled(AniLink)`
   position: relative;
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
   width: 34px;
-  &:hover {
-    background-color: ${color.flare200};
-    box-shadow: 0 0 5px ${color.shadow200};
-  }
   .breadcrumb-tick {
-    background: ${color.flare800};
+    background: ${color.mono100};
     border-radius: 1px;
     box-shadow: 0 0 2px ${color.shadow300};
     display: block;
-    height: 10px;
+    height: 8px;
     left: 50%;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 3px;
+    width: 4px;
   }
   .breadcrumb-title,
   .breadcrumb-order {
@@ -162,7 +158,7 @@ const Breadcrumbs = styled.nav`
     background: ${({ theme }) => theme.palette.background.accent};
     content: ' ';
     display: ${({ count }) => (count > 1 ? 'block' : 'none')};
-    height: 2px;
+    height: 3px;
     left: 0;
     position: absolute;
     top: 50%;

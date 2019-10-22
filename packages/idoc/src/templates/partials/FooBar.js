@@ -74,16 +74,18 @@ class FooBar extends Component {
             <Grid container spacing={1}>
               <Grid item>
                 <Tooltip
-                  title="Credits"
                   enterDelay={500}
                   onClose={() => this.setState({ tooltip: null })}
                   onOpen={() => this.setState({ tooltip: 'credits' })}
-                  open={!isTransitioning && tooltip === 'credits'}>
-                  <AniLink to="/credits" onClick={this.onLinkWTransitionClick}>
-                    <IconButton>
-                      <CreditsIcon />
-                    </IconButton>
-                  </AniLink>
+                  open={!isTransitioning && tooltip === 'credits'}
+                  title="Credits">
+                  <div style={{ display: 'inline-block' }}>
+                    <AniLink to="/credits" onClick={this.onLinkWTransitionClick}>
+                      <IconButton>
+                        <CreditsIcon />
+                      </IconButton>
+                    </AniLink>
+                  </div>
                 </Tooltip>
               </Grid>
             </Grid>
