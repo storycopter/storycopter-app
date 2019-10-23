@@ -278,42 +278,46 @@ class TopBar extends Component {
                       </Grid>
                     ) : null}
                     <Grid item>
-                      <Tooltip
-                        enterDelay={500}
-                        onClose={() => this.setState({ tooltip: null })}
-                        onOpen={() => this.setState({ tooltip: 'prev' })}
-                        open={!isTransitioning && tooltip === 'prev'}
-                        title="Previous page">
-                        <div style={{ display: 'inline-block' }}>
-                          <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
-                            <IconButton
-                              style={{
-                                borderBottomRightRadius: 0,
-                                borderTopRightRadius: 0,
-                              }}>
-                              <KeyboardArrowLeftIcon />
-                            </IconButton>
-                          </AniLink>
-                        </div>
-                      </Tooltip>
-                      <Tooltip
-                        enterDelay={500}
-                        onClose={() => this.setState({ tooltip: null })}
-                        onOpen={() => this.setState({ tooltip: 'next' })}
-                        open={!isTransitioning && tooltip === 'next'}
-                        title="Next page">
-                        <div style={{ display: 'inline-block' }}>
-                          <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
-                            <IconButton
-                              style={{
-                                borderBottomLeftRadius: 0,
-                                borderTopLeftRadius: 0,
-                              }}>
-                              <KeyboardArrowRightIcon />
-                            </IconButton>
-                          </AniLink>
-                        </div>
-                      </Tooltip>
+                      {prevPage ? (
+                        <Tooltip
+                          enterDelay={500}
+                          onClose={() => this.setState({ tooltip: null })}
+                          onOpen={() => this.setState({ tooltip: 'prev' })}
+                          open={!isTransitioning && tooltip === 'prev'}
+                          title="Previous page">
+                          <div style={{ display: 'inline-block' }}>
+                            <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
+                              <IconButton
+                                style={{
+                                  borderBottomRightRadius: 0,
+                                  borderTopRightRadius: 0,
+                                }}>
+                                <KeyboardArrowLeftIcon />
+                              </IconButton>
+                            </AniLink>
+                          </div>
+                        </Tooltip>
+                      ) : null}
+                      {nextPage ? (
+                        <Tooltip
+                          enterDelay={500}
+                          onClose={() => this.setState({ tooltip: null })}
+                          onOpen={() => this.setState({ tooltip: 'next' })}
+                          open={!isTransitioning && tooltip === 'next'}
+                          title="Next page">
+                          <div style={{ display: 'inline-block' }}>
+                            <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
+                              <IconButton
+                                style={{
+                                  borderBottomLeftRadius: 0,
+                                  borderTopLeftRadius: 0,
+                                }}>
+                                <KeyboardArrowRightIcon />
+                              </IconButton>
+                            </AniLink>
+                          </div>
+                        </Tooltip>
+                      ) : null}
                     </Grid>
                   </Grid>
                 </Toolbar>

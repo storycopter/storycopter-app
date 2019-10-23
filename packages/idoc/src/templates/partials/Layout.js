@@ -122,10 +122,12 @@ class Layout extends Component {
 
             const isCurrentCredits = path === '/credits';
             const isCurrentHome = path === '/';
+            const isCurrentError = path === '/404';
+            const isCurrentListing = path === '/listing';
 
             // define next/prev pages
-            const prevPage = isCurrentFirst ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
-            const nextPage = isCurrentLast ? allPages[0] : allPages[currentPageI + 1];
+            const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
+            const nextPage = isCurrentCredits ? allPages[0] : allPages[currentPageI + 1];
 
             // construct Table of Contents object
             const toc = {
@@ -142,10 +144,12 @@ class Layout extends Component {
               <>
                 <GlobalStyles />
                 <IdocProvider invert>
-                  <TopBar isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props} />
+                  {!isCurrentError && !isCurrentListing ? (
+                    <TopBar isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props} />
+                  ) : null}
                 </IdocProvider>
                 <Main>{children}</Main>
-                {!isCurrentCredits && !isCurrentHome ? (
+                {!isCurrentCredits && !isCurrentHome && !isCurrentError && !isCurrentListing ? (
                   <Shortcuts isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props}></Shortcuts>
                 ) : null}
                 <FooBar isCredits={isCurrentCredits} isHome={isCurrentHome} {...this.props}></FooBar>
