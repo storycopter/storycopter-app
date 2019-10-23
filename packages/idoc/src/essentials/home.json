@@ -1,7 +1,11 @@
 {
   "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
     "path": "/",
-    "title": "Home",
+    "text": "Some text",
+    "title": "Opening Titles",
     "uid": "home"
   },
   "tree": {

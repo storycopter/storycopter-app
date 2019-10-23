@@ -6,7 +6,7 @@
     "order": 0,
     "path": "/intro",
     "text": "Some text",
-    "title": "Intro",
+    "title": "Intro, that may have a lengthy title",
     "uid": "000-intro"
   },
   "tree": {
