@@ -5,8 +5,8 @@
     },
     "order": 2,
     "path": "/middle",
-    "text": "Some text",
-    "title": "Middle",
+    "text": "This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.",
+    "title": "Middle that may also have a lengthy title",
     "uid": "002-middle"
   },
   "tree": {

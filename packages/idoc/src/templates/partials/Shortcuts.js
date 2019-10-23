@@ -16,39 +16,50 @@ import { setSpace, setType } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
 
-const TileSub = styled(Typography)``;
+const TileOverline = styled(Typography)`
+  ${setType('x')}
+  color: ${color.mono300};
+`;
 const TileTitle = styled(({ theme, ...props }) => <Typography {...props} />)`
+  ${setSpace('mts')};
   ${setType('h')};
   color: ${({ theme }) => theme.palette.primary.main};
+  position: relative;
   width: 100%;
 `;
-const TileText = styled(Typography)``;
-const TileButton = styled(Button)``;
+const TileText = styled.div`
+  ${setSpace('mtm')};
+  ${setType('m')}
+`;
+const TileIcon = styled(({ theme, ...props }) => <div {...props} />)`
+  ${setSpace('mtm')};
+  ${setType('l')}
+  color: ${color.mono300};
+`;
+
 const TileCopy = styled.div`
   color: ${color.mono500};
   display: flex;
   flex-direction: column;
   flex: 0 0 50%;
   justify-content: center;
+  text-align: ${({ prev }) => (prev ? `right` : `left`)};
+  width: 50vw;
   & > div {
     ${setSpace('pal')};
     position: relative;
-    width: 50vw;
   }
 `;
 const TileImagery = styled.div`
   background: ${color.mono900};
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 0 0 50%;
   position: relative;
   width: 100%;
   .gatsby-image-wrapper {
     opacity: 0.5;
-  }
-  &:hover {
-    .gatsby-image-wrapper {
-      opacity: 0.75;
-    }
   }
 `;
 const TileContent = styled.div`
@@ -73,13 +84,59 @@ const TileRoot = styled.div`
       flex-direction: row-reverse;
     }
   }
+  &:hover {
+    .gatsby-image-wrapper {
+      opacity: 0.75;
+    }
+  }
 `;
 const Element = styled(({ theme, ...props }) => <nav {...props} />)`
-  ${setSpace('pvh')}
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1600px;
   min-height: 100vh;
+
+  ${breakpoint.phone} {
+    justify-content: space-around;
+  }
+  ${breakpoint.tabletPlus} {
+    justify-content: center;
+  }
+  ${breakpoint.desktopPlus} {
+    ${setSpace('pak')};
+    ${TileRoot} {
+      &:first-child {
+        ${TileContent} {
+          flex-direction: row-reverse;
+        }
+        ${TileImagery} {
+          flex: 0 0 ${(100 / 3) * 2}%;
+        }
+        ${TileCopy} {
+          flex: 0 0 ${100 / 3}%;
+        }
+      }
+      &:last-child {
+        transform: translateY(-7%);
+        ${TileContent} {
+          ${setSpace('phh')};
+          flex-direction: row;
+        }
+        ${TileCopy} {
+          text-align: left;
+          flex: 0 0 ${(100 / 5) * 3}%;
+        }
+        ${TileTitle} {
+          ${setType('l')};
+        }
+        ${TileImagery} {
+          flex: 0 0 ${(100 / 5) * 2}%;
+        }
+      }
+    }
+  }
 `;
 
 class Shortcuts extends Component {
@@ -105,8 +162,7 @@ class Shortcuts extends Component {
     const { isTransitioning, tooltip } = this.state;
 
     console.group('Shortcuts.js');
-    console.log({ prevPage });
-    console.log({ nextPage });
+    console.log({ theme });
     console.groupEnd();
 
     return (
@@ -117,46 +173,46 @@ class Shortcuts extends Component {
               <TileContent>
                 {nextPage && nextPage.cover ? (
                   <TileImagery>
-                    <Img fluid={nextPage.cover.childImageSharp.squarishFluidThumb} className="show-mobile" />
-                    <Img fluid={nextPage.cover.childImageSharp.horizontal} className="hide-mobile" />
+                    <Img fluid={nextPage.cover.childImageSharp.verticalFluidThumb} className="show-mobile" />
+                    <Img fluid={nextPage.cover.childImageSharp.horizontalFluidThumb} className="hide-mobile" />
                   </TileImagery>
                 ) : null}
-                <TileCopy>
+                <TileCopy next>
                   <div>
-                    <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
-                      Next <ArrowForwardIcon fontSize="inherit" />
-                    </TileSub>
-                    <TileTitle component="h2" display="block" gutterBottom noWrap theme={theme} variant="h4">
+                    <TileOverline component="span" display="block" variant="overline" noWrap gutterBottom>
+                      Next
+                    </TileOverline>
+                    <TileTitle component="h2" display="block" gutterBottom theme={theme} variant="h4">
                       {nextPage.title}
                     </TileTitle>
-                    <TileText component="p" display="block" variant="body1" noWrap gutterBottom>
-                      {nextPage.text}
-                    </TileText>
+                    <TileIcon theme={theme}>
+                      <ArrowForwardIcon fontSize="inherit" />
+                    </TileIcon>
                   </div>
                 </TileCopy>
               </TileContent>
             </Tile>
           </TileRoot>
           <TileRoot>
-            <Tile onClick={this.onLinkWTransitionClick} prev theme={theme} to={prevPage.path}>
+            <Tile prev onClick={this.onLinkWTransitionClick} theme={theme} to={prevPage.path}>
               <TileContent>
                 {prevPage && prevPage.cover ? (
                   <TileImagery>
-                    <Img fluid={prevPage.cover.childImageSharp.squarishFluidThumb} className="show-mobile" />
-                    <Img fluid={prevPage.cover.childImageSharp.horizontal} className="hide-mobile" />
+                    <Img fluid={prevPage.cover.childImageSharp.verticalFluidThumb} className="show-mobile" />
+                    <Img fluid={prevPage.cover.childImageSharp.horizontalFluidThumb} className="hide-mobile" />
                   </TileImagery>
                 ) : null}
-                <TileCopy>
+                <TileCopy prev>
                   <div>
-                    <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
-                      <ArrowBackIcon fontSize="inherit" /> Previously
-                    </TileSub>
-                    <TileTitle component="h2" display="block" gutterBottom noWrap theme={theme} variant="h6">
+                    <TileOverline component="span" display="block" variant="overline" noWrap gutterBottom>
+                      Previously
+                    </TileOverline>
+                    <TileTitle component="h2" display="block" gutterBottom theme={theme} variant="h4">
                       {prevPage.title}
                     </TileTitle>
-                    <TileText component="p" display="block" variant="body1" noWrap gutterBottom>
-                      {prevPage.text}
-                    </TileText>
+                    <TileIcon theme={theme}>
+                      <ArrowBackIcon fontSize="inherit" />
+                    </TileIcon>
                   </div>
                 </TileCopy>
               </TileContent>
