@@ -56,13 +56,13 @@ const Element = styled(({ align, animate, image, cover, mask, theme, ...props })
   ${breakpoint.tablet} {
     ${setSpace('pah')};
   }
-  ${breakpoint.desktopUp} {
+  ${breakpoint.desktopPlus} {
     ${setSpace('pak')};
     ${Child} {
       flex: 0 0 ${(100 / 3) * 2}%;
     }
   }
-  ${breakpoint.hdesktopUp} {
+  ${breakpoint.hdesktopPlus} {
     ${setSpace('pak')};
     ${Child} {
       flex: 0 0 ${100 / 2}%;

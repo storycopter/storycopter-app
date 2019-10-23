@@ -5,139 +5,81 @@ import styled from 'styled-components';
 import { bool } from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
 
-import Typography from '@material-ui/core/Typography';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import { withTheme } from '@material-ui/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withTheme } from '@material-ui/styles';
 
-import { color, radius, time } from '@storycopter/ui/settings';
+import { breakpoint, color, radius, time } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
 
-const TileSub = styled(Typography)`
-  color: ${color.flare500};
+const TileSub = styled(Typography)``;
+const TileTitle = styled(({ theme, ...props }) => <Typography {...props} />)`
+  ${setType('h')};
+  color: ${({ theme }) => theme.palette.primary.main};
+  width: 100%;
 `;
-const TileTitle = styled(Typography)``;
-
 const TileText = styled(Typography)``;
-
-const TileButton = styled(Button)`
-  ${setSpace('mtl')};
-  ${setSpace('pan')};
-  color: ${color.mono100};
+const TileButton = styled(Button)``;
+const TileCopy = styled.div`
+  color: ${color.mono500};
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  justify-content: center;
+  & > div {
+    ${setSpace('pal')};
+    position: relative;
+    width: 50vw;
+  }
 `;
-
-const TileLink = styled(AniLink)`
+const TileImagery = styled.div`
   background: ${color.mono900};
-  border-radius: ${radius.x};
-  color: ${({ theme }) => theme.palette.common.white};
   display: block;
-  max-width: 1000px;
-  overflow: hidden;
+  flex: 0 0 50%;
   position: relative;
+  width: 100%;
   .gatsby-image-wrapper {
-    opacity: 0.25;
-    transition: opacity ${time.m};
+    opacity: 0.5;
   }
   &:hover {
     .gatsby-image-wrapper {
-      opacity: 0.5;
+      opacity: 0.75;
     }
   }
 `;
-
 const TileContent = styled.div`
-  bottom: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+  flex: 0 0 50%;
 `;
 
-const Tile = styled.div`
-  display: flex;
-  flex-direction: column;
+const Tile = styled(({ prev, next, theme, ...props }) => <AniLink {...props} />)`
+  border-radius: ${radius.x};
+  display: block;
+  position: relative;
+`;
+const TileRoot = styled.div`
+  flex: 0 0 50%;
   &:first-child {
-    ${setSpace('mbk')};
-    flex: 0 0 ${(100 / 3) * 2}%;
-    justify-content: flex-start;
     ${TileContent} {
-      ${setSpace('pak')};
-    }
-    ${TileTitle} {
-      ${setType('h')};
-    }
-    ${TileButton} {
-      ${setType('s')};
+      flex-direction: row;
     }
   }
   &:last-child {
-    ${setSpace('prh')};
-    flex: 0 0 ${100 / 3}%;
-    justify-content: flex-end;
-    align-self: flex-end;
     ${TileContent} {
-      ${setSpace('pah')};
-    }
-    ${TileTitle} {
-      ${setType('l')};
-    }
-    ${TileButton} {
-      ${setType('x')};
+      flex-direction: row-reverse;
     }
   }
 `;
-
-const Element = styled(({ isHome, theme, ...props }) => <nav {...props} />)`
-  ${setSpace('pak')};
-  align-items: stretch;
-  background-color: ${({ theme }) => theme.palette.common.white};
-  color: ${({ theme }) => theme.palette.text.primary};
+const Element = styled(({ theme, ...props }) => <nav {...props} />)`
+  ${setSpace('pvh')}
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  position: relative;
-  width: 100%;
-`;
-
-const ShortcutsQuery = graphql`
-  query ShortcutsQuery {
-    allChaptersJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            cover {
-              name
-            }
-            order
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
-    allFile(filter: { sourceInstanceName: { eq: "chapters" }, name: { eq: "cover" } }) {
-      edges {
-        node {
-          childImageSharp {
-            horizontal: fluid(maxWidth: 600, maxHeight: 450, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFluid
-            }
-            vertical: fluid(maxWidth: 400, maxHeight: 500, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-          relativePath
-        }
-      }
-    }
-  }
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100vh;
 `;
 
 class Shortcuts extends Component {
@@ -158,117 +100,75 @@ class Shortcuts extends Component {
   }
 
   render() {
-    const { theme, isHome, isCredits, path } = this.props;
+    const { theme } = this.props;
+    const { prevPage, nextPage } = this.props.toc;
     const { isTransitioning, tooltip } = this.state;
 
+    console.group('Shortcuts.js');
+    console.log({ prevPage });
+    console.log({ nextPage });
+    console.groupEnd();
+
     return (
-      <StaticQuery
-        query={ShortcutsQuery}
-        render={data => {
-          // fetch cover images by name
-          const covers = data.allFile.edges.map(el => el.node);
-          const toc = data.allChaptersJson.edges
-            .map(el => el.node.meta)
-            .map(el => {
-              return {
-                ...el,
-                cover: {
-                  ...el.cover,
-                  ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
-                },
-              };
-            });
-
-          // fetch active chapter
-          const currentChapter = _.find(toc, o => o.path === path);
-          const currentChapterI = _.findIndex(toc, o => o.path === path);
-          const isLastChapter = currentChapterI === toc.length - 1;
-          const isFirstChapter = currentChapterI === 0;
-
-          const nextChapter = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1]) : toc[0];
-          const prevChapter = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1]) : null;
-
-          console.group('Shortcuts.js');
-          console.log({ theme });
-          console.log({ toc });
-          console.log({ prevChapter });
-          console.log({ currentChapter });
-          console.log({ nextChapter });
-          console.groupEnd();
-
-          return (
-            <aside>
-              <Element theme={theme}>
-                <Tile theme={theme} next>
-                  <TileLink
-                    onClick={this.onLinkWTransitionClick}
-                    to={nextChapter !== '/credits' ? nextChapter.path : nextChapter}
-                    theme={theme}>
-                    {nextChapter && nextChapter.cover ? (
-                      <Img fluid={nextChapter.cover.childImageSharp.horizontal} />
-                    ) : null}
-                    <TileContent>
-                      <div>
-                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
-                          Next
-                        </TileSub>
-                        <h2>
-                          <TileTitle component="span" display="block" variant="h4" noWrap gutterBottom>
-                            {nextChapter !== '/credits' ? nextChapter.title : 'Credits'}
-                          </TileTitle>
-                        </h2>
-                        <TileText component="p" display="block" variant="p1" noWrap gutterBottom>
-                          {nextChapter !== '/credits' ? nextChapter.text : null}
-                        </TileText>
-
-                        <TileButton endIcon={<ArrowRightAltIcon />}>Continue</TileButton>
-                      </div>
-                    </TileContent>
-                  </TileLink>
-                </Tile>
-                <Tile theme={theme} prev>
-                  <TileLink
-                    onClick={this.onLinkWTransitionClick}
-                    to={prevChapter && prevChapter.path ? prevChapter.path : '/'}
-                    theme={theme}>
-                    {prevChapter && prevChapter.cover ? (
-                      <Img fluid={prevChapter.cover.childImageSharp.vertical} />
-                    ) : null}
-                    <TileContent>
-                      <div>
-                        <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
-                          Previously
-                        </TileSub>
-                        <h2>
-                          <TileTitle component="span" display="block" variant="h6" noWrap gutterBottom>
-                            {prevChapter && prevChapter.title ? prevChapter.title : 'Opening Titles'}
-                          </TileTitle>
-                        </h2>
-                        <TileButton>Return</TileButton>
-                      </div>
-                    </TileContent>
-                  </TileLink>
-                </Tile>
-              </Element>
-            </aside>
-          );
-        }}
-      />
+      <aside>
+        <Element theme={theme}>
+          <TileRoot>
+            <Tile next onClick={this.onLinkWTransitionClick} theme={theme} to={nextPage.path}>
+              <TileContent>
+                {nextPage && nextPage.cover ? (
+                  <TileImagery>
+                    <Img fluid={nextPage.cover.childImageSharp.squarishFluidThumb} className="show-mobile" />
+                    <Img fluid={nextPage.cover.childImageSharp.horizontal} className="hide-mobile" />
+                  </TileImagery>
+                ) : null}
+                <TileCopy>
+                  <div>
+                    <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
+                      Next <ArrowForwardIcon fontSize="inherit" />
+                    </TileSub>
+                    <TileTitle component="h2" display="block" gutterBottom noWrap theme={theme} variant="h4">
+                      {nextPage.title}
+                    </TileTitle>
+                    <TileText component="p" display="block" variant="body1" noWrap gutterBottom>
+                      {nextPage.text}
+                    </TileText>
+                  </div>
+                </TileCopy>
+              </TileContent>
+            </Tile>
+          </TileRoot>
+          <TileRoot>
+            <Tile onClick={this.onLinkWTransitionClick} prev theme={theme} to={prevPage.path}>
+              <TileContent>
+                {prevPage && prevPage.cover ? (
+                  <TileImagery>
+                    <Img fluid={prevPage.cover.childImageSharp.squarishFluidThumb} className="show-mobile" />
+                    <Img fluid={prevPage.cover.childImageSharp.horizontal} className="hide-mobile" />
+                  </TileImagery>
+                ) : null}
+                <TileCopy>
+                  <div>
+                    <TileSub component="span" display="block" variant="overline" noWrap gutterBottom>
+                      <ArrowBackIcon fontSize="inherit" /> Previously
+                    </TileSub>
+                    <TileTitle component="h2" display="block" gutterBottom noWrap theme={theme} variant="h6">
+                      {prevPage.title}
+                    </TileTitle>
+                    <TileText component="p" display="block" variant="body1" noWrap gutterBottom>
+                      {prevPage.text}
+                    </TileText>
+                  </div>
+                </TileCopy>
+              </TileContent>
+            </Tile>
+          </TileRoot>
+        </Element>
+      </aside>
     );
   }
 }
 
 export default withTheme(Shortcuts);
 
-Shortcuts.propTypes = {
-  allowNext: bool,
-  allowPrev: bool,
-  isCredits: bool,
-  isHome: bool,
-};
-Shortcuts.defaultProps = {
-  allowPrev: null,
-  allowNext: null,
-  isCredits: null,
-  isHome: null,
-};
+Shortcuts.propTypes = {};
+Shortcuts.defaultProps = {};

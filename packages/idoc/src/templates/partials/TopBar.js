@@ -176,7 +176,7 @@ const Breadcrumbs = styled.nav`
   }
 `;
 
-const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...props} />)`
+const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />)`
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
