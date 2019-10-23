@@ -17,7 +17,7 @@ class ListingTpl extends Component {
     console.groupEnd();
 
     return (
-      <Layout>
+      <Layout location={this.props.location} path={this.props.path}>
         <h1>Listing</h1>
         <p>Some text</p>
       </Layout>

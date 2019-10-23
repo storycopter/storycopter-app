@@ -28,7 +28,7 @@ class Home extends Component {
     // console.groupEnd();
 
     return (
-      <Layout isHome>
+      <Layout location={this.props.location} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
           const merger = (propValues, constValues) => {
             if (_.isArray(propValues)) {

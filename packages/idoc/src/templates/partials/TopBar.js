@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import { bool } from 'prop-types';
-import { graphql, StaticQuery } from 'gatsby';
 
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -80,6 +79,7 @@ const Summary = styled.div`
   }
 `;
 const Preview = styled.div`
+  width: 160px;
   .preview-thumb {
     ${setSpace('mtx')};
   }
@@ -206,48 +206,12 @@ const Element = styled(({ isHovered, isHome, theme, ...props }) => <header {...p
       : ``};
 `;
 
-const TopBarQuery = graphql`
-  query TopBarQuery {
-    allChaptersJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            cover {
-              name
-            }
-            order
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
-    allFile(filter: { sourceInstanceName: { eq: "chapters" }, name: { eq: "cover" } }) {
-      edges {
-        node {
-          childImageSharp {
-            thumb: fixed(width: 40, height: 40, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFixed
-            }
-            preview: fixed(width: 160, height: 80, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFixed
-            }
-          }
-          relativePath
-        }
-      }
-    }
-  }
-`;
-
 class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.onLinkWTransitionClick = this.onLinkWTransitionClick.bind(this);
-    this.elRef = React.createRef();
+    // this.elRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -277,251 +241,213 @@ class TopBar extends Component {
   }
 
   render() {
-    const { theme, isHome, isCredits, path } = this.props;
+    const { theme, isHome, isCredits, toc } = this.props;
     const { isHovered, isTransitioning, tooltip } = this.state;
+    const { chapters, currentPage, currentPageI, nextPage, prevPage } = toc;
+
+    // console.group('TopBar.js');
+    // console.log({ toc });
+    // console.groupEnd();
 
     return (
-      <StaticQuery
-        query={TopBarQuery}
-        render={data => {
-          // fetch cover images by name
-          const covers = data.allFile.edges.map(el => el.node);
-          const toc = data.allChaptersJson.edges
-            .map(el => el.node.meta)
-            .map(el => {
-              return {
-                ...el,
-                cover: {
-                  ...el.cover,
-                  ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
-                },
-              };
-            });
-
-          // fetch active chapter
-          const currentChapter = _.find(toc, o => o.path === path);
-          const currentChapterI = _.findIndex(toc, o => o.path === path);
-          const isLastChapter = currentChapterI === toc.length - 1;
-          const isFirstChapter = currentChapterI === 0;
-          const nextPath = currentChapter ? (isLastChapter ? '/credits' : toc[currentChapterI + 1].path) : toc[0].path;
-          const prevPath = currentChapter ? (isFirstChapter ? '/' : toc[currentChapterI - 1].path) : '/';
-
-          // console.group('TopBar.js');
-          // console.log(this.elRef);
-          // console.log(tooltip);
-          // console.groupEnd();
-
-          return (
-            <PopupState variant="popover" popupId="sharePopover">
-              {popupState => (
-                <div ref={this.elRef}>
-                  <Element
-                    isHovered={isHovered || popupState.isOpen}
-                    onMouseOut={() => this.setState({ isHovered: false })}
-                    onMouseOver={() => this.setState({ isHovered: true })}
-                    theme={theme}>
-                    <Side lx>
-                      <Toolbar>
-                        <Grid container spacing={1}>
-                          {toc.length > 1 ? (
-                            <Grid item>
-                              <Tooltip
-                                enterDelay={500}
-                                onClose={() => this.setState({ tooltip: null })}
-                                onOpen={() => this.setState({ tooltip: 'toc' })}
-                                open={!isTransitioning && tooltip === 'toc'}
-                                title="Table of contents">
-                                <div style={{ display: 'inline-block' }}>
-                                  <IconButton>
-                                    <MenuIcon />
-                                  </IconButton>
-                                </div>
-                              </Tooltip>
-                            </Grid>
-                          ) : null}
-                          <Grid item>
+      <PopupState variant="popover" popupId="sharePopover">
+        {popupState => (
+          <div ref={this.elRef}>
+            <Element
+              isHovered={isHovered || popupState.isOpen}
+              onMouseOut={() => this.setState({ isHovered: false })}
+              onMouseOver={() => this.setState({ isHovered: true })}
+              theme={theme}>
+              <Side lx>
+                <Toolbar>
+                  <Grid container spacing={1}>
+                    {chapters.length > 1 ? (
+                      <Grid item>
+                        <Tooltip
+                          enterDelay={500}
+                          onClose={() => this.setState({ tooltip: null })}
+                          onOpen={() => this.setState({ tooltip: 'chapters' })}
+                          open={!isTransitioning && tooltip === 'chapters'}
+                          title="Table of contents">
+                          <div style={{ display: 'inline-block' }}>
+                            <IconButton>
+                              <MenuIcon />
+                            </IconButton>
+                          </div>
+                        </Tooltip>
+                      </Grid>
+                    ) : null}
+                    <Grid item>
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'prev' })}
+                        open={!isTransitioning && tooltip === 'prev'}
+                        title="Previous page">
+                        <div style={{ display: 'inline-block' }}>
+                          <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
+                            <IconButton
+                              style={{
+                                borderBottomRightRadius: 0,
+                                borderTopRightRadius: 0,
+                              }}>
+                              <KeyboardArrowLeftIcon />
+                            </IconButton>
+                          </AniLink>
+                        </div>
+                      </Tooltip>
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'next' })}
+                        open={!isTransitioning && tooltip === 'next'}
+                        title="Next page">
+                        <div style={{ display: 'inline-block' }}>
+                          <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
+                            <IconButton
+                              style={{
+                                borderBottomLeftRadius: 0,
+                                borderTopLeftRadius: 0,
+                              }}>
+                              <KeyboardArrowRightIcon />
+                            </IconButton>
+                          </AniLink>
+                        </div>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </Side>
+              <Main>
+                {isHome ? (
+                  <Title theme={theme}>
+                    <Typography component="span" noWrap variant="caption">
+                      Hiking Cima dell’Uomo
+                    </Typography>
+                  </Title>
+                ) : null}
+                <Summary>
+                  {currentPage || isCredits ? (
+                    <>
+                      <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
+                        Hiking Cima dell’Uomo
+                      </Typography>
+                      <Typography className="summary-text" component="p" display="block" noWrap variant="subtitle2">
+                        {isCredits ? 'Credits' : currentPage.title}
+                      </Typography>
+                    </>
+                  ) : null}
+                </Summary>
+                <Breadcrumbs
+                  count={chapters.length}
+                  current={currentPageI}
+                  isHovered={isHovered || popupState.isOpen}
+                  theme={theme}>
+                  {chapters.length > 1 ? (
+                    <ol>
+                      {_.sortBy(chapters, [o => o.order]).map((chapter, i) => {
+                        const camelId = _.camelCase(`str${chapter.uid}`);
+                        const breadcrumb = (
+                          <div style={{ display: 'inline-block' }}>
+                            <BreadcrumbLink onClick={this.onLinkWTransitionClick} theme={theme} to={chapter.path}>
+                              <span className="breadcrumb-order">{chapter.id}</span>
+                              <span className="breadcrumb-title">{chapter.title}</span>
+                              <span className="breadcrumb-tick"></span>
+                            </BreadcrumbLink>
+                          </div>
+                        );
+                        return (
+                          <Breadcrumb key={chapter.uid}>
                             <Tooltip
-                              enterDelay={500}
                               onClose={() => this.setState({ tooltip: null })}
-                              onOpen={() => this.setState({ tooltip: 'prev' })}
-                              open={!isTransitioning && tooltip === 'prev'}
-                              title="Previous page">
-                              <div style={{ display: 'inline-block' }}>
-                                <AniLink
-                                  onClick={this.onLinkWTransitionClick}
-                                  to={isHome ? '/credits' : isCredits ? toc[toc.length - 1].path : prevPath}>
-                                  <IconButton
-                                    style={{
-                                      borderBottomRightRadius: 0,
-                                      borderTopRightRadius: 0,
-                                    }}>
-                                    <KeyboardArrowLeftIcon />
-                                  </IconButton>
-                                </AniLink>
-                              </div>
+                              onOpen={() => this.setState({ tooltip: camelId })}
+                              open={!isTransitioning && tooltip === camelId}
+                              title={
+                                <Preview>
+                                  <Img
+                                    fixed={chapter.cover.childImageSharp.smallFixedThumb}
+                                    className="preview-thumb"
+                                  />
+                                  <Typography
+                                    className="preview-title"
+                                    component="h2"
+                                    display="block"
+                                    noWrap
+                                    variant="subtitle1">
+                                    {chapter.title}
+                                  </Typography>
+                                  <Typography
+                                    className="preview-text"
+                                    component="p"
+                                    display="block"
+                                    noWrap
+                                    variant="caption">
+                                    {chapter.text}
+                                  </Typography>
+                                </Preview>
+                              }>
+                              {breadcrumb}
                             </Tooltip>
-                            <Tooltip
-                              enterDelay={500}
-                              onClose={() => this.setState({ tooltip: null })}
-                              onOpen={() => this.setState({ tooltip: 'next' })}
-                              open={!isTransitioning && tooltip === 'next'}
-                              title="Next page">
-                              <div style={{ display: 'inline-block' }}>
-                                <AniLink onClick={this.onLinkWTransitionClick} to={isCredits ? '/' : nextPath}>
-                                  <IconButton
-                                    style={{
-                                      borderBottomLeftRadius: 0,
-                                      borderTopLeftRadius: 0,
-                                    }}>
-                                    <KeyboardArrowRightIcon />
-                                  </IconButton>
-                                </AniLink>
-                              </div>
-                            </Tooltip>
-                          </Grid>
-                        </Grid>
-                      </Toolbar>
-                    </Side>
-                    <Main>
-                      {isHome ? (
-                        <Title theme={theme}>
-                          <Typography component="span" noWrap variant="caption">
-                            Hiking Cima dell’Uomo
-                          </Typography>
-                        </Title>
-                      ) : null}
-                      <Summary>
-                        {currentChapter || isCredits ? (
-                          <>
-                            <Typography
-                              className="summary-title"
-                              component="h2"
-                              display="block"
-                              noWrap
-                              variant="caption">
-                              Hiking Cima dell’Uomo
-                            </Typography>
-                            <Typography
-                              className="summary-text"
-                              component="p"
-                              display="block"
-                              noWrap
-                              variant="subtitle2">
-                              {isCredits ? 'Credits' : currentChapter.title}
-                            </Typography>
-                          </>
-                        ) : null}
-                      </Summary>
-                      <Breadcrumbs
-                        count={toc.length}
-                        current={currentChapter ? currentChapterI + 1 : isCredits ? toc.length + 1 : null}
-                        isHovered={isHovered || popupState.isOpen}
-                        theme={theme}>
-                        {toc.length > 1 ? (
-                          <ol>
-                            {_.sortBy(toc, [o => o.order]).map((chapter, i) => {
-                              const camelId = _.camelCase(`str${chapter.uid}`);
-                              const breadcrumb = (
-                                <div style={{ display: 'inline-block' }}>
-                                  <BreadcrumbLink onClick={this.onLinkWTransitionClick} theme={theme} to={chapter.path}>
-                                    <span className="breadcrumb-order">{chapter.id}</span>
-                                    <span className="breadcrumb-title">{chapter.title}</span>
-                                    <span className="breadcrumb-tick"></span>
-                                  </BreadcrumbLink>
-                                </div>
-                              );
-                              return (
-                                <Breadcrumb key={chapter.uid}>
-                                  <Tooltip
-                                    onClose={() => this.setState({ tooltip: null })}
-                                    onOpen={() => this.setState({ tooltip: camelId })}
-                                    open={!isTransitioning && tooltip === camelId}
-                                    title={
-                                      <Preview>
-                                        <Img fixed={chapter.cover.childImageSharp.preview} className="preview-thumb" />
-                                        <Typography
-                                          className="preview-title"
-                                          component="h2"
-                                          display="block"
-                                          noWrap
-                                          variant="subtitle1">
-                                          {chapter.title}
-                                        </Typography>
-                                        <Typography
-                                          className="preview-text"
-                                          component="p"
-                                          display="block"
-                                          noWrap
-                                          variant="caption">
-                                          {chapter.text}
-                                        </Typography>
-                                      </Preview>
-                                    }>
-                                    {breadcrumb}
-                                  </Tooltip>
-                                </Breadcrumb>
-                              );
-                            })}
-                          </ol>
-                        ) : null}
-                      </Breadcrumbs>
-                    </Main>
-                    <Side rx>
-                      <Toolbar>
-                        <Grid container spacing={1}>
-                          <Grid item>
-                            <Tooltip
-                              enterDelay={500}
-                              onClose={() => this.setState({ tooltip: null })}
-                              onOpen={() => this.setState({ tooltip: 'share' })}
-                              open={!isTransitioning && tooltip === 'share'}
-                              title="Share">
-                              <div style={{ display: 'inline-block' }}>
-                                <IconButton {...bindTrigger(popupState)}>
-                                  <ShareIcon />
-                                </IconButton>
-                              </div>
-                            </Tooltip>
-                          </Grid>
-                          <Grid item>
-                            <Tooltip
-                              enterDelay={500}
-                              onClose={() => this.setState({ tooltip: null })}
-                              onOpen={() => this.setState({ tooltip: 'cta' })}
-                              open={!isTransitioning && tooltip === 'cta'}
-                              title="Take action">
-                              <div style={{ display: 'inline-block' }}>
-                                <IconButton>
-                                  <PointerIcon />
-                                </IconButton>
-                              </div>
-                            </Tooltip>
-                          </Grid>
-                        </Grid>
-                      </Toolbar>
-                    </Side>
-                  </Element>
-                  <Menu
-                    {...bindMenu(popupState)}
-                    getContentAnchorEl={null}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}>
-                    <MenuItem onClick={popupState.close}>Facebook</MenuItem>
-                    <MenuItem onClick={popupState.close}>Twitter</MenuItem>
-                    <MenuItem onClick={popupState.close}>Email</MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </PopupState>
-          );
-        }}
-      />
+                          </Breadcrumb>
+                        );
+                      })}
+                    </ol>
+                  ) : null}
+                </Breadcrumbs>
+              </Main>
+              <Side rx>
+                <Toolbar>
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'share' })}
+                        open={!isTransitioning && tooltip === 'share'}
+                        title="Share">
+                        <div style={{ display: 'inline-block' }}>
+                          <IconButton {...bindTrigger(popupState)}>
+                            <ShareIcon />
+                          </IconButton>
+                        </div>
+                      </Tooltip>
+                    </Grid>
+                    <Grid item>
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'cta' })}
+                        open={!isTransitioning && tooltip === 'cta'}
+                        title="Take action">
+                        <div style={{ display: 'inline-block' }}>
+                          <IconButton>
+                            <PointerIcon />
+                          </IconButton>
+                        </div>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </Side>
+            </Element>
+            <Menu
+              {...bindMenu(popupState)}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}>
+              <MenuItem onClick={popupState.close}>Facebook</MenuItem>
+              <MenuItem onClick={popupState.close}>Twitter</MenuItem>
+              <MenuItem onClick={popupState.close}>Email</MenuItem>
+            </Menu>
+          </div>
+        )}
+      </PopupState>
     );
   }
 }

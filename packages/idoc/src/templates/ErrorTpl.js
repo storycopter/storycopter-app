@@ -17,7 +17,7 @@ class ErrorTpl extends Component {
     console.groupEnd();
 
     return (
-      <Layout>
+      <Layout location={this.props.location} path={this.props.path}>
         <h1>Error</h1>
         <p>Some text</p>
       </Layout>
