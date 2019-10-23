@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { withTheme } from '@material-ui/styles';
 
-import { color } from '@storycopter/ui/settings';
+import { breakpoint, color } from '@storycopter/ui/settings';
 import { setType } from '@storycopter/ui/mixins';
 
 const GlobalStyle = createGlobalStyle`
@@ -83,6 +83,49 @@ const GlobalStyle = createGlobalStyle`
   }
   ::-moz-selection {
     background: ${color.flare200};
+  }
+
+  ${breakpoint.phone} {
+    .hide-phone,
+    .hide-mobile,
+    .show-tablet,
+    .show-desktop,
+    .show-hdesktop {
+      display: none;
+    }
+  }
+  ${breakpoint.tablet} {
+    .hide-mobile,
+    .hide-tablet,
+    .show-desktop,
+    .show-hdesktop {
+      display: none;
+    }
+  }
+  ${breakpoint.tabletPlus} {
+    .show-phone {
+      display: none;
+    }
+  }
+  ${breakpoint.desktop} {
+    .hide-desktop,
+    .show-tablet,
+    .show-hdesktop {
+      display: none;
+    }
+  }
+  ${breakpoint.desktopPlus} {
+    .show-tablet,
+    .show-mobile {
+      display: none;
+    }
+  }
+  ${breakpoint.hdesktop} {
+    .hide-hdesktop,
+    .show-phone,
+    .show-mobile,
+    .show-tablet,
+    .show-desktop { display: none;}
   }
 
 `;
