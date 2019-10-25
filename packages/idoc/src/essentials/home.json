@@ -22,6 +22,7 @@
             "color": "",
             "image": "image.jpg"
           },
+          "images": [],
           "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Some text",

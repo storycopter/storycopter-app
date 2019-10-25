@@ -6,6 +6,7 @@ import { IdocProvider } from '@storycopter/ui/providers';
 import { componentMap } from '@storycopter/ui/components';
 
 import Layout from './partials/Layout';
+import utilFill from './utils/utilFill';
 
 const merger = (someValues, otherValues) => {
   if (_.isArray(someValues)) {
@@ -34,7 +35,7 @@ class ChapterTpl extends Component {
         {_.sortBy(components, [o => o.order]).map(component => {
           const { props } = component;
           /*
-            NORMALIZE ALL COMPONENT PROPS
+            CHECK ALL GRAPHQL-ed PROPS
             - align?
             - animate?
             - cover?
@@ -47,18 +48,7 @@ class ChapterTpl extends Component {
           */
 
           // consolidate props.fill.image w/ graphql-ed image data
-          const fill = props.fill
-            ? {
-                color: props.fill.color ? props.fill.color : null,
-                image: {
-                  name: props.fill.image,
-                  ..._.get(
-                    _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
-                    'node.childImageSharp'
-                  ),
-                },
-              }
-            : null;
+          const fill = utilFill(component, props, edges);
 
           // consolidate props.images w/ graphql-ed image data
           const images =
@@ -81,9 +71,11 @@ class ChapterTpl extends Component {
           // dirty validate mask string values
           const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
 
-          console.group('ChapterTpl.js');
+          {
+            /* console.group('ChapterTpl.js');
           console.log({ component });
-          console.groupEnd();
+          console.groupEnd(); */
+          }
 
           const RenderedComponent = componentMap[component.type];
 

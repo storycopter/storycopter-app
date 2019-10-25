@@ -8,8 +8,9 @@ import { Headline } from '@storycopter/ui/components';
 import { track } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
-import Layout from './partials/Layout';
 import AniLink from './components/AniLink';
+import Layout from './partials/Layout';
+import utilFill from './utils/utilFill';
 
 const StartButton = styled(AniLink)`
   border-color: white;
@@ -63,20 +64,28 @@ class Home extends Component {
     return (
       <Layout location={this.props.location} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
+          const { props } = component;
+          /*
+            CHECK ALL GRAPHQL-ed PROPS
+            - align?
+            - animate?
+            - cover?
+            - images
+            - mask
+            - subtitle?
+            - text?
+            - title?
+            √ fill
+          */
+
           const merger = (propValues, constValues) => {
             if (_.isArray(propValues)) {
               return propValues.concat(constValues);
             }
           };
 
-          // merge component.props.image object with actual graphql resolved image file
-          const image = _.mergeWith(
-            component.props.image,
-            _.get(
-              _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
-              'node.childImageSharp'
-            )
-          );
+          // consolidate props.fill.image w/ graphql-ed image data
+          const fill = utilFill(component, props, edges);
 
           // merge component.props.images array with actual graphql resolved image files
           const images = _.mergeWith(
@@ -91,13 +100,15 @@ class Home extends Component {
             merger
           );
 
-          console.group('Home.js');
+          {
+            /* console.group('Home.js');
           console.log(this.props);
-          console.groupEnd();
+          console.groupEnd(); */
+          }
 
           return (
             <IdocProvider invert={component.invert} key={component.id}>
-              <OpeningTitles {...titlesProps} cover>
+              <OpeningTitles {...titlesProps} fill={fill} cover>
                 <OpeningActions vertical={titlesProps.align === 'center'}>
                   <StartButton to={initialPath}>Start exploring</StartButton>
                   <IndexButton to="/contents">Discover contents</IndexButton>
