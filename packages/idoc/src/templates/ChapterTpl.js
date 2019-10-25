@@ -22,10 +22,10 @@ class ChapterTpl extends Component {
   render() {
     const {
       data: {
-        chaptersJson: {
+        chapter: {
           tree: { components },
         },
-        allFile: { edges },
+        files: { edges },
       },
     } = this.props;
 
@@ -82,7 +82,7 @@ export default ChapterTpl;
 
 export const pageQuery = graphql`
   query ChapterTplQuery($uid: String!) {
-    chaptersJson(meta: { uid: { eq: $uid } }) {
+    chapter: chaptersJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -116,7 +116,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allFile(filter: { relativeDirectory: { eq: $uid } }) {
+    files: allFile(filter: { relativeDirectory: { eq: $uid } }) {
       edges {
         node {
           childImageSharp {

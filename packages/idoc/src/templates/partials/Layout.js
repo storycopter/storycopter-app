@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { array, bool } from 'prop-types';
-import { graphql, StaticQuery } from 'gatsby';
 import _ from 'lodash';
 import styled from 'styled-components';
+import { array, bool, oneOfType, object } from 'prop-types';
+import { graphql, StaticQuery } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
 
@@ -83,6 +83,8 @@ class Layout extends Component {
   render() {
     const { children, isHome, isCredits, path } = this.props;
 
+    console.log({ children });
+
     return (
       <IdocProvider>
         <StaticQuery
@@ -120,10 +122,10 @@ class Layout extends Component {
             const isCurrentFirst = currentPageI === 0;
             const isCurrentLast = currentPageI === allPages.length - 1;
 
+            const isCurrentContents = path === '/contents';
             const isCurrentCredits = path === '/credits';
-            const isCurrentHome = path === '/';
             const isCurrentError = path === '/404';
-            const isCurrentListing = path === '/listing';
+            const isCurrentHome = path === '/';
 
             // define next/prev pages
             const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
@@ -144,12 +146,12 @@ class Layout extends Component {
               <>
                 <GlobalStyles />
                 <IdocProvider invert>
-                  {!isCurrentError && !isCurrentListing ? (
+                  {!isCurrentError && !isCurrentContents ? (
                     <TopBar isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props} />
                   ) : null}
                 </IdocProvider>
                 <Main>{children}</Main>
-                {!isCurrentCredits && !isCurrentHome && !isCurrentError && !isCurrentListing ? (
+                {!isCurrentCredits && !isCurrentHome && !isCurrentError && !isCurrentContents ? (
                   <Shortcuts isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props}></Shortcuts>
                 ) : null}
                 <FooBar isCredits={isCurrentCredits} isHome={isCurrentHome} {...this.props}></FooBar>
@@ -165,7 +167,7 @@ class Layout extends Component {
 export default Layout;
 
 Layout.propTypes = {
-  children: array.isRequired,
+  children: oneOfType([array, object]).isRequired,
   isCredits: bool,
   isHome: bool,
 };

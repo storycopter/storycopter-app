@@ -1,11 +1,45 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
+import styled from 'styled-components';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { componentMap } from '@storycopter/ui/components';
+import { Headline } from '@storycopter/ui/components';
+import { track } from '@storycopter/ui/settings';
+import { setSpace, setType } from '@storycopter/ui/mixins';
 
 import Layout from './partials/Layout';
+import AniLink from './components/AniLink';
+
+const StartButton = styled(AniLink)`
+  border-color: white;
+`;
+const IndexButton = styled(AniLink)`
+  border-color: transparent;
+`;
+const OpeningActions = styled.div`
+  ${setSpace('mtl')};
+  align-items: center;
+  display: flex;
+  flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};
+  & > * {
+    ${setSpace('mas')}
+    ${setSpace('phm')};
+    ${setSpace('pvs')};
+    ${setType('s')};
+    border-style: solid;
+    border-width: 2px;
+    color: white;
+    letter-spacing: ${track.m};
+    text-transform: uppercase;
+    &:hover {
+      background-color: white;
+      border-color: white;
+      color: black;
+    }
+  }
+`;
+const OpeningTitles = styled(Headline)``;
 
 class Home extends Component {
   constructor(props) {
@@ -16,16 +50,15 @@ class Home extends Component {
   render() {
     const {
       data: {
-        essentialsJson: {
+        essential: {
           tree: { components },
         },
-        allFile: { edges },
+        files: { edges },
       },
     } = this.props;
 
-    // console.group('Home.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    const titlesProps = this.props.data.essential.tree.components[0].props;
+    const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
       <Layout location={this.props.location} path={this.props.path}>
@@ -58,14 +91,18 @@ class Home extends Component {
             merger
           );
 
-          const RenderedComponent = componentMap[component.type];
+          console.group('Home.js');
+          console.log(this.props);
+          console.groupEnd();
+
           return (
             <IdocProvider invert={component.invert} key={component.id}>
-              <RenderedComponent
-                {...component.props}
-                image={component.props.image ? image : null}
-                images={component.props.images ? images : null}
-              />
+              <OpeningTitles {...titlesProps} cover>
+                <OpeningActions vertical={titlesProps.align === 'center'}>
+                  <StartButton to={initialPath}>Start exploring</StartButton>
+                  <IndexButton to="/contents">Discover contents</IndexButton>
+                </OpeningActions>
+              </OpeningTitles>
             </IdocProvider>
           );
         })}
@@ -78,7 +115,7 @@ export default Home;
 
 export const pageQuery = graphql`
   query HomeQuery($uid: String!) {
-    essentialsJson(meta: { uid: { eq: $uid } }) {
+    essential: essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -105,7 +142,18 @@ export const pageQuery = graphql`
         }
       }
     }
-    allFile(filter: { relativeDirectory: { eq: $uid } }) {
+    chapters: allChaptersJson(sort: { fields: meta___order }) {
+      edges {
+        node {
+          meta {
+            order
+            path
+            title
+          }
+        }
+      }
+    }
+    files: allFile(filter: { relativeDirectory: { eq: $uid } }) {
       edges {
         node {
           childImageSharp {

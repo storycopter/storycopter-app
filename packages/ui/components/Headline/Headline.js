@@ -135,7 +135,20 @@ class Headline extends Component {
   }
 
   render() {
-    const { align, anchor, animate, cover, image, mask, subtitle, text, theme, title, updateSelf } = this.props;
+    const {
+      align,
+      anchor,
+      animate,
+      children,
+      cover,
+      image,
+      mask,
+      subtitle,
+      text,
+      theme,
+      title,
+      updateSelf,
+    } = this.props;
 
     const getSplit = e => {
       const t = e.split(' ');
@@ -154,8 +167,15 @@ class Headline extends Component {
     // console.groupEnd();
 
     return (
-      <Element align={align} animate={animate} cover={cover} image={image} id={anchor} mask={mask} theme={theme}>
-        {image ? (
+      <Element
+        align={align}
+        animate={animate}
+        cover={cover}
+        id={anchor}
+        image={image.name ? image : null}
+        mask={mask}
+        theme={theme}>
+        {image.name ? (
           <Img fixed={image.fixed} style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }} />
         ) : null}
         <Parent>
@@ -226,6 +246,20 @@ class Headline extends Component {
                 </h2>
               </Text>
             ) : null}
+            {children && animate ? (
+              <Texty
+                split={t => [t]}
+                type="top"
+                mode="smooth"
+                duration={500}
+                delay={600}
+                exclusive={true}
+                component="span">
+                {children}
+              </Texty>
+            ) : (
+              children
+            )}
           </Child>
         </Parent>
       </Element>
