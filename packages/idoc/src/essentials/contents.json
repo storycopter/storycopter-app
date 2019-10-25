@@ -3,9 +3,9 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "path": "/listing",
+    "path": "/contents",
     "text": "Some text",
-    "title": "Listing",
-    "uid": "listing"
+    "title": "All parts",
+    "uid": "contents"
   }
 }
