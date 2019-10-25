@@ -81,9 +81,7 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, isHome, isCredits, path } = this.props;
-
-    console.log({ children });
+    const { children, path } = this.props;
 
     return (
       <IdocProvider>

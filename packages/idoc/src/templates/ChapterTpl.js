@@ -32,44 +32,64 @@ class ChapterTpl extends Component {
     return (
       <Layout location={this.props.location} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
-          // merge component.props.image object with actual graphql resolved image file
-          const image = _.mergeWith(
-            component.props.image,
-            _.get(
-              _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
-              'node.childImageSharp'
-            )
-          );
+          const { props } = component;
+          /*
+            NORMALIZE ALL COMPONENT PROPS
+            - align?
+            - animate?
+            - cover?
+            - subtitle?
+            - text?
+            - title?
+            √ fill
+            √ images
+            √ mask
+          */
 
-          // merge component.props.images array with actual graphql resolved image files
-          const images = _.mergeWith(
-            _.sortBy(component.props.images, [o => o.order]),
-            _.sortBy(
-              _.map(
-                _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
-                o => _.get(o, 'node.childImageSharp')
-              ),
-              [o => o.order]
-            ),
-            merger
-          );
+          // consolidate props.fill.image w/ graphql-ed image data
+          const fill = props.fill
+            ? {
+                color: props.fill.color ? props.fill.color : null,
+                image: {
+                  name: props.fill.image,
+                  ..._.get(
+                    _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
+                    'node.childImageSharp'
+                  ),
+                },
+              }
+            : null;
+
+          // consolidate props.images w/ graphql-ed image data
+          const images =
+            props.images.length > 0
+              ? _.mergeWith(
+                  _.sortBy(props.images, [o => o.order]),
+                  _.sortBy(
+                    _.map(
+                      _.filter(edges, o =>
+                        o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)
+                      ),
+                      o => _.get(o, 'node.childImageSharp')
+                    ),
+                    [o => o.order]
+                  ),
+                  merger
+                )
+              : null;
+
+          // dirty validate mask string values
+          const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
+
+          console.group('ChapterTpl.js');
+          console.log({ component });
+          console.groupEnd();
 
           const RenderedComponent = componentMap[component.type];
 
-          {
-            /* console.group('ChapterTpl.js');
-          console.log({ image });
-          console.log({ images });
-          console.groupEnd(); */
-          }
-
           return (
             <IdocProvider invert={component.invert} key={component.id}>
-              <RenderedComponent
-                {...component.props}
-                image={component.props.image ? image : null}
-                images={component.props.images ? images : null}
-              />
+              <RenderedComponent {...props} fill={fill} images={images} mask={mask} />
             </IdocProvider>
           );
         })}
@@ -96,11 +116,11 @@ export const pageQuery = graphql`
           type
           props {
             align
-            anchor
             animate
             cover
-            image {
-              name
+            fill {
+              image
+              color
             }
             images {
               alt

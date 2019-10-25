@@ -17,12 +17,13 @@
         "order": 0,
         "props": {
           "align": "right",
-          "anchor": null,
           "animate": true,
           "cover": true,
-          "image": {
-            "name": "headline-image.jpg"
+          "fill": {
+            "color": "",
+            "image": "headline-image.jpg"
           },
+          "images": [],
           "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -32,32 +33,41 @@
       },
       {
         "id": "001",
-        "invert": null,
+        "invert": false,
         "order": 1,
         "props": {
           "align": "center",
-          "anchor": "anchor1",
           "animate": true,
           "cover": true,
-          "image": null,
-          "mask": "dark",
+          "fill": {
+            "color": "red",
+            "image": ""
+          },
+          "images": [],
+          "mask": "light",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "text": "",
           "title": "A title of the Headline"
         },
         "type": "headline"
       },
       {
         "id": "002",
-        "invert": null,
+        "invert": false,
         "order": 2,
         "props": {
           "align": "left",
-          "anchor": "anchor2",
           "animate": true,
-          "cover": null,
-          "image": null,
-          "mask": null,
-          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text."
+          "cover": false,
+          "fill": {
+            "color": "cyan",
+            "image": ""
+          },
+          "images": [],
+          "mask": "dark",
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "text": "",
+          "title": ""
         },
         "type": "headline"
       },
@@ -66,6 +76,7 @@
         "invert": true,
         "order": 3,
         "props": {
+          "cover": true,
           "images": [
             {
               "alt": "Alt text",
@@ -86,8 +97,6 @@
               "order": 2
             }
           ],
-          "anchor": null,
-          "cover": true,
           "mask": "dark"
         },
         "type": "gallery"

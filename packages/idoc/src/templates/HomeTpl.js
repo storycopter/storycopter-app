@@ -131,8 +131,9 @@ export const pageQuery = graphql`
             align
             animate
             cover
-            image {
-              name
+            fill {
+              image
+              color
             }
             mask
             subtitle

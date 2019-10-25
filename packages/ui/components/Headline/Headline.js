@@ -3,7 +3,7 @@ import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';
 import styled from 'styled-components';
-import { bool, func, object, string } from 'prop-types';
+import { bool, func, object, string, shape } from 'prop-types';
 
 import { withTheme } from '@material-ui/styles';
 
@@ -40,14 +40,13 @@ const Parent = styled.div`
   max-width: 1600px;
   width: 100%;
 `;
-const Element = styled(({ align, animate, image, cover, mask, theme, ...props }) => <section {...props} />)`
+const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
 
-  background-color: ${({ theme }) => theme.palette.background.accent};
   color: ${({ theme }) => theme.palette.text.primary};
 
   ${breakpoint.phone} {
@@ -85,10 +84,15 @@ const Element = styled(({ align, animate, image, cover, mask, theme, ...props })
       `;
   }};
 
-  ${({ image }) => {
-    if (image) {
+  ${({ fill, theme }) => {
+    if (fill.color) {
       return `
-        background: url(${image.fixed.src});
+        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
+        `;
+    }
+    if (fill.image.name) {
+      return `
+        background-image: url(${fill.image.fixed.src});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -126,29 +130,11 @@ const Element = styled(({ align, animate, image, cover, mask, theme, ...props })
 class Headline extends Component {
   constructor(props) {
     super(props);
-    this.state = { edit: null };
-    this.enterEditMode = this.enterEditMode.bind(this);
-  }
-
-  enterEditMode(node) {
-    this.setState({ edit: node });
+    this.state = {};
   }
 
   render() {
-    const {
-      align,
-      anchor,
-      animate,
-      children,
-      cover,
-      image,
-      mask,
-      subtitle,
-      text,
-      theme,
-      title,
-      updateSelf,
-    } = this.props;
+    const { align, animate, children, cover, fill, id, mask, subtitle, text, theme, title } = this.props;
 
     const getSplit = e => {
       const t = e.split(' ');
@@ -163,29 +149,21 @@ class Headline extends Component {
     };
 
     // console.group('Headline.js');
-    // console.log(image);
+    // console.log(this.props);
     // console.groupEnd();
 
     return (
-      <Element
-        align={align}
-        animate={animate}
-        cover={cover}
-        id={anchor}
-        image={image.name ? image : null}
-        mask={mask}
-        theme={theme}>
-        {image.name ? (
-          <Img fixed={image.fixed} style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }} />
+      <Element align={align} animate={animate} cover={cover} id={id} fill={fill} mask={mask} theme={theme}>
+        {fill.image.name ? (
+          <Img
+            fixed={fill.image.fixed}
+            style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }}
+          />
         ) : null}
         <Parent>
           <Child>
             {title ? (
-              <Title
-                contentEditable={this.state.edit === 'title'}
-                onClick={updateSelf ? () => this.enterEditMode('title') : null}
-                // ref={this.titleRef}
-              >
+              <Title>
                 <h1 className="TitleText">
                   {animate ? (
                     <Texty split={getSplit} type="top" mode="smooth" duration={500} component="span">
@@ -198,12 +176,7 @@ class Headline extends Component {
               </Title>
             ) : null}
             {subtitle ? (
-              <Subtitle
-                contentEditable={this.state.edit === 'subtitle'}
-                onClick={updateSelf ? () => this.enterEditMode('subtitle') : null}
-                onChange={e => console.log(e)}
-                // ref={this.subtitleRef}
-              >
+              <Subtitle>
                 <h2 className="SubtitleText">
                   {animate ? (
                     <Texty
@@ -223,11 +196,7 @@ class Headline extends Component {
               </Subtitle>
             ) : null}
             {text ? (
-              <Text
-                contentEditable={this.state.edit === 'text'}
-                onClick={updateSelf ? () => this.enterEditMode('text') : null}
-                // ref={this.textRef}
-              >
+              <Text>
                 <h2 className="TextText">
                   {animate ? (
                     <Texty
@@ -270,27 +239,23 @@ class Headline extends Component {
 export default withTheme(Headline);
 
 Headline.propTypes = {
-  align: string,
-  anchor: string,
-  animate: bool,
-  cover: bool,
-  image: object,
+  align: string.isRequired,
+  animate: bool.isRequired,
+  cover: bool.isRequired,
+  fill: shape({
+    image: object.isRequired,
+    color: string,
+  }),
   mask: string,
-  subtitle: string,
-  text: string,
-  theme: object,
-  updateSelf: func,
+  subtitle: string.isRequired,
+  text: string.isRequired,
+  theme: object.isRequired,
 };
+
 Headline.defaultProps = {
-  align: 'left',
-  anchor: null,
-  animate: null,
-  cover: null,
-  image: null,
+  fill: {
+    color: 'transparent',
+    image: null,
+  },
   mask: null,
-  subtitle: null,
-  text: null,
-  theme: null,
-  title: null,
-  updateSelf: null,
 };

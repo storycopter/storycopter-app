@@ -15,14 +15,13 @@
         "invert": true,
         "order": 0,
         "props": {
-          "align": "right",
-          "anchor": null,
+          "align": "",
           "animate": true,
           "cover": true,
-          "image": {
-            "name": "image.jpg"
+          "fill": {
+            "color": "",
+            "image": "image.jpg"
           },
-          "images": null,
           "mask": "dark",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Some text",

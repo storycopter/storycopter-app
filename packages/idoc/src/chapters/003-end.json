@@ -17,12 +17,14 @@
         "order": 0,
         "props": {
           "align": "left",
-          "anchor": null,
           "animate": true,
           "cover": true,
-          "image": {
-            "name": "headline-image.jpg"
+          "fill": {
+            "color": "",
+            "image": "headline-image.jpg"
           },
+          "image": "",
+          "images": [],
           "mask": "dark",
           "subtitle": "Some text",
           "text": "More text",
