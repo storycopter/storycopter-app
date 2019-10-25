@@ -333,9 +333,11 @@ class TopBar extends Component {
                 <Summary>
                   {currentPage || isCredits ? (
                     <>
-                      <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
-                        Hiking Cima dell’Uomo
-                      </Typography>
+                      <AniLink to="/">
+                        <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
+                          Hiking Cima dell’Uomo
+                        </Typography>
+                      </AniLink>
                       <Typography className="summary-text" component="p" display="block" noWrap variant="subtitle2">
                         {isCredits ? 'Credits' : currentPage.title}
                       </Typography>
