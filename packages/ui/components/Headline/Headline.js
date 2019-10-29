@@ -51,6 +51,7 @@ const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) 
 
   ${breakpoint.phone} {
     ${setSpace('pal')};
+    justify-content: flex-end;
   }
   ${breakpoint.tablet} {
     ${setSpace('pah')};
@@ -166,7 +167,7 @@ class Headline extends Component {
               <Title>
                 <h1 className="TitleText">
                   {animate ? (
-                    <Texty split={getSplit} type="top" mode="smooth" duration={500} component="span">
+                    <Texty component="span" duration={500} mode="smooth" split={getSplit} type="top">
                       {title}
                     </Texty>
                   ) : (
@@ -180,13 +181,13 @@ class Headline extends Component {
                 <h2 className="SubtitleText">
                   {animate ? (
                     <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
+                      component="span"
                       delay={300}
+                      duration={500}
                       exclusive={true}
-                      component="span">
+                      mode="smooth"
+                      split={t => [t]}
+                      type="top">
                       {subtitle}
                     </Texty>
                   ) : (
@@ -200,13 +201,13 @@ class Headline extends Component {
                 <h2 className="TextText">
                   {animate ? (
                     <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
+                      component="span"
                       delay={600}
+                      duration={500}
                       exclusive={true}
-                      component="span">
+                      mode="smooth"
+                      split={t => [t]}
+                      type="top">
                       {text}
                     </Texty>
                   ) : (
@@ -215,20 +216,7 @@ class Headline extends Component {
                 </h2>
               </Text>
             ) : null}
-            {children && animate ? (
-              <Texty
-                split={t => [t]}
-                type="top"
-                mode="smooth"
-                duration={500}
-                delay={600}
-                exclusive={true}
-                component="span">
-                {children}
-              </Texty>
-            ) : (
-              children
-            )}
+            {children && animate ? <div>{children}</div> : children}
           </Child>
         </Parent>
       </Element>
