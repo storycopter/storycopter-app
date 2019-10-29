@@ -17,14 +17,14 @@ const Title = styled.div`
   }
 `;
 const Subtitle = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .SubtitleText {
     ${setType('h')};
     ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Text = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .TextText {
     ${setType('l')};
     ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
@@ -39,6 +39,9 @@ const Parent = styled.div`
   flex-direction: row;
   max-width: 1600px;
   width: 100%;
+`;
+const Append = styled.div`
+  ${setSpace('mtl')};
 `;
 const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
@@ -153,7 +156,7 @@ class Headline extends Component {
     // console.groupEnd();
 
     return (
-      <Element align={align} animate={animate} cover={cover} id={id} fill={fill} mask={mask} theme={theme}>
+      <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
         {fill.image.name ? (
           <Img
             fixed={fill.image.fixed}
@@ -166,7 +169,7 @@ class Headline extends Component {
               <Title>
                 <h1 className="TitleText">
                   {animate ? (
-                    <Texty split={getSplit} type="top" mode="smooth" duration={500} component="span">
+                    <Texty component="span" duration={500} mode="smooth" split={getSplit} type="top">
                       {title}
                     </Texty>
                   ) : (
@@ -180,13 +183,13 @@ class Headline extends Component {
                 <h2 className="SubtitleText">
                   {animate ? (
                     <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
+                      component="span"
                       delay={300}
+                      duration={500}
                       exclusive={true}
-                      component="span">
+                      mode="smooth"
+                      split={t => [t]}
+                      type="top">
                       {subtitle}
                     </Texty>
                   ) : (
@@ -200,13 +203,13 @@ class Headline extends Component {
                 <h2 className="TextText">
                   {animate ? (
                     <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
+                      component="span"
                       delay={600}
+                      duration={500}
                       exclusive={true}
-                      component="span">
+                      mode="smooth"
+                      split={t => [t]}
+                      type="top">
                       {text}
                     </Texty>
                   ) : (
@@ -215,20 +218,7 @@ class Headline extends Component {
                 </h2>
               </Text>
             ) : null}
-            {children && animate ? (
-              <Texty
-                split={t => [t]}
-                type="top"
-                mode="smooth"
-                duration={500}
-                delay={600}
-                exclusive={true}
-                component="span">
-                {children}
-              </Texty>
-            ) : (
-              children
-            )}
+            {children && animate ? <Append>{children}</Append> : children}
           </Child>
         </Parent>
       </Element>

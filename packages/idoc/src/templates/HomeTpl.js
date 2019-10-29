@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import styled from 'styled-components';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { Headline } from '@storycopter/ui/components';
+import { Action, ActionBar, Headline } from '@storycopter/ui/components';
 import { track } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
@@ -109,10 +109,16 @@ class Home extends Component {
           return (
             <IdocProvider invert={component.invert} key={component.id}>
               <OpeningTitles {...titlesProps} fill={fill} cover>
-                <OpeningActions vertical={titlesProps.align === 'center'}>
-                  <StartButton to={initialPath}>Start exploring</StartButton>
-                  <IndexButton to="/contents">Discover contents</IndexButton>
-                </OpeningActions>
+                <ActionBar>
+                  <StartButton to={initialPath}>
+                    <Action as="span" primary>
+                      Start exploring
+                    </Action>
+                  </StartButton>
+                  <IndexButton to="/contents">
+                    <Action as="span">Discover contents</Action>
+                  </IndexButton>
+                </ActionBar>
               </OpeningTitles>
             </IdocProvider>
           );
