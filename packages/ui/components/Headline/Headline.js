@@ -17,14 +17,14 @@ const Title = styled.div`
   }
 `;
 const Subtitle = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .SubtitleText {
     ${setType('h')};
     ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Text = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .TextText {
     ${setType('l')};
     ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
@@ -40,6 +40,9 @@ const Parent = styled.div`
   max-width: 1600px;
   width: 100%;
 `;
+const Append = styled.div`
+  ${setSpace('mtl')};
+`;
 const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
   display: flex;
@@ -51,7 +54,6 @@ const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) 
 
   ${breakpoint.phone} {
     ${setSpace('pal')};
-    justify-content: flex-end;
   }
   ${breakpoint.tablet} {
     ${setSpace('pah')};
@@ -154,7 +156,7 @@ class Headline extends Component {
     // console.groupEnd();
 
     return (
-      <Element align={align} animate={animate} cover={cover} id={id} fill={fill} mask={mask} theme={theme}>
+      <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
         {fill.image.name ? (
           <Img
             fixed={fill.image.fixed}
@@ -216,7 +218,7 @@ class Headline extends Component {
                 </h2>
               </Text>
             ) : null}
-            {children && animate ? <div>{children}</div> : children}
+            {children && animate ? <Append>{children}</Append> : children}
           </Child>
         </Parent>
       </Element>

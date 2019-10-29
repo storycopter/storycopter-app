@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { breakpoint, track } from '@storycopter/ui/settings';
+import { withTheme } from '@material-ui/styles';
+
+import { breakpoint, time, track } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
-const Element = styled(({ ...props }) => <a {...props} />)`
+const Element = styled(({ theme, ...props }) => <a {...props} />)`
   ${setSpace('phm')};
   ${setSpace('pvs')};
   ${setType('x')};
-  background: ${({ primary }) => (primary ? 'white' : 'transparent')};
-  border-color: white;
+  background: ${({ primary, theme }) => (primary ? theme.palette.common.white : 'transparent')};
+  border-color: ${({ theme }) => theme.palette.common.white};
   border-style: solid;
   border-width: 2px;
-  color: ${({ primary }) => (primary ? 'black' : 'white')};
+  color: ${({ primary, theme }) => (primary ? theme.palette.common.black : theme.palette.common.white)};
   display: block;
   letter-spacing: ${track.m};
   text-transform: uppercase;
+  transition: background ${time.m}, color ${time.m}, transform ${time.x};
+  &:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(-3%);
+  }
+  &:active {
+    transform: translateY(0%);
+  }
 `;
 
 class Action extends Component {
@@ -34,7 +45,7 @@ class Action extends Component {
   }
 }
 
-export default Action;
+export default withTheme(Action);
 
 Action.propTypes = {};
 Action.defaultProps = {};

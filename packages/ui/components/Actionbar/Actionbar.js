@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { breakpoint } from '@storycopter/ui/settings';
 import { setSpace } from '@storycopter/ui/mixins';
 
-const Element = styled(({ ...props }) => <div {...props} />)`
+const Element = styled(({ align, ...props }) => <div {...props} />)`
   display: flex;
   flex-direction: row;
+  justify-content: ${({ align }) => (align === 'center' ? 'center' : 'flex-start')};
   ${breakpoint.phone} {
     align-items: stretch;
     flex-direction: column;
@@ -29,7 +30,7 @@ const Element = styled(({ ...props }) => <div {...props} />)`
   }
 `;
 
-class Actionbar extends Component {
+class ActionBar extends Component {
   constructor(props) {
     super(props);
   }
@@ -37,7 +38,7 @@ class Actionbar extends Component {
   render() {
     const { children } = this.props;
 
-    // console.group('Actionbar.js');
+    // console.group('ActionBar.js');
     // console.log(this.props);
     // console.groupEnd();
 
@@ -45,7 +46,7 @@ class Actionbar extends Component {
   }
 }
 
-export default Actionbar;
+export default ActionBar;
 
-Actionbar.propTypes = {};
-Actionbar.defaultProps = {};
+ActionBar.propTypes = {};
+ActionBar.defaultProps = {};

@@ -32,7 +32,7 @@ class ChapterTpl extends Component {
 
     return (
       <Layout location={this.props.location} path={this.props.path}>
-        {_.sortBy(components, [o => o.order]).map(component => {
+        {_.sortBy(components, [o => o.order]).map((component, i) => {
           const { props } = component;
           /*
             CHECK ALL GRAPHQL-ed PROPS
