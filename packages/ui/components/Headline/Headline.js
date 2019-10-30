@@ -93,7 +93,7 @@ const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) 
         background-color: ${fill.color ? fill.color : theme.palette.background.accent};
         `;
     }
-    if (fill.image.name) {
+    if (fill.image) {
       return `
         background-image: url(${fill.image.fixed.src});
         background-position: center;
@@ -157,7 +157,7 @@ class Headline extends Component {
 
     return (
       <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
-        {fill.image.name ? (
+        {fill.image ? (
           <Img
             fixed={fill.image.fixed}
             style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }}

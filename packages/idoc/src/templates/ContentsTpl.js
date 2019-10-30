@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import Layout from './partials/Layout';
 
-class ListingTpl extends Component {
+class ContentsTpl extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,7 +12,7 @@ class ListingTpl extends Component {
   render() {
     const {} = this.props;
 
-    console.group('ListingTpl.js');
+    console.group('ContentsTpl.js');
     console.log(this.props);
     console.groupEnd();
 
@@ -25,4 +25,4 @@ class ListingTpl extends Component {
   }
 }
 
-export default ListingTpl;
+export default ContentsTpl;
