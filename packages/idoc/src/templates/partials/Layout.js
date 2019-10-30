@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { array, bool, oneOfType, object } from 'prop-types';
+import { array, bool, node, oneOfType, object, string } from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
@@ -124,6 +124,7 @@ class Layout extends Component {
             const isCurrentCredits = path === '/credits';
             const isCurrentError = path === '/404';
             const isCurrentHome = path === '/';
+            const isCurrentEssential = isCurrentContents || isCurrentCredits || isCurrentHome;
 
             // define next/prev pages
             const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
@@ -144,12 +145,17 @@ class Layout extends Component {
               <>
                 <GlobalStyles />
                 <IdocProvider invert>
-                  {!isCurrentError && !isCurrentContents ? (
-                    <TopBar isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props} />
-                  ) : null}
+                  <TopBar
+                    isContents={isCurrentContents}
+                    isCredits={isCurrentCredits}
+                    isEssential={isCurrentEssential}
+                    isHome={isCurrentHome}
+                    toc={toc}
+                    {...this.props}
+                  />
                 </IdocProvider>
                 <Main>{children}</Main>
-                {!isCurrentCredits && !isCurrentHome && !isCurrentError && !isCurrentContents ? (
+                {!isCurrentEssential ? (
                   <Shortcuts isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props}></Shortcuts>
                 ) : null}
                 <FooBar isCredits={isCurrentCredits} isHome={isCurrentHome} {...this.props}></FooBar>
@@ -165,7 +171,7 @@ class Layout extends Component {
 export default Layout;
 
 Layout.propTypes = {
-  children: oneOfType([array, object]).isRequired,
+  children: oneOfType([array, node, object, string]).isRequired,
   isCredits: bool,
   isHome: bool,
 };
