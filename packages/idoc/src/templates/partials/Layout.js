@@ -15,6 +15,30 @@ const Main = styled.main``;
 
 const LayoutQuery = graphql`
   query LayoutQuery {
+    site: allSiteJson {
+      edges {
+        node {
+          meta {
+            title
+            publisher
+          }
+          settings {
+            assets {
+              brandmark
+              favicon
+            }
+            palette {
+              accent
+              background
+              main
+            }
+            typography {
+              variant
+            }
+          }
+        }
+      }
+    }
     chapters: allChaptersJson(sort: { fields: meta___order }) {
       edges {
         node {
@@ -105,6 +129,7 @@ class Layout extends Component {
 
             const chapters = consolidate(data.chapters.edges);
             const essentials = consolidate(data.essentials.edges);
+            const site = data.site.edges[0].node;
 
             // create allPages array
             let allPages = chapters.map(el => el);
@@ -141,6 +166,10 @@ class Layout extends Component {
               prevPage,
             };
 
+            // console.group('Layout.js');
+            // console.log({ data });
+            // console.groupEnd();
+
             return (
               <>
                 <GlobalStyles />
@@ -150,6 +179,7 @@ class Layout extends Component {
                     isCredits={isCurrentCredits}
                     isEssential={isCurrentEssential}
                     isHome={isCurrentHome}
+                    site={site}
                     toc={toc}
                     {...this.props}
                   />

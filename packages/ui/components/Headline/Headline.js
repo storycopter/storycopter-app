@@ -157,7 +157,7 @@ class Headline extends Component {
 
     return (
       <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
-        {fill.image ? (
+        {fill.image.name ? (
           <Img
             fixed={fill.image.fixed}
             style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }}

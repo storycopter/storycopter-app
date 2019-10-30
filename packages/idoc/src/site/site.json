@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "title": "Hiking Cima dell’Uomo",
+    "publisher": "Storycopter"
+  },
+  "settings": {
+    "palette": {
+      "background": "white",
+      "main": "black",
+      "accent": "#ffd520"
+    },
+    "typography": {
+      "variant": "modern"
+    },
+    "assets": {
+      "favicon": "",
+      "brandmark": ""
+    }
+  }
+}

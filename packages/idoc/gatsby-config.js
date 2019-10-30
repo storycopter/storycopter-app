@@ -31,6 +31,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `site`,
+        path: `${__dirname}/src/site`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `essentials`,
         path: `${__dirname}/src/essentials/`,
       },

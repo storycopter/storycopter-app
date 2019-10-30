@@ -241,7 +241,7 @@ class TopBar extends Component {
   }
 
   render() {
-    const { isCredits, isEssential, isHome, theme, toc } = this.props;
+    const { isCredits, isEssential, isHome, theme, site, toc } = this.props;
     const { isHovered, isTransitioning, tooltip } = this.state;
     const { chapters, currentPage, currentPageI, nextPage, prevPage } = toc;
 
@@ -279,7 +279,18 @@ class TopBar extends Component {
                         </Tooltip>
                       </Grid>
                     ) : (
-                      'Brandmark'
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'replay' })}
+                        open={!isTransitioning && tooltip === 'replay'}
+                        title="Return home">
+                        <div style={{ display: 'inline-block' }}>
+                          <AniLink onClick={this.onLinkWTransitionClick} to="/">
+                            {site.meta.publisher}
+                          </AniLink>
+                        </div>
+                      </Tooltip>
                     )}
                     {!isEssential ? (
                       <Grid item>
@@ -332,7 +343,7 @@ class TopBar extends Component {
                 {isHome ? (
                   <Title theme={theme}>
                     <Typography component="span" noWrap variant="caption">
-                      Hiking Cima dell’Uomo
+                      {site.meta.title}
                     </Typography>
                   </Title>
                 ) : null}
@@ -341,7 +352,7 @@ class TopBar extends Component {
                     <>
                       <AniLink to="/">
                         <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
-                          Hiking Cima dell’Uomo
+                          {site.meta.title}
                         </Typography>
                       </AniLink>
                       <Typography className="summary-text" component="p" display="block" noWrap variant="subtitle2">
