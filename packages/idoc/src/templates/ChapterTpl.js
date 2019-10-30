@@ -30,6 +30,10 @@ class ChapterTpl extends Component {
       },
     } = this.props;
 
+    // console.group('ChapterTpl.js');
+    // console.log(this.props);
+    // console.groupEnd();
+
     return (
       <Layout location={this.props.location} path={this.props.path}>
         {_.sortBy(components, [o => o.order]).map((component, i) => {
@@ -70,12 +74,6 @@ class ChapterTpl extends Component {
 
           // dirty validate mask string values
           const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
-
-          {
-            /* console.group('ChapterTpl.js');
-          console.log({ component });
-          console.groupEnd(); */
-          }
 
           const RenderedComponent = componentMap[component.type];
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { graphql } from 'gatsby';
 import styled from 'styled-components';
+import { graphql } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
 import { Action, ActionBar, Headline } from '@storycopter/ui/components';

@@ -20,10 +20,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const tpls = {
     chapter: path.resolve(__dirname, 'src/templates/ChapterTpl.js'),
+    contents: path.resolve(__dirname, 'src/templates/ContentsTpl.js'),
     credits: path.resolve(__dirname, 'src/templates/CreditsTpl.js'),
     error: path.resolve(__dirname, 'src/templates/ErrorTpl.js'),
     home: path.resolve(__dirname, 'src/templates/HomeTpl.js'),
-    contents: path.resolve(__dirname, 'src/templates/ContentsTpl.js'),
   };
 
   const essentials = await graphql(`
