@@ -35,7 +35,7 @@ class ChapterTpl extends Component {
     // console.groupEnd();
 
     return (
-      <Layout location={this.props.location} path={this.props.path}>
+      <Layout location={this.props.location} path={this.props.data.chapter.meta.path}>
         {_.sortBy(components, [o => o.order]).map((component, i) => {
           const { props } = component;
           /*

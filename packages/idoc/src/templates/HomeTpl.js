@@ -62,7 +62,7 @@ class Home extends Component {
     const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
-      <Layout location={this.props.location} path={this.props.path}>
+      <Layout location={this.props.location} path={this.props.data.essential.meta.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
           const { props } = component;
           /*
@@ -131,7 +131,7 @@ class Home extends Component {
 export default Home;
 
 export const pageQuery = graphql`
-  query HomeQuery($uid: String!) {
+  query HomeTplQuery($uid: String!) {
     essential: essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path

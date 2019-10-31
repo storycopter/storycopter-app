@@ -16,7 +16,7 @@ class ContentsTpl extends Component {
     console.groupEnd();
 
     return (
-      <Layout location={this.props.location} path={this.props.path}>
+      <Layout location={this.props.location} path={this.props.data.essential.meta.path}>
         <h1>Contents</h1>
         <p>Some text</p>
       </Layout>
