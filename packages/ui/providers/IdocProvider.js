@@ -5,7 +5,7 @@ import { defaultThm, negativeThm } from '@storycopter/ui/themes';
 import { ThemeProvider } from '@material-ui/styles';
 
 const CustomThemeProvider = ({ children, invert }) => {
-  return <ThemeProvider theme={invert ? negativeThm : defaultThm}>{children ? children : <></>}</ThemeProvider>;
+  return <ThemeProvider theme={invert ? negativeThm : defaultThm}>{children}</ThemeProvider>;
 };
 
 CustomThemeProvider.propTypes = {
@@ -14,6 +14,7 @@ CustomThemeProvider.propTypes = {
 };
 
 CustomThemeProvider.defaultProps = {
+  children: null,
   invert: null,
 };
 
