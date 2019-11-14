@@ -8310,7 +8310,7 @@ gatsby-plugin-styled-components@3.1.12:
   dependencies:
     "@babel/runtime" "^7.7.2"
 
-gatsby-plugin-transition-link@^1.16.2:
+gatsby-plugin-transition-link@1.16.2:
   version "1.16.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-transition-link/-/gatsby-plugin-transition-link-1.16.2.tgz#8a4d320604793464db2efeb10f07202460d3ce2c"
   integrity sha512-cAOkxXrjC/EaIagrOD+gW9nIfNO7Ai1Fa2Gd3Q2r79ytNIPARbu38WTOsUnHZ0dlz8acSR1NquyPl3GlcB57IA==
@@ -9225,7 +9225,7 @@ gray-matter@^4.0.2:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
-gsap@^3.0.1:
+gsap@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.0.1.tgz#946b49e860487bd23e6c884b95152d556a5f86f1"
   integrity sha512-9nzEBF7Ss9Ogyw6oEOXZxxVYH8WNRA/nHmIp3DrPOTKmlLxX9MN2ovSoH9TApA+rucBgp9veCedujp5oSQRvZw==
