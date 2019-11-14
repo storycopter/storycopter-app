@@ -4,6 +4,10 @@
     "publisher": "Storycopter"
   },
   "settings": {
+    "fill": {
+      "color": "cyan",
+      "image": "cover.jpg"
+    },
     "palette": {
       "background": "white",
       "main": "black",
