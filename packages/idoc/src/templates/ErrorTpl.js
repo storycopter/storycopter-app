@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import { IdocProvider } from '@storycopter/ui/providers';
+
 import Layout from './partials/Layout';
 
 class ErrorTpl extends Component {
@@ -17,10 +19,12 @@ class ErrorTpl extends Component {
     console.groupEnd();
 
     return (
-      <Layout contextData={this.props.pageContext.contextData} location={this.props.location} path={this.props.path}>
-        <h1>Error</h1>
-        <p>Some text</p>
-      </Layout>
+      <IdocProvider>
+        <Layout contextData={this.props.pageContext.contextData} location={this.props.location} path={this.props.path}>
+          <h1>Error</h1>
+          <p>Some text</p>
+        </Layout>
+      </IdocProvider>
     );
   }
 }

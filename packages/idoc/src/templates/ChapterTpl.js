@@ -35,13 +35,14 @@ class ChapterTpl extends Component {
     // console.groupEnd();
 
     return (
-      <Layout
-        contextData={this.props.pageContext.contextData}
-        location={this.props.location}
-        path={this.props.data.chapter.meta.path}>
-        {_.sortBy(components, [o => o.order]).map((component, i) => {
-          const { props } = component;
-          /*
+      <IdocProvider>
+        <Layout
+          contextData={this.props.pageContext.contextData}
+          location={this.props.location}
+          path={this.props.data.chapter.meta.path}>
+          {_.sortBy(components, [o => o.order]).map((component, i) => {
+            const { props } = component;
+            /*
             CHECK ALL GRAPHQL-ed PROPS
             - align?
             - animate?
@@ -54,39 +55,40 @@ class ChapterTpl extends Component {
             √ mask
           */
 
-          // consolidate props.fill.image w/ graphql-ed image data
-          const fill = utilFill(component, props, edges);
+            // consolidate props.fill.image w/ graphql-ed image data
+            const fill = utilFill(component, props, edges);
 
-          // consolidate props.images w/ graphql-ed image data
-          const images =
-            props.images.length > 0
-              ? _.mergeWith(
-                  _.sortBy(props.images, [o => o.order]),
-                  _.sortBy(
-                    _.map(
-                      _.filter(edges, o =>
-                        o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)
+            // consolidate props.images w/ graphql-ed image data
+            const images =
+              props.images.length > 0
+                ? _.mergeWith(
+                    _.sortBy(props.images, [o => o.order]),
+                    _.sortBy(
+                      _.map(
+                        _.filter(edges, o =>
+                          o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)
+                        ),
+                        o => _.get(o, 'node.childImageSharp')
                       ),
-                      o => _.get(o, 'node.childImageSharp')
+                      [o => o.order]
                     ),
-                    [o => o.order]
-                  ),
-                  merger
-                )
-              : null;
+                    merger
+                  )
+                : null;
 
-          // dirty validate mask string values
-          const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
+            // dirty validate mask string values
+            const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
 
-          const RenderedComponent = componentMap[component.type];
+            const RenderedComponent = componentMap[component.type];
 
-          return (
-            <IdocProvider invert={component.invert} key={component.id}>
-              <RenderedComponent {...props} fill={fill} images={images} mask={mask} />
-            </IdocProvider>
-          );
-        })}
-      </Layout>
+            return (
+              <IdocProvider invert={component.invert} key={component.id}>
+                <RenderedComponent {...props} fill={fill} images={images} mask={mask} />
+              </IdocProvider>
+            );
+          })}
+        </Layout>
+      </IdocProvider>
     );
   }
 }
