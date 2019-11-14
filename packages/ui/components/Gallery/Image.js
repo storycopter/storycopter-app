@@ -1,4 +1,3 @@
-import './react-slick.css';
 import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import styled from 'styled-components';
