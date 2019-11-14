@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { array, bool, node, oneOfType, object, string } from 'prop-types';
+import { array, bool, node, oneOfType, object, shape, string } from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
+import { withTheme } from '@material-ui/styles';
 
 import { IdocProvider } from '@storycopter/ui/providers';
 
@@ -11,7 +12,23 @@ import GlobalStyles from './GlobalStyles';
 import Shortcuts from './Shortcuts';
 import TopBar from './TopBar';
 
-const Main = styled.main``;
+const Main = styled(({ fill, theme, ...props }) => <main {...props} />)`
+  ${({ fill, theme }) => {
+    if (fill.color) {
+      return `
+        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
+        `;
+    }
+    if (fill.image) {
+      return `
+        background-image: url(${fill.image.fixed.src});
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        `;
+    }
+  }};
+`;
 
 const LayoutQuery = graphql`
   query LayoutQuery {
@@ -49,11 +66,11 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, path, contextData } = this.props;
+    const { children, contextData, fill, path, theme } = this.props;
 
-    console.group('Layout.js');
-    console.log({ contextData });
-    console.groupEnd();
+    // console.group('Layout.js');
+    // console.log({ contextData });
+    // console.groupEnd();
 
     return (
       <IdocProvider>
@@ -118,7 +135,6 @@ class Layout extends Component {
 
             return (
               <>
-                <GlobalStyles />
                 <IdocProvider invert>
                   <TopBar
                     isContents={isCurrentContents}
@@ -130,7 +146,9 @@ class Layout extends Component {
                     {...this.props}
                   />
                 </IdocProvider>
-                <Main>{children}</Main>
+                <Main fill={fill} theme={theme}>
+                  {children}
+                </Main>
                 {!isCurrentEssential ? (
                   <Shortcuts isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props}></Shortcuts>
                 ) : null}
@@ -139,20 +157,29 @@ class Layout extends Component {
             );
           }}
         />
+        <GlobalStyles />
       </IdocProvider>
     );
   }
 }
 
-export default Layout;
+export default withTheme(Layout);
 
 Layout.propTypes = {
   children: oneOfType([array, node, object, string]).isRequired,
+  fill: shape({
+    image: object,
+    color: string,
+  }),
   isCredits: bool,
   isHome: bool,
 };
 
 Layout.defaultProps = {
+  fill: {
+    color: 'transparent',
+    image: null,
+  },
   isCredits: null,
   isHome: null,
 };
