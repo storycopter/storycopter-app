@@ -62,7 +62,10 @@ class Home extends Component {
     const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
-      <Layout location={this.props.location} path={this.props.data.essential.meta.path}>
+      <Layout
+        contextData={this.props.pageContext.contextData}
+        location={this.props.location}
+        path={this.props.data.essential.meta.path}>
         {_.sortBy(components, [o => o.order]).map(component => {
           const { props } = component;
           /*

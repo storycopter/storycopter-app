@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { graphql } from 'gatsby';
 
 import Layout from './partials/Layout';
 
@@ -17,7 +18,10 @@ class CreditsTpl extends Component {
     // console.groupEnd();
 
     return (
-      <Layout location={this.props.location} path={this.props.data.essential.meta.path}>
+      <Layout
+        contextData={this.props.pageContext.contextData}
+        location={this.props.location}
+        path={this.props.data.essential.meta.path}>
         <h1>Credits</h1>
         <p>Some text</p>
       </Layout>

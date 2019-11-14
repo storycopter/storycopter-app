@@ -16,7 +16,10 @@ class ContentsTpl extends Component {
     console.groupEnd();
 
     return (
-      <Layout location={this.props.location} path={this.props.data.essential.meta.path}>
+      <Layout
+        contextData={this.props.pageContext.contextData}
+        location={this.props.location}
+        path={this.props.data.essential.meta.path}>
         <h1>Contents</h1>
         <p>Some text</p>
       </Layout>
@@ -52,38 +55,6 @@ export const pageQuery = graphql`
             subtitle
             text
             title
-          }
-        }
-      }
-    }
-    chapters: allChaptersJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            cover {
-              name
-            }
-            order
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
-    essentials: allEssentialsJson {
-      edges {
-        node {
-          id
-          meta {
-            cover {
-              name
-            }
-            path
-            text
-            title
-            uid
           }
         }
       }

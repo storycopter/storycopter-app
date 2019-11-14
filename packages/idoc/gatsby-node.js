@@ -26,13 +26,18 @@ exports.createPages = async ({ graphql, actions }) => {
     home: path.resolve(__dirname, 'src/templates/HomeTpl.js'),
   };
 
-  const essentials = await graphql(`
+  const allEssentials = await graphql(`
     {
       allEssentialsJson {
         edges {
           node {
             meta {
+              cover {
+                name
+              }
               path
+              text
+              title
               uid
             }
           }
@@ -40,9 +45,9 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `);
-  const chapters = await graphql(`
+  const allChapters = await graphql(`
     {
-      allChaptersJson {
+      allChaptersJson(sort: { fields: meta___order }) {
         edges {
           node {
             meta {
@@ -51,8 +56,38 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               order
               path
+              text
               title
               uid
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  const allSiteData = await graphql(`
+    {
+      allSiteJson {
+        edges {
+          node {
+            meta {
+              title
+              publisher
+            }
+            settings {
+              assets {
+                brandmark
+                favicon
+              }
+              palette {
+                accent
+                background
+                main
+              }
+              typography {
+                variant
+              }
             }
           }
         }
@@ -63,11 +98,11 @@ exports.createPages = async ({ graphql, actions }) => {
   const creators = [
     {
       gql: 'allEssentialsJson',
-      src: essentials,
+      src: allEssentials,
     },
     {
       gql: 'allChaptersJson',
-      src: chapters,
+      src: allChapters,
       tpl: tpls.chapter,
     },
   ];
@@ -78,7 +113,14 @@ exports.createPages = async ({ graphql, actions }) => {
       const { path, uid } = node.meta;
       createPage({
         component: creator.tpl ? creator.tpl : tpls[uid],
-        context: { uid: uid },
+        context: {
+          uid: uid,
+          contextData: {
+            allChapters: allChapters.data.allChaptersJson.edges.map(el => el.node.meta),
+            allEssentials: allEssentials.data.allEssentialsJson.edges.map(el => el.node.meta),
+            allSiteData: allSiteData.data.allSiteJson.edges[0].node,
+          },
+        },
         path: path,
       });
     });

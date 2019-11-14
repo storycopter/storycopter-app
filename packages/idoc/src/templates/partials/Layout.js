@@ -15,62 +15,6 @@ const Main = styled.main``;
 
 const LayoutQuery = graphql`
   query LayoutQuery {
-    site: allSiteJson {
-      edges {
-        node {
-          meta {
-            title
-            publisher
-          }
-          settings {
-            assets {
-              brandmark
-              favicon
-            }
-            palette {
-              accent
-              background
-              main
-            }
-            typography {
-              variant
-            }
-          }
-        }
-      }
-    }
-    chapters: allChaptersJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            cover {
-              name
-            }
-            order
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
-    essentials: allEssentialsJson {
-      edges {
-        node {
-          id
-          meta {
-            cover {
-              name
-            }
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
     covers: allFile(filter: { name: { eq: "cover" } }) {
       edges {
         node {
@@ -105,7 +49,11 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, path } = this.props;
+    const { children, path, contextData } = this.props;
+
+    console.group('Layout.js');
+    console.log({ contextData });
+    console.groupEnd();
 
     return (
       <IdocProvider>
@@ -117,19 +65,17 @@ class Layout extends Component {
 
             // make up chapters' and essentials' data
             const consolidate = arr =>
-              arr
-                .map(el => el.node.meta)
-                .map(el => ({
-                  ...el,
-                  cover: {
-                    ...el.cover,
-                    ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
-                  },
-                }));
+              arr.map(el => ({
+                ...el,
+                cover: {
+                  ...el.cover,
+                  ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
+                },
+              }));
 
-            const chapters = consolidate(data.chapters.edges);
-            const essentials = consolidate(data.essentials.edges);
-            const site = data.site.edges[0].node;
+            const chapters = consolidate(contextData.allChapters);
+            const essentials = consolidate(contextData.allEssentials);
+            const site = contextData.allSiteData;
 
             // create allPages array
             let allPages = chapters.map(el => el);
