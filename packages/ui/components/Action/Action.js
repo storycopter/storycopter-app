@@ -15,7 +15,7 @@ const Element = styled(({ theme, ...props }) => <a {...props} />)`
   border-style: solid;
   border-width: 2px;
   color: ${({ primary, theme }) => (primary ? theme.palette.common.black : theme.palette.common.white)};
-  display: block;
+  display: inline-block;
   letter-spacing: ${track.m};
   text-transform: uppercase;
   transition: background ${time.m}, color ${time.m}, transform ${time.x};

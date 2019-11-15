@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
-import Slider from 'react-slick';
+
+import { withStyles } from '@material-ui/core/styles';
+import { GridList, GridListTile } from '@material-ui/core';
 
 import { setSpace } from '@storycopter/ui/mixins';
 import { IdocProvider } from '@storycopter/ui/providers';
@@ -11,11 +12,26 @@ import Layout from './partials/Layout';
 import Tile from './components/Tile';
 
 const TileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   height: 100vh;
-  justify-content: center;
+  width: 100vw;
+  display: flex;
+  flexwrap: wrap;
+  justifycontent: space-around;
+  overflow: hidden;
+  .slick-slide {
+    ${setSpace('phk')};
+  }
 `;
+
+const TileWrapper = styled(GridListTile)`
+  & > * {
+    ${setSpace('phl')};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+
 const TilesHd = styled.div`
   ${setSpace('phk')};
   ${setSpace('pbh')};
@@ -26,88 +42,129 @@ const TilesHd = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
-const Tiles = styled.div`
-  .horizontal-menu {
-    bottom: 0;
-    height: 100vh;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100vw;
-  }
-  .menu-wrapper {
-  }
-  .menu-wrapper--inner {
-  }
-  .menu-item-wrapper {
-    height: 500px;
-    background: yellow;
-    border: 5px solid transparent;
-    &:focus {
-      outline: none;
-    }
-  }
-  .menu-item-wrapper.active {
-    border-color: orange;
-  }
-`;
+
+const Tiles = styled.div``;
+
+const styles = theme => ({
+  gridList: {
+    flexWrap: 'nowrap',
+    width: '100%',
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+  },
+  gridListTile: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  title: {
+    color: theme.palette.primary.light,
+  },
+  titleBar: {
+    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+});
 
 class ContentsTpl extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: 0 };
+    this.state = { selectedTile: 0 };
   }
-  onSelect = key => {
-    this.setState({ selected: key });
-  };
 
   render() {
-    const { allChapters } = this.props.pageContext.contextData;
-    const { selected } = this.state;
+    const { classes, path } = this.props;
+    const { contextData } = this.props.pageContext;
+
+    // LAYOUT LOGIC ENTERS HERE:
+
+    const allCovers = this.props.data.allCovers.edges.map(el => el.node);
+
+    // make up chapters' and essentials' data
+    const consolidate = arr =>
+      arr.map(el => ({
+        ...el,
+        cover: {
+          ...el.cover,
+          ..._.find(allCovers, o => o.relativePath.startsWith(el.uid)),
+        },
+      }));
+
+    const allChapters = consolidate(contextData.allChapters);
+    const allEssentials = consolidate(contextData.allEssentials);
+    const allSiteData = contextData.allSiteData;
+
+    // create allPages array
+    let allPages = allChapters.map(el => el);
+    allPages.unshift(_.find(allEssentials, o => o.uid === 'home'));
+    allPages.push(_.find(allEssentials, o => o.uid === 'credits'));
+
+    // define current page
+    const currentPage = _.find(allPages, o => o.path === path);
+
+    // find out more about current page
+    const currentPageI = _.findIndex(allPages, o => o.path === path);
+    const isCurrentFirst = currentPageI === 0;
+    const isCurrentLast = currentPageI === allPages.length - 1;
+
+    const isCurrentContents = path === '/contents';
+    const isCurrentCredits = path === '/credits';
+    const isCurrentError = path === '/404';
+    const isCurrentHome = path === '/';
+    const isCurrentEssential = isCurrentContents || isCurrentCredits || isCurrentHome;
+
+    // define next/prev pages
+    const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
+    const nextPage = isCurrentCredits ? allPages[0] : allPages[currentPageI + 1];
+
+    // construct Table of Contents object
+    const toc = {
+      allChapters,
+      allEssentials,
+      allPages,
+      currentPage,
+      currentPageI,
+      nextPage,
+      prevPage,
+    };
+
+    // LAYOUT LOGIC ENDS HERE ^
 
     console.group('ContentsTpl.js');
     console.log(this.props);
+    console.log({ allCovers });
+    console.log({ allEssentials });
+    console.log({ allPages });
+    console.log({ toc });
     console.groupEnd();
-
-    const settings = {
-      adaptiveHeight: true,
-      autoplay: true,
-      autoplaySpeed: 5000,
-      centerMode: false,
-      dots: true,
-      focusOnSelect: true,
-      infinite: false,
-      pauseOnDotsHover: true,
-      pauseOnFocus: true,
-      pauseOnHover: true,
-      slidesToScroll: 1,
-      slidesToShow: 3,
-      swipeToSlide: true,
-    };
 
     return (
       <IdocProvider>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
-          path={this.props.data.essential.meta.path}>
+          path={this.props.data.pageData.meta.path}>
           <TileContainer>
-            <Slider ref={c => (this.slider = c)} {...settings}>
-              {allChapters.map((chapter, i) => {
-                return <Tile key={i} title={chapter.title} text={chapter.text} path={chapter.path}></Tile>;
+            <GridList cols={allChapters.length} spacing={1} cellHeight="auto" className={classes.gridList}>
+              {allChapters.map(chapter => {
+                const { cover, order, path, text, title } = chapter;
+                console.log({ chapter });
+                return (
+                  <TileWrapper
+                    className={classes.gridListTile}
+                    key={order}
+                    rows={1}
+                    cols={2.3}
+                    onClick={() => this.setState({ selectedTile: order })}>
+                    <Tile
+                      cover={cover}
+                      isActive={this.state.selectedTile === order}
+                      path={path}
+                      text={text}
+                      title={title}></Tile>
+                  </TileWrapper>
+                );
               })}
-            </Slider>
-
-            {/* <TilesHd>
-              <h1>Contents</h1>
-              <p>Some text</p>
-            </TilesHd>
-            <Tiles>
-              {allChapters.map((chapter, i) => {
-                return <Tile key={i} title={chapter.title} text={chapter.text} path={chapter.path}></Tile>;
-              })}
-            </Tiles> */}
+            </GridList>
           </TileContainer>
         </Layout>
       </IdocProvider>
@@ -115,11 +172,11 @@ class ContentsTpl extends Component {
   }
 }
 
-export default ContentsTpl;
+export default withStyles(styles)(ContentsTpl);
 
 export const pageQuery = graphql`
   query ContentsTplQuery($uid: String!) {
-    essential: essentialsJson(meta: { uid: { eq: $uid } }) {
+    pageData: essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -147,24 +204,12 @@ export const pageQuery = graphql`
         }
       }
     }
-    covers: allFile(filter: { name: { eq: "cover" } }) {
+    allCovers: allFile(filter: { name: { eq: "cover" } }) {
       edges {
         node {
           childImageSharp {
-            horizontal: fluid(maxWidth: 600, maxHeight: 400, quality: 95, cropFocus: CENTER, fit: COVER) {
+            tileSize: fluid(maxWidth: 300, maxHeight: 400, quality: 95, cropFocus: CENTER, fit: COVER) {
               ...GatsbyImageSharpFluid
-            }
-            squarishFluidThumb: fluid(maxWidth: 400, maxHeight: 320, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFluid
-            }
-            verticalFluidThumb: fluid(maxWidth: 300, maxHeight: 400, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFluid
-            }
-            horizontalFluidThumb: fluid(maxWidth: 600, maxHeight: 400, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFluid
-            }
-            smallFixedThumb: fixed(width: 160, height: 80, quality: 95, cropFocus: CENTER, fit: COVER) {
-              ...GatsbyImageSharpFixed
             }
           }
           relativePath

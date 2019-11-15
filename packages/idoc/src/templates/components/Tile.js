@@ -1,50 +1,75 @@
+import Img from 'gatsby-image';
 import React from 'react';
-import { withTheme } from '@material-ui/styles';
 import styled from 'styled-components';
+import { withTheme } from '@material-ui/styles';
 
+import { Action } from '@storycopter/ui/components';
+import { color } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
 import AniLink from './AniLink';
 
 const TileEl = styled(({ ...props }) => <div {...props} />)`
-  background: grey;
   border: none;
   cursor: pointer;
   display: block;
   height: 400px;
+  overflow: hidden;
   position: relative;
   white-space: normal;
-  width: 320px;
-  p {
-    display: block;
-  }
+  max-width: 400px;
+  width: 100%;
 `;
 
 const TileLink = styled(({ theme, ...props }) => <AniLink {...props} />)`
+  display: block;
+`;
+
+const TileImage = styled(({ theme, ...props }) => <div {...props} />)``;
+const TileContent = styled(({ theme, ...props }) => <div {...props} />)`
   ${setSpace('pal')};
+  background: ${color.shadow500};
+  bottom: 0;
+  color: ${({ theme }) => theme.palette.common.white};
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  height: 100%;
+  justify-content: space-between;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
+
+const TileHead = styled.div`
   h2,
   p {
     white-space: normal;
   }
   h2 {
-    ${setType('m')};
+    ${setType('l')};
+    ${setSpace('mbm')};
   }
   p {
     ${setType('s')};
   }
 `;
+const TileFoot = styled.div``;
 
 const Tile = props => {
+  const { isActive } = props;
+  console.log(props.theme);
   return (
     <TileEl>
-      <TileLink to={props.path}>
-        <h2>{props.title}</h2>
-        <p>{props.text}</p>
-      </TileLink>
+      <TileImage>
+        <Img fluid={props.cover.childImageSharp.tileSize} />
+      </TileImage>
+      <TileContent theme={props.theme}>
+        <TileHead>
+          <h2>{props.title}</h2>
+          {isActive ? <p>{props.text}</p> : null}
+        </TileHead>
+        <TileFoot>{isActive ? <Action>Continue</Action> : null}</TileFoot>
+      </TileContent>
     </TileEl>
   );
 };

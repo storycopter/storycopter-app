@@ -22,7 +22,6 @@
     "lodash": "4.17.15",
     "react": "16.11.0",
     "react-dom": "16.11.0",
-    "react-slick": "0.25.2",
     "styled-components": "4.4.1"
   },
   "devDependencies": {
