@@ -1,9 +1,80 @@
 {
-  "name": "@storycopter/app",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "BSD-3-Clause",
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {}
+  "name": "storycopter-electron",
+  "version": "0.1.0",
+  "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@domain.com",
+    "url": "https://your-website.com"
+  },
+  "build": {
+    "appId": "com.storycopter.storycopter",
+    "productName": "Storycopter",
+    "copyright": "Copyright ©2019 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "asarUnpack": [
+      "node_modules/npm/**/*",
+      "node_modules/gatsby/**/*",
+      "node_modules/gatsby-cli/**/*"
+    ]
+  },
+  "dependencies": {
+    "ansi-to-react": "^5.1.0",
+    "electron-is": "^3.0.0",
+    "electron-is-dev": "^1.1.0",
+    "gatsby": "^2.18.2",
+    "hazardous": "^0.3.0",
+    "npm": "^6.13.1",
+    "npm-commands": "^1.0.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.2.0",
+    "shelljs": "^0.8.3"
+  },
+  "scripts": {
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "build -mw",
+    "foo": "echo bar"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@rescripts/cli": "^0.0.13",
+    "@rescripts/rescript-env": "^0.0.11",
+    "concurrently": "^5.0.0",
+    "electron": "^7.1.2",
+    "electron-builder": "20.28.4",
+    "typescript": "^3.7.2",
+    "wait-on": "^3.3.0"
+  }
 }
