@@ -57,7 +57,6 @@ const TileFoot = styled.div``;
 
 const Tile = props => {
   const { isActive } = props;
-  console.log(props.theme);
   return (
     <TileEl>
       <TileImage>

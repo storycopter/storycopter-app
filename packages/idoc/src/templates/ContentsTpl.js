@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import _ from 'lodash';
 import { graphql } from 'gatsby';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -83,10 +84,12 @@ class ContentsTpl extends Component {
     const consolidate = arr =>
       arr.map(el => ({
         ...el,
-        cover: {
-          ...el.cover,
-          ..._.find(allCovers, o => o.relativePath.startsWith(el.uid)),
-        },
+        cover: el.cover
+          ? {
+              ...el.cover,
+              ..._.find(allCovers, o => o.relativePath.startsWith(el.uid)),
+            }
+          : null,
       }));
 
     const allChapters = consolidate(contextData.allChapters);
@@ -121,6 +124,7 @@ class ContentsTpl extends Component {
       allChapters,
       allEssentials,
       allPages,
+      allSiteData,
       currentPage,
       currentPageI,
       nextPage,
@@ -131,6 +135,7 @@ class ContentsTpl extends Component {
 
     console.group('ContentsTpl.js');
     console.log(this.props);
+    console.log({ contextData });
     console.log({ allCovers });
     console.log({ allEssentials });
     console.log({ allPages });
@@ -147,7 +152,6 @@ class ContentsTpl extends Component {
             <GridList cols={allChapters.length} spacing={1} cellHeight="auto" className={classes.gridList}>
               {allChapters.map(chapter => {
                 const { cover, order, path, text, title } = chapter;
-                console.log({ chapter });
                 return (
                   <TileWrapper
                     className={classes.gridListTile}
