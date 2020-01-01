@@ -1,4 +1,4 @@
-const { BrowserWindow, Menu, app, shell, dialog } = require('electron');
+const { BrowserWindow, Menu, app, shell, dialog, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
@@ -29,6 +29,18 @@ let template = [
       },
       {
         label: 'Open Project',
+        click: function(item, focusedWindow) {
+          if (focusedWindow) {
+            // const options = {
+            //   type: 'info',
+            //   title: 'Application Menu Demo',
+            //   buttons: ['Ok'],
+            //   message:
+            //     'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.',
+            // };
+            // dialog.showMessageBox(focusedWindow, options, function() {});
+          }
+        },
       },
       {
         label: 'Build Project',
