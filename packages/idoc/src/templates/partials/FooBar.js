@@ -33,6 +33,7 @@ const Toolbar = styled.div`
 `;
 
 const Element = styled(({ theme, ...props }) => <footer {...props} />)`
+  ${({ theme }) => theme.typography.body2};
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;

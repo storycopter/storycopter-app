@@ -6,13 +6,14 @@ import { graphql, StaticQuery } from 'gatsby';
 import { withTheme } from '@material-ui/styles';
 
 import { IdocProvider } from '@storycopter/ui/providers';
+import { GlobalStyles } from '@storycopter/ui/components';
 
 import FooBar from './FooBar';
-import GlobalStyles from './GlobalStyles';
 import Shortcuts from './Shortcuts';
 import TopBar from './TopBar';
 
 const Main = styled(({ fill, theme, ...props }) => <main {...props} />)`
+  ${({ theme }) => theme.typography.body2};
   ${({ fill, theme }) => {
     if (fill.color) {
       return `
@@ -135,6 +136,7 @@ class Layout extends Component {
 
             return (
               <>
+                <GlobalStyles />
                 <IdocProvider invert>
                   <TopBar
                     isContents={isCurrentContents}
@@ -157,7 +159,6 @@ class Layout extends Component {
             );
           }}
         />
-        <GlobalStyles />
       </IdocProvider>
     );
   }

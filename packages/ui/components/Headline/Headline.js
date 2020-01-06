@@ -157,7 +157,7 @@ class Headline extends Component {
 
     return (
       <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
-        {fill.image.name ? (
+        {fill.image && fill.image.name ? (
           <Img
             fixed={fill.image.fixed}
             style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }}
@@ -229,23 +229,27 @@ class Headline extends Component {
 export default withTheme(Headline);
 
 Headline.propTypes = {
-  align: string.isRequired,
-  animate: bool.isRequired,
-  cover: bool.isRequired,
+  align: string,
+  animate: bool,
+  cover: bool,
   fill: shape({
-    image: object.isRequired,
+    image: object,
     color: string,
   }),
   mask: string,
   subtitle: string.isRequired,
-  text: string.isRequired,
+  text: string,
   theme: object.isRequired,
 };
 
 Headline.defaultProps = {
+  align: 'left',
+  animate: false,
+  cover: false,
   fill: {
     color: 'transparent',
     image: null,
   },
   mask: null,
+  text: null,
 };

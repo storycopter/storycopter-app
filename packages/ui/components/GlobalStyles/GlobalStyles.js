@@ -1,6 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { withTheme } from '@material-ui/styles';
-
 import { breakpoint, color } from '@storycopter/ui/settings';
 import { setType } from '@storycopter/ui/mixins';
 
@@ -58,7 +56,6 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     ${setType('m')};
-    ${({ theme }) => theme.typography.body2};
   }
   a {
     font-size: inherit;
@@ -367,4 +364,4 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-export default withTheme(GlobalStyle);
+export default GlobalStyle;
