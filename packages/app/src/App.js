@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React from 'react';
+import { connect } from 'react-redux';
 import { remote } from 'electron';
 import is from 'electron-is';
 import process from 'child_process';
@@ -7,6 +8,7 @@ import Ansi from 'ansi-to-react';
 import path from 'path';
 import stripAnsi from 'strip-ansi';
 
+import { update } from './reducers/data';
 import './App.css';
 
 const dialog = remote.dialog;
@@ -90,6 +92,7 @@ class App extends React.Component {
 
   render() {
     const { child, log, status, src } = this.state;
+    const { data, update } = this.props;
 
     return (
       <div className="App">
@@ -98,9 +101,19 @@ class App extends React.Component {
         {status ? <h1>{status}</h1> : null}
         <Ansi>{log}</Ansi>
         {child ? <button onClick={() => this.kill()}>kill gatsby</button> : null}
+        <hr />
+        initialState: foo = "{data.foo}"
+        <hr />
+        data.test = "{data.test}"
+        <br />
+        <button onClick={() => update({ test: Date.now() })}>set test to Date.now()</button>
       </div>
     );
   }
 }
 
-export default App;
+// export default App;
+export default connect(
+  ({ data }) => ({ data }),
+  { update }
+)(App);
