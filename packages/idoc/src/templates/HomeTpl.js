@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { graphql } from 'gatsby';
 import styled from 'styled-components';
+import { graphql } from 'gatsby';
 
 import { IdocProvider } from '@storycopter/ui/providers';
-import { Headline } from '@storycopter/ui/components';
+import { Action, ActionBar, Headline } from '@storycopter/ui/components';
 import { track } from '@storycopter/ui/settings';
 import { setSpace, setType } from '@storycopter/ui/mixins';
 
@@ -62,10 +62,14 @@ class Home extends Component {
     const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
-      <Layout location={this.props.location} path={this.props.path}>
-        {_.sortBy(components, [o => o.order]).map(component => {
-          const { props } = component;
-          /*
+      <IdocProvider>
+        <Layout
+          contextData={this.props.pageContext.contextData}
+          location={this.props.location}
+          path={this.props.data.essential.meta.path}>
+          {_.sortBy(components, [o => o.order]).map(component => {
+            const { props } = component;
+            /*
             CHECK ALL GRAPHQL-ed PROPS
             - align?
             - animate?
@@ -78,46 +82,53 @@ class Home extends Component {
             √ fill
           */
 
-          const merger = (propValues, constValues) => {
-            if (_.isArray(propValues)) {
-              return propValues.concat(constValues);
-            }
-          };
+            const merger = (propValues, constValues) => {
+              if (_.isArray(propValues)) {
+                return propValues.concat(constValues);
+              }
+            };
 
-          // consolidate props.fill.image w/ graphql-ed image data
-          const fill = utilFill(component, props, edges);
+            // consolidate props.fill.image w/ graphql-ed image data
+            const fill = utilFill(component, props, edges);
 
-          // merge component.props.images array with actual graphql resolved image files
-          const images = _.mergeWith(
-            _.sortBy(component.props.images, [o => o.order]),
-            _.sortBy(
-              _.map(
-                _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
-                o => _.get(o, 'node.childImageSharp')
+            // merge component.props.images array with actual graphql resolved image files
+            const images = _.mergeWith(
+              _.sortBy(component.props.images, [o => o.order]),
+              _.sortBy(
+                _.map(
+                  _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
+                  o => _.get(o, 'node.childImageSharp')
+                ),
+                [o => o.order]
               ),
-              [o => o.order]
-            ),
-            merger
-          );
+              merger
+            );
 
-          {
-            /* console.group('Home.js');
+            {
+              /* console.group('Home.js');
           console.log(this.props);
           console.groupEnd(); */
-          }
+            }
 
-          return (
-            <IdocProvider invert={component.invert} key={component.id}>
-              <OpeningTitles {...titlesProps} fill={fill} cover>
-                <OpeningActions vertical={titlesProps.align === 'center'}>
-                  <StartButton to={initialPath}>Start exploring</StartButton>
-                  <IndexButton to="/contents">Discover contents</IndexButton>
-                </OpeningActions>
-              </OpeningTitles>
-            </IdocProvider>
-          );
-        })}
-      </Layout>
+            return (
+              <IdocProvider invert={component.invert} key={component.id}>
+                <OpeningTitles {...titlesProps} fill={fill} cover>
+                  <ActionBar>
+                    <StartButton to={initialPath}>
+                      <Action as="span" primary>
+                        Start exploring
+                      </Action>
+                    </StartButton>
+                    <IndexButton to="/contents">
+                      <Action as="span">Discover contents</Action>
+                    </IndexButton>
+                  </ActionBar>
+                </OpeningTitles>
+              </IdocProvider>
+            );
+          })}
+        </Layout>
+      </IdocProvider>
     );
   }
 }
@@ -125,7 +136,7 @@ class Home extends Component {
 export default Home;
 
 export const pageQuery = graphql`
-  query HomeQuery($uid: String!) {
+  query HomeTplQuery($uid: String!) {
     essential: essentialsJson(meta: { uid: { eq: $uid } }) {
       meta {
         path

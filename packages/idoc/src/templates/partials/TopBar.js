@@ -177,6 +177,7 @@ const Breadcrumbs = styled.nav`
 `;
 
 const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />)`
+  ${({ theme }) => theme.typography.body2};
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
@@ -241,7 +242,7 @@ class TopBar extends Component {
   }
 
   render() {
-    const { theme, isHome, isCredits, toc } = this.props;
+    const { isCredits, isEssential, isHome, theme, site, toc } = this.props;
     const { isHovered, isTransitioning, tooltip } = this.state;
     const { chapters, currentPage, currentPageI, nextPage, prevPage } = toc;
 
@@ -261,7 +262,7 @@ class TopBar extends Component {
               <Side lx>
                 <Toolbar>
                   <Grid container spacing={1}>
-                    {chapters.length > 1 ? (
+                    {chapters.length > 1 && !isEssential ? (
                       <Grid item>
                         <Tooltip
                           enterDelay={500}
@@ -270,55 +271,72 @@ class TopBar extends Component {
                           open={!isTransitioning && tooltip === 'chapters'}
                           title="Table of contents">
                           <div style={{ display: 'inline-block' }}>
-                            <IconButton>
-                              <MenuIcon />
-                            </IconButton>
+                            <AniLink onClick={this.onLinkWTransitionClick} to="/contents">
+                              <IconButton>
+                                <MenuIcon />
+                              </IconButton>
+                            </AniLink>
                           </div>
                         </Tooltip>
                       </Grid>
+                    ) : (
+                      <Tooltip
+                        enterDelay={500}
+                        onClose={() => this.setState({ tooltip: null })}
+                        onOpen={() => this.setState({ tooltip: 'replay' })}
+                        open={!isTransitioning && tooltip === 'replay'}
+                        title="Return home">
+                        <div style={{ display: 'inline-block' }}>
+                          <AniLink onClick={this.onLinkWTransitionClick} to="/">
+                            {site.meta.publisher}
+                          </AniLink>
+                        </div>
+                      </Tooltip>
+                    )}
+                    {!isEssential ? (
+                      <Grid item>
+                        {prevPage ? (
+                          <Tooltip
+                            enterDelay={500}
+                            onClose={() => this.setState({ tooltip: null })}
+                            onOpen={() => this.setState({ tooltip: 'prev' })}
+                            open={!isTransitioning && tooltip === 'prev'}
+                            title="Previous page">
+                            <div style={{ display: 'inline-block' }}>
+                              <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
+                                <IconButton
+                                  style={{
+                                    borderBottomRightRadius: 0,
+                                    borderTopRightRadius: 0,
+                                  }}>
+                                  <KeyboardArrowLeftIcon />
+                                </IconButton>
+                              </AniLink>
+                            </div>
+                          </Tooltip>
+                        ) : null}
+                        {nextPage ? (
+                          <Tooltip
+                            enterDelay={500}
+                            onClose={() => this.setState({ tooltip: null })}
+                            onOpen={() => this.setState({ tooltip: 'next' })}
+                            open={!isTransitioning && tooltip === 'next'}
+                            title="Next page">
+                            <div style={{ display: 'inline-block' }}>
+                              <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
+                                <IconButton
+                                  style={{
+                                    borderBottomLeftRadius: 0,
+                                    borderTopLeftRadius: 0,
+                                  }}>
+                                  <KeyboardArrowRightIcon />
+                                </IconButton>
+                              </AniLink>
+                            </div>
+                          </Tooltip>
+                        ) : null}
+                      </Grid>
                     ) : null}
-                    <Grid item>
-                      {prevPage ? (
-                        <Tooltip
-                          enterDelay={500}
-                          onClose={() => this.setState({ tooltip: null })}
-                          onOpen={() => this.setState({ tooltip: 'prev' })}
-                          open={!isTransitioning && tooltip === 'prev'}
-                          title="Previous page">
-                          <div style={{ display: 'inline-block' }}>
-                            <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
-                              <IconButton
-                                style={{
-                                  borderBottomRightRadius: 0,
-                                  borderTopRightRadius: 0,
-                                }}>
-                                <KeyboardArrowLeftIcon />
-                              </IconButton>
-                            </AniLink>
-                          </div>
-                        </Tooltip>
-                      ) : null}
-                      {nextPage ? (
-                        <Tooltip
-                          enterDelay={500}
-                          onClose={() => this.setState({ tooltip: null })}
-                          onOpen={() => this.setState({ tooltip: 'next' })}
-                          open={!isTransitioning && tooltip === 'next'}
-                          title="Next page">
-                          <div style={{ display: 'inline-block' }}>
-                            <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
-                              <IconButton
-                                style={{
-                                  borderBottomLeftRadius: 0,
-                                  borderTopLeftRadius: 0,
-                                }}>
-                                <KeyboardArrowRightIcon />
-                              </IconButton>
-                            </AniLink>
-                          </div>
-                        </Tooltip>
-                      ) : null}
-                    </Grid>
                   </Grid>
                 </Toolbar>
               </Side>
@@ -326,7 +344,7 @@ class TopBar extends Component {
                 {isHome ? (
                   <Title theme={theme}>
                     <Typography component="span" noWrap variant="caption">
-                      Hiking Cima dell’Uomo
+                      {site.meta.title}
                     </Typography>
                   </Title>
                 ) : null}
@@ -335,7 +353,7 @@ class TopBar extends Component {
                     <>
                       <AniLink to="/">
                         <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
-                          Hiking Cima dell’Uomo
+                          {site.meta.title}
                         </Typography>
                       </AniLink>
                       <Typography className="summary-text" component="p" display="block" noWrap variant="subtitle2">

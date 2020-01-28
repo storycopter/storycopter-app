@@ -11,6 +11,7 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
 import { CreditsIcon } from '@storycopter/ui/elements';
+import { breakpoint } from '@storycopter/ui/settings';
 import { setHeight, setSpace } from '@storycopter/ui/mixins';
 
 import AniLink from '../components/AniLink';
@@ -32,6 +33,7 @@ const Toolbar = styled.div`
 `;
 
 const Element = styled(({ theme, ...props }) => <footer {...props} />)`
+  ${({ theme }) => theme.typography.body2};
   ${setHeight('h')};
   ${setSpace('pam')};
   align-items: center;
@@ -45,6 +47,9 @@ const Element = styled(({ theme, ...props }) => <footer {...props} />)`
   position: fixed;
   right: 0;
   z-index: ${({ theme }) => theme.zIndex.appBar};
+  ${breakpoint.phone} {
+    display: none;
+  }
 `;
 
 class FooBar extends Component {

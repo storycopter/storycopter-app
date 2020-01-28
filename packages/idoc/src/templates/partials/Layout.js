@@ -1,52 +1,38 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { array, bool, oneOfType, object } from 'prop-types';
+import { array, bool, node, oneOfType, object, shape, string } from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
+import { withTheme } from '@material-ui/styles';
 
 import { IdocProvider } from '@storycopter/ui/providers';
+import { GlobalStyles } from '@storycopter/ui/components';
 
 import FooBar from './FooBar';
-import GlobalStyles from './GlobalStyles';
 import Shortcuts from './Shortcuts';
 import TopBar from './TopBar';
 
-const Main = styled.main``;
+const Main = styled(({ fill, theme, ...props }) => <main {...props} />)`
+  ${({ theme }) => theme.typography.body2};
+  ${({ fill, theme }) => {
+    if (fill.color) {
+      return `
+        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
+        `;
+    }
+    if (fill.image) {
+      return `
+        background-image: url(${fill.image.fixed.src});
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        `;
+    }
+  }};
+`;
 
 const LayoutQuery = graphql`
   query LayoutQuery {
-    chapters: allChaptersJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            cover {
-              name
-            }
-            order
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
-    essentials: allEssentialsJson {
-      edges {
-        node {
-          id
-          meta {
-            cover {
-              name
-            }
-            path
-            text
-            title
-            uid
-          }
-        }
-      }
-    }
     covers: allFile(filter: { name: { eq: "cover" } }) {
       edges {
         node {
@@ -81,7 +67,11 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, path } = this.props;
+    const { children, contextData, fill, path, theme } = this.props;
+
+    // console.group('Layout.js');
+    // console.log({ contextData });
+    // console.groupEnd();
 
     return (
       <IdocProvider>
@@ -93,18 +83,17 @@ class Layout extends Component {
 
             // make up chapters' and essentials' data
             const consolidate = arr =>
-              arr
-                .map(el => el.node.meta)
-                .map(el => ({
-                  ...el,
-                  cover: {
-                    ...el.cover,
-                    ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
-                  },
-                }));
+              arr.map(el => ({
+                ...el,
+                cover: {
+                  ...el.cover,
+                  ..._.find(covers, o => o.relativePath.startsWith(el.uid)),
+                },
+              }));
 
-            const chapters = consolidate(data.chapters.edges);
-            const essentials = consolidate(data.essentials.edges);
+            const chapters = consolidate(contextData.allChapters);
+            const essentials = consolidate(contextData.allEssentials);
+            const site = contextData.allSiteData;
 
             // create allPages array
             let allPages = chapters.map(el => el);
@@ -124,6 +113,7 @@ class Layout extends Component {
             const isCurrentCredits = path === '/credits';
             const isCurrentError = path === '/404';
             const isCurrentHome = path === '/';
+            const isCurrentEssential = isCurrentContents || isCurrentCredits || isCurrentHome;
 
             // define next/prev pages
             const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
@@ -140,16 +130,28 @@ class Layout extends Component {
               prevPage,
             };
 
+            // console.group('Layout.js');
+            // console.log({ data });
+            // console.groupEnd();
+
             return (
               <>
                 <GlobalStyles />
                 <IdocProvider invert>
-                  {!isCurrentError && !isCurrentContents ? (
-                    <TopBar isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props} />
-                  ) : null}
+                  <TopBar
+                    isContents={isCurrentContents}
+                    isCredits={isCurrentCredits}
+                    isEssential={isCurrentEssential}
+                    isHome={isCurrentHome}
+                    site={site}
+                    toc={toc}
+                    {...this.props}
+                  />
                 </IdocProvider>
-                <Main>{children}</Main>
-                {!isCurrentCredits && !isCurrentHome && !isCurrentError && !isCurrentContents ? (
+                <Main fill={fill} theme={theme}>
+                  {children}
+                </Main>
+                {!isCurrentEssential ? (
                   <Shortcuts isCredits={isCurrentCredits} isHome={isCurrentHome} toc={toc} {...this.props}></Shortcuts>
                 ) : null}
                 <FooBar isCredits={isCurrentCredits} isHome={isCurrentHome} {...this.props}></FooBar>
@@ -162,15 +164,23 @@ class Layout extends Component {
   }
 }
 
-export default Layout;
+export default withTheme(Layout);
 
 Layout.propTypes = {
-  children: oneOfType([array, object]).isRequired,
+  children: oneOfType([array, node, object, string]).isRequired,
+  fill: shape({
+    image: object,
+    color: string,
+  }),
   isCredits: bool,
   isHome: bool,
 };
 
 Layout.defaultProps = {
+  fill: {
+    color: 'transparent',
+    image: null,
+  },
   isCredits: null,
   isHome: null,
 };
