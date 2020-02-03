@@ -1,32 +1,24 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-// import is from 'electron-is';
-// import path from 'path';
-import Ansi from 'ansi-to-react';
 import React from 'react';
-import process from 'child_process';
-import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
-import { createGlobalStyle } from 'styled-components';
+import is from 'electron-is';
+import process from 'child_process';
+import Ansi from 'ansi-to-react';
+import path from 'path';
+import stripAnsi from 'strip-ansi';
+
+import { Button } from '@material-ui/core';
+
 import { update } from './reducers/data';
-
-import { Button, CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
-
-import { defaultTheme } from './themes';
-import Editor from './Editor';
+import './App.css';
 
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
+
 const foo = remote.require('./foo');
 const node = foo.getNode();
-
-const GlobalStyle = createGlobalStyle`
-  html, body, #root {
-    width: 100%;
-    height: 100%;
-  }
-`;
+console.log(node);
 
 class App extends React.Component {
   constructor(props) {
@@ -102,34 +94,22 @@ class App extends React.Component {
 
   render() {
     const { child, log, status, src } = this.state;
-    const { data } = this.props;
-
-    console.group('App.js:');
-    console.log({ data });
-    console.log({ defaultTheme });
-    console.groupEnd();
+    const { data, update } = this.props;
 
     return (
-      <ThemeProvider theme={defaultTheme}>
-        <>
-          <Editor />
-          <CssBaseline />
-          <GlobalStyle />
-          {!child ? (
-            <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
-              Open Project
-            </Button>
-          ) : null}
-          {child ? (
-            <Button variant="contained" color="secondary" onClick={() => this.kill()}>
-              Kill Gatsby
-            </Button>
-          ) : null}
-          {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
-          {status ? <h1>{status}</h1> : null}
-          <Ansi>{log}</Ansi>
-        </>
-      </ThemeProvider>
+      <div className="App">
+        {!child ? <Button onClick={() => this.openProjectDialog()}>Open Project</Button> : null}
+        {src ? <iframe ref={this.iframeRef} src={src}></iframe> : null}
+        {status ? <h1>{status}</h1> : null}
+        <Ansi>{log}</Ansi>
+        {child ? <Button onClick={() => this.kill()}>kill gatsby</Button> : null}
+        <hr />
+        initialState: foo = "{data.foo}"
+        <hr />
+        data.test = "{data.test}"
+        <br />
+        <Button onClick={() => update({ test: Date.now() })}>set test to Date.now()</Button>
+      </div>
     );
   }
 }

@@ -1,7 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  foo: 'bar',
+  inspector: {
+    activeInspector: 'document',
+    documentInspector: {
+      meta: true,
+      brand: false,
+      sound: false,
+      motivation: false,
+    },
+    chapterInspector: {},
+    elementInspector: {},
+  },
 };
 
 const dataSlice = createSlice({
