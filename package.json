@@ -7,6 +7,9 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "clean": "npx oao clean"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
