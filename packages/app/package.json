@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.1",
     "@reduxjs/toolkit": "1.2.3",
     "ansi-to-react": "5.1.1",
     "electron-is": "3.0.0",
@@ -46,7 +47,8 @@
     "redux-localstorage-simple": "2.1.6",
     "redux-logger": "3.0.6",
     "shelljs": "0.8.3",
-    "strip-ansi": "6.0.0"
+    "strip-ansi": "6.0.0",
+    "styled-components": "^5.0.0"
   },
   "scripts": {
     "start": "rescripts start",
