@@ -30,23 +30,23 @@
     ]
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.2.3",
-    "ansi-to-react": "^5.1.1",
-    "electron-is": "^3.0.0",
-    "electron-is-dev": "^1.1.0",
-    "gatsby": "^2.18.17",
-    "hazardous": "^0.3.0",
-    "npm": "^6.13.4",
-    "npm-commands": "^1.0.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-redux": "^7.1.3",
+    "@reduxjs/toolkit": "1.2.3",
+    "ansi-to-react": "5.1.1",
+    "electron-is": "3.0.0",
+    "electron-is-dev": "1.1.0",
+    "gatsby": "2.18.17",
+    "hazardous": "0.3.0",
+    "npm": "6.13.4",
+    "npm-commands": "1.0.2",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-redux": "7.1.3",
     "react-scripts": "3.3.0",
-    "redux": "^4.0.5",
-    "redux-localstorage-simple": "^2.1.6",
-    "redux-logger": "^3.0.6",
-    "shelljs": "^0.8.3",
-    "strip-ansi": "^6.0.0"
+    "redux": "4.0.5",
+    "redux-localstorage-simple": "2.1.6",
+    "redux-logger": "3.0.6",
+    "shelljs": "0.8.3",
+    "strip-ansi": "6.0.0"
   },
   "scripts": {
     "start": "rescripts start",
@@ -75,12 +75,12 @@
     ]
   },
   "devDependencies": {
-    "@rescripts/cli": "^0.0.13",
-    "@rescripts/rescript-env": "^0.0.11",
-    "concurrently": "^5.0.2",
-    "electron": "^7.1.7",
+    "@rescripts/cli": "0.0.13",
+    "@rescripts/rescript-env": "0.0.11",
+    "concurrently": "5.0.2",
+    "electron": "7.1.7",
     "electron-builder": "20.28.4",
-    "typescript": "^3.7.4",
-    "wait-on": "^3.3.0"
+    "typescript": "3.7.4",
+    "wait-on": "3.3.0"
   }
 }
