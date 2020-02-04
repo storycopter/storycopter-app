@@ -4,6 +4,11 @@
     "publisher": "Storycopter",
     "summary": "An interactive documentary about something truly epic."
   },
+  "motivation": {
+    "enable": true,
+    "label": "Visit Storycopter!",
+    "link": "https://storycopter.com"
+  },
   "settings": {
     "fill": {
       "color": "cyan",
