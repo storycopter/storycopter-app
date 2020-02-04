@@ -4,6 +4,14 @@
     "publisher": "Storycopter",
     "summary": "An interactive documentary about something truly epic."
   },
+  "brand": {
+    "backgColor": "#ffffff",
+    "brandColor": "#4051b5",
+    "enableFavicon": false,
+    "enableLogo": false,
+    "textColor": "#333333",
+    "typography": "modern"
+  },
   "motivation": {
     "enable": true,
     "label": "Visit Storycopter!",

@@ -111,24 +111,22 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={defaultTheme}>
-        <>
-          <Editor />
-          <CssBaseline />
-          <GlobalStyle />
-          {!child ? (
-            <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
-              Open Project
-            </Button>
-          ) : null}
-          {child ? (
-            <Button variant="contained" color="secondary" onClick={() => this.kill()}>
-              Kill Gatsby
-            </Button>
-          ) : null}
-          {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
-          {status ? <h1>{status}</h1> : null}
-          <Ansi>{log}</Ansi>
-        </>
+        <GlobalStyle />
+        <CssBaseline />
+        <Editor />
+        {!child ? (
+          <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
+            Open Project
+          </Button>
+        ) : null}
+        {child ? (
+          <Button variant="contained" color="secondary" onClick={() => this.kill()}>
+            Kill Gatsby
+          </Button>
+        ) : null}
+        {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
+        {status ? <h1>{status}</h1> : null}
+        <Ansi>{log}</Ansi>
       </ThemeProvider>
     );
   }

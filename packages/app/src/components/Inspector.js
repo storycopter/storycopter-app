@@ -29,7 +29,7 @@ const Inspector = props => {
         variant="fullWidth">
         <Tab label="Item One" value="document" label="Document" />
         <Tab label="Item Two" value="chapter" label="Chapter" />
-        <Tab label="Item Three" value="component" label="Element" />
+        {/* <Tab label="Item Three" value="component" label="Element" /> */}
       </Tabs>
       <Box
         display={inspector.activeInspector !== 'document' ? 'none' : 'flex'}
@@ -38,7 +38,7 @@ const Inspector = props => {
         <DocumentInspector />
       </Box>
       <Box display={inspector.activeInspector !== 'chapter' ? 'none' : 'flex'}>Chapter</Box>
-      <Box display={inspector.activeInspector !== 'component' ? 'none' : 'flex'}>Element</Box>
+      {/* <Box display={inspector.activeInspector !== 'component' ? 'none' : 'flex'}>Element</Box> */}
     </>
   );
 };

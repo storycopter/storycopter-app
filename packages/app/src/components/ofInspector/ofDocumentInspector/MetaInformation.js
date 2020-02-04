@@ -4,7 +4,7 @@ import { update } from '../../../reducers/data';
 
 import { Button, FormControl, InputLabel, FilledInput } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,8 +87,8 @@ const MetaInformation = props => {
           type="file"
         />
         <label htmlFor="cover">
-          <Button startIcon={<PanoramaOutlinedIcon />} fullWidth variant="contained" component="span">
-            Select image…
+          <Button startIcon={<AddIcon />} fullWidth variant="contained" component="span">
+            Select image
           </Button>
         </label>
       </FormControl>

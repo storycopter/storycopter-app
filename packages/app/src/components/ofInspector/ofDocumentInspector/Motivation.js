@@ -64,7 +64,7 @@ const Motivation = props => {
             value="true"
           />
         }
-        label="Motivate readers"
+        label={<Typography variant="overline">Motivate readers</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <InputLabel htmlFor="label">Action label</InputLabel>

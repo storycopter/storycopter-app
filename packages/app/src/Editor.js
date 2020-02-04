@@ -23,9 +23,15 @@ const useStyles = makeStyles(theme => ({
   main: {
     flexGrow: 1,
   },
+  canvas: {
+    flexBasis: '100%',
+    overflow: 'hidden',
+  },
   side: {
     flexBasis: '320px',
     flexGrow: 0,
+    height: '100%',
+    overflowY: 'auto',
   },
   offset: theme.mixins.toolbar,
 }));
@@ -72,19 +78,14 @@ const Editor = props => {
         </AppBar>
         <AppBarSpacer className={classes.offset} />
       </Grid>
-      <Grid container className={classes.main}>
-        <Grid item className={classes.side}>
+      <Grid container className={[classes.main, classes.canvas]}>
+        <Grid item className={classes.side} style={{ overflowY: 'auto' }}>
           <Box borderRight={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
-            Left
+            <Inspector />
           </Box>
         </Grid>
         <Grid item className={classes.main}>
-          Center
-        </Grid>
-        <Grid item className={classes.side}>
-          <Box borderLeft={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
-            <Inspector />
-          </Box>
+          Main
         </Grid>
       </Grid>
     </Grid>
