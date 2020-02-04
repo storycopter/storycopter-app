@@ -3,31 +3,8 @@
   "version": "1.0.0",
   "license": "BSD-3-Clause",
   "main": "index.js",
-  "dependencies": {
-    "@material-ui/core": "4.9.0",
-    "gatsby": "2.19.7",
-    "gatsby-cli": "2.8.27",
-    "gatsby-source-filesystem": "2.1.46",
-    "gatsby-transformer-remark": "2.6.48",
-    "lodash": "4.17.15",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "styled-components": "5.0.0"
-  },
-  "devDependencies": {
-    "babel-eslint": "10.0.3",
-    "eslint-config-prettier": "6.10.0",
-    "eslint-plugin-prettier": "3.1.2",
-    "eslint-plugin-react": "7.18.0",
-    "eslint": "6.8.0",
-    "gh-pages": "2.2.0",
-    "prettier-eslint": "9.0.1",
-    "prettier-stylelint": "0.4.2",
-    "prettier": "1.19.1",
-    "pretty-quick": "2.0.1",
-    "react-hot-loader": "4.12.19",
-    "stylelint-prettier": "1.1.2"
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "scripts": {
     "clean:all": "rm -rf ./.cache && rm -rf ./public && rm -rf ./node_modules && rm -f ./yarn.lock && rm -f ./yarn-error.log",
     "clear:gatsby": "rm -rf ./.cache && rm -rf ./public",
