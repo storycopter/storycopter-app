@@ -61,8 +61,8 @@ const defaultTheme = createMuiTheme({
     },
     MuiExpansionPanelSummary: {
       root: {
-        padding: '0 0',
-        margin: '0 24px',
+        padding: '0',
+        margin: `0 ${muiTheme.spacing(3)}px`,
         minHeight: 'auto',
         '&$expanded': {
           minHeight: 'auto',
@@ -71,13 +71,13 @@ const defaultTheme = createMuiTheme({
       },
       content: {
         '&$expanded': {
-          margin: '16px 0',
+          margin: `${muiTheme.spacing(2)}px 0`,
         },
       },
     },
     MuiExpansionPanelDetails: {
       root: {
-        padding: '12px 24px 16px',
+        padding: `${muiTheme.spacing(2)}px ${muiTheme.spacing(3)}px ${muiTheme.spacing(2)}px`,
       },
     },
   },

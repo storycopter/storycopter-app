@@ -10,6 +10,9 @@ import introJSON from '@storycopter/idoc/src/chapters/000-intro.json';
 import beginningJSON from '@storycopter/idoc/src/chapters/001-beginning.json';
 
 const initialState = {
+  editor: {
+    activePage: 0,
+  },
   inspector: {
     activeInspector: 'document',
     documentInspector: {
@@ -22,7 +25,7 @@ const initialState = {
     elementInspector: {},
   },
   currentProject: {
-    // basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',
+    basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',
     site: siteJSON,
     essentials: {
       contents: contentsJSON,
