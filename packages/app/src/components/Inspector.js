@@ -28,7 +28,7 @@ const Inspector = props => {
         aria-label="simple tabs example"
         variant="fullWidth">
         <Tab label="Item One" value="document" label="Document" />
-        <Tab label="Item Two" value="chapter" label="Chapter" />
+        <Tab label="Item Two" value="page" label="Page" />
         {/* <Tab label="Item Three" value="component" label="Element" /> */}
       </Tabs>
       <Box
@@ -37,7 +37,7 @@ const Inspector = props => {
         borderTop={`1px solid ${defaultTheme.palette.divider}`}>
         <DocumentInspector />
       </Box>
-      <Box display={inspector.activeInspector !== 'chapter' ? 'none' : 'flex'}>Chapter</Box>
+      <Box display={inspector.activeInspector !== 'page' ? 'none' : 'flex'}>Page</Box>
       {/* <Box display={inspector.activeInspector !== 'component' ? 'none' : 'flex'}>Element</Box> */}
     </>
   );

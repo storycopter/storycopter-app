@@ -9,6 +9,8 @@
     "brandColor": "#4051b5",
     "enableFavicon": false,
     "enableLogo": false,
+    "favicon": null,
+    "logo": "src/site/assets/logo.png",
     "textColor": "#333333",
     "typography": "modern"
   },
