@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
-import { Button, MenuItem, FormControl, FilledInput, InputLabel, Select, Typography } from '@material-ui/core';
+import { Button, FormControl, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -59,4 +59,7 @@ const SoundExperience = props => {
   );
 };
 
-export default connect(({ data }) => ({ data }), { update })(SoundExperience);
+export default connect(
+  ({ data }) => ({ data }),
+  { update }
+)(SoundExperience);
