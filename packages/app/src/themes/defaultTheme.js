@@ -18,8 +18,15 @@ const defaultTheme = createMuiTheme({
       },
     },
 
-    // Tooltips
+    // Forms
+    MuiFilledInput: {
+      root: {
+        borderBottomLeftRadius: muiTheme.shape.borderRadius,
+        borderBottomRightRadius: muiTheme.shape.borderRadius,
+      },
+    },
 
+    // Tooltips
     MuiTooltip: {
       tooltip: {
         ...muiTheme.typography.body2,
@@ -70,7 +77,7 @@ const defaultTheme = createMuiTheme({
     },
     MuiExpansionPanelDetails: {
       root: {
-        padding: '24px',
+        padding: '12px 24px 16px',
       },
     },
   },
