@@ -43,26 +43,23 @@ const SoundExperience = props => {
 
   const { data, update } = props;
   const { currentProject } = data;
-  const { basepath } = currentProject;
-  const { enableSound, track } = currentProject.site.sound;
+  const { basepath, site } = currentProject;
+  const { sound } = site;
+  const { enableSound, track } = sound;
   const trackPath = `${basepath}src/site/assets/${track}`;
 
   const [trackDuration, setTrackDuration] = React.useState(0);
   const [trackPlaying, setTrackPlaying] = React.useState(false);
   const [trackProgress, setTrackProgress] = React.useState(0);
 
-  React.useEffect(() => {
-    player.current.seekTo(trackProgress);
-  }, [trackProgress]);
-
   const handleUpdate = payload => {
     update({
       currentProject: {
         ...currentProject,
         site: {
-          ...currentProject.site,
+          ...site,
           sound: {
-            ...currentProject.site.sound,
+            ...sound,
             ...payload,
           },
         },
@@ -80,7 +77,9 @@ const SoundExperience = props => {
   };
 
   const handleSliderChange = (e, newValue) => {
+    setTrackPlaying(true);
     setTrackProgress(newValue);
+    if (player && player.current) player.current.seekTo(newValue);
   };
 
   return (
@@ -109,6 +108,7 @@ const SoundExperience = props => {
               height="10px"
               loop
               onReady={player => setTrackDuration(player.getDuration())}
+              onProgress={progress => setTrackProgress(progress.playedSeconds)}
               playing={trackPlaying}
               url={trackPath}
               width="100%"

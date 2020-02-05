@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   canvas: {
+    flexGrow: 1,
     flexBasis: '100%',
     overflow: 'hidden',
   },
@@ -76,7 +77,7 @@ const Editor = props => {
         </AppBar>
         <div className={classes.offset} />
       </Grid>
-      <Grid container className={[classes.main, classes.canvas]}>
+      <Grid container className={classes.canvas}>
         <Grid item className={classes.side} style={{ overflowY: 'auto' }}>
           <Box borderRight={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
             <Inspector />

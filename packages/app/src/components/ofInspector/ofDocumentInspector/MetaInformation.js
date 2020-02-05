@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   cardMedia: {
     display: 'flex',
     flexDirection: 'row',
-    jusitfyContent: 'center',
+    justifyContent: 'center',
   },
   cardLabel: {
     display: 'block',
@@ -34,40 +35,35 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MetaInformation = props => {
+  const classes = useStyles();
+
   const { data, update } = props;
   const { currentProject } = data;
   const { basepath } = currentProject;
+  const { site } = currentProject;
+  const { meta } = site;
 
-  const classes = useStyles();
-
-  const handleChange = e => {
+  const handleUpdate = payload => {
     update({
       currentProject: {
         ...currentProject,
         site: {
-          ...currentProject.site,
+          ...site,
           meta: {
-            ...currentProject.site.meta,
-            [e.target.name]: e.target.value,
+            ...meta,
+            ...payload,
           },
         },
       },
     });
   };
 
-  const handleCheckbox = e => {
-    update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...currentProject.site,
-          meta: {
-            ...currentProject.site.meta,
-            [e.target.name]: e.target.checked,
-          },
-        },
-      },
-    });
+  const handleInputChange = e => {
+    handleUpdate({ [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = e => {
+    handleUpdate({ [e.target.name]: e.target.checked });
   };
 
   return (
@@ -79,10 +75,10 @@ const MetaInformation = props => {
           fullWidth
           id="title"
           name="title"
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
           type="text"
-          value={currentProject.site.meta.title}
+          value={meta.title}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -93,11 +89,11 @@ const MetaInformation = props => {
           id="summary"
           multiline={true}
           name="summary"
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
           type="text"
           rowsMax={4}
-          value={currentProject.site.meta.summary}
+          value={meta.summary}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -107,20 +103,20 @@ const MetaInformation = props => {
           fullWidth
           id="publisher"
           name="publisher"
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
           type="text"
-          value={currentProject.site.meta.publisher}
+          value={meta.publisher}
         />
       </FormControl>
       <FormControlLabel
         control={
           <Checkbox
-            checked={currentProject.site.meta.enableCover}
+            checked={meta.enableCover}
             color="primary"
             id="enableCover"
             name="enableCover"
-            onChange={handleCheckbox}
+            onChange={handleCheckboxChange}
             value="true"
           />
         }
@@ -128,34 +124,29 @@ const MetaInformation = props => {
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
-          <CardMedia
-            alt={`Cover`}
-            component="img"
-            className={classes.cardMedia}
-            height="100"
-            image={`${basepath}src/site/${currentProject.site.meta.cover.name}`}
-            title={`Cover`}
-          />
+          <CardMedia className={classes.cardMedia}>
+            {meta.cover && meta.cover.name ? (
+              <img alt="Cover" height="100" src={`${basepath}src/site/assets/${meta.cover.name}`} title="Cover" />
+            ) : (
+              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
+                <PanoramaOutlinedIcon color={meta.enableCover ? 'action' : 'disabled'} />
+              </Box>
+            )}
+          </CardMedia>
           <CardActions>
             <input
               accept="image/*"
               color="primary"
-              disabled={!currentProject.site.meta.enableCover}
+              disabled={!meta.enableCover}
               id="cover"
               name="cover"
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="cover" className={classes.cardLabel}>
-              <Button
-                color="primary"
-                component="span"
-                disabled={!currentProject.site.meta.enableCover}
-                fullWidth
-                size="small"
-                startIcon={<PanoramaOutlinedIcon />}>
-                Select…
+              <Button color="primary" component="span" disabled={!meta.enableCover} fullWidth size="small">
+                Choose file…
               </Button>
             </label>
           </CardActions>

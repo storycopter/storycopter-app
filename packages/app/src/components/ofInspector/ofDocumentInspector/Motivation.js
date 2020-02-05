@@ -12,10 +12,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Motivation = props => {
+  const classes = useStyles();
+
   const { data, update } = props;
   const { currentProject } = data;
-
-  const classes = useStyles();
 
   const handleChange = e => {
     update({

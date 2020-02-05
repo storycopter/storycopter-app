@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Chapters = props => {
+  const classes = useStyles();
+
   const { data, update } = props;
   const { currentProject, editor } = data;
   const { chapters } = currentProject;
@@ -38,8 +40,6 @@ const Chapters = props => {
   const handleAvatarClick = value => {
     handleUpdate({ activeChapter: value });
   };
-
-  const classes = useStyles();
 
   return (
     <Box className={classes.root}>

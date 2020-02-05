@@ -13,7 +13,9 @@
     "brandColor": "#4051b5",
     "enableFavicon": false,
     "enableLogo": false,
-    "favicon": null,
+    "favicon": {
+      "name": null
+    },
     "logo": {
       "name": "logo.png"
     },

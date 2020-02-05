@@ -20,14 +20,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Canvas = props => {
+  const classes = useStyles();
+
   const { data } = props;
   const { currentProject, editor } = data;
   const { chapters } = currentProject;
   const { activeChapter } = editor;
 
   const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
-
-  const classes = useStyles();
 
   return (
     <Box className={classes.root}>

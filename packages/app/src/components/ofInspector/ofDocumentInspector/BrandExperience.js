@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   cardMedia: {
     display: 'flex',
     flexDirection: 'row',
-    jusitfyContent: 'center',
+    justifyContent: 'center',
   },
   cardLabel: {
     display: 'block',
@@ -36,40 +37,35 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BrandExperience = props => {
+  const classes = useStyles();
+
   const { data, update } = props;
   const { currentProject } = data;
   const { basepath } = currentProject;
+  const { site } = currentProject;
+  const { brand } = site;
 
-  const classes = useStyles();
-
-  const handleChange = e => {
+  const handleUpdate = payload => {
     update({
       currentProject: {
         ...currentProject,
         site: {
-          ...currentProject.site,
+          ...site,
           brand: {
-            ...currentProject.site.brand,
-            [e.target.name]: e.target.value,
+            ...brand,
+            ...payload,
           },
         },
       },
     });
   };
 
-  const handleCheckbox = e => {
-    update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...currentProject.site,
-          brand: {
-            ...currentProject.site.brand,
-            [e.target.name]: e.target.checked,
-          },
-        },
-      },
-    });
+  const handleInputChange = e => {
+    handleUpdate({ [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = e => {
+    handleUpdate({ [e.target.name]: e.target.checked });
   };
 
   return (
@@ -77,11 +73,11 @@ const BrandExperience = props => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={currentProject.site.brand.enableLogo}
+            checked={brand.enableLogo}
             color="primary"
             id="enableLogo"
             name="enableLogo"
-            onChange={handleCheckbox}
+            onChange={handleCheckboxChange}
             value="true"
           />
         }
@@ -89,34 +85,29 @@ const BrandExperience = props => {
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
-          <CardMedia
-            alt={`Logo`}
-            component="img"
-            className={classes.cardMedia}
-            height="100"
-            image={`${basepath}src/site/assets/${currentProject.site.brand.logo.name}`}
-            title={`Logo`}
-          />
+          <CardMedia className={classes.cardMedia}>
+            {brand.logo && brand.logo.name ? (
+              <img alt="Logo" height="100" src={`${basepath}src/site/assets/${brand.logo.name}`} title="Logo" />
+            ) : (
+              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
+                <PanoramaOutlinedIcon color={brand.enableLogo ? 'action' : 'disabled'} />
+              </Box>
+            )}
+          </CardMedia>
           <CardActions>
             <input
               accept="image/*"
               color="primary"
-              disabled={!currentProject.site.brand.enableLogo}
+              disabled={!brand.enableLogo}
               id="logo"
               name="logo"
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="logo" className={classes.cardLabel}>
-              <Button
-                color="primary"
-                component="span"
-                disabled={!currentProject.site.brand.enableLogo}
-                fullWidth
-                size="small"
-                startIcon={<PanoramaOutlinedIcon />}>
-                Select…
+              <Button color="primary" component="span" disabled={!brand.enableLogo} fullWidth size="small">
+                Choose file…
               </Button>
             </label>
           </CardActions>
@@ -125,11 +116,11 @@ const BrandExperience = props => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={currentProject.site.brand.enableFavicon}
+            checked={brand.enableFavicon}
             color="primary"
             id="enableFavicon"
             name="enableFavicon"
-            onChange={handleCheckbox}
+            onChange={handleCheckboxChange}
             value="true"
           />
         }
@@ -137,34 +128,29 @@ const BrandExperience = props => {
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
-          <CardMedia
-            alt={`Favicon`}
-            className={classes.cardMedia}
-            component="img"
-            height="40"
-            image={`${basepath}src/site/assets/${currentProject.site.brand.logo.name}`}
-            title={`Favicon`}
-          />
+          <CardMedia className={classes.cardMedia}>
+            {brand.favicon && brand.favicon.name ? (
+              <img alt="Favicon" height="36" src={`${basepath}src/site/assets/${brand.favicon.name}`} title="Favicon" />
+            ) : (
+              <Box height="36px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
+                <PanoramaOutlinedIcon color={brand.enableFavicon ? 'action' : 'disabled'} />
+              </Box>
+            )}
+          </CardMedia>
           <CardActions>
             <input
               accept=".ico"
               color="primary"
-              disabled={!currentProject.site.brand.enableFavicon}
+              disabled={!brand.enableFavicon}
               id="favicon"
               name="favicon"
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="favicon" className={classes.cardLabel}>
-              <Button
-                color="primary"
-                component="span"
-                disabled={!currentProject.site.brand.enableFavicon}
-                fullWidth
-                size="small"
-                startIcon={<PanoramaOutlinedIcon />}>
-                Select…
+              <Button color="primary" component="span" disabled={!brand.enableFavicon} fullWidth size="small">
+                Choose file…
               </Button>
             </label>
           </CardActions>
@@ -177,9 +163,9 @@ const BrandExperience = props => {
           fullWidth
           id="brandColor"
           name="brandColor"
-          onChange={handleChange}
+          onChange={handleInputChange}
           type="color"
-          value={currentProject.site.brand.brandColor}
+          value={brand.brandColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -189,9 +175,9 @@ const BrandExperience = props => {
           fullWidth
           id="backgColor"
           name="backgColor"
-          onChange={handleChange}
+          onChange={handleInputChange}
           type="color"
-          value={currentProject.site.brand.backgColor}
+          value={brand.backgColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -201,9 +187,9 @@ const BrandExperience = props => {
           fullWidth
           id="textColor"
           name="textColor"
-          onChange={handleChange}
+          onChange={handleInputChange}
           type="color"
-          value={currentProject.site.brand.textColor}
+          value={brand.textColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -213,10 +199,10 @@ const BrandExperience = props => {
           fullWidth
           id="typography"
           name="typography"
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
           type="text"
-          value={currentProject.site.brand.typography}>
+          value={brand.typography}>
           <MenuItem value="modern">Modern</MenuItem>
           <MenuItem value="classic">Classic</MenuItem>
         </Select>
