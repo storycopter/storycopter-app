@@ -18,8 +18,15 @@ const defaultTheme = createMuiTheme({
       },
     },
 
-    // Tooltips
+    // Forms
+    MuiFilledInput: {
+      root: {
+        borderBottomLeftRadius: muiTheme.shape.borderRadius,
+        borderBottomRightRadius: muiTheme.shape.borderRadius,
+      },
+    },
 
+    // Tooltips
     MuiTooltip: {
       tooltip: {
         ...muiTheme.typography.body2,
@@ -54,8 +61,8 @@ const defaultTheme = createMuiTheme({
     },
     MuiExpansionPanelSummary: {
       root: {
-        padding: '0 0',
-        margin: '0 24px',
+        padding: '0',
+        margin: `0 ${muiTheme.spacing(3)}px`,
         minHeight: 'auto',
         '&$expanded': {
           minHeight: 'auto',
@@ -64,13 +71,13 @@ const defaultTheme = createMuiTheme({
       },
       content: {
         '&$expanded': {
-          margin: '16px 0',
+          margin: `${muiTheme.spacing(2)}px 0`,
         },
       },
     },
     MuiExpansionPanelDetails: {
       root: {
-        padding: '24px',
+        padding: `${muiTheme.spacing(2)}px ${muiTheme.spacing(3)}px ${muiTheme.spacing(2)}px`,
       },
     },
   },

@@ -30,10 +30,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DocumentInspector = props => {
-  const classes = useStyles();
   const { data, update } = props;
   const { inspector } = data;
   const { documentInspector } = inspector;
+
+  const classes = useStyles();
 
   const togglePanel = panel => {
     console.log('Toggle panel: ', panel);
