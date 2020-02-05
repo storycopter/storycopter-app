@@ -11,20 +11,24 @@ const Inspector = props => {
   const { data, update } = props;
   const { inspector } = data;
 
-  const handleChangeTab = (event, newValue) => {
+  const handleUpdate = payload => {
     update({
       inspector: {
         ...inspector,
-        activeInspector: newValue,
+        ...payload,
       },
     });
+  };
+
+  const handleTabChange = (event, newValue) => {
+    handleUpdate({ activeInspector: newValue });
   };
 
   return (
     <>
       <Tabs
         value={inspector.activeInspector}
-        onChange={handleChangeTab}
+        onChange={handleTabChange}
         aria-label="simple tabs example"
         variant="fullWidth">
         <Tab label="Item One" value="document" label="Document" />

@@ -55,7 +55,7 @@ const SoundExperience = props => {
   const classes = useStyles();
   const player = React.createRef();
 
-  const handleChange = payload => {
+  const handleUpdate = payload => {
     update({
       currentProject: {
         ...currentProject,
@@ -71,12 +71,12 @@ const SoundExperience = props => {
   };
 
   const handleInputChange = e => {
-    handleChange({ [e.target.name]: e.target.value });
+    handleUpdate({ [e.target.name]: e.target.value });
   };
 
   const handleCheckboxChange = e => {
     setTrackPlaying(false);
-    handleChange({ [e.target.name]: e.target.checked });
+    handleUpdate({ [e.target.name]: e.target.checked });
   };
 
   const handleSliderChange = (e, newValue) => {
