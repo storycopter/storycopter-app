@@ -48,25 +48,14 @@ const SoundExperience = props => {
   const [trackPlaying, setTrackPlaying] = React.useState(false);
   const [trackProgress, setTrackProgress] = React.useState(0);
 
+  React.useEffect(() => {
+    player.current.seekTo(trackProgress);
+  }, [trackProgress]);
+
   const classes = useStyles();
+  const player = React.createRef();
 
-  const handleChange = e => {
-    update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...currentProject.site,
-          brand: {
-            ...currentProject.site.brand,
-            [e.target.name]: e.target.value,
-          },
-        },
-      },
-    });
-  };
-
-  const handleCheckbox = e => {
-    setTrackPlaying(false);
+  const handleChange = payload => {
     update({
       currentProject: {
         ...currentProject,
@@ -74,11 +63,24 @@ const SoundExperience = props => {
           ...currentProject.site,
           sound: {
             ...currentProject.site.sound,
-            [e.target.name]: e.target.checked,
+            ...payload,
           },
         },
       },
     });
+  };
+
+  const handleInputChange = e => {
+    handleChange({ [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = e => {
+    setTrackPlaying(false);
+    handleChange({ [e.target.name]: e.target.checked });
+  };
+
+  const handleSliderChange = (e, newValue) => {
+    setTrackProgress(newValue);
   };
 
   return (
@@ -94,8 +96,7 @@ const SoundExperience = props => {
             color="primary"
             id="enableSound"
             name="enableSound"
-            onChange={handleCheckbox}
-            value="true"
+            onChange={handleCheckboxChange}
           />
         }
         label={<Typography variant="overline">Enable background sound</Typography>}
@@ -104,9 +105,9 @@ const SoundExperience = props => {
         <Card elevation={0}>
           <CardContent>
             <ReactPlayer
+              ref={player}
               height="10px"
               loop
-              onProgress={obj => setTrackProgress(obj.playedSeconds)}
               onReady={player => setTrackDuration(player.getDuration())}
               playing={trackPlaying}
               url={trackPath}
@@ -140,8 +141,7 @@ const SoundExperience = props => {
                   disabled={!enableSound}
                   max={trackDuration}
                   min={0}
-                  onChange={CHANGED => console.log(CHANGED)}
-                  onChangeCommitted={COMMITTED => console.log(COMMITTED)}
+                  onChange={handleSliderChange}
                   value={trackProgress}
                 />
               </Grid>
@@ -154,7 +154,7 @@ const SoundExperience = props => {
               disabled={!enableSound}
               id="soundtrack"
               name="soundtrack"
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
