@@ -94,7 +94,7 @@ const BrandExperience = props => {
             component="img"
             className={classes.cardMedia}
             height="100"
-            image={`${basepath}src/site/${currentProject.site.brand.logo.name}`}
+            image={`${basepath}src/site/assets/${currentProject.site.brand.logo.name}`}
             title={`Logo`}
           />
           <CardActions>
@@ -142,7 +142,7 @@ const BrandExperience = props => {
             className={classes.cardMedia}
             component="img"
             height="40"
-            image={`${basepath}src/site/${currentProject.site.brand.logo.name}`}
+            image={`${basepath}src/site/assets/${currentProject.site.brand.logo.name}`}
             title={`Favicon`}
           />
           <CardActions>
