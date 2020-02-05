@@ -31,11 +31,10 @@ const Chapters = props => {
     <Box className={classes.root}>
       {orderBy(chapters, [o => o.meta.order], ['asc']).map(chapter => {
         return (
-          <Tooltip title={chapter.meta.title}>
+          <Tooltip title={chapter.meta.title} key={chapter.meta.order}>
             <Avatar
               alt={`${chapter.meta.title}`}
               className={classes.avatar}
-              key={chapter.meta.order}
               src={`${currentProject.basepath}src/chapters/${chapter.meta.uid}/${chapter.meta.cover.name}`}
               variant="square">
               {chapter.meta.order + 1}

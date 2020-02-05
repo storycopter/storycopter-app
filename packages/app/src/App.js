@@ -103,10 +103,12 @@ class App extends React.Component {
   render() {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
+    const { currentProject } = data;
 
     console.group('App.js:');
     console.log({ data });
     console.log({ defaultTheme });
+    console.log({ currentProject });
     console.groupEnd();
 
     return (

@@ -4,6 +4,9 @@ import { update } from '../../../reducers/data';
 
 import {
   Button,
+  Card,
+  CardActions,
+  CardMedia,
   Checkbox,
   FilledInput,
   FormControl,
@@ -14,10 +17,20 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
+import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    width: '100%',
+  },
+  cardMedia: {
+    display: 'flex',
+    flexDirection: 'row',
+    jusitfyContent: 'center',
+  },
+  cardLabel: {
+    display: 'block',
+    margin: '0 !important',
     width: '100%',
   },
 }));
@@ -25,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 const BrandExperience = props => {
   const { data, update } = props;
   const { currentProject } = data;
+  const { basepath } = currentProject;
 
   const classes = useStyles();
 
@@ -74,26 +88,39 @@ const BrandExperience = props => {
         label={<Typography variant="overline">Enable logo</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
-        <input
-          accept="image/*"
-          color="primary"
-          disabled={!currentProject.site.brand.enableLogo}
-          id="logo"
-          name="logo"
-          onChange={handleChange}
-          style={{ display: 'none' }}
-          type="file"
-        />
-        <label htmlFor="logo">
-          <Button
-            startIcon={<AddIcon />}
-            fullWidth
-            variant="contained"
-            component="span"
-            disabled={!currentProject.site.brand.enableLogo}>
-            Select logo
-          </Button>
-        </label>
+        <Card>
+          <CardMedia
+            alt={`Logo`}
+            component="img"
+            className={classes.cardMedia}
+            height="100"
+            image={`${basepath}src/site/${currentProject.site.brand.logo.name}`}
+            title={`Logo`}
+          />
+          <CardActions>
+            <input
+              accept="image/*"
+              color="primary"
+              disabled={!currentProject.site.brand.enableLogo}
+              id="logo"
+              name="logo"
+              onChange={handleChange}
+              style={{ display: 'none' }}
+              type="file"
+            />
+            <label htmlFor="logo" className={classes.cardLabel}>
+              <Button
+                color="primary"
+                component="span"
+                disabled={!currentProject.site.brand.enableLogo}
+                fullWidth
+                size="small"
+                startIcon={<PanoramaOutlinedIcon />}>
+                Select…
+              </Button>
+            </label>
+          </CardActions>
+        </Card>
       </FormControl>
       <FormControlLabel
         control={
@@ -109,26 +136,39 @@ const BrandExperience = props => {
         label={<Typography variant="overline">Enable favicon</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
-        <input
-          accept=".ico"
-          color="primary"
-          id="favicon"
-          disabled={!currentProject.site.brand.enableFavicon}
-          name="favicon"
-          onChange={handleChange}
-          style={{ display: 'none' }}
-          type="file"
-        />
-        <label htmlFor="favicon">
-          <Button
-            component="span"
-            disabled={!currentProject.site.brand.enableFavicon}
-            fullWidth
-            startIcon={<AddIcon />}
-            variant="contained">
-            Select favicon
-          </Button>
-        </label>
+        <Card>
+          <CardMedia
+            alt={`Favicon`}
+            className={classes.cardMedia}
+            component="img"
+            height="40"
+            image={`${basepath}src/site/${currentProject.site.brand.logo.name}`}
+            title={`Favicon`}
+          />
+          <CardActions>
+            <input
+              accept=".ico"
+              color="primary"
+              disabled={!currentProject.site.brand.enableFavicon}
+              id="favicon"
+              name="favicon"
+              onChange={handleChange}
+              style={{ display: 'none' }}
+              type="file"
+            />
+            <label htmlFor="favicon" className={classes.cardLabel}>
+              <Button
+                color="primary"
+                component="span"
+                disabled={!currentProject.site.brand.enableFavicon}
+                fullWidth
+                size="small"
+                startIcon={<PanoramaOutlinedIcon />}>
+                Select…
+              </Button>
+            </label>
+          </CardActions>
+        </Card>
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
         <InputLabel htmlFor="brandColor">Brand color</InputLabel>
