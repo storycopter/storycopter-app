@@ -25,6 +25,7 @@ const initialState = {
     elementInspector: {},
   },
   currentProject: {
+    // basepath: '/Users/pio/Playground/storycopter/packages/idoc/',
     basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',
     site: siteJSON,
     essentials: {

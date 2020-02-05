@@ -25,7 +25,8 @@
     "link": "https://storycopter.com"
   },
   "sound": {
-    "enableSound": false
+    "enableSound": false,
+    "track": "obudzanka.mp3"
   },
   "settings": {
     "fill": {

@@ -1,25 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import ReactPlayer from 'react-player';
 
 import {
   Button,
   Card,
+  Grid,
   CardActions,
-  CardMedia,
+  CardContent,
   Checkbox,
   FormControl,
   FormControlLabel,
+  IconButton,
+  Slider,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
-  cardMedia: {
+  cardContent: {
     display: 'flex',
     flexDirection: 'row',
     jusitfyContent: 'center',
@@ -35,6 +41,12 @@ const SoundExperience = props => {
   const { data, update } = props;
   const { currentProject } = data;
   const { basepath } = currentProject;
+  const { enableSound, track } = currentProject.site.sound;
+  const trackPath = `${basepath}src/site/assets/${track}`;
+
+  const [trackDuration, setTrackDuration] = React.useState(0);
+  const [trackPlaying, setTrackPlaying] = React.useState(false);
+  const [trackProgress, setTrackProgress] = React.useState(0);
 
   const classes = useStyles();
 
@@ -54,6 +66,7 @@ const SoundExperience = props => {
   };
 
   const handleCheckbox = e => {
+    setTrackPlaying(false);
     update({
       currentProject: {
         ...currentProject,
@@ -77,7 +90,7 @@ const SoundExperience = props => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={currentProject.site.sound.enableSound}
+            checked={enableSound}
             color="primary"
             id="enableSound"
             name="enableSound"
@@ -89,19 +102,56 @@ const SoundExperience = props => {
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
-          <CardMedia
-            alt={`Soundtrack`}
-            component="img"
-            className={classes.cardMedia}
-            height="100"
-            image={`${basepath}src/site/${currentProject.site.meta.cover.name}`}
-            title={`Soundtrack`}
-          />
+          <CardContent>
+            <ReactPlayer
+              height="10px"
+              loop
+              onProgress={obj => setTrackProgress(obj.playedSeconds)}
+              onReady={player => setTrackDuration(player.getDuration())}
+              playing={trackPlaying}
+              url={trackPath}
+              width="100%"
+              config={{
+                file: {
+                  forceAudio: true,
+                },
+              }}
+            />
+            <Grid
+              alignContent="center"
+              alignItems="center"
+              container
+              direction="row"
+              justify="space-between"
+              wrap="nowrap"
+              spacing={2}>
+              <Grid item>
+                <IconButton
+                  aria-label="Play"
+                  disabled={!enableSound}
+                  onClick={() => setTrackPlaying(!trackPlaying)}
+                  size="small">
+                  {trackPlaying ? <PauseIcon fontSize="inherit" /> : <PlayArrowIcon fontSize="inherit" />}
+                </IconButton>
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  aria-labelledby="continuous-slider"
+                  disabled={!enableSound}
+                  max={trackDuration}
+                  min={0}
+                  onChange={CHANGED => console.log(CHANGED)}
+                  onChangeCommitted={COMMITTED => console.log(COMMITTED)}
+                  value={trackProgress}
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
           <CardActions>
             <input
               accept=".mp3,.m4a"
               color="primary"
-              disabled={!currentProject.site.sound.enableSound}
+              disabled={!enableSound}
               id="soundtrack"
               name="soundtrack"
               onChange={handleChange}
@@ -112,7 +162,7 @@ const SoundExperience = props => {
               <Button
                 color="primary"
                 component="span"
-                disabled={!currentProject.site.sound.enableSound}
+                disabled={!enableSound}
                 fullWidth
                 size="small"
                 startIcon={<EqualizerOutlinedIcon />}>
