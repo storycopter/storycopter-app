@@ -2,7 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
-import { Card, CardActions, CardMedia, Button, FormControl, InputLabel, FilledInput } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardMedia,
+  Checkbox,
+  FilledInput,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 
@@ -38,6 +49,21 @@ const MetaInformation = props => {
           meta: {
             ...currentProject.site.meta,
             [e.target.name]: e.target.value,
+          },
+        },
+      },
+    });
+  };
+
+  const handleCheckbox = e => {
+    update({
+      currentProject: {
+        ...currentProject,
+        site: {
+          ...currentProject.site,
+          meta: {
+            ...currentProject.site.meta,
+            [e.target.name]: e.target.checked,
           },
         },
       },
@@ -87,8 +113,21 @@ const MetaInformation = props => {
           value={currentProject.site.meta.publisher}
         />
       </FormControl>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={currentProject.site.meta.enableCover}
+            color="primary"
+            id="enableCover"
+            name="enableCover"
+            onChange={handleCheckbox}
+            value="true"
+          />
+        }
+        label={<Typography variant="overline">Enable cover</Typography>}
+      />
       <FormControl variant="filled" fullWidth margin="dense">
-        <Card>
+        <Card elevation={0}>
           <CardMedia
             alt={`Cover`}
             component="img"
@@ -101,6 +140,7 @@ const MetaInformation = props => {
             <input
               accept="image/*"
               color="primary"
+              disabled={!currentProject.site.meta.enableCover}
               id="cover"
               name="cover"
               onChange={handleChange}
@@ -108,7 +148,13 @@ const MetaInformation = props => {
               type="file"
             />
             <label htmlFor="cover" className={classes.cardLabel}>
-              <Button color="primary" component="span" fullWidth size="small" startIcon={<PanoramaOutlinedIcon />}>
+              <Button
+                color="primary"
+                component="span"
+                disabled={!currentProject.site.meta.enableCover}
+                fullWidth
+                size="small"
+                startIcon={<PanoramaOutlinedIcon />}>
                 Select…
               </Button>
             </label>
