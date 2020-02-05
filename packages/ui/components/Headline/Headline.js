@@ -3,7 +3,7 @@ import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import Texty from 'rc-texty';
 import styled from 'styled-components';
-import { bool, func, object, string, shape } from 'prop-types';
+import { bool, object, oneOfType, string, shape } from 'prop-types';
 
 import { withTheme } from '@material-ui/styles';
 
@@ -233,7 +233,7 @@ Headline.propTypes = {
   animate: bool,
   cover: bool,
   fill: shape({
-    image: object,
+    image: oneOfType([object, string]),
     color: string,
   }),
   mask: string,

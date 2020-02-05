@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   avatar: {
+    cursor: 'pointer',
     height: theme.spacing(4),
     width: theme.spacing(4),
   },
@@ -22,8 +23,21 @@ const useStyles = makeStyles(theme => ({
 
 const Chapters = props => {
   const { data, update } = props;
-  const { currentProject } = data;
+  const { currentProject, editor } = data;
   const { chapters } = currentProject;
+
+  const handleUpdate = payload => {
+    update({
+      editor: {
+        ...editor,
+        ...payload,
+      },
+    });
+  };
+
+  const handleAvatarClick = value => {
+    handleUpdate({ activeChapter: value });
+  };
 
   const classes = useStyles();
 
@@ -36,7 +50,8 @@ const Chapters = props => {
               alt={`${chapter.meta.title}`}
               className={classes.avatar}
               src={`${currentProject.basepath}src/chapters/${chapter.meta.uid}/${chapter.meta.cover.name}`}
-              variant="square">
+              variant="square"
+              onClick={() => handleAvatarClick(chapter.meta.uid)}>
               {chapter.meta.order + 1}
             </Avatar>
           </Tooltip>

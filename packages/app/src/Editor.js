@@ -1,20 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { update } from './reducers/data';
 
 import CloseIcon from '@material-ui/icons/Close';
-import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
-import LaunchIcon from '@material-ui/icons/Launch';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import LaunchIcon from '@material-ui/icons/Launch';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 import { AppBar, Box, Grid, IconButton, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { defaultTheme } from './themes';
 
 import { Canvas, Chapters, Inspector } from './components';
-
-const AppBarSpacer = styled(({ ...props }) => <div {...props} />)``;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,11 +34,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Editor = props => {
-  const { data, update } = props;
-  const { currentProject, editor } = data;
-  const { basepath, chapters, essentials } = currentProject;
-  const { activeChapter } = editor;
-
   const classes = useStyles();
 
   return (
@@ -82,7 +74,7 @@ const Editor = props => {
             </Grid>
           </Toolbar>
         </AppBar>
-        <AppBarSpacer className={classes.offset} />
+        <div className={classes.offset} />
       </Grid>
       <Grid container className={[classes.main, classes.canvas]}>
         <Grid item className={classes.side} style={{ overflowY: 'auto' }}>

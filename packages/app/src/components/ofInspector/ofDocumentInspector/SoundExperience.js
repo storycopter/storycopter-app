@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SoundExperience = props => {
+  const classes = useStyles();
+  const player = React.createRef();
+
   const { data, update } = props;
   const { currentProject } = data;
   const { basepath } = currentProject;
@@ -51,9 +54,6 @@ const SoundExperience = props => {
   React.useEffect(() => {
     player.current.seekTo(trackProgress);
   }, [trackProgress]);
-
-  const classes = useStyles();
-  const player = React.createRef();
 
   const handleUpdate = payload => {
     update({

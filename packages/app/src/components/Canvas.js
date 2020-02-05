@@ -14,12 +14,15 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     padding: `${theme.spacing(5)}px`,
   },
+  componentWrap: {
+    position: 'relative',
+  },
 }));
 
 const Canvas = props => {
-  const { data, update } = props;
+  const { data } = props;
   const { currentProject, editor } = data;
-  const { basepath, chapters, essentials } = currentProject;
+  const { chapters } = currentProject;
   const { activeChapter } = editor;
 
   const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
@@ -36,10 +39,11 @@ const Canvas = props => {
               const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
 
               const RenderedComponent = componentMap[component.type];
+              const componentProps = component.props;
 
               return (
-                <Grid item key={component.id}>
-                  <RenderedComponent {...props} mask={mask} />
+                <Grid item key={component.id} className={classes.componentWrap}>
+                  <RenderedComponent {...componentProps} mask={mask} />
                 </Grid>
               );
             })
