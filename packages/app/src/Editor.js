@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { defaultTheme } from './themes';
 
-import { Chapters, Inspector } from './components';
+import { Canvas, Chapters, Inspector } from './components';
 
 const AppBarSpacer = styled(({ ...props }) => <div {...props} />)``;
 
@@ -37,7 +37,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Editor = props => {
+  const { data, update } = props;
+  const { currentProject, editor } = data;
+  const { basepath, chapters, essentials } = currentProject;
+  const { activeChapter } = editor;
+
   const classes = useStyles();
+
   return (
     <Grid
       alignContent="stretch"
@@ -85,7 +91,7 @@ const Editor = props => {
           </Box>
         </Grid>
         <Grid item className={classes.main}>
-          Main
+          <Canvas />
         </Grid>
       </Grid>
     </Grid>

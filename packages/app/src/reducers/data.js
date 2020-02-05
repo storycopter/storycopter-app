@@ -6,12 +6,12 @@ import contentsJSON from '@storycopter/idoc/src/essentials/contents.json';
 import creditsJSON from '@storycopter/idoc/src/essentials/credits.json';
 import errorJSON from '@storycopter/idoc/src/essentials/error.json';
 import homeJSON from '@storycopter/idoc/src/essentials/home.json';
-import introJSON from '@storycopter/idoc/src/chapters/000-intro.json';
+// import introJSON from '@storycopter/idoc/src/chapters/000-intro.json';
 import beginningJSON from '@storycopter/idoc/src/chapters/001-beginning.json';
 
 const initialState = {
   editor: {
-    activePage: 0,
+    activeChapter: null,
   },
   inspector: {
     activeInspector: 'document',
@@ -34,7 +34,8 @@ const initialState = {
       error: errorJSON,
       home: homeJSON,
     },
-    chapters: [introJSON, beginningJSON],
+    chapters: [beginningJSON],
+    // chapters: [introJSON, beginningJSON],
   },
 };
 
