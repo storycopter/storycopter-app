@@ -88,7 +88,7 @@ const SoundExperience = props => {
         label={<Typography variant="overline">Enable background sound</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
-        <Card>
+        <Card elevation={0}>
           <CardMedia
             alt={`Soundtrack`}
             component="img"

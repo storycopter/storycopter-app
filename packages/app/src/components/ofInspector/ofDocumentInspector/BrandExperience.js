@@ -88,7 +88,7 @@ const BrandExperience = props => {
         label={<Typography variant="overline">Enable logo</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
-        <Card>
+        <Card elevation={0}>
           <CardMedia
             alt={`Logo`}
             component="img"
@@ -136,7 +136,7 @@ const BrandExperience = props => {
         label={<Typography variant="overline">Enable favicon</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
-        <Card>
+        <Card elevation={0}>
           <CardMedia
             alt={`Favicon`}
             className={classes.cardMedia}
