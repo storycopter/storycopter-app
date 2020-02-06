@@ -43,8 +43,16 @@ const Canvas = props => {
       <Grid container direction="column" className={classes.components}>
         {chapterData
           ? _.sortBy(chapterData.tree.components, [o => o.order]).map((component, i) => {
-              // consolidate props.images w/ graphql-ed image data
+              // consolidate fill props with raw images
+              const fill =
+                component.props.fill && component.props.fill.image
+                  ? {
+                      ...component.props.fill,
+                      raw: `${basepath}src/chapters/${activeChapter}/${component.id}-${component.props.fill.image}`,
+                    }
+                  : component.props.fill;
 
+              // consolidate component.props.images with raw images
               const images =
                 component.props.images.length > 0
                   ? component.props.images.map(image => {
@@ -57,7 +65,7 @@ const Canvas = props => {
                   : [];
 
               // dirty validate mask string values
-              const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
+              const mask = ['dark', 'light'].includes(component.props.mask) ? component.props.mask : null;
 
               const RenderedComponent = componentMap[component.type];
               const componentProps = component.props;
@@ -65,7 +73,14 @@ const Canvas = props => {
               return (
                 <Grid item key={component.id} className={classes.componentWrap}>
                   <IdocProvider invert={component.invert}>
-                    <RenderedComponent {...componentProps} mask={mask} cover={false} animate={false} images={images} />
+                    <RenderedComponent
+                      {...componentProps}
+                      mask={mask}
+                      cover={false}
+                      animate={false}
+                      fill={fill}
+                      images={images}
+                    />
                   </IdocProvider>
                 </Grid>
               );

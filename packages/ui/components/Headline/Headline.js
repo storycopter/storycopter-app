@@ -93,9 +93,10 @@ const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) 
         background-color: ${fill.color ? fill.color : theme.palette.background.accent};
         `;
     }
-    if (fill.image) {
+    if (fill.image || fill.raw) {
+      console.log('HERE', fill);
       return `
-        background-image: url(${fill.image.fixed.src});
+        background-image: url(${fill.raw ? fill.raw : fill.image.fixed.src});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -151,9 +152,9 @@ class Headline extends Component {
       return c;
     };
 
-    // console.group('Headline.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('Headline.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
       <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>

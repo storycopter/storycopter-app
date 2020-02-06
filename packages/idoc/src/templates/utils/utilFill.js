@@ -7,7 +7,7 @@ const utilFill = (component, props, edges) => {
         image: {
           name: props.fill.image,
           ..._.get(
-            _.find(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-image`)),
+            _.find(edges, o => o.node.childImageSharp.resize.originalName === `${component.id}-${props.fill.image}`),
             'node.childImageSharp'
           ),
         },
