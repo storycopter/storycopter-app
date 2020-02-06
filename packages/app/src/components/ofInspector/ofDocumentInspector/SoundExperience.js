@@ -159,13 +159,7 @@ const SoundExperience = props => {
               type="file"
             />
             <label htmlFor="soundtrack" className={classes.cardLabel}>
-              <Button
-                color="primary"
-                component="span"
-                disabled={!enableSound}
-                fullWidth
-                size="small"
-                startIcon={<EqualizerOutlinedIcon />}>
+              <Button color="primary" component="span" disabled={!enableSound} fullWidth size="small">
                 Select soundtrack
               </Button>
             </label>
