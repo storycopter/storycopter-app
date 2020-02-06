@@ -78,12 +78,12 @@ const Editor = props => {
         <div className={classes.offset} />
       </Grid>
       <Grid container className={classes.canvas} wrap="nowrap">
-        <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs={3}>
+        <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
           <Box borderRight={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
             <Inspector />
           </Box>
         </Grid>
-        <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs={12}>
+        <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs>
           <Canvas />
         </Grid>
       </Grid>
