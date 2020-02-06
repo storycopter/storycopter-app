@@ -13,6 +13,8 @@ import { update } from './reducers/data';
 import { Button, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
+import { GlobalStyles } from '@storycopter/ui/components';
+
 import { defaultTheme } from './themes';
 import Editor from './Editor';
 
@@ -113,6 +115,7 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={defaultTheme}>
+        <GlobalStyles />
         <GlobalStyle />
         <CssBaseline />
         <Editor />

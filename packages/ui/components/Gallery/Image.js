@@ -75,7 +75,7 @@ class Image extends Component {
   };
 
   render() {
-    const { alt, caption, classes, fixed, i, images, mask, onNextImage, onPrevImage, theme } = this.props;
+    const { alt, caption, classes, fixed, i, images, mask, onNextImage, onPrevImage, raw, theme } = this.props;
 
     // console.group('Image.js');
     // console.log(this.props);
@@ -83,7 +83,11 @@ class Image extends Component {
 
     return (
       <Element mask={mask}>
-        <Img alt={alt} fixed={fixed} cropFocus="cover" />
+        {raw ? (
+          <img className="non-gatsby-image" alt={alt} src={raw} />
+        ) : (
+          <Img alt={alt} fixed={fixed} cropFocus="cover" />
+        )}
         <Caption theme={theme}>
           {images.length > 1 ? (
             <CaptionCount>
@@ -108,11 +112,12 @@ export default withTheme(withStyles(styles)(Image));
 Image.propTypes = {
   alt: string.isRequired,
   caption: string,
-  fixed: object.isRequired,
+  fixed: object,
   images: array.isRequired,
   mask: string,
   onNextImage: func,
   onPrevImage: func,
+  raw: string,
   theme: object,
 };
 Image.defaultProps = {
@@ -120,4 +125,5 @@ Image.defaultProps = {
   mask: null,
   onNextImage: null,
   onPrevImage: null,
+  raw: null,
 };

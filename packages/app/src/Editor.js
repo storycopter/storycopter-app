@@ -77,13 +77,13 @@ const Editor = props => {
         </AppBar>
         <div className={classes.offset} />
       </Grid>
-      <Grid container className={classes.canvas}>
-        <Grid item className={classes.side} style={{ overflowY: 'auto' }}>
+      <Grid container className={classes.canvas} wrap="nowrap">
+        <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs={3}>
           <Box borderRight={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
             <Inspector />
           </Box>
         </Grid>
-        <Grid item className={classes.main}>
+        <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs={12}>
           <Canvas />
         </Grid>
       </Grid>

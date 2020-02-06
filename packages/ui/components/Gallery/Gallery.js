@@ -21,6 +21,7 @@ const Slide = styled(({ cover, ...props }) => <figure {...props} />)`
       `;
     } else {
       return `
+        .non-gatsby-image,
         .gatsby-image-wrapper {
           max-height: 100vh !important;
           width: 100% !important;
@@ -77,6 +78,7 @@ class Gallery extends Component {
                 mask: mask,
                 onNextImage: this.nextSlide,
                 onPrevImage: this.prevSlide,
+                raw: image.raw,
               };
               return (
                 <Slide cover={cover} key={i}>
@@ -91,6 +93,7 @@ class Gallery extends Component {
               fixed={images[0].fixed}
               images={images}
               mask={mask}
+              raw={images[0].raw}
             />
           )}
         </Slider>
