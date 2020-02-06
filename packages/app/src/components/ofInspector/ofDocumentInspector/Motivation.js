@@ -16,35 +16,38 @@ const Motivation = props => {
 
   const { data, update } = props;
   const { currentProject } = data;
+  const { site } = currentProject;
+  const { motivation } = site;
 
-  const handleChange = e => {
+  const [state, setState] = React.useState({
+    label: motivation.label,
+    link: motivation.link,
+  });
+
+  const handleUpdate = payload => {
     update({
       currentProject: {
         ...currentProject,
         site: {
-          ...currentProject.site,
+          ...site,
           motivation: {
-            ...currentProject.site.motivation,
-            [e.target.name]: e.target.value,
+            ...motivation,
+            ...payload,
           },
         },
       },
     });
   };
 
-  const handleCheckbox = e => {
-    update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...currentProject.site,
-          motivation: {
-            ...currentProject.site.motivation,
-            [e.target.name]: e.target.checked,
-          },
-        },
-      },
-    });
+  const handleCheckboxChange = e => {
+    handleUpdate({ [e.target.name]: e.target.checked });
+  };
+
+  const handleInputChange = e => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+  const handleInputBlur = e => {
+    handleUpdate({ [e.target.name]: e.target.value });
   };
 
   return (
@@ -56,11 +59,11 @@ const Motivation = props => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={currentProject.site.motivation.enable}
+            checked={motivation.enable}
             color="primary"
             id="enable"
             name="enable"
-            onChange={handleCheckbox}
+            onChange={handleCheckboxChange}
             value="true"
           />
         }
@@ -70,26 +73,28 @@ const Motivation = props => {
         <InputLabel htmlFor="label">Action label</InputLabel>
         <FilledInput
           disableUnderline
+          disabled={!motivation.enable}
           fullWidth
           id="label"
           name="label"
-          onChange={handleChange}
+          onBlur={handleInputBlur}
+          onChange={handleInputChange}
           type="text"
-          value={currentProject.site.motivation.label}
-          disabled={!currentProject.site.motivation.enable}
+          value={state.label}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
         <InputLabel htmlFor="link">Action link</InputLabel>
         <FilledInput
           disableUnderline
+          disabled={!motivation.enable}
           fullWidth
           id="link"
           name="link"
-          onChange={handleChange}
+          onBlur={handleInputBlur}
+          onChange={handleInputChange}
           type="url"
-          value={currentProject.site.motivation.link}
-          disabled={!currentProject.site.motivation.enable}
+          value={state.link}
         />
       </FormControl>
     </form>

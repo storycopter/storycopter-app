@@ -43,6 +43,12 @@ const MetaInformation = props => {
   const { site } = currentProject;
   const { meta } = site;
 
+  const [state, setState] = React.useState({
+    title: meta.title,
+    summary: meta.summary,
+    publisher: meta.publisher,
+  });
+
   const handleUpdate = payload => {
     update({
       currentProject: {
@@ -59,6 +65,13 @@ const MetaInformation = props => {
   };
 
   const handleInputChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleInputBlur = e => {
     handleUpdate({ [e.target.name]: e.target.value });
   };
 
@@ -75,10 +88,11 @@ const MetaInformation = props => {
           fullWidth
           id="title"
           name="title"
+          onBlur={handleInputBlur}
           onChange={handleInputChange}
           required
           type="text"
-          value={meta.title}
+          value={state.title}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -89,11 +103,12 @@ const MetaInformation = props => {
           id="summary"
           multiline={true}
           name="summary"
+          onBlur={handleInputBlur}
           onChange={handleInputChange}
           required
-          type="text"
           rowsMax={4}
-          value={meta.summary}
+          type="text"
+          value={state.summary}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -103,10 +118,11 @@ const MetaInformation = props => {
           fullWidth
           id="publisher"
           name="publisher"
+          onBlur={handleInputBlur}
           onChange={handleInputChange}
           required
           type="text"
-          value={meta.publisher}
+          value={state.publisher}
         />
       </FormControl>
       <FormControlLabel

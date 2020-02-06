@@ -36,8 +36,6 @@ const Canvas = props => {
 
   const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
 
-  console.log({ chapterData });
-
   return (
     <Box className={classes.root}>
       <Grid container direction="column" className={classes.components}>

@@ -45,6 +45,13 @@ const BrandExperience = props => {
   const { site } = currentProject;
   const { brand } = site;
 
+  const [state, setState] = React.useState({
+    backgColor: brand.backgColor,
+    brandColor: brand.brandColor,
+    textColor: brand.textColor,
+    typography: brand.typography,
+  });
+
   const handleUpdate = payload => {
     update({
       currentProject: {
@@ -61,6 +68,13 @@ const BrandExperience = props => {
   };
 
   const handleInputChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleInputBlur = e => {
     handleUpdate({ [e.target.name]: e.target.value });
   };
 
@@ -164,8 +178,9 @@ const BrandExperience = props => {
           id="brandColor"
           name="brandColor"
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           type="color"
-          value={brand.brandColor}
+          value={state.brandColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -176,8 +191,9 @@ const BrandExperience = props => {
           id="backgColor"
           name="backgColor"
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           type="color"
-          value={brand.backgColor}
+          value={state.backgColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -188,8 +204,9 @@ const BrandExperience = props => {
           id="textColor"
           name="textColor"
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           type="color"
-          value={brand.textColor}
+          value={state.textColor}
         />
       </FormControl>
       <FormControl variant="filled" fullWidth margin="dense">
@@ -200,9 +217,10 @@ const BrandExperience = props => {
           id="typography"
           name="typography"
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           required
           type="text"
-          value={brand.typography}>
+          value={state.typography}>
           <MenuItem value="modern">Modern</MenuItem>
           <MenuItem value="classic">Classic</MenuItem>
         </Select>
