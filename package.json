@@ -8,7 +8,7 @@
     ]
   },
   "scripts": {
-    "clean": "npx oao clean"
+    "clean": "npx rimraf **/node_modules/"
   },
   "husky": {
     "hooks": {
