@@ -3,6 +3,7 @@
 // import path from 'path';
 import Ansi from 'ansi-to-react';
 import React from 'react';
+import fs from 'fs';
 import process from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
@@ -46,6 +47,30 @@ class App extends React.Component {
   };
 
   openProject(path) {
+    const siteJSON = JSON.parse(fs.readFileSync(`${path}/src/site.json`, 'utf8'));
+    const contentsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/contents.json`, 'utf8'));
+    const creditsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/credits.json`, 'utf8'));
+    const errorJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/error.json`, 'utf8'));
+    const homeJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/home.json`, 'utf8'));
+    const introJSON = JSON.parse(fs.readFileSync(`${path}/src/chapters/000-intro.json`, 'utf8'));
+    const beginningJSON = JSON.parse(fs.readFileSync(`${path}/src/chapters/001-beginning.json`, 'utf8'));
+
+    const currentProject = {
+      basepath: path,
+      site: siteJSON,
+      essentials: {
+        contents: contentsJSON,
+        credits: creditsJSON,
+        error: errorJSON,
+        home: homeJSON,
+      },
+      chapters: [introJSON, beginningJSON],
+    };
+
+    console.log(currentProject);
+  }
+
+  previewProject(path) {
     const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
       // cwd: '/Users/laurian/Projects/Storycopter/storycopter/packages/idoc',
       cwd: path,
