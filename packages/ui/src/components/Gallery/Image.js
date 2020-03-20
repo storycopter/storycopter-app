@@ -40,7 +40,7 @@ const Element = styled(({ mask, ...props }) => <div {...props} />)`
     if (mask) {
       return `
       &:before {
-        background: ${mask === 'dark' ? color.shadow500 : color.flare500};
+        background: ${mask === 'dark' ? color.shadow[500] : color.flare[500]};
         bottom: 0;
         content: " ";
         left: 0;

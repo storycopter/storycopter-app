@@ -15,9 +15,9 @@ class ErrorTpl extends Component {
   render() {
     const {} = this.props;
 
-    console.group('ErrorTpl.js');
-    console.log(this.props);
-    console.groupEnd();
+    // console.group('ErrorTpl.js');
+    // console.log(this.props);
+    // console.groupEnd();
 
     return (
       <ThemeProvider theme={docTheme}>

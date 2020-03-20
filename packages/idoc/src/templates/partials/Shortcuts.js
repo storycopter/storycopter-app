@@ -18,7 +18,7 @@ import AniLink from '../components/AniLink';
 
 const TileOverline = styled(Typography)`
   ${setType('x')}
-  color: ${color.mono300};
+  color: ${color.grey[300]};
 `;
 const TileTitle = styled(({ theme, ...props }) => <Typography {...props} />)`
   ${setSpace('mts')};
@@ -37,11 +37,11 @@ const TileText = styled.div`
 const TileIcon = styled(({ theme, ...props }) => <div {...props} />)`
   ${setSpace('mtm')};
   ${setType('l')}
-  color: ${color.mono300};
+  color: ${color.grey[300]};
 `;
 
 const TileCopy = styled.div`
-  color: ${color.mono500};
+  color: ${color.grey[500]};
   display: flex;
   flex-direction: column;
   flex: 0 0 50%;

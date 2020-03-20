@@ -44,10 +44,10 @@ const Canvas = props => {
           ? _.sortBy(chapterData.tree.components, [o => o.order]).map((component, i) => {
               // consolidate fill props with raw images
               const fill =
-                component.props.fill && component.props.fill.image
+                component.props.fill && component.props.fill.length > 0
                   ? {
                       ...component.props.fill,
-                      raw: `${basepath}src/chapters/${activeChapter}/${component.id}-${component.props.fill.image}`,
+                      raw: `${basepath}src/chapters/${activeChapter}/${component.id}-${component.props.fill}`,
                     }
                   : component.props.fill;
 

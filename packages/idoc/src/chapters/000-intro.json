@@ -19,12 +19,10 @@
           "align": "right",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "",
-            "image": "headline-image.jpg"
-          },
+          "fill": "headline-image.jpg",
           "images": [],
           "mask": "dark",
+          "paint": null,
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
           "title": "Intro"
@@ -39,12 +37,10 @@
           "align": "center",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "red",
-            "image": ""
-          },
+          "fill": "",
           "images": [],
           "mask": "light",
+          "paint": "red",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "",
           "title": "A title of the Headline"
@@ -58,13 +54,10 @@
         "props": {
           "align": "left",
           "animate": true,
-          "cover": false,
-          "fill": {
-            "color": "cyan",
-            "image": ""
-          },
+          "fill": "",
           "images": [],
           "mask": "dark",
+          "paint": "cyan",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "",
           "title": ""

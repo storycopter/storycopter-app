@@ -7,16 +7,17 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 // import useTheme from '@material-ui/core/styles/useTheme';
 
-import { color } from '../../settings';
+import { colors } from '../../themes/settings';
 
-const useStyles = (align, cover, fill, mask, paint) =>
+const useStyles = (align, color, cover, fill, mask, paint) =>
   makeStyles(theme => ({
     headlineRoot: {
       backgroundColor: paint ? paint : 'transparent',
-      backgroundImage: fill ? `url(${fill})` : 'none',
+      backgroundImage: fill ? (fill.raw ? `url(${fill.raw})` : `url(${fill.fixed.src})`) : 'none',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
+      color: color ? color : 'inherit',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -33,7 +34,7 @@ const useStyles = (align, cover, fill, mask, paint) =>
         paddingBottom: theme.spacing(20),
       },
       '&:before': {
-        backgroundColor: mask ? (mask === 'dark' ? color.shadow500 : color.flare500) : 'transparent',
+        backgroundColor: mask ? (mask === 'dark' ? colors.shadow[500] : colors.flare[500]) : 'transparent',
         bottom: 0,
         content: mask ? `' '` : 'none',
         display: mask ? 'block' : 'none',
@@ -93,6 +94,7 @@ const useStyles = (align, cover, fill, mask, paint) =>
 export default function Headline({
   align = 'left',
   children = null,
+  color = null,
   cover = false,
   fill = null,
   mask = null,
@@ -103,7 +105,8 @@ export default function Headline({
   ...props
 }) {
   // const theme = useTheme();
-  const classes = useStyles(align, cover, fill, mask, paint)();
+  console.log({ fill });
+  const classes = useStyles(align, color, cover, fill, mask, paint)();
 
   return (
     <Box className={classes.headlineRoot}>
@@ -115,12 +118,12 @@ export default function Headline({
             </Typography>
           ) : null}
           {subtitle ? (
-            <Typography className={classes.headlineSubtitle} variant="h2">
+            <Typography className={classes.headlineSubtitle} variant="h3">
               {subtitle}
             </Typography>
           ) : null}
           {text ? (
-            <Typography className={classes.headlineText} variant="h4" component="p">
+            <Typography className={classes.headlineText} variant="h5" component="p">
               {subtitle}
             </Typography>
           ) : null}
@@ -134,13 +137,11 @@ export default function Headline({
 Headline.propTypes = {
   align: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  color: PropTypes.string,
   cover: PropTypes.bool,
-  fill: PropTypes.shape({
-    image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    color: PropTypes.string,
-  }),
-  id: PropTypes.string.isRequired,
+  fill: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   mask: PropTypes.string,
+  paint: PropTypes.string,
   subtitle: PropTypes.string.isRequired,
   text: PropTypes.string,
   title: PropTypes.string.isRequired,

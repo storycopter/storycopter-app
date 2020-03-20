@@ -53,7 +53,7 @@ const Title = styled.h1`
   & > span {
     ${setSpace('phs')};
     ${setSpace('pvx')};
-    background-color: ${color.shadow300};
+    background-color: ${({ theme }) => theme.palette.common.white};
     border-radius: 1px;
     color: ${color.white};
     letter-spacing: ${track.l};
@@ -71,7 +71,7 @@ const Summary = styled.div`
     position: relative;
     text-transform: uppercase;
     top: -2px;
-    color: ${color.mono400};
+    color: ${color.grey[400]};
   }
   .summary-text {
     position: relative;
@@ -102,9 +102,9 @@ const BreadcrumbLink = styled(AniLink)`
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
   width: 34px;
   .breadcrumb-tick {
-    background: ${color.mono100};
+    background: ${color.grey[100]};
     border-radius: 1px;
-    box-shadow: 0 0 2px ${color.shadow300};
+    box-shadow: 0 0 2px ${color.shadow[300]};
     display: block;
     height: 8px;
     left: 50%;
@@ -144,7 +144,7 @@ const Breadcrumbs = styled.nav`
   transition: opacity ${time.m};
   width: 100%;
   &:before {
-    background: ${color.shadow300};
+    background: ${color.shadow[300]};
     content: ' ';
     display: block;
     height: 16px;
@@ -194,7 +194,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
   ${({ isHovered }) =>
     isHovered
       ? `
-    background-color: ${color.mono900};
+    background-color: ${color.grey[900]};
     ${Breadcrumbs} {
       display: block;
       opacity: 1;

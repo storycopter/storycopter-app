@@ -18,12 +18,10 @@
           "align": "",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "",
-            "image": "image.jpg"
-          },
+          "fill": "image.jpg",
           "images": [],
           "mask": "dark",
+          "paint": "",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Some text",
           "title": "A title of the Headline"

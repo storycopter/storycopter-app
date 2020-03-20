@@ -19,13 +19,11 @@
           "align": "left",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "",
-            "image": "headline-image.jpg"
-          },
+          "fill": "headline-image.jpg",
           "image": "",
           "images": [],
           "mask": "dark",
+          "paint": "",
           "subtitle": "Some text",
           "text": "More text",
           "title": "Middle"

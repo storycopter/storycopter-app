@@ -16,13 +16,11 @@
         "invert": true,
         "order": 0,
         "props": {
+          "fill": "headline-image.jpg",
+          "paint": "",
           "align": "left",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "",
-            "image": "headline-image.jpg"
-          },
           "image": "",
           "images": [],
           "mask": "dark",

@@ -76,10 +76,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::selection {
-    background: ${color.flare200};
+    background: ${color.flare[200]};
   }
   ::-moz-selection {
-    background: ${color.flare200};
+    background: ${color.flare[200]};
   }
 
   ${breakpoint.phone} {

@@ -90,7 +90,7 @@ class Home extends Component {
               }
             };
 
-            // consolidate props.fill.image w/ graphql-ed image data
+            // consolidate props.fill w/ graphql-ed image data
             const fill = utilFill(component, props, edges);
 
             // merge component.props.images array with actual graphql resolved image files
@@ -106,11 +106,9 @@ class Home extends Component {
               merger
             );
 
-            {
-              /* console.group('Home.js');
-          console.log(this.props);
-          console.groupEnd(); */
-            }
+            // console.group('Home.js');
+            // console.log(this.props);
+            // console.groupEnd();
 
             return (
               <OpeningTitles {...titlesProps} cover fill={fill} id={component.id} key={component.id}>
@@ -153,11 +151,9 @@ export const pageQuery = graphql`
             align
             animate
             cover
-            fill {
-              image
-              color
-            }
+            fill
             mask
+            paint
             subtitle
             text
             title

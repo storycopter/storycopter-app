@@ -57,7 +57,7 @@ class ChapterTpl extends Component {
             √ mask
           */
 
-            // consolidate props.fill.image w/ graphql-ed image data
+            // consolidate props.fill w/ graphql-ed image data
             const fill = utilFill(component, props, edges);
 
             // consolidate props.images w/ graphql-ed image data
@@ -120,10 +120,7 @@ export const pageQuery = graphql`
             align
             animate
             cover
-            fill {
-              image
-              color
-            }
+            fill
             images {
               alt
               caption
@@ -131,6 +128,7 @@ export const pageQuery = graphql`
               order
             }
             mask
+            paint
             subtitle
             text
             title

@@ -28,7 +28,7 @@ const TileLink = styled(({ theme, ...props }) => <AniLink {...props} />)`
 const TileImage = styled(({ theme, ...props }) => <div {...props} />)``;
 const TileContent = styled(({ theme, ...props }) => <div {...props} />)`
   ${setSpace('pal')};
-  background: ${color.shadow500};
+  background: ${color.shadow[500]};
   bottom: 0;
   color: ${({ theme }) => theme.palette.common.white};
   display: flex;

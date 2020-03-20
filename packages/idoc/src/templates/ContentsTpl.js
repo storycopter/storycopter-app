@@ -197,11 +197,9 @@ export const pageQuery = graphql`
             align
             animate
             cover
-            fill {
-              image
-              color
-            }
+            fill
             mask
+            paint
             subtitle
             text
             title

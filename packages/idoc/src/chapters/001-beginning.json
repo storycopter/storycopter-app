@@ -19,13 +19,11 @@
           "align": "left",
           "animate": true,
           "cover": true,
-          "fill": {
-            "color": "blue",
-            "image": ""
-          },
+          "fill": "",
           "image": "",
           "images": [],
           "mask": "",
+          "paint": "blue",
           "subtitle": "Some text",
           "text": "More text",
           "title": "Beginning"

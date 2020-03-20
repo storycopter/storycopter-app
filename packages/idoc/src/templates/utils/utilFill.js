@@ -1,18 +1,12 @@
 import _ from 'lodash';
 
-const utilFill = (component, props, edges) => {
-  return props.fill
-    ? {
-        color: props.fill.color ? props.fill.color : null,
-        image: {
-          name: props.fill.image,
-          ..._.get(
-            _.find(edges, o => o.node.childImageSharp.resize.originalName === `${component.id}-${props.fill.image}`),
-            'node.childImageSharp'
-          ),
-        },
-      }
-    : null;
-};
-
-export default utilFill;
+export default function utilFill(component, props, edges) {
+  if (!props.fill || props.fill.length === 0) return null;
+  return {
+    name: props.fill,
+    ..._.get(
+      _.find(edges, o => o.node.childImageSharp.resize.originalName === `${component.id}-${props.fill}`),
+      'node.childImageSharp'
+    ),
+  };
+}
