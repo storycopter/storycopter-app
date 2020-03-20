@@ -1,7 +1,7 @@
 import { array, bool, node, object, oneOfType, string } from 'prop-types';
 import React from 'react';
 
-import { defaultThm, negativeThm } from '@storycopter/ui/themes';
+import { defaultThm, negativeThm } from '../themes';
 import { ThemeProvider } from '@material-ui/styles';
 
 const CustomThemeProvider = ({ children, invert }) => {

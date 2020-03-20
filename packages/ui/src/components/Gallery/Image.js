@@ -9,8 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/styles';
 import { withTheme } from '@material-ui/styles';
 
-import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType, setSpace } from '@storycopter/ui/mixins';
+import { breakpoint, color } from '../../settings';
+import { setType, setSpace } from '../../mixins';
 
 const CaptionCount = styled(({ ...props }) => <span {...props} />)`
   ${setType('x')};

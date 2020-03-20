@@ -1,4 +1,3 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
 import React from 'react';
 import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
 import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
@@ -7,7 +6,9 @@ import { configureActions } from '@storybook/addon-actions';
 
 // import './storybook.css';
 
-// import ThemeProvider from '../src/utils/ThemeProvider';
+import ThemeProvider from '../src/providers/IdocProvider';
+
+import { GlobalStyles } from '../src/components';
 
 addParameters({
   options: {
@@ -27,16 +28,9 @@ configureActions({
   limit: 25,
 });
 
-// addDecorator(story => (
-//   <ThemeProvider>
-//     <CssBaseline />
-//     {story()}
-//   </ThemeProvider>
-// ));
-
 addDecorator(story => (
-  <>
-    <CssBaseline />
+  <ThemeProvider>
+    <GlobalStyles />
     {story()}
-  </>
+  </ThemeProvider>
 ));

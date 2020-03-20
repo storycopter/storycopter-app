@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType } from '@storycopter/ui/mixins';
+import { breakpoint, color } from '../../settings';
+import { setType } from '../../mixins';
 
 const GlobalStyle = createGlobalStyle`
 

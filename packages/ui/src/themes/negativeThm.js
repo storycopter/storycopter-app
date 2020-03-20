@@ -1,4 +1,4 @@
-import { color } from '@storycopter/ui/settings';
+import { color } from '../settings';
 
 import thm from './thm';
 

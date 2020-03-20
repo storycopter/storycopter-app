@@ -1,4 +1,4 @@
-import { color, radius, time } from '@storycopter/ui/settings';
+import { color, radius, time } from '../settings';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 let thm = createMuiTheme();

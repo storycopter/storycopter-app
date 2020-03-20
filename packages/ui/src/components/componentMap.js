@@ -1,4 +1,4 @@
-import { Headline, Gallery } from '@storycopter/ui/components';
+import { Headline, Gallery } from '.';
 
 const componentMap = {
   headline: Headline,

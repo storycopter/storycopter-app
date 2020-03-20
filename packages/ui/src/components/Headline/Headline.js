@@ -7,8 +7,8 @@ import { bool, object, oneOfType, string, shape } from 'prop-types';
 
 import { withTheme } from '@material-ui/styles';
 
-import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType, setSpace } from '@storycopter/ui/mixins';
+import { breakpoint, color } from '../../settings';
+import { setType, setSpace } from '../../mixins';
 
 const Title = styled.div`
   .TitleText {
@@ -124,7 +124,7 @@ const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) 
     if (cover) {
       return `
         min-height: 100vh;
-        min-width: 100vw;
+        width: 100%
       `;
     }
   }};
@@ -151,9 +151,9 @@ class Headline extends Component {
       return c;
     };
 
-    // console.group('Headline.js');
-    // console.log(this.props);
-    // console.groupEnd();
+    console.group('Headline.js');
+    console.log(this.props);
+    console.groupEnd();
 
     return (
       <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>

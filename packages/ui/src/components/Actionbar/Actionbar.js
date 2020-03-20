@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { breakpoint } from '@storycopter/ui/settings';
-import { setSpace } from '@storycopter/ui/mixins';
+import { breakpoint } from '../../settings';
+import { setSpace } from '../../mixins';
 
 const Element = styled(({ align, ...props }) => <div {...props} />)`
   display: flex;

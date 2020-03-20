@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { withTheme } from '@material-ui/styles';
 
-import { breakpoint, time, track } from '@storycopter/ui/settings';
-import { setSpace, setType } from '@storycopter/ui/mixins';
+import { breakpoint, time, track } from '../../settings';
+import { setSpace, setType } from '../../mixins';
 
 const Element = styled(({ theme, ...props }) => <a {...props} />)`
   ${setSpace('phm')};
