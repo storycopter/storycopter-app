@@ -2,9 +2,21 @@ const path = require('path');
 
 module.exports = {
   siteMetadata: {
-    // siteUrl: config.site.url
+    title: 'Storycopter',
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
+    },
+    `gatsby-plugin-transition-link`,
+    `gatsby-plugin-styled-components`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-transformer-json`,
       options: {},
@@ -12,15 +24,29 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `theme`,
-        path: `${__dirname}/theme/`,
+        name: `templates`,
+        path: `${__dirname}/src/templates`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `pages`,
-        path: `${__dirname}/pages/`,
+        name: `site`,
+        path: `${__dirname}/src/site`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `essentials`,
+        path: `${__dirname}/src/essentials/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `chapters`,
+        path: `${__dirname}/src/chapters/`,
       },
     },
   ],

@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "order": 4,
+    "path": "/outro",
+    "text": "Some text",
+    "title": "Outro",
+    "uid": "004-outro"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "invert": true,
+        "order": 0,
+        "props": {
+          "align": "left",
+          "animate": true,
+          "cover": true,
+          "fill": {
+            "color": "",
+            "image": "headline-image.jpg"
+          },
+          "image": "",
+          "images": [],
+          "mask": "dark",
+          "subtitle": "Some text",
+          "text": "More text",
+          "title": "Outro"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

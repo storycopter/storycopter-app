@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "path": "/contents",
+    "text": "Some text",
+    "title": "All parts",
+    "uid": "contents"
+  }
+}

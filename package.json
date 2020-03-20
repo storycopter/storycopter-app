@@ -7,7 +7,27 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "clean": "npx rimraf **/node_modules/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
-    "eslint-config-prettier": "6.0.0"
+    "eslint-config-prettier": "6.10.0",
+    "husky": "4.2.1",
+    "lint-staged": "10.0.7"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "order": 5,
+    "path": "/appendix",
+    "text": "Some text",
+    "title": "Appendix",
+    "uid": "005-appendix"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "invert": false,
+        "order": 0,
+        "props": {
+          "align": "left",
+          "animate": true,
+          "cover": true,
+          "fill": {
+            "color": "",
+            "image": ""
+          },
+          "image": "",
+          "images": [],
+          "mask": "",
+          "subtitle": "Some text",
+          "text": "More text",
+          "title": "Appendix"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

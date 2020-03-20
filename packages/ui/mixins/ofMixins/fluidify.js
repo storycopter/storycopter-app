@@ -3,23 +3,21 @@ const getFluidStyles = (property, minValue, maxValue, isImportant) => {
   const minVal = parseInt(minValue, 10);
   const maxVal = parseInt(maxValue, 10);
   return `
-    ${property}: ${minValue} ${isImportant ? "!important" : ``};
+    ${property}: ${minValue} ${isImportant ? '!important' : ``};
     @media screen and (min-width: ${screen.min}px) {
-      ${property}: calc(${minValue} + ${maxVal - minVal} * (100vw - ${
-    screen.min
-  }px) / ${screen.max - screen.min}) ${isImportant ? "!important" : ``};
+      ${property}: calc(${minValue} + ${maxVal - minVal} * (100vw - ${screen.min}px) / ${screen.max - screen.min}) ${
+    isImportant ? '!important' : ``
+  };
     }
     @media screen and (min-width: ${screen.max}px) {
-      ${property}: ${maxValue} ${isImportant ? "!important" : ``};
+      ${property}: ${maxValue} ${isImportant ? '!important' : ``};
     }
   `;
 };
 
 const fluid = (properties, minValue, maxValue, isImportant) => {
   if (Array.isArray(properties)) {
-    return properties.map(property =>
-      getFluidStyles(property, minValue, maxValue, isImportant)
-    );
+    return properties.map(property => getFluidStyles(property, minValue, maxValue, isImportant));
   }
   return getFluidStyles(properties, minValue, maxValue, isImportant);
 };

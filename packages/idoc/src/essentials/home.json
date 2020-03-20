@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "path": "/",
+    "text": "Some text",
+    "title": "Opening Titles",
+    "uid": "home"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "001",
+        "invert": true,
+        "order": 0,
+        "props": {
+          "align": "",
+          "animate": true,
+          "cover": true,
+          "fill": {
+            "color": "",
+            "image": "image.jpg"
+          },
+          "images": [],
+          "mask": "dark",
+          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+          "text": "Some text",
+          "title": "A title of the Headline"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

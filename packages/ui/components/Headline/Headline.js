@@ -1,5 +1,4 @@
 import 'rc-texty/assets/index.css';
-import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Texty from 'rc-texty';
@@ -13,21 +12,21 @@ import { setType, setSpace } from '../../mixins';
 const Title = styled.div`
   .TitleText {
     ${setType('k')};
-    font-family: ${({ theme }) => theme.typography.stack.primary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.primary}; */}
   }
 `;
 const Subtitle = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .SubtitleText {
     ${setType('h')};
-    font-family: ${({ theme }) => theme.typography.stack.secondary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Text = styled.div`
-  ${setSpace('mtl')};
+  ${setSpace('mtm')};
   .TextText {
     ${setType('l')};
-    font-family: ${({ theme }) => theme.typography.stack.secondary};
+    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
   }
 `;
 const Child = styled.div`
@@ -35,23 +34,22 @@ const Child = styled.div`
   z-index: 2;
 `;
 const Parent = styled.div`
-  max-width: 1200px;
   display: flex;
   flex-direction: row;
+  max-width: 1600px;
+  width: 100%;
 `;
-const Element = styled(
-  ({ align, animate, fill, cover, mask, theme, ...props }) => (
-    <section {...props} />
-  )
-)`
+const Append = styled.div`
+  ${setSpace('mtl')};
+`;
+const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) => <section {...props} />)`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
 
-  background-color: ${({ theme }) => theme.colors.palette.accent};
-  color: ${({ theme }) => theme.colors.palette.text};
+  color: ${({ theme }) => theme.palette.text.primary};
 
   ${breakpoint.phone} {
     ${setSpace('pal')};
@@ -59,14 +57,17 @@ const Element = styled(
   ${breakpoint.tablet} {
     ${setSpace('pah')};
   }
-  ${breakpoint.desktopUp} {
+  ${breakpoint.desktopPlus} {
     ${setSpace('pak')};
     ${Child} {
-      flex: 0 0 ${(100 / 4) * 3}%;
+      flex: 0 0 ${(100 / 3) * 2}%;
     }
   }
-  ${breakpoint.hdesktopUp} {
+  ${breakpoint.hdesktopPlus} {
     ${setSpace('pak')};
+    ${Child} {
+      flex: 0 0 ${100 / 2}%;
+    }
   }
 
   ${({ align }) => {
@@ -88,9 +89,7 @@ const Element = styled(
   ${({ fill, theme }) => {
     if (fill && fill.color) {
       return `
-        background-color: ${
-          fill.color ? fill.color : theme.palette.background.accent
-        };
+        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
         `;
     }
     if (fill && (fill.image || fill.raw)) {
@@ -99,7 +98,6 @@ const Element = styled(
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        text-shadow: 0 2px 2px ${color.shadow300};
         `;
     }
   }};
@@ -163,39 +161,14 @@ export default function Headline({
   // console.groupEnd();
 
   return (
-    <Element
-      align={align}
-      animate={animate}
-      cover={cover}
-      fill={fill}
-      id={id}
-      mask={mask}
-      theme={theme}
-    >
-      {fill && fill.image && fill.image.name ? (
-        <Img
-          fixed={fill.image.fixed}
-          style={{
-            height: '1px',
-            width: '1px',
-            overflow: 'hidden',
-            visibility: 'hidden',
-          }}
-        />
-      ) : null}
+    <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
       <Parent>
         <Child>
           {title ? (
             <Title>
               <h1 className="TitleText">
                 {animate ? (
-                  <Texty
-                    component="span"
-                    duration={500}
-                    mode="smooth"
-                    split={splitString}
-                    type="top"
-                  >
+                  <Texty component="span" duration={500} mode="smooth" split={splitString} type="top">
                     {title}
                   </Texty>
                 ) : (
@@ -215,8 +188,7 @@ export default function Headline({
                     exclusive={true}
                     mode="smooth"
                     split={t => [t]}
-                    type="top"
-                  >
+                    type="top">
                     {subtitle}
                   </Texty>
                 ) : (
@@ -236,8 +208,7 @@ export default function Headline({
                     exclusive={true}
                     mode="smooth"
                     split={t => [t]}
-                    type="top"
-                  >
+                    type="top">
                     {text}
                   </Texty>
                 ) : (
@@ -255,10 +226,7 @@ export default function Headline({
 
 Headline.propTypes = {
   align: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   animate: PropTypes.bool,
   cover: PropTypes.bool,
   fill: PropTypes.shape({

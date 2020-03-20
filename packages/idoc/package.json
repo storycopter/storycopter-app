@@ -3,56 +3,47 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "BSD-3-Clause",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "linters": {
-      "*.{js}": [
-        "eslint",
-        "pretty-quick — staged",
-        "git add"
-      ]
-    },
-    "ignore": [
-      ".cache",
-      "node_modules",
-      "public"
-    ]
-  },
   "dependencies": {
-    "@material-ui/core": "4.3.0",
-    "@material-ui/icons": "4.2.1",
+    "@material-ui/core": "4.9.1",
+    "@material-ui/icons": "4.9.1",
     "@storycopter/ui": "1.0.0",
+    "gatsby": "2.19.12",
+    "gatsby-cli": "2.8.29",
+    "gatsby-link": "2.2.29",
+    "gatsby-plugin-material-ui": "2.1.6",
+    "gatsby-plugin-sharp": "2.4.5",
+    "gatsby-plugin-styled-components": "3.1.19",
+    "gatsby-plugin-transition-link": "1.17.7",
+    "gatsby-react-router-scroll": "2.1.21",
+    "gatsby-source-filesystem": "2.1.48",
+    "gatsby-transformer-json": "2.2.26",
+    "gatsby-transformer-sharp": "2.3.14",
+    "gsap": "^3.1.1",
     "lodash": "4.17.15",
-    "gatsby": "2.13.41",
-    "gatsby-cli": "2.7.20",
-    "gatsby-transformer-json": "2.2.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "styled-components": "4.3.2"
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "styled-components": "5.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "10.0.2",
-    "eslint": "6.1.0",
-    "eslint-config-prettier": "6.0.0",
-    "eslint-plugin-prettier": "3.1.0",
-    "eslint-plugin-react": "7.14.3",
-    "husky": "3.0.1",
-    "lint-staged": "9.2.1",
-    "prettier": "1.18.2",
-    "prettier-eslint": "9.0.0",
+    "@hot-loader/react-dom": "16.11.0",
+    "@now/node": "1.4.0",
+    "babel-eslint": "10.0.3",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.18.3",
+    "prettier": "1.19.1",
+    "prettier-eslint": "9.0.1",
     "prettier-stylelint": "0.4.2",
-    "pretty-quick": "1.11.1",
-    "stylelint-prettier": "1.1.1"
+    "pretty-quick": "2.0.1",
+    "stylelint-prettier": "1.1.2"
   },
   "scripts": {
     "clean:all": "rm -rf ./.cache && rm -rf ./public && rm -rf ./node_modules && rm -f ./yarn.lock && rm -f ./yarn-error.log",
     "clear:gatsby": "rm -rf ./.cache && rm -rf ./public",
     "start:lan": "./node_modules/.bin/gatsby develop -o -H $HOSTNAME -p 8000",
     "start": "./node_modules/.bin/gatsby develop",
-    "build": "./node_modules/.bin/gatsby build"
+    "build": "./node_modules/.bin/gatsby build",
+    "stage": "./node_modules/.bin/gatsby build && now ./public --name 'storycopter-idoc'"
   }
 }

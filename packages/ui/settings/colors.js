@@ -1,15 +1,18 @@
 import { darken, lighten } from 'polished';
 
 export const colors = {
-  monoWt: lighten(0.48, '#767269'),
-  monoHL: lighten(0.36, '#767269'),
-  monoLt: lighten(0.24, '#767269'),
-  monoLLt: lighten(0.12, '#767269'),
-  monoM: '#767269',
-  monoHD: darken(0.12, '#767269'),
-  monoD: darken(0.24, '#767269'),
-  monoLD: darken(0.36, '#767269'),
-  monoBlk: darken(0.48, '#767269'),
+  accent: '#c23232',
+  white: '#fff',
+
+  mono100: lighten(0.48, '#767269'),
+  mono200: lighten(0.36, '#767269'),
+  mono300: lighten(0.24, '#767269'),
+  mono400: lighten(0.12, '#767269'),
+  mono500: '#767269',
+  mono600: darken(0.12, '#767269'),
+  mono700: darken(0.24, '#767269'),
+  mono800: darken(0.36, '#767269'),
+  mono900: darken(0.48, '#767269'),
 
   flare100: 'rgba(255,255,255,.07)',
   flare200: 'rgba(255,255,255,.17375)',
