@@ -8,7 +8,7 @@ import DocumentInspector from './ofInspector/DocumentInspector';
 import ElementInspector from './ofInspector/ElementInspector';
 import PageInspector from './ofInspector/PageInspector';
 
-import { defaultTheme } from '../themes';
+import { appTheme } from '@storycopter/ui/src/themes';
 
 export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const { inspector } = data;
@@ -29,7 +29,7 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
 
   const boxProps = {
     flexDirection: 'column',
-    borderTop: `1px solid ${defaultTheme.palette.divider}`,
+    borderTop: `1px solid ${appTheme.palette.divider}`,
   };
 
   return (
