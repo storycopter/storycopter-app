@@ -11,8 +11,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withTheme } from '@material-ui/styles';
 
-import { breakpoint, color, radius, time } from '@storycopter/ui/settings';
-import { setSpace, setType } from '@storycopter/ui/mixins';
+import { breakpoint, color, radius, time } from '@storycopter/ui/src//settings';
+import { setSpace, setType } from '@storycopter/ui/src//mixins';
 
 import AniLink from '../components/AniLink';
 

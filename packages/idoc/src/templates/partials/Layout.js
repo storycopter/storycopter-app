@@ -5,8 +5,8 @@ import { array, bool, node, oneOfType, object, shape, string } from 'prop-types'
 import { graphql, StaticQuery } from 'gatsby';
 import { withTheme } from '@material-ui/styles';
 
-import { IdocProvider } from '@storycopter/ui/providers';
-import { GlobalStyles } from '@storycopter/ui/components';
+import { IdocProvider } from '@storycopter/ui/src/providers';
+import { GlobalStyles } from '@storycopter/ui/src/components';
 
 import FooBar from './FooBar';
 import Shortcuts from './Shortcuts';

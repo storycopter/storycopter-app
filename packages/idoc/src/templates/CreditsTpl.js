@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/providers';
+import { IdocProvider } from '@storycopter/ui/src/providers';
 
 import Layout from './partials/Layout';
 
