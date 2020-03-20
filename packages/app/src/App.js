@@ -109,8 +109,6 @@ class App extends React.Component {
 
     console.group('App.js:');
     console.log({ data });
-    console.log({ appTheme });
-    console.log({ currentProject });
     console.groupEnd();
 
     return (

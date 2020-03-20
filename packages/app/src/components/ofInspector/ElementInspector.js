@@ -10,6 +10,11 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
   const classes = useStyles();
 
   const { inspector } = data;
+  const { elementInspector } = inspector;
+
+  console.group('ElementInspector.js');
+  console.log({ elementInspector });
+  console.groupEnd();
 
   return <>Element inspector</>;
 });

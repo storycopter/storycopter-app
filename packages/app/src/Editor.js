@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
 }));
 
-const Editor = props => {
+export default connect(({ data }) => ({ data }), { update })(({ ...props }) => {
   const classes = useStyles();
 
   return (
@@ -89,6 +89,4 @@ const Editor = props => {
       </Grid>
     </Grid>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(Editor);
+});

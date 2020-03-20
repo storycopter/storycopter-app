@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,15 +27,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Canvas = props => {
+export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { data } = props;
-  const { currentProject, editor } = data;
+  const { currentProject, editor, inspector } = data;
   const { basepath, chapters } = currentProject;
   const { activeChapter } = editor;
 
   const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
+
+  const onInspectElement = (chapter, component) => {
+    console.log('onInspectElement', chapter, component);
+    update({
+      inspector: {
+        ...inspector,
+        elementInspector: {
+          ...inspector.elementInspector,
+          targetElement: { chapter: chapter, component: component },
+        },
+      },
+    });
+  };
 
   return (
     <Box className={classes.root}>
@@ -72,16 +84,18 @@ const Canvas = props => {
               return (
                 <Grid item key={component.id} className={classes.componentWrap}>
                   <ThemeProvider theme={docTheme}>
-                    <RenderedComponent
-                      {...componentProps}
-                      animate={false}
-                      cover={false}
-                      fill={fill}
-                      images={images}
-                      isEditable
-                      mask={mask}
-                      onComponentSave={payload => console.log({ payload })}
-                    />
+                    <div onClick={() => onInspectElement(activeChapter, component.id)}>
+                      <RenderedComponent
+                        {...componentProps}
+                        animate={false}
+                        cover={false}
+                        fill={fill}
+                        images={images}
+                        isEditable
+                        mask={mask}
+                        onComponentSave={payload => console.log({ payload })}
+                      />
+                    </div>
                   </ThemeProvider>
                 </Grid>
               );
@@ -90,6 +104,4 @@ const Canvas = props => {
       </Grid>
     </Box>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(Canvas);
+});
