@@ -1,11 +1,14 @@
 import 'rc-texty/assets/index.css';
-import React, { Component } from 'react';
+import Img from 'gatsby-image';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Texty from 'rc-texty';
-import styled, { withTheme } from 'styled-components';
-import { bool, func, object, string } from 'prop-types';
+import styled from 'styled-components';
 
-import { breakpoint, color } from '@storycopter/ui/settings';
-import { setType, setSpace } from '@storycopter/ui/mixins';
+import { useTheme } from '@material-ui/core/styles';
+
+import { breakpoint, color } from '../../settings';
+import { setType, setSpace } from '../../mixins';
 
 const Title = styled.div`
   .TitleText {
@@ -82,10 +85,17 @@ const Element = styled(
       `;
   }};
 
-  ${({ fill }) => {
-    if (fill) {
+  ${({ fill, theme }) => {
+    if (fill && fill.color) {
       return `
-        background: ${fill};
+        background-color: ${
+          fill.color ? fill.color : theme.palette.background.accent
+        };
+        `;
+    }
+    if (fill && (fill.image || fill.raw)) {
+      return `
+        background-image: url(${fill.raw ? fill.raw : fill.image.fixed.src});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -121,170 +131,142 @@ const Element = styled(
   }};
 `;
 
-class Headline extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { edit: null };
-    this.enterEditMode = this.enterEditMode.bind(this);
-    // this.titleRef = createRef();
-    // this.subtitleRef = createRef();
-    // this.textRef = createRef();
-  }
+export default function Headline({
+  align = 'left',
+  animate = false,
+  children = null,
+  cover = false,
+  fill = null,
+  id,
+  mask = null,
+  subtitle,
+  text = null,
+  title,
+  ...props
+}) {
+  const theme = useTheme();
 
-  enterEditMode(node) {
-    this.setState({ edit: node });
-  }
+  const splitString = e => {
+    const t = e.split(' ');
+    const c = [];
+    t.forEach((str, i) => {
+      c.push(<span key={`${str}-${i}`}>{str}</span>);
+      if (i < t.length - 1) {
+        c.push(<span key={` -${i}`}> </span>);
+      }
+    });
+    return c;
+  };
 
-  render() {
-    const {
-      align,
-      anchor,
-      animate,
-      cover,
-      fill,
-      mask,
-      subtitle,
-      text,
-      theme,
-      title,
-      updateSelf,
-    } = this.props;
+  // console.group('Headline.js');
+  // console.log({ props });
+  // console.groupEnd();
 
-    const getSplit = e => {
-      const t = e.split(' ');
-      const c = [];
-      t.forEach((str, i) => {
-        c.push(<span key={`${str}-${i}`}>{str}</span>);
-        if (i < t.length - 1) {
-          c.push(<span key={` -${i}`}> </span>);
-        }
-      });
-      return c;
-    };
-
-    console.group('Headline.js');
-    console.log(this.props);
-    console.groupEnd();
-
-    return (
-      <Element
-        align={align}
-        animate={animate}
-        cover={cover}
-        fill={fill}
-        id={anchor}
-        mask={mask}
-        theme={theme}
-      >
-        <Parent>
-          <Child>
-            {title ? (
-              <Title
-                contentEditable={this.state.edit === 'title'}
-                onClick={updateSelf ? () => this.enterEditMode('title') : null}
-                // ref={this.titleRef}
-              >
-                <h1 className="TitleText">
-                  {animate ? (
-                    <Texty
-                      split={getSplit}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
-                      component="span"
-                    >
-                      {title}
-                    </Texty>
-                  ) : (
-                    title
-                  )}
-                </h1>
-              </Title>
-            ) : null}
-            {subtitle ? (
-              <Subtitle
-                contentEditable={this.state.edit === 'subtitle'}
-                onClick={
-                  updateSelf ? () => this.enterEditMode('subtitle') : null
-                }
-                onChange={e => console.log(e)}
-                // ref={this.subtitleRef}
-              >
-                <h2 className="SubtitleText">
-                  {animate ? (
-                    <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
-                      delay={700}
-                      exclusive={true}
-                      component="span"
-                    >
-                      {subtitle}
-                    </Texty>
-                  ) : (
-                    subtitle
-                  )}
-                </h2>
-              </Subtitle>
-            ) : null}
-            {text ? (
-              <Text
-                contentEditable={this.state.edit === 'text'}
-                onClick={updateSelf ? () => this.enterEditMode('text') : null}
-                // ref={this.textRef}
-              >
-                <h2 className="TextText">
-                  {animate ? (
-                    <Texty
-                      split={t => [t]}
-                      type="top"
-                      mode="smooth"
-                      duration={500}
-                      delay={800}
-                      exclusive={true}
-                      component="span"
-                    >
-                      {text}
-                    </Texty>
-                  ) : (
-                    text
-                  )}
-                </h2>
-              </Text>
-            ) : null}
-          </Child>
-        </Parent>
-      </Element>
-    );
-  }
+  return (
+    <Element
+      align={align}
+      animate={animate}
+      cover={cover}
+      fill={fill}
+      id={id}
+      mask={mask}
+      theme={theme}
+    >
+      {fill && fill.image && fill.image.name ? (
+        <Img
+          fixed={fill.image.fixed}
+          style={{
+            height: '1px',
+            width: '1px',
+            overflow: 'hidden',
+            visibility: 'hidden',
+          }}
+        />
+      ) : null}
+      <Parent>
+        <Child>
+          {title ? (
+            <Title>
+              <h1 className="TitleText">
+                {animate ? (
+                  <Texty
+                    component="span"
+                    duration={500}
+                    mode="smooth"
+                    split={splitString}
+                    type="top"
+                  >
+                    {title}
+                  </Texty>
+                ) : (
+                  title
+                )}
+              </h1>
+            </Title>
+          ) : null}
+          {subtitle ? (
+            <Subtitle>
+              <h2 className="SubtitleText">
+                {animate ? (
+                  <Texty
+                    component="span"
+                    delay={300}
+                    duration={500}
+                    exclusive={true}
+                    mode="smooth"
+                    split={t => [t]}
+                    type="top"
+                  >
+                    {subtitle}
+                  </Texty>
+                ) : (
+                  subtitle
+                )}
+              </h2>
+            </Subtitle>
+          ) : null}
+          {text ? (
+            <Text>
+              <h2 className="TextText">
+                {animate ? (
+                  <Texty
+                    component="span"
+                    delay={600}
+                    duration={500}
+                    exclusive={true}
+                    mode="smooth"
+                    split={t => [t]}
+                    type="top"
+                  >
+                    {text}
+                  </Texty>
+                ) : (
+                  text
+                )}
+              </h2>
+            </Text>
+          ) : null}
+          {children && animate ? <Append>{children}</Append> : children}
+        </Child>
+      </Parent>
+    </Element>
+  );
 }
 
-export default withTheme(Headline);
-
 Headline.propTypes = {
-  align: string,
-  anchor: string,
-  animate: bool,
-  cover: bool,
-  fill: string,
-  mask: string,
-  subtitle: string,
-  text: string,
-  theme: object,
-  updateSelf: func,
-};
-Headline.defaultProps = {
-  align: 'left',
-  anchor: null,
-  animate: null,
-  cover: null,
-  fill: null,
-  mask: null,
-  subtitle: null,
-  text: null,
-  theme: null,
-  title: null,
-  updateSelf: null,
+  align: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  animate: PropTypes.bool,
+  cover: PropTypes.bool,
+  fill: PropTypes.shape({
+    image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    color: PropTypes.string,
+  }),
+  id: PropTypes.string.isRequired,
+  mask: PropTypes.string,
+  subtitle: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
