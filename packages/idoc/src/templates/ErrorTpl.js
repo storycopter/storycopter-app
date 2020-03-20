@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
-import { IdocProvider } from '@storycopter/ui/src/providers';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
+import { docTheme } from '@storycopter/ui/src/themes';
 import Layout from './partials/Layout';
 
 class ErrorTpl extends Component {
@@ -19,12 +20,12 @@ class ErrorTpl extends Component {
     console.groupEnd();
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout contextData={this.props.pageContext.contextData} location={this.props.location} path={this.props.path}>
           <h1>Error</h1>
           <p>Some text</p>
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }

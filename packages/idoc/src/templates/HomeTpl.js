@@ -3,7 +3,9 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/src/providers';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+
+import { docTheme } from '@storycopter/ui/src/themes';
 import { Action, ActionBar, Headline } from '@storycopter/ui/src/components';
 import { track } from '@storycopter/ui/src/settings';
 import { setSpace, setType } from '@storycopter/ui/src/mixins';
@@ -62,7 +64,7 @@ class Home extends Component {
     const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
@@ -111,24 +113,22 @@ class Home extends Component {
             }
 
             return (
-              <IdocProvider invert={component.invert} key={component.id}>
-                <OpeningTitles {...titlesProps} fill={fill} cover>
-                  <ActionBar>
-                    <StartButton to={initialPath}>
-                      <Action as="span" primary>
-                        Start exploring
-                      </Action>
-                    </StartButton>
-                    <IndexButton to="/contents">
-                      <Action as="span">Discover contents</Action>
-                    </IndexButton>
-                  </ActionBar>
-                </OpeningTitles>
-              </IdocProvider>
+              <OpeningTitles {...titlesProps} cover fill={fill} id={component.id} key={component.id}>
+                <ActionBar>
+                  <StartButton to={initialPath}>
+                    <Action as="span" primary>
+                      Start exploring
+                    </Action>
+                  </StartButton>
+                  <IndexButton to="/contents">
+                    <Action as="span">Discover contents</Action>
+                  </IndexButton>
+                </ActionBar>
+              </OpeningTitles>
             );
           })}
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }

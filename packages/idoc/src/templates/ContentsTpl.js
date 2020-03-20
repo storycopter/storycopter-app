@@ -5,9 +5,10 @@ import { graphql } from 'gatsby';
 
 import { withStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
+import { docTheme } from '@storycopter/ui/src/themes';
 import { setSpace } from '@storycopter/ui/src/mixins';
-import { IdocProvider } from '@storycopter/ui/src/providers';
 
 import Layout from './partials/Layout';
 import Tile from './components/Tile';
@@ -143,7 +144,7 @@ class ContentsTpl extends Component {
     console.groupEnd();
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
@@ -171,7 +172,7 @@ class ContentsTpl extends Component {
             </GridList>
           </TileContainer>
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }

@@ -5,9 +5,10 @@ import { update } from '../reducers/data';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import { componentMap } from '@storycopter/ui/src/components';
-import { IdocProvider } from '@storycopter/ui/src/providers';
+import { docTheme } from '@storycopter/ui/src/themes';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,7 +71,7 @@ const Canvas = props => {
 
               return (
                 <Grid item key={component.id} className={classes.componentWrap}>
-                  <IdocProvider invert={component.invert}>
+                  <ThemeProvider theme={docTheme}>
                     <RenderedComponent
                       {...componentProps}
                       mask={mask}
@@ -79,7 +80,7 @@ const Canvas = props => {
                       fill={fill}
                       images={images}
                     />
-                  </IdocProvider>
+                  </ThemeProvider>
                 </Grid>
               );
             })

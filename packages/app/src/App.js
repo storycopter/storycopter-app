@@ -14,8 +14,8 @@ import { Button, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import { GlobalStyles } from '@storycopter/ui/src/components';
+import { appTheme } from '@storycopter/ui/src/themes';
 
-import { defaultTheme } from './themes';
 import Editor from './Editor';
 
 const dialog = remote.dialog;
@@ -109,12 +109,12 @@ class App extends React.Component {
 
     console.group('App.js:');
     console.log({ data });
-    console.log({ defaultTheme });
+    console.log({ appTheme });
     console.log({ currentProject });
     console.groupEnd();
 
     return (
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={appTheme}>
         <GlobalStyles />
         <GlobalStyle />
         <CssBaseline />

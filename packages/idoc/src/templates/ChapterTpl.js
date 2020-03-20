@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/src/providers';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+
 import { componentMap } from '@storycopter/ui/src/components';
+import { docTheme } from '@storycopter/ui/src/themes';
 
 import Layout from './partials/Layout';
 import utilFill from './utils/utilFill';
@@ -35,7 +37,7 @@ class ChapterTpl extends Component {
     // console.groupEnd();
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
@@ -82,13 +84,18 @@ class ChapterTpl extends Component {
             const RenderedComponent = componentMap[component.type];
 
             return (
-              <IdocProvider invert={component.invert} key={component.id}>
-                <RenderedComponent {...props} fill={fill} images={images} mask={mask} />
-              </IdocProvider>
+              <RenderedComponent
+                {...props}
+                fill={fill}
+                id={component.id}
+                images={images}
+                key={component.id}
+                mask={mask}
+              />
             );
           })}
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }
