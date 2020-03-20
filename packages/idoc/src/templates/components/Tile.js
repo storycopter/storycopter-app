@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/styles';
 
-import { Action } from '@storycopter/ui/components';
-import { color } from '@storycopter/ui/settings';
-import { setSpace, setType } from '@storycopter/ui/mixins';
+import { Action } from '@storycopter/ui/src/components';
+import { color } from '@storycopter/ui/src/settings';
+import { setSpace, setType } from '@storycopter/ui/src/mixins';
 
 import AniLink from './AniLink';
 

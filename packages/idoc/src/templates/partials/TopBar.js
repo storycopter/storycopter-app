@@ -16,9 +16,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withTheme } from '@material-ui/styles';
 
-import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { breakpoint, color, time, track } from '@storycopter/ui/settings';
-import { setHeight, setSpace } from '@storycopter/ui/mixins';
+import { PointerIcon, ShareIcon } from '@storycopter/ui/src/elements';
+import { breakpoint, color, time, track } from '@storycopter/ui/src/settings';
+import { setHeight, setSpace } from '@storycopter/ui/src/mixins';
 
 import AniLink from '../components/AniLink';
 

@@ -3,10 +3,10 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/providers';
-import { Action, ActionBar, Headline } from '@storycopter/ui/components';
-import { track } from '@storycopter/ui/settings';
-import { setSpace, setType } from '@storycopter/ui/mixins';
+import { IdocProvider } from '@storycopter/ui/src/providers';
+import { Action, ActionBar, Headline } from '@storycopter/ui/src/components';
+import { track } from '@storycopter/ui/src/settings';
+import { setSpace, setType } from '@storycopter/ui/src/mixins';
 
 import AniLink from './components/AniLink';
 import Layout from './partials/Layout';

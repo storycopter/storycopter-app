@@ -1,0 +1,164 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+
+import Headline from './Headline';
+import ThemeProvider from '../../providers/IdocProvider';
+
+<Meta title="Components/Headline" />
+
+# Headline
+
+<Preview>
+  <Story name="Headline Plain">
+    <ThemeProvider>
+      <Headline
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Fill">
+    <ThemeProvider>
+      <Headline
+        fill={{
+          base64:
+            'data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAECAwQF/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAABiqEajlh//8QAGBAAAwEBAAAAAAAAAAAAAAAAAAECEiL/2gAIAQEAAQUC0jcm5Gi1wqaP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGBAAAgMAAAAAAAAAAAAAAAAAEBEAASH/2gAIAQEABj8Cbmiz/8QAGxABAAIDAQEAAAAAAAAAAAAAAQARQVGRITH/2gAIAQEAAT8h+93YI+kcXmaEYEBe9QarOT//2gAMAwEAAgADAAAAEJMP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAHBABAAMAAgMAAAAAAAAAAAAAAQARITFBUWHR/9oACAEBAAE/EMgFHl1FImN6PiclB5GAA7T3LHrp6lAUX3H/2Q==',
+          width: 1400,
+          height: 900,
+          src: '/static/e35a8fbc6e59a02084ddb9d248664161/17c72/000-image.jpg',
+          srcSet: '/static/e35a8fbc6e59a02084ddb9d248664161/17c72/000-image.jpg 1x',
+        }}
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Animate">
+    <ThemeProvider>
+      <Headline
+        animate={true}
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Align Center">
+    <ThemeProvider>
+      <Headline
+        align="center"
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Align Right">
+    <ThemeProvider>
+      <Headline
+        align="right"
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Mask Bright">
+    <ThemeProvider >
+      <Headline
+        fill={{
+          name: "sample.jpg",
+          fixed: {
+            base64: "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIBBAUG/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAED/9oADAMBAAIQAxAAAAHchBWFDm2zhnfKIf/EABoQAAIDAQEAAAAAAAAAAAAAAAABAgQREAP/2gAIAQEAAQUC7pporEkl7yQ7DZvf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAFRABAQAAAAAAAAAAAAAAAAAAIDH/2gAIAQEABj8CdP8A/8QAGhAAAwADAQAAAAAAAAAAAAAAAAERIDFxgf/aAAgBAQABPyHISlrEztejK1mw3GdP/9oADAMBAAIAAwAAABBrJoL/xAAXEQADAQAAAAAAAAAAAAAAAAAAEBEh/9oACAEDAQE/EKU1f//EABYRAAMAAAAAAAAAAAAAAAAAAAAQIf/aAAgBAgEBPxBw/8QAHRABAAICAgMAAAAAAAAAAAAAAQARIVEQMUFhcf/aAAgBAQABPxDEa4puV2SuyXu7mlyxAT17EwhfGCEUairWGdhbNeCf/9k=",
+            height: 900,
+            src: "sample.jpg",
+            srcSet: "sample.jpg 1x,sample.jpg 1.5x,sample.jpg 2x",
+            width: 1400
+          },
+        }}
+        mask="bright"
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Mask Dark">
+    <ThemeProvider invert>
+      <Headline
+        fill={{
+          name: "sample.jpg",
+          fixed: {
+            base64: "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIBBAUG/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAED/9oADAMBAAIQAxAAAAHchBWFDm2zhnfKIf/EABoQAAIDAQEAAAAAAAAAAAAAAAABAgQREAP/2gAIAQEAAQUC7pporEkl7yQ7DZvf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAFRABAQAAAAAAAAAAAAAAAAAAIDH/2gAIAQEABj8CdP8A/8QAGhAAAwADAQAAAAAAAAAAAAAAAAERIDFxgf/aAAgBAQABPyHISlrEztejK1mw3GdP/9oADAMBAAIAAwAAABBrJoL/xAAXEQADAQAAAAAAAAAAAAAAAAAAEBEh/9oACAEDAQE/EKU1f//EABYRAAMAAAAAAAAAAAAAAAAAAAAQIf/aAAgBAgEBPxBw/8QAHRABAAICAgMAAAAAAAAAAAAAAQARIVEQMUFhcf/aAAgBAQABPxDEa4puV2SuyXu7mlyxAT17EwhfGCEUairWGdhbNeCf/9k=",
+            height: 900,
+            src: "sample.jpg",
+            srcSet: "sample.jpg 1x,sample.jpg 1.5x,sample.jpg 2x",
+            width: 1400
+          },
+        }}
+        mask="dark"
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Cover">
+    <ThemeProvider>
+      <Headline
+        cover={true}
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Headline Combination">
+    <ThemeProvider invert>
+      <Headline
+        align="center"
+        animate={true}
+        cover={true}
+        fill={{
+          name: "sample.jpg",
+          fixed: {
+            base64: "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIBBAUG/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAED/9oADAMBAAIQAxAAAAHchBWFDm2zhnfKIf/EABoQAAIDAQEAAAAAAAAAAAAAAAABAgQREAP/2gAIAQEAAQUC7pporEkl7yQ7DZvf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAFRABAQAAAAAAAAAAAAAAAAAAIDH/2gAIAQEABj8CdP8A/8QAGhAAAwADAQAAAAAAAAAAAAAAAAERIDFxgf/aAAgBAQABPyHISlrEztejK1mw3GdP/9oADAMBAAIAAwAAABBrJoL/xAAXEQADAQAAAAAAAAAAAAAAAAAAEBEh/9oACAEDAQE/EKU1f//EABYRAAMAAAAAAAAAAAAAAAAAAAAQIf/aAAgBAgEBPxBw/8QAHRABAAICAgMAAAAAAAAAAAAAAQARIVEQMUFhcf/aAAgBAQABPxDEa4puV2SuyXu7mlyxAT17EwhfGCEUairWGdhbNeCf/9k=",
+            height: 900,
+            src: "sample.jpg",
+            srcSet: "sample.jpg 1x,sample.jpg 1.5x,sample.jpg 2x",
+            width: 1400
+          },
+        }}
+        mask="dark"
+        subtitle="A subtitle belonging to the Headline. Such item can contain lenghty text."
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="A title of the Headline"
+        updateSelf={(payload) => console.log("updateSelf(): ", payload)}
+      />
+    </ThemeProvider>
+  </Story>
+</Preview>

@@ -10,9 +10,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
-import { CreditsIcon } from '@storycopter/ui/elements';
-import { breakpoint } from '@storycopter/ui/settings';
-import { setHeight, setSpace } from '@storycopter/ui/mixins';
+import { CreditsIcon } from '@storycopter/ui/src/elements';
+import { breakpoint } from '@storycopter/ui/src/settings';
+import { setHeight, setSpace } from '@storycopter/ui/src/mixins';
 
 import AniLink from '../components/AniLink';
 

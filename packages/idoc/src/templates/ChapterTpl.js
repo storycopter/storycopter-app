@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/providers';
-import { componentMap } from '@storycopter/ui/components';
+import { IdocProvider } from '@storycopter/ui/src/providers';
+import { componentMap } from '@storycopter/ui/src/components';
 
 import Layout from './partials/Layout';
 import utilFill from './utils/utilFill';

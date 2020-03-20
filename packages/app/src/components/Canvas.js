@@ -6,8 +6,8 @@ import { update } from '../reducers/data';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid } from '@material-ui/core';
 
-import { componentMap } from '@storycopter/ui/components';
-import { IdocProvider } from '@storycopter/ui/providers';
+import { componentMap } from '@storycopter/ui/src/components';
+import { IdocProvider } from '@storycopter/ui/src/providers';
 
 const useStyles = makeStyles(theme => ({
   root: {

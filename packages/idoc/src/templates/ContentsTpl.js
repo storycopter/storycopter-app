@@ -6,8 +6,8 @@ import { graphql } from 'gatsby';
 import { withStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core';
 
-import { setSpace } from '@storycopter/ui/mixins';
-import { IdocProvider } from '@storycopter/ui/providers';
+import { setSpace } from '@storycopter/ui/src/mixins';
+import { IdocProvider } from '@storycopter/ui/src/providers';
 
 import Layout from './partials/Layout';
 import Tile from './components/Tile';
