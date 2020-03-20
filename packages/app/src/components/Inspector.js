@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
 import { Box, Tabs, Tab } from '@material-ui/core';
+
 import DocumentInspector from './ofInspector/DocumentInspector';
+import ElementInspector from './ofInspector/ElementInspector';
+import PageInspector from './ofInspector/PageInspector';
 
 import { defaultTheme } from '../themes';
 
-const Inspector = props => {
-  const { data, update } = props;
+export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const { inspector } = data;
   const { activeInspector } = inspector;
 
@@ -25,23 +27,27 @@ const Inspector = props => {
     handleUpdate({ activeInspector: newValue });
   };
 
+  const boxProps = {
+    flexDirection: 'column',
+    borderTop: `1px solid ${defaultTheme.palette.divider}`,
+  };
+
   return (
     <>
-      <Tabs value={activeInspector} onChange={handleTabChange} aria-label="simple tabs example" variant="fullWidth">
+      <Tabs value={activeInspector} onChange={handleTabChange} aria-label="Idoc inspector" variant="fullWidth">
         <Tab value="document" label="Document" />
         <Tab value="page" label="Page" />
-        {/* <Tab label="Item Three" value="component" label="Element" /> */}
+        <Tab value="element" label="Element" />
       </Tabs>
-      <Box
-        display={activeInspector !== 'document' ? 'none' : 'flex'}
-        flexDirection="column"
-        borderTop={`1px solid ${defaultTheme.palette.divider}`}>
+      <Box {...boxProps} display={activeInspector === 'document' ? 'flex' : 'none'}>
         <DocumentInspector />
       </Box>
-      <Box display={activeInspector !== 'page' ? 'none' : 'flex'}>Page</Box>
-      {/* <Box display={inspector.activeInspector !== 'component' ? 'none' : 'flex'}>Element</Box> */}
+      <Box {...boxProps} display={activeInspector === 'page' ? 'flex' : 'none'}>
+        <PageInspector />
+      </Box>
+      <Box {...boxProps} display={inspector.activeInspector === 'element' ? 'flex' : 'none'}>
+        <ElementInspector />
+      </Box>
     </>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(Inspector);
+});
