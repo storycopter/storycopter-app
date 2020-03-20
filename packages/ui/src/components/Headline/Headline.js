@@ -1,5 +1,6 @@
+import ContentEditable from 'react-contenteditable';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -97,16 +98,25 @@ export default function Headline({
   color = null,
   cover = false,
   fill = null,
+  isEditable = false,
   mask = null,
   paint = null,
-  subtitle = null,
-  text = null,
-  title = null,
   ...props
 }) {
-  // const theme = useTheme();
-  console.log({ fill });
   const classes = useStyles(align, color, cover, fill, mask, paint)();
+  // const theme = useTheme();
+
+  const [title, setTitle] = useState(props.title);
+  const [subtitle, setSubtitle] = useState(props.subtitle);
+  const [text, setText] = useState(props.text);
+
+  const onSave = () => {
+    props.onComponentSave({
+      title: title,
+      subtitle: subtitle,
+      text: text,
+    });
+  };
 
   return (
     <Box className={classes.headlineRoot}>
@@ -114,17 +124,38 @@ export default function Headline({
         <Box className={classes.headlineContent}>
           {title ? (
             <Typography className={classes.headlineTitle} variant="h1">
-              {title}
+              <ContentEditable
+                className="sc-editable"
+                disabled={!isEditable}
+                html={title}
+                onBlur={onSave}
+                onChange={e => setTitle(e.target.value)}
+                tagName="span"
+              />
             </Typography>
           ) : null}
           {subtitle ? (
             <Typography className={classes.headlineSubtitle} variant="h3">
-              {subtitle}
+              <ContentEditable
+                className="sc-editable"
+                disabled={!isEditable}
+                html={subtitle}
+                onBlur={onSave}
+                onChange={e => setSubtitle(e.target.value)}
+                tagName="span"
+              />
             </Typography>
           ) : null}
           {text ? (
             <Typography className={classes.headlineText} variant="h5" component="p">
-              {subtitle}
+              <ContentEditable
+                className="sc-editable"
+                disabled={!isEditable}
+                html={text}
+                onBlur={onSave}
+                onChange={e => setText(e.target.value)}
+                tagName="span"
+              />
             </Typography>
           ) : null}
           {children ? <Box className={classes.headlineActionbar}>{children}</Box> : null}
@@ -140,7 +171,9 @@ Headline.propTypes = {
   color: PropTypes.string,
   cover: PropTypes.bool,
   fill: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  isEditable: PropTypes.bool,
   mask: PropTypes.string,
+  onComponentSave: PropTypes.func,
   paint: PropTypes.string,
   subtitle: PropTypes.string.isRequired,
   text: PropTypes.string,

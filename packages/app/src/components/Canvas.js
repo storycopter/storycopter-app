@@ -74,11 +74,13 @@ const Canvas = props => {
                   <ThemeProvider theme={docTheme}>
                     <RenderedComponent
                       {...componentProps}
-                      mask={mask}
-                      cover={false}
                       animate={false}
+                      cover={false}
                       fill={fill}
                       images={images}
+                      isEditable
+                      mask={mask}
+                      onComponentSave={payload => console.log({ payload })}
                     />
                   </ThemeProvider>
                 </Grid>

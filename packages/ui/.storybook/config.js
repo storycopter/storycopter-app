@@ -8,7 +8,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 import docTheme from '../src/themes/docTheme';
 
-import { GlobalStyles } from '../src/components';
+import Baseline from '../src/themes/styles/Baseline';
 
 addParameters({
   options: {
@@ -30,7 +30,7 @@ configureActions({
 
 addDecorator(story => (
   <ThemeProvider theme={docTheme}>
-    <GlobalStyles />
+    <Baseline />
     {story()}
   </ThemeProvider>
 ));
