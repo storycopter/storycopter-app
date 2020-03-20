@@ -1,1 +1,1 @@
-{"componentChunkName":"component---theme-templates-error-tpl-js","path":"/404/","result":{"data":{"markdownRemark":{"html":"","frontmatter":{"title":"Error","intro":"Error","intro_head":"head","intro_body":"body","intro_cta1":"cta1","intro_cta2":"cta2"}}},"pageContext":{"uid":"error"}}}
+{"componentChunkName":"component---src-pages-404-js","path":"/404/","webpackCompilationHash":"c10d5b363b1b1805606e","result":{"pageContext":{"isCreatedByStatefulCreatePages":true}}}
