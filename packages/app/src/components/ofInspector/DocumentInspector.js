@@ -15,10 +15,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import BrandExperience from './ofDocumentInspector/BrandExperience';
-import MetaInformation from './ofDocumentInspector/MetaInformation';
-import Motivation from './ofDocumentInspector/Motivation';
-import SoundExperience from './ofDocumentInspector/SoundExperience';
+import BrandControls from './ofDocumentInspector/BrandControls';
+import MetaControls from './ofDocumentInspector/MetaControls';
+import MotivationControls from './ofDocumentInspector/MotivationControls';
+import SoundControls from './ofDocumentInspector/SoundControls';
 
 const useStyles = makeStyles(theme => ({
   expandIcon: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const DocumentInspector = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { inspector } = data;
@@ -80,7 +80,7 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <MetaInformation />
+          <MetaControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={documentInspector.brand} onChange={() => togglePanel('brand')} square elevation={0}>
@@ -113,7 +113,7 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <BrandExperience />
+          <BrandControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={documentInspector.sound} onChange={() => togglePanel('sound')} square elevation={0}>
@@ -146,7 +146,7 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <SoundExperience />
+          <SoundControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
@@ -183,9 +183,11 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Motivation />
+          <MotivationControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(DocumentInspector);

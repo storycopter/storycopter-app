@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const SoundControls = ({ data, update, ...props }) => {
   const classes = useStyles();
   const player = React.createRef();
 
@@ -165,4 +165,6 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       </FormControl>
     </form>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(SoundControls);

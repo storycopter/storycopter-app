@@ -325,7 +325,7 @@ const Baseline = createGlobalStyle`
     display: block;
     &:focus {
       border-radius: 1px;
-      box-shadow: 0 0 0 1px ${color.flare[200]};
+      box-shadow: 0 0 0 1px ${color.flare[300]};
       outline: none;
       overflow: hidden;
     }

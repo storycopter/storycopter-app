@@ -12,7 +12,7 @@ import PageInspector from './ofInspector/PageInspector';
 
 import { appTheme } from '@storycopter/ui/src/themes';
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const Inspector = ({ data, update, ...props }) => {
   const { inspector } = data;
   const { activeInspector } = inspector;
 
@@ -52,4 +52,6 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       </Box>
     </>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(Inspector);

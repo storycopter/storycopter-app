@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const BrandControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject } = data;
@@ -224,4 +224,6 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       </FormControl>
     </form>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(BrandControls);

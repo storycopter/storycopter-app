@@ -1,12 +1,11 @@
 import ContentEditable from 'react-contenteditable';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-// import useTheme from '@material-ui/core/styles/useTheme';
 
 import { colors } from '../../themes/settings';
 
@@ -104,7 +103,6 @@ export default function Headline({
   ...props
 }) {
   const classes = useStyles(align, color, cover, fill, mask, paint)();
-  // const theme = useTheme();
 
   const [title, setTitle] = useState(props.title);
   const [subtitle, setSubtitle] = useState(props.subtitle);
@@ -118,44 +116,60 @@ export default function Headline({
     });
   };
 
+  console.group('Headline.js');
+  console.log('props:', props);
+  console.groupEnd();
+
   return (
     <Box className={classes.headlineRoot}>
       <Container className={classes.headlineContainer}>
         <Box className={classes.headlineContent}>
           {title ? (
             <Typography className={classes.headlineTitle} variant="h1">
-              <ContentEditable
-                className="sc-editable"
-                disabled={!isEditable}
-                html={title}
-                onBlur={onSave}
-                onChange={e => setTitle(e.target.value)}
-                tagName="span"
-              />
+              {isEditable ? (
+                <ContentEditable
+                  className="sc-editable"
+                  disabled={!isEditable}
+                  html={title}
+                  onBlur={onSave}
+                  onChange={e => setTitle(e.target.value)}
+                  tagName="span"
+                />
+              ) : (
+                props.title
+              )}
             </Typography>
           ) : null}
           {subtitle ? (
             <Typography className={classes.headlineSubtitle} variant="h3">
-              <ContentEditable
-                className="sc-editable"
-                disabled={!isEditable}
-                html={subtitle}
-                onBlur={onSave}
-                onChange={e => setSubtitle(e.target.value)}
-                tagName="span"
-              />
+              {isEditable ? (
+                <ContentEditable
+                  className="sc-editable"
+                  disabled={!isEditable}
+                  html={subtitle}
+                  onBlur={onSave}
+                  onChange={e => setSubtitle(e.target.value)}
+                  tagName="span"
+                />
+              ) : (
+                props.subtitle
+              )}
             </Typography>
           ) : null}
           {text ? (
             <Typography className={classes.headlineText} variant="h5" component="p">
-              <ContentEditable
-                className="sc-editable"
-                disabled={!isEditable}
-                html={text}
-                onBlur={onSave}
-                onChange={e => setText(e.target.value)}
-                tagName="span"
-              />
+              {isEditable ? (
+                <ContentEditable
+                  className="sc-editable"
+                  disabled={!isEditable}
+                  html={text}
+                  onBlur={onSave}
+                  onChange={e => setText(e.target.value)}
+                  tagName="span"
+                />
+              ) : (
+                props.text
+              )}
             </Typography>
           ) : null}
           {children ? <Box className={classes.headlineActionbar}>{children}</Box> : null}

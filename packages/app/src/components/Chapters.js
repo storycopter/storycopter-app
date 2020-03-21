@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const Chapters = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor } = data;
@@ -60,4 +60,6 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       })}
     </Box>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(Chapters);

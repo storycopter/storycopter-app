@@ -16,7 +16,7 @@
         "invert": true,
         "order": 0,
         "props": {
-          "fill": "headline-image.jpg",
+          "fill": "image.jpg",
           "paint": "",
           "align": "left",
           "animate": true,

@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
+const Canvas = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor, inspector } = data;
@@ -49,6 +49,11 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       },
     });
   };
+
+  // console.group('Canvas.js');
+  // console.log('data:', data);
+  // console.log('props:', props);
+  // console.groupEnd();
 
   return (
     <Box className={classes.root}>
@@ -83,7 +88,7 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
               const componentProps = component.props;
 
               return (
-                <Grid item key={component.id} className={classes.componentWrap}>
+                <Grid item key={`${chapterData.meta.uid}${component.id}`} className={classes.componentWrap}>
                   <ThemeProvider theme={docTheme}>
                     <div onClick={() => onInspectElement(activeChapter, component.id)}>
                       <RenderedComponent
@@ -105,4 +110,6 @@ export default connect(({ data }) => ({ data }), { update })(({ data, update, ..
       </Grid>
     </Box>
   );
-});
+};
+
+export default connect(({ data }) => ({ data }), { update })(Canvas);
