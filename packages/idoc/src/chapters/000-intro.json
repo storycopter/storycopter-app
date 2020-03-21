@@ -15,7 +15,7 @@
         "id": "000",
         "invert": true,
         "order": 0,
-        "props": {
+        "settings": {
           "align": "right",
           "animate": true,
           "cover": true,
@@ -33,7 +33,7 @@
         "id": "001",
         "invert": false,
         "order": 1,
-        "props": {
+        "settings": {
           "align": "center",
           "animate": true,
           "cover": true,
@@ -51,7 +51,7 @@
         "id": "002",
         "invert": false,
         "order": 2,
-        "props": {
+        "settings": {
           "align": "left",
           "animate": true,
           "fill": "",
@@ -68,7 +68,7 @@
         "id": "003",
         "invert": true,
         "order": 3,
-        "props": {
+        "settings": {
           "cover": true,
           "images": [
             {

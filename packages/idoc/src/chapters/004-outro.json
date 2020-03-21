@@ -15,7 +15,7 @@
         "id": "000",
         "invert": true,
         "order": 0,
-        "props": {
+        "settings": {
           "fill": "image.jpg",
           "paint": "",
           "align": "left",

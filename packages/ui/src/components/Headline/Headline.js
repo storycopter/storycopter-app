@@ -1,11 +1,13 @@
-import ContentEditable from 'react-contenteditable';
 import PropTypes from 'prop-types';
-import React, { memo, useState, useEffect } from 'react';
+import React from 'react';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import docTheme from '../../themes/docTheme';
 
 import { colors } from '../../themes/settings';
 
@@ -57,7 +59,7 @@ const useStyles = (align, color, cover, fill, mask, paint) =>
       [theme.breakpoints.up('md')]: {
         flex: `0 0 ${(100 / 3) * 2}%`,
       },
-      [theme.breakpoints.up('xl')]: {
+      [theme.breakpoints.up('lg')]: {
         flex: `0 0 ${100 / 2}%`,
       },
     },
@@ -79,6 +81,15 @@ const useStyles = (align, color, cover, fill, mask, paint) =>
       [theme.breakpoints.up('xl')]: {
         marginTop: theme.spacing(5),
       },
+    },
+    headlineTitleInput: {
+      ...docTheme.typography.h1,
+    },
+    headlineSubtitleInput: {
+      ...docTheme.typography.h3,
+    },
+    headlineTextInput: {
+      ...docTheme.typography.h5,
     },
     headlineActionbar: {
       marginTop: theme.spacing(5),
@@ -104,71 +115,88 @@ export default function Headline({
 }) {
   const classes = useStyles(align, color, cover, fill, mask, paint)();
 
-  const [title, setTitle] = useState(props.title);
-  const [subtitle, setSubtitle] = useState(props.subtitle);
-  const [text, setText] = useState(props.text);
-
-  const onSave = () => {
-    props.onComponentSave({
-      title: title,
-      subtitle: subtitle,
-      text: text,
+  const onInputBlur = (e, key) => {
+    props.onElementUpdate({
+      [key]: e.target.value,
     });
   };
 
-  // console.group('Headline.js');
-  // console.log('props:', props);
-  // console.groupEnd();
-
   return (
     <Box className={classes.headlineRoot}>
-      <Container className={classes.headlineContainer}>
+      <Container className={classes.headlineContainer} maxWidth="xl">
         <Box className={classes.headlineContent}>
-          {title ? (
-            <Typography className={classes.headlineTitle} variant="h1">
+          {isEditable || props.title ? (
+            <Typography className={classes.headlineTitle} component="div" variant="h1">
               {isEditable ? (
-                <ContentEditable
-                  className="sc-editable"
-                  disabled={!isEditable}
-                  html={title}
-                  onBlur={onSave}
-                  onChange={e => setTitle(e.target.value)}
-                  tagName="span"
+                <TextField
+                  defaultValue={props.title}
+                  fullWidth
+                  id="title"
+                  inputProps={{
+                    className: classes.headlineTitleInput,
+                    maxLength: 150,
+                    onBlur: e => onInputBlur(e, 'title'),
+                  }}
+                  margin="none"
+                  multiline
+                  name="title"
+                  placeholder="Enter title…"
+                  rowsMax="5"
+                  type="text"
+                  variant="outlined"
                 />
               ) : (
-                props.title
+                <h1>{props.title}</h1>
               )}
             </Typography>
           ) : null}
-          {subtitle ? (
-            <Typography className={classes.headlineSubtitle} variant="h3">
+          {isEditable || props.subtitle ? (
+            <Typography className={classes.headlineSubtitle} component="div" variant="h3">
               {isEditable ? (
-                <ContentEditable
-                  className="sc-editable"
-                  disabled={!isEditable}
-                  html={subtitle}
-                  onBlur={onSave}
-                  onChange={e => setSubtitle(e.target.value)}
-                  tagName="span"
+                <TextField
+                  defaultValue={props.subtitle}
+                  fullWidth
+                  id="subtitle"
+                  inputProps={{
+                    className: classes.headlineSubtitleInput,
+                    maxLength: 150,
+                    onBlur: e => onInputBlur(e, 'subtitle'),
+                  }}
+                  margin="none"
+                  multiline
+                  name="title"
+                  placeholder="Enter subtitle…"
+                  rowsMax="5"
+                  type="text"
+                  variant="outlined"
                 />
               ) : (
-                props.subtitle
+                <h2>{props.subtitle}</h2>
               )}
             </Typography>
           ) : null}
-          {text ? (
-            <Typography className={classes.headlineText} variant="h5" component="p">
+          {isEditable || props.text ? (
+            <Typography className={classes.headlineText} component="div" variant="h5">
               {isEditable ? (
-                <ContentEditable
-                  className="sc-editable"
-                  disabled={!isEditable}
-                  html={text}
-                  onBlur={onSave}
-                  onChange={e => setText(e.target.value)}
-                  tagName="span"
+                <TextField
+                  defaultValue={props.text}
+                  fullWidth
+                  id="text"
+                  inputProps={{
+                    className: classes.headlineTextInput,
+                    maxLength: 250,
+                    onBlur: e => onInputBlur(e, 'text'),
+                  }}
+                  margin="none"
+                  multiline
+                  name="title"
+                  placeholder="Enter text…"
+                  rowsMax="5"
+                  type="text"
+                  variant="outlined"
                 />
               ) : (
-                props.text
+                <p>{props.text}</p>
               )}
             </Typography>
           ) : null}
@@ -187,9 +215,9 @@ Headline.propTypes = {
   fill: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   isEditable: PropTypes.bool,
   mask: PropTypes.string,
-  onComponentSave: PropTypes.func,
+  onElementUpdate: PropTypes.func,
   paint: PropTypes.string,
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   text: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

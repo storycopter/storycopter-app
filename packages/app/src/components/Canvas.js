@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
@@ -31,26 +32,35 @@ const useStyles = makeStyles(theme => ({
 const Canvas = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor, inspector } = data;
+  const { currentProject, editor } = data;
   const { basepath, chapters } = currentProject;
-  const { activeChapter } = editor;
+  const { activeChapterId, activeElementId } = editor;
 
-  const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
+  const chapterData = activeChapterId ? _.find(chapters, o => o.meta.uid === editor.activeChapterId) : null;
+  const chapterIndex = activeChapterId ? _.findIndex(chapters, o => o.meta.uid === editor.activeChapterId) : null;
 
-  const onInspectElement = (chapter, component) => {
-    console.log('onInspectElement', chapter, component);
+  const onInspectElement = componentId => {
     update({
-      inspector: {
-        ...inspector,
-        elementInspector: {
-          ...inspector.elementInspector,
-          targetElement: { chapter: chapter, component: component },
-        },
-      },
+      ...produce(data, nextData => {
+        nextData.editor.activeElementId = componentId;
+      }),
+    });
+  };
+
+  const onElementUpdate = payload => {
+    const componentIndex = _.findIndex(chapterData.tree.components, o => o.id === activeElementId);
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.chapters[chapterIndex].tree.components[componentIndex].settings = {
+          ...nextData.currentProject.chapters[chapterIndex].tree.components[componentIndex].settings,
+          ...payload,
+        };
+      }),
     });
   };
 
   // console.group('Canvas.js');
+  // console.log('chapterData:', chapterData);
   // console.log('data:', data);
   // console.log('props:', props);
   // console.groupEnd();
@@ -62,18 +72,18 @@ const Canvas = ({ data, update, ...props }) => {
           ? _.sortBy(chapterData.tree.components, [o => o.order]).map((component, i) => {
               // consolidate fill props with raw images
               const fill =
-                component.props.fill && component.props.fill.length > 0
+                component.settings.fill && component.settings.fill.length > 0
                   ? {
-                      ...component.props.fill,
-                      raw: `${basepath}src/chapters/${activeChapter}/${component.id}-${component.props.fill}`,
+                      ...component.settings.fill,
+                      raw: `${basepath}src/chapters/${activeChapterId}/${component.id}-${component.settings.fill}`,
                     }
-                  : component.props.fill;
+                  : component.settings.fill;
 
-              // consolidate component.props.images with raw images
+              // consolidate component.settings.images with raw images
               const images =
-                component.props.images.length > 0
-                  ? component.props.images.map(image => {
-                      const imagePath = `${basepath}src/chapters/${activeChapter}/${component.id}-${image.name}`;
+                component.settings.images.length > 0
+                  ? component.settings.images.map(image => {
+                      const imagePath = `${basepath}src/chapters/${activeChapterId}/${component.id}-${image.name}`;
                       return {
                         ...image,
                         raw: imagePath,
@@ -82,15 +92,15 @@ const Canvas = ({ data, update, ...props }) => {
                   : [];
 
               // dirty validate mask string values
-              const mask = ['dark', 'light'].includes(component.props.mask) ? component.props.mask : null;
+              const mask = ['dark', 'light'].includes(component.settings.mask) ? component.settings.mask : null;
 
               const RenderedComponent = componentMap[component.type];
-              const componentProps = component.props;
+              const componentProps = component.settings;
 
               return (
                 <Grid item key={`${chapterData.meta.uid}${component.id}`} className={classes.componentWrap}>
                   <ThemeProvider theme={docTheme}>
-                    <div onClick={() => onInspectElement(activeChapter, component.id)}>
+                    <div onClick={() => onInspectElement(component.id)}>
                       <RenderedComponent
                         {...componentProps}
                         animate={false}
@@ -99,7 +109,7 @@ const Canvas = ({ data, update, ...props }) => {
                         images={images}
                         isEditable
                         mask={mask}
-                        onComponentSave={payload => console.log({ payload })}
+                        onElementUpdate={onElementUpdate}
                       />
                     </div>
                   </ThemeProvider>

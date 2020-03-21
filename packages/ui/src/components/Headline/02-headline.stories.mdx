@@ -11,8 +11,8 @@ export const headlineStore = new Store({
   title: "A title of the Headline",
 });
 
-export const onHeadlineEdit = (payload) => { 
-  action('onHeadlineEdit')(payload);
+export const onHeadlineUpdate = (payload) => { 
+  action('onHeadlineUpdate')(payload);
   headlineStore.set(payload);
 }
 
@@ -196,7 +196,7 @@ export const onHeadlineEdit = (payload) => {
         }}
         isEditable
         mask="dark"
-        onComponentSave={onHeadlineEdit}
+        onElementUpdate={onHeadlineUpdate}
         subtitle={state.subtitle}
         text={state.text}
         title={state.title}

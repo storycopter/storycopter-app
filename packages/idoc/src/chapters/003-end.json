@@ -15,11 +15,11 @@
         "id": "000",
         "invert": true,
         "order": 0,
-        "props": {
+        "settings": {
           "align": "left",
           "animate": true,
           "cover": true,
-          "fill": "headline-image.jpg",
+          "fill": "image.jpg",
           "image": "",
           "images": [],
           "mask": "dark",

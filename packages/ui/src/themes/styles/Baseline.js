@@ -317,20 +317,6 @@ const Baseline = createGlobalStyle`
     color: #000;
   }
 
-  /*
-
-  */
-
-  .sc-editable {
-    display: block;
-    &:focus {
-      border-radius: 1px;
-      box-shadow: 0 0 0 1px ${color.flare[300]};
-      outline: none;
-      overflow: hidden;
-    }
-  }
-
 `;
 
 export default Baseline;

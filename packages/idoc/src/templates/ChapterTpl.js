@@ -43,7 +43,7 @@ class ChapterTpl extends Component {
           location={this.props.location}
           path={this.props.data.chapter.meta.path}>
           {_.sortBy(components, [o => o.order]).map((component, i) => {
-            const { props } = component;
+            const { settings } = component;
             /*
             CHECK ALL GRAPHQL-ed PROPS
             - align?
@@ -56,14 +56,14 @@ class ChapterTpl extends Component {
             √ mask
           */
 
-            // consolidate props.fill w/ graphql-ed image data
-            const fill = utilFill(component, props, edges);
+            // consolidate settings.fill w/ graphql-ed image data
+            const fill = utilFill(component, settings, edges);
 
-            // consolidate props.images w/ graphql-ed image data
+            // consolidate settings.images w/ graphql-ed image data
             const images =
-              props.images.length > 0
+              settings.images.length > 0
                 ? _.mergeWith(
-                    _.sortBy(props.images, [o => o.order]),
+                    _.sortBy(settings.images, [o => o.order]),
                     _.sortBy(
                       _.map(
                         _.filter(edges, o =>
@@ -78,13 +78,13 @@ class ChapterTpl extends Component {
                 : null;
 
             // dirty validate mask string values
-            const mask = ['dark', 'light'].includes(props.mask) ? props.mask : null;
+            const mask = ['dark', 'light'].includes(settings.mask) ? settings.mask : null;
 
             const RenderedComponent = componentMap[component.type];
 
             return (
               <RenderedComponent
-                {...props}
+                {...settings}
                 fill={fill}
                 id={component.id}
                 images={images}
@@ -114,7 +114,7 @@ export const pageQuery = graphql`
           id
           order
           type
-          props {
+          settings {
             align
             cover
             fill

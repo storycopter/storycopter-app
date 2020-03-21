@@ -15,7 +15,8 @@ import appendixJSON from '@storycopter/idoc/src/chapters/005-appendix.json';
 
 const initialState = {
   editor: {
-    activeChapter: null,
+    activeChapterId: null,
+    activeElementId: null,
   },
   inspector: {
     activeInspector: 'document',

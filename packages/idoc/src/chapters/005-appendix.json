@@ -15,7 +15,7 @@
         "id": "000",
         "invert": false,
         "order": 0,
-        "props": {
+        "settings": {
           "align": "left",
           "animate": true,
           "cover": true,

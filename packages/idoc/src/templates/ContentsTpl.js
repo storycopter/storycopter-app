@@ -193,7 +193,7 @@ export const pageQuery = graphql`
           invert
           order
           type
-          props {
+          settings {
             align
             animate
             cover

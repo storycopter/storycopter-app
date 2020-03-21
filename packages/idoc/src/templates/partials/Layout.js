@@ -6,7 +6,7 @@ import { graphql, StaticQuery } from 'gatsby';
 
 import { withTheme } from '@material-ui/styles';
 
-import { GlobalStyles } from '@storycopter/ui/src/components';
+import Baseline from '@storycopter/ui/src/themes/styles/Baseline';
 
 import FooBar from './FooBar';
 import Shortcuts from './Shortcuts';
@@ -135,7 +135,7 @@ class Layout extends Component {
 
           return (
             <>
-              <GlobalStyles />
+              <Baseline />
               <TopBar
                 {...this.props}
                 isContents={isCurrentContents}

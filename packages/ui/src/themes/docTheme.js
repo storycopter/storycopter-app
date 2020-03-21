@@ -2,16 +2,14 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 import setType from './mixins/setType';
 
-const thm = createMuiTheme();
+const muiTheme = createMuiTheme();
 
 console.group('docTheme.js');
-console.log('thm:', thm);
+console.log('muiTheme:', muiTheme);
 console.groupEnd();
 
 export default createMuiTheme({
-  // ...thm,
   typography: {
-    // ...thm.typography,
     h1: {
       ...setType(900),
       fontWeight: 'medium',

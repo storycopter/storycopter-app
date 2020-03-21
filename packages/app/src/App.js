@@ -24,7 +24,7 @@ const WIN = remote.getCurrentWindow();
 const foo = remote.require('./foo');
 const node = foo.getNode();
 
-const GlobalStyle = createGlobalStyle`
+const AppBaseline = createGlobalStyle`
   html, body, #root {
     width: 100%;
     height: 100%;
@@ -113,9 +113,9 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={appTheme}>
-        <Baseline />
-        <GlobalStyle />
         <CssBaseline />
+        <Baseline />
+        <AppBaseline />
         <Editor />
         {!child ? (
           <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>

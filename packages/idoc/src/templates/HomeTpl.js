@@ -60,7 +60,7 @@ class Home extends Component {
       },
     } = this.props;
 
-    const titlesProps = this.props.data.essential.tree.components[0].props;
+    const titlesProps = this.props.data.essential.tree.components[0].settings;
     const initialPath = this.props.data.chapters.edges[0].node.meta.path;
 
     return (
@@ -70,7 +70,7 @@ class Home extends Component {
           location={this.props.location}
           path={this.props.data.essential.meta.path}>
           {_.sortBy(components, [o => o.order]).map(component => {
-            const { props } = component;
+            const { settings } = component;
             /*
             CHECK ALL GRAPHQL-ed PROPS
             - align?
@@ -90,12 +90,12 @@ class Home extends Component {
               }
             };
 
-            // consolidate props.fill w/ graphql-ed image data
-            const fill = utilFill(component, props, edges);
+            // consolidate settings.fill w/ graphql-ed image data
+            const fill = utilFill(component, settings, edges);
 
-            // merge component.props.images array with actual graphql resolved image files
+            // merge component.settings.images array with actual graphql resolved image files
             const images = _.mergeWith(
-              _.sortBy(component.props.images, [o => o.order]),
+              _.sortBy(component.settings.images, [o => o.order]),
               _.sortBy(
                 _.map(
                   _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
@@ -147,7 +147,7 @@ export const pageQuery = graphql`
           invert
           order
           type
-          props {
+          settings {
             align
             animate
             cover
