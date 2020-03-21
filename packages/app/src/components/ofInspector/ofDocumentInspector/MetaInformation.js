@@ -2,21 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardMedia,
-  Checkbox,
-  FilledInput,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import Checkbox from '@material-ui/core/Checkbox';
+import FilledInput from '@material-ui/core/FilledInput';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,10 +32,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MetaInformation = props => {
+export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { data, update } = props;
   const { currentProject } = data;
   const { basepath } = currentProject;
   const { site } = currentProject;
@@ -170,6 +167,4 @@ const MetaInformation = props => {
       </FormControl>
     </form>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(MetaInformation);
+});

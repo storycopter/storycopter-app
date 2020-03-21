@@ -31,6 +31,8 @@
   },
   "dependencies": {
     "@material-ui/core": "4.9.7",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.45",
     "@reduxjs/toolkit": "1.2.3",
     "@storycopter/idoc": "1.0.0",
     "ansi-to-react": "6.0.0",

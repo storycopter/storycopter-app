@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
-import { Box, Tabs, Tab } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
 import DocumentInspector from './ofInspector/DocumentInspector';
 import ElementInspector from './ofInspector/ElementInspector';

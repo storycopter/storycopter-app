@@ -3,9 +3,10 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { componentMap } from '@storycopter/ui/src/components';
 import { docTheme } from '@storycopter/ui/src/themes';

@@ -10,11 +10,12 @@ import { remote } from 'electron';
 import { createGlobalStyle } from 'styled-components';
 import { update } from './reducers/data';
 
-import { Button, CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 import Baseline from '@storycopter/ui/src/themes/styles/Baseline';
-import { appTheme } from '@storycopter/ui/src/themes';
+import appTheme from '@storycopter/ui/src/themes/appTheme';
 
 import Editor from './Editor';
 

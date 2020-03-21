@@ -2,20 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
-import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import BrandExperience from './ofDocumentInspector/BrandExperience';
 import MetaInformation from './ofDocumentInspector/MetaInformation';
@@ -29,10 +27,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const DocumentInspector = props => {
+export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { data, update } = props;
   const { inspector } = data;
   const { documentInspector } = inspector;
 
@@ -191,6 +188,4 @@ const DocumentInspector = props => {
       </ExpansionPanel>
     </>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(DocumentInspector);
+});

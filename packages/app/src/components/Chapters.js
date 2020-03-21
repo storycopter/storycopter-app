@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 import { orderBy } from 'lodash';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Box, Tooltip } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,10 +23,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Chapters = props => {
+export default connect(({ data }) => ({ data }), { update })(({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { data, update } = props;
   const { currentProject, editor } = data;
   const { chapters } = currentProject;
 
@@ -59,6 +60,4 @@ const Chapters = props => {
       })}
     </Box>
   );
-};
-
-export default connect(({ data }) => ({ data }), { update })(Chapters);
+});

@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "4.9.7",
     "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.45",
     "@storycopter/ui": "1.0.0",
     "gatsby": "2.19.49",
     "gatsby-cli": "2.10.13",

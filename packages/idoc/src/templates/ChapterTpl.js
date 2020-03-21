@@ -47,7 +47,6 @@ class ChapterTpl extends Component {
             /*
             CHECK ALL GRAPHQL-ed PROPS
             - align?
-            - animate?
             - cover?
             - subtitle?
             - text?
@@ -113,12 +112,10 @@ export const pageQuery = graphql`
       tree {
         components {
           id
-          invert
           order
           type
           props {
             align
-            animate
             cover
             fill
             images {
