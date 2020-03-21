@@ -116,9 +116,9 @@ export default function Headline({
     });
   };
 
-  console.group('Headline.js');
-  console.log('props:', props);
-  console.groupEnd();
+  // console.group('Headline.js');
+  // console.log('props:', props);
+  // console.groupEnd();
 
   return (
     <Box className={classes.headlineRoot}>

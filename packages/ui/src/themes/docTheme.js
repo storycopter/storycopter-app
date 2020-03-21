@@ -4,7 +4,9 @@ import setType from './mixins/setType';
 
 const thm = createMuiTheme();
 
-console.log({ thm });
+console.group('docTheme.js');
+console.log('thm:', thm);
+console.groupEnd();
 
 export default createMuiTheme({
   // ...thm,

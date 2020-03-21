@@ -34,9 +34,6 @@ const DocumentInspector = ({ data, update, ...props }) => {
   const { documentInspector } = inspector;
 
   const togglePanel = panel => {
-    console.log('Toggle panel: ', panel);
-    console.log(data.inspector.documentInspector[panel]);
-
     update({
       inspector: {
         ...inspector,
