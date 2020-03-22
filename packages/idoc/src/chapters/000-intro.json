@@ -17,14 +17,14 @@
         "order": 0,
         "settings": {
           "align": "right",
-          "animate": true,
+          "backgColor": null,
+          "backgImage": "headline-image.jpg",
           "cover": true,
-          "fill": "headline-image.jpg",
           "images": [],
-          "mask": "dark",
-          "paint": null,
+          "maskColor": "rgba(0,0,0,0.3)",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "textColor": "#ffffff",
           "title": "Intro"
         },
         "type": "headline"
@@ -35,14 +35,14 @@
         "order": 1,
         "settings": {
           "align": "center",
-          "animate": true,
+          "backgColor": "red",
+          "backgImage": "",
           "cover": true,
-          "fill": "",
           "images": [],
-          "mask": "light",
-          "paint": "red",
+          "maskColor": "rgba(0,0,0,0.3)",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "",
+          "textColor": "#ff0100",
           "title": "A title of the Headline"
         },
         "type": "headline"
@@ -53,13 +53,13 @@
         "order": 2,
         "settings": {
           "align": "left",
-          "animate": true,
-          "fill": "",
+          "backgColor": "cyan",
+          "backgImage": "",
           "images": [],
-          "mask": "dark",
-          "paint": "cyan",
+          "maskColor": "rgba(0,0,0,0.3)",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "",
+          "textColor": null,
           "title": ""
         },
         "type": "headline"
@@ -69,6 +69,8 @@
         "invert": true,
         "order": 3,
         "settings": {
+          "backgColor": "cyan",
+          "backgImage": "",
           "cover": true,
           "images": [
             {
@@ -90,7 +92,8 @@
               "order": 2
             }
           ],
-          "mask": "dark"
+          "maskColor": "rgba(0,0,0,0.3)",
+          "textColor": null
         },
         "type": "gallery"
       }

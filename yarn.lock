@@ -17126,7 +17126,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.1, prop-types@^15.7.2:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -17538,7 +17538,7 @@ react-clientside-effect@^1.2.2:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-react-color@^2.17.0:
+react-color@^2.17.0, react-color@^2.18.0:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.18.0.tgz#34956f0bac394f6c3bc01692fd695644cc775ffd"
   integrity sha512-FyVeU1kQiSokWc8NPz22azl1ezLpJdUyTbWL0LPUpcuuYDrZ/Y1veOk9rRK5B3pMlyDGvTk4f4KJhlkIQNRjEA==
@@ -17549,14 +17549,6 @@ react-color@^2.17.0:
     prop-types "^15.5.10"
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
-
-react-contenteditable@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.3.3.tgz#73ea271a0e84d54516e6075c318d4372e5b95c70"
-  integrity sha512-3sOt9x6A7SzHqJgFRqKfaUnIh2tdxrdnJcE/0g1dN/g3twsqNxMxUCJGWvZUUDIQjUzqdSz6tsnGdddrPr5UNg==
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    prop-types "^15.7.1"
 
 react-dev-utils@^10.0.0, react-dev-utils@^10.2.0:
   version "10.2.0"

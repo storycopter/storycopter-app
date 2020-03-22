@@ -18,13 +18,13 @@
         "settings": {
           "align": "left",
           "animate": true,
+          "backgColor": "",
+          "backgImage": "",
           "cover": true,
-          "fill": "",
-          "images": [],
-          "mask": "",
-          "paint": "",
+          "maskColor": null,
           "subtitle": "Some text",
           "text": "More text",
+          "textColor": null,
           "title": "Appendix"
         },
         "type": "headline"

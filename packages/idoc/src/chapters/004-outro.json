@@ -16,16 +16,15 @@
         "invert": true,
         "order": 0,
         "settings": {
-          "fill": "image.jpg",
-          "paint": "",
           "align": "left",
           "animate": true,
+          "backgColor": "",
+          "backgImage": "image.jpg",
           "cover": true,
-          "image": "",
-          "images": [],
-          "mask": "dark",
+          "maskColor": null,
           "subtitle": "Some text",
           "text": "More text",
+          "textColor": null,
           "title": "Outro"
         },
         "type": "headline"

@@ -17,13 +17,14 @@
         "settings": {
           "align": "",
           "animate": true,
+          "backgColor": "",
+          "backgImage": "image.jpg",
           "cover": true,
-          "fill": "image.jpg",
           "images": [],
-          "mask": "dark",
-          "paint": "",
+          "maskColor": null,
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Some text",
+          "textColor": null,
           "title": "A title of the Headline"
         },
         "type": "headline"

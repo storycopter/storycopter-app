@@ -18,14 +18,13 @@
         "settings": {
           "align": "left",
           "animate": true,
+          "backgColor": null,
+          "backgImage": "image.jpg",
           "cover": true,
-          "fill": "image.jpg",
-          "image": "",
-          "images": [],
-          "mask": "dark",
-          "paint": null,
+          "maskColor": "rgba(0,0,0,0.3)",
           "subtitle": "Some text",
           "text": "More text",
+          "textColor": null,
           "title": "End"
         },
         "type": "headline"

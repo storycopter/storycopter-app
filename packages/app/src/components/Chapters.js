@@ -39,7 +39,7 @@ const Chapters = ({ data, update, ...props }) => {
   };
 
   const handleAvatarClick = value => {
-    handleUpdate({ activeChapterId: value });
+    handleUpdate({ activeChapterId: value, activeElementId: null });
   };
 
   return (

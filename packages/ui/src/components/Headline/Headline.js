@@ -9,17 +9,19 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import docTheme from '../../themes/docTheme';
 
-import { colors } from '../../themes/settings';
-
-const useStyles = (align, color, cover, fill, mask, paint) =>
+const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =>
   makeStyles(theme => ({
     headlineRoot: {
-      backgroundColor: paint ? paint : 'transparent',
-      backgroundImage: fill ? (fill.raw ? `url(${fill.raw})` : `url(${fill.fixed.src})`) : 'none',
+      backgroundColor: backgColor ? backgColor : 'transparent',
+      backgroundImage: backgImage
+        ? backgImage.raw
+          ? `url(${backgImage.raw})`
+          : `url(${backgImage.fixed.src})`
+        : 'none',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      color: color ? color : 'inherit',
+      color: textColor ? textColor : 'inherit',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -36,10 +38,10 @@ const useStyles = (align, color, cover, fill, mask, paint) =>
         paddingBottom: theme.spacing(20),
       },
       '&:before': {
-        backgroundColor: mask ? (mask === 'dark' ? colors.shadow[500] : colors.flare[500]) : 'transparent',
+        backgroundColor: maskColor ? maskColor : 'transparent',
         bottom: 0,
-        content: mask ? `' '` : 'none',
-        display: mask ? 'block' : 'none',
+        content: maskColor ? `' '` : 'none',
+        display: maskColor ? 'block' : 'none',
         left: 0,
         position: 'absolute',
         right: 0,
@@ -104,16 +106,17 @@ const useStyles = (align, color, cover, fill, mask, paint) =>
 
 export default function Headline({
   align = 'left',
+  backgColor = null,
+  backgImage = null,
   children = null,
-  color = null,
   cover = false,
-  fill = null,
   isEditable = false,
-  mask = null,
-  paint = null,
+  maskColor = null,
+  style = null,
+  textColor = null,
   ...props
 }) {
-  const classes = useStyles(align, color, cover, fill, mask, paint)();
+  const classes = useStyles(align, backgColor, backgImage, cover, maskColor, textColor)();
 
   const onInputBlur = (e, key) => {
     props.onElementUpdate({
@@ -121,29 +124,38 @@ export default function Headline({
     });
   };
 
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'none',
+    multiline: true,
+    rowsMax: '5',
+    type: 'text',
+    variant: 'outlined',
+  };
+
+  // console.group('Headline.js');
+  // console.log('maskColor:', maskColor);
+  // console.groupEnd();
+
   return (
-    <Box className={classes.headlineRoot}>
+    <Box className={classes.headlineRoot} style={style}>
       <Container className={classes.headlineContainer} maxWidth="xl">
         <Box className={classes.headlineContent}>
           {isEditable || props.title ? (
-            <Typography className={classes.headlineTitle} component="div" variant="h1">
+            <Typography className={classes.headlineTitle} component="div" variant="h1" style={{ color: textColor }}>
               {isEditable ? (
                 <TextField
+                  {...textFieldProps}
                   defaultValue={props.title}
-                  fullWidth
                   id="title"
                   inputProps={{
                     className: classes.headlineTitleInput,
                     maxLength: 150,
                     onBlur: e => onInputBlur(e, 'title'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
                   }}
-                  margin="none"
-                  multiline
                   name="title"
-                  placeholder="Enter title…"
-                  rowsMax="5"
-                  type="text"
-                  variant="outlined"
+                  placeholder="Add title…"
                 />
               ) : (
                 <h1>{props.title}</h1>
@@ -151,24 +163,20 @@ export default function Headline({
             </Typography>
           ) : null}
           {isEditable || props.subtitle ? (
-            <Typography className={classes.headlineSubtitle} component="div" variant="h3">
+            <Typography className={classes.headlineSubtitle} component="div" variant="h3" style={{ color: textColor }}>
               {isEditable ? (
                 <TextField
+                  {...textFieldProps}
                   defaultValue={props.subtitle}
-                  fullWidth
                   id="subtitle"
                   inputProps={{
                     className: classes.headlineSubtitleInput,
                     maxLength: 150,
                     onBlur: e => onInputBlur(e, 'subtitle'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
                   }}
-                  margin="none"
-                  multiline
-                  name="title"
-                  placeholder="Enter subtitle…"
-                  rowsMax="5"
-                  type="text"
-                  variant="outlined"
+                  name="subtitle"
+                  placeholder="Add subtitle…"
                 />
               ) : (
                 <h2>{props.subtitle}</h2>
@@ -176,24 +184,20 @@ export default function Headline({
             </Typography>
           ) : null}
           {isEditable || props.text ? (
-            <Typography className={classes.headlineText} component="div" variant="h5">
+            <Typography className={classes.headlineText} component="div" variant="h5" style={{ color: textColor }}>
               {isEditable ? (
                 <TextField
+                  {...textFieldProps}
                   defaultValue={props.text}
-                  fullWidth
                   id="text"
                   inputProps={{
                     className: classes.headlineTextInput,
                     maxLength: 250,
                     onBlur: e => onInputBlur(e, 'text'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
                   }}
-                  margin="none"
-                  multiline
-                  name="title"
-                  placeholder="Enter text…"
-                  rowsMax="5"
-                  type="text"
-                  variant="outlined"
+                  name="text"
+                  placeholder="Add text…"
                 />
               ) : (
                 <p>{props.text}</p>
@@ -209,15 +213,15 @@ export default function Headline({
 
 Headline.propTypes = {
   align: PropTypes.string,
+  backgColor: PropTypes.string,
+  backgImage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  color: PropTypes.string,
   cover: PropTypes.bool,
-  fill: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   isEditable: PropTypes.bool,
-  mask: PropTypes.string,
+  maskColor: PropTypes.string,
   onElementUpdate: PropTypes.func,
-  paint: PropTypes.string,
   subtitle: PropTypes.string,
   text: PropTypes.string,
+  textColor: PropTypes.string,
   title: PropTypes.string,
 };

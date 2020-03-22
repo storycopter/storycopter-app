@@ -22,8 +22,8 @@ import SoundControls from './ofDocumentInspector/SoundControls';
 
 const useStyles = makeStyles(theme => ({
   expandIcon: {
-    marginRight: '8px',
-    marginLeft: '8px',
+    marginRight: `${theme.spacing(1)}px`,
+    marginLeft: `${theme.spacing(1)}px`,
   },
 }));
 
