@@ -29,17 +29,17 @@ const initialState = {
     elementInspector: {},
     pageInspector: {},
   },
-  currentProject: {
-    basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',
-    site: siteJSON,
-    essentials: {
-      contents: contentsJSON,
-      credits: creditsJSON,
-      error: errorJSON,
-      home: homeJSON,
-    },
-    pages: [introJSON, beginningJSON, middleJSON, endJSON, outroJSON, appendixJSON],
-  },
+  // currentProject: {
+  //   basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',
+  //   site: siteJSON,
+  //   essentials: {
+  //     contents: contentsJSON,
+  //     credits: creditsJSON,
+  //     error: errorJSON,
+  //     home: homeJSON,
+  //   },
+  //   pages: [introJSON, beginningJSON, middleJSON, endJSON, outroJSON, appendixJSON],
+  // },
 };
 
 const dataSlice = createSlice({
