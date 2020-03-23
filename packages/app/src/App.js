@@ -14,7 +14,6 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import Baseline from '@storycopter/ui/src/themes/styles/Baseline';
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
 import Editor from './Editor';
@@ -114,7 +113,6 @@ class App extends React.Component {
     return (
       <ThemeProvider theme={appTheme}>
         <CssBaseline />
-        <Baseline />
         <AppBaseline />
         <Editor />
         {!child ? (
