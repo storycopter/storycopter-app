@@ -15,7 +15,6 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import Baseline from '@storycopter/ui/src/themes/styles/Baseline';
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
 import ErrorBoundary from './components/ErrorBoundary';
@@ -150,7 +149,6 @@ class App extends React.Component {
         {data && data.currentProject ? (
           <ErrorBoundary>
             <CssBaseline />
-            <Baseline />
             <AppBaseline />
             <Editor />
           </ErrorBoundary>
