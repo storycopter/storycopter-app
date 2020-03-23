@@ -3,6 +3,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
+import { Link } from 'gatsby';
 import { bool } from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
@@ -16,11 +17,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withTheme } from '@material-ui/styles';
 
-import { PointerIcon, ShareIcon } from '@storycopter/ui/elements';
-import { breakpoint, color, time, track } from '@storycopter/ui/settings';
-import { setHeight, setSpace } from '@storycopter/ui/mixins';
-
-import AniLink from '../components/AniLink';
+import { PointerIcon, ShareIcon } from '@storycopter/ui/src/elements';
+import { breakpoint, color, time, track } from '@storycopter/ui/src/settings';
+import { setHeight, setSpace } from '@storycopter/ui/src/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -53,7 +52,7 @@ const Title = styled.h1`
   & > span {
     ${setSpace('phs')};
     ${setSpace('pvx')};
-    background-color: ${color.shadow300};
+    background-color: ${({ theme }) => theme.palette.common.white};
     border-radius: 1px;
     color: ${color.white};
     letter-spacing: ${track.l};
@@ -71,7 +70,7 @@ const Summary = styled.div`
     position: relative;
     text-transform: uppercase;
     top: -2px;
-    color: ${color.mono400};
+    color: ${color.grey[400]};
   }
   .summary-text {
     position: relative;
@@ -90,7 +89,7 @@ const Preview = styled.div`
   }
 `;
 
-const BreadcrumbLink = styled(AniLink)`
+const BreadcrumbLink = styled(Link)`
   background-color: transparent;
   border-radius: 100px;
   cursor: pointer;
@@ -102,9 +101,9 @@ const BreadcrumbLink = styled(AniLink)`
   transition: background-color ${time.m}, border-color ${time.m}, box-shadow ${time.m};
   width: 34px;
   .breadcrumb-tick {
-    background: ${color.mono100};
+    background: ${color.grey[100]};
     border-radius: 1px;
-    box-shadow: 0 0 2px ${color.shadow300};
+    box-shadow: 0 0 2px ${color.shadow[300]};
     display: block;
     height: 8px;
     left: 50%;
@@ -144,7 +143,7 @@ const Breadcrumbs = styled.nav`
   transition: opacity ${time.m};
   width: 100%;
   &:before {
-    background: ${color.shadow300};
+    background: ${color.shadow[300]};
     content: ' ';
     display: block;
     height: 16px;
@@ -194,7 +193,7 @@ const Element = styled(({ isHovered, theme, ...props }) => <header {...props} />
   ${({ isHovered }) =>
     isHovered
       ? `
-    background-color: ${color.mono900};
+    background-color: ${color.grey[900]};
     ${Breadcrumbs} {
       display: block;
       opacity: 1;
@@ -244,10 +243,10 @@ class TopBar extends Component {
   render() {
     const { isCredits, isEssential, isHome, theme, site, toc } = this.props;
     const { isHovered, isTransitioning, tooltip } = this.state;
-    const { chapters, currentPage, currentPageI, nextPage, prevPage } = toc;
+    const { pages, currentPage, currentPageI, nextPage, prevPage } = toc;
 
     // console.group('TopBar.js');
-    // console.log({ toc });
+    // console.log({ pages });
     // console.groupEnd();
 
     return (
@@ -262,20 +261,20 @@ class TopBar extends Component {
               <Side lx>
                 <Toolbar>
                   <Grid container spacing={1}>
-                    {chapters.length > 1 && !isEssential ? (
+                    {pages.length > 1 && !isEssential ? (
                       <Grid item>
                         <Tooltip
                           enterDelay={500}
                           onClose={() => this.setState({ tooltip: null })}
-                          onOpen={() => this.setState({ tooltip: 'chapters' })}
-                          open={!isTransitioning && tooltip === 'chapters'}
+                          onOpen={() => this.setState({ tooltip: 'pages' })}
+                          open={!isTransitioning && tooltip === 'pages'}
                           title="Table of contents">
                           <div style={{ display: 'inline-block' }}>
-                            <AniLink onClick={this.onLinkWTransitionClick} to="/contents">
+                            <Link onClick={this.onLinkWTransitionClick} to="/contents">
                               <IconButton>
                                 <MenuIcon />
                               </IconButton>
-                            </AniLink>
+                            </Link>
                           </div>
                         </Tooltip>
                       </Grid>
@@ -287,9 +286,9 @@ class TopBar extends Component {
                         open={!isTransitioning && tooltip === 'replay'}
                         title="Return home">
                         <div style={{ display: 'inline-block' }}>
-                          <AniLink onClick={this.onLinkWTransitionClick} to="/">
+                          <Link onClick={this.onLinkWTransitionClick} to="/">
                             {site.meta.publisher}
-                          </AniLink>
+                          </Link>
                         </div>
                       </Tooltip>
                     )}
@@ -303,7 +302,7 @@ class TopBar extends Component {
                             open={!isTransitioning && tooltip === 'prev'}
                             title="Previous page">
                             <div style={{ display: 'inline-block' }}>
-                              <AniLink onClick={this.onLinkWTransitionClick} to={prevPage.path}>
+                              <Link onClick={this.onLinkWTransitionClick} to={prevPage.path}>
                                 <IconButton
                                   style={{
                                     borderBottomRightRadius: 0,
@@ -311,7 +310,7 @@ class TopBar extends Component {
                                   }}>
                                   <KeyboardArrowLeftIcon />
                                 </IconButton>
-                              </AniLink>
+                              </Link>
                             </div>
                           </Tooltip>
                         ) : null}
@@ -323,7 +322,7 @@ class TopBar extends Component {
                             open={!isTransitioning && tooltip === 'next'}
                             title="Next page">
                             <div style={{ display: 'inline-block' }}>
-                              <AniLink onClick={this.onLinkWTransitionClick} to={nextPage.path}>
+                              <Link onClick={this.onLinkWTransitionClick} to={nextPage.path}>
                                 <IconButton
                                   style={{
                                     borderBottomLeftRadius: 0,
@@ -331,7 +330,7 @@ class TopBar extends Component {
                                   }}>
                                   <KeyboardArrowRightIcon />
                                 </IconButton>
-                              </AniLink>
+                              </Link>
                             </div>
                           </Tooltip>
                         ) : null}
@@ -351,11 +350,11 @@ class TopBar extends Component {
                 <Summary>
                   {currentPage || isCredits ? (
                     <>
-                      <AniLink to="/">
+                      <Link to="/">
                         <Typography className="summary-title" component="h2" display="block" noWrap variant="caption">
                           {site.meta.title}
                         </Typography>
-                      </AniLink>
+                      </Link>
                       <Typography className="summary-text" component="p" display="block" noWrap variant="subtitle2">
                         {isCredits ? 'Credits' : currentPage.title}
                       </Typography>
@@ -363,42 +362,41 @@ class TopBar extends Component {
                   ) : null}
                 </Summary>
                 <Breadcrumbs
-                  count={chapters.length}
+                  count={pages.length}
                   current={currentPageI}
                   isHovered={isHovered || popupState.isOpen}
                   theme={theme}>
-                  {chapters.length > 1 ? (
+                  {pages.length > 1 ? (
                     <ol>
-                      {_.sortBy(chapters, [o => o.order]).map((chapter, i) => {
-                        const camelId = _.camelCase(`str${chapter.uid}`);
+                      {_.sortBy(pages, [o => o.order]).map((page, i) => {
+                        const camelId = _.camelCase(`str${page.uid}`);
                         const breadcrumb = (
                           <div style={{ display: 'inline-block' }}>
-                            <BreadcrumbLink onClick={this.onLinkWTransitionClick} theme={theme} to={chapter.path}>
-                              <span className="breadcrumb-order">{chapter.id}</span>
-                              <span className="breadcrumb-title">{chapter.title}</span>
+                            <BreadcrumbLink onClick={this.onLinkWTransitionClick} theme={theme} to={page.path}>
+                              <span className="breadcrumb-order">{page.id}</span>
+                              <span className="breadcrumb-title">{page.title}</span>
                               <span className="breadcrumb-tick"></span>
                             </BreadcrumbLink>
                           </div>
                         );
                         return (
-                          <Breadcrumb key={chapter.uid}>
+                          <Breadcrumb key={page.uid}>
                             <Tooltip
                               onClose={() => this.setState({ tooltip: null })}
                               onOpen={() => this.setState({ tooltip: camelId })}
                               open={!isTransitioning && tooltip === camelId}
                               title={
                                 <Preview>
-                                  <Img
-                                    fixed={chapter.cover.childImageSharp.smallFixedThumb}
-                                    className="preview-thumb"
-                                  />
+                                  {page.cover ? (
+                                    <Img fixed={page.cover.childImageSharp.smallFixedThumb} className="preview-thumb" />
+                                  ) : null}
                                   <Typography
                                     className="preview-title"
                                     component="h2"
                                     display="block"
                                     noWrap
                                     variant="subtitle1">
-                                    {chapter.title}
+                                    {page.title}
                                   </Typography>
                                   <Typography
                                     className="preview-text"
@@ -406,7 +404,7 @@ class TopBar extends Component {
                                     display="block"
                                     noWrap
                                     variant="caption">
-                                    {chapter.text}
+                                    {page.text}
                                   </Typography>
                                 </Preview>
                               }>

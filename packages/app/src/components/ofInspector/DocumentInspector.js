@@ -2,44 +2,38 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
-import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import BrandExperience from './ofDocumentInspector/BrandExperience';
-import MetaInformation from './ofDocumentInspector/MetaInformation';
-import Motivation from './ofDocumentInspector/Motivation';
-import SoundExperience from './ofDocumentInspector/SoundExperience';
+import BrandControls from './ofDocumentInspector/BrandControls';
+import MetaControls from './ofDocumentInspector/MetaControls';
+import MotivationControls from './ofDocumentInspector/MotivationControls';
+import SoundControls from './ofDocumentInspector/SoundControls';
 
 const useStyles = makeStyles(theme => ({
   expandIcon: {
-    marginRight: '8px',
-    marginLeft: '8px',
+    marginRight: `${theme.spacing(1)}px`,
+    marginLeft: `${theme.spacing(1)}px`,
   },
 }));
 
-const DocumentInspector = props => {
-  const { data, update } = props;
+const DocumentInspector = ({ data, update, ...props }) => {
+  const classes = useStyles();
+
   const { inspector } = data;
   const { documentInspector } = inspector;
 
-  const classes = useStyles();
-
   const togglePanel = panel => {
-    console.log('Toggle panel: ', panel);
-    console.log(data.inspector.documentInspector[panel]);
-
     update({
       inspector: {
         ...inspector,
@@ -83,7 +77,7 @@ const DocumentInspector = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <MetaInformation />
+          <MetaControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={documentInspector.brand} onChange={() => togglePanel('brand')} square elevation={0}>
@@ -116,7 +110,7 @@ const DocumentInspector = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <BrandExperience />
+          <BrandControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={documentInspector.sound} onChange={() => togglePanel('sound')} square elevation={0}>
@@ -149,7 +143,7 @@ const DocumentInspector = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <SoundExperience />
+          <SoundControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
@@ -186,7 +180,7 @@ const DocumentInspector = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Motivation />
+          <MotivationControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </>

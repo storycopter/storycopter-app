@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
+import { Link } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/providers';
-import { Action, ActionBar, Headline } from '@storycopter/ui/components';
-import { track } from '@storycopter/ui/settings';
-import { setSpace, setType } from '@storycopter/ui/mixins';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import AniLink from './components/AniLink';
+import { docTheme } from '@storycopter/ui/src/themes';
+import { Action, ActionBar, Headline } from '@storycopter/ui/src/components';
+import { track } from '@storycopter/ui/src/settings';
+import { setSpace, setType } from '@storycopter/ui/src/mixins';
+
 import Layout from './partials/Layout';
-import utilFill from './utils/utilFill';
+import consolidateBackgImage from './utils/consolidateBackgImage';
 
-const StartButton = styled(AniLink)`
+const StartButton = styled(Link)`
   border-color: white;
 `;
-const IndexButton = styled(AniLink)`
+const IndexButton = styled(Link)`
   border-color: transparent;
 `;
 const OpeningActions = styled.div`
@@ -58,77 +60,42 @@ class Home extends Component {
       },
     } = this.props;
 
-    const titlesProps = this.props.data.essential.tree.components[0].props;
-    const initialPath = this.props.data.chapters.edges[0].node.meta.path;
+    const titlesProps = this.props.data.essential.tree.components[0].settings;
+    const initialPath = this.props.data.pages.edges[0].node.meta.path;
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
           path={this.props.data.essential.meta.path}>
           {_.sortBy(components, [o => o.order]).map(component => {
-            const { props } = component;
-            /*
-            CHECK ALL GRAPHQL-ed PROPS
-            - align?
-            - animate?
-            - cover?
-            - images
-            - mask
-            - subtitle?
-            - text?
-            - title?
-            √ fill
-          */
+            const { settings } = component;
 
-            const merger = (propValues, constValues) => {
-              if (_.isArray(propValues)) {
-                return propValues.concat(constValues);
-              }
-            };
+            // consolidate settings.backgImage w/ graphql-ed image data
+            const backgImage = consolidateBackgImage(component, settings, edges);
 
-            // consolidate props.fill.image w/ graphql-ed image data
-            const fill = utilFill(component, props, edges);
-
-            // merge component.props.images array with actual graphql resolved image files
-            const images = _.mergeWith(
-              _.sortBy(component.props.images, [o => o.order]),
-              _.sortBy(
-                _.map(
-                  _.filter(edges, o => o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)),
-                  o => _.get(o, 'node.childImageSharp')
-                ),
-                [o => o.order]
-              ),
-              merger
-            );
-
-            {
-              /* console.group('Home.js');
-          console.log(this.props);
-          console.groupEnd(); */
-            }
+            // console.group('Home.js');
+            // console.log(this.props);
+            // console.groupEnd();
 
             return (
-              <IdocProvider invert={component.invert} key={component.id}>
-                <OpeningTitles {...titlesProps} fill={fill} cover>
-                  <ActionBar>
-                    <StartButton to={initialPath}>
-                      <Action as="span" primary>
-                        Start exploring
-                      </Action>
-                    </StartButton>
-                    <IndexButton to="/contents">
-                      <Action as="span">Discover contents</Action>
-                    </IndexButton>
-                  </ActionBar>
-                </OpeningTitles>
-              </IdocProvider>
+              <OpeningTitles {...titlesProps} cover backgImage={backgImage} id={component.id} key={component.id}>
+                <ActionBar>
+                  <StartButton to={initialPath}>
+                    <Action as="span" primary>
+                      Start exploring
+                    </Action>
+                  </StartButton>
+                  <IndexButton to="/contents">
+                    <Action as="span">Discover contents</Action>
+                  </IndexButton>
+                </ActionBar>
+              </OpeningTitles>
             );
           })}
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }
@@ -146,26 +113,23 @@ export const pageQuery = graphql`
       tree {
         components {
           id
-          invert
           order
           type
-          props {
+          settings {
             align
-            animate
+            backgColor
+            backgImage
             cover
-            fill {
-              image
-              color
-            }
-            mask
+            maskColor
             subtitle
             text
+            textColor
             title
           }
         }
       }
     }
-    chapters: allChaptersJson(sort: { fields: meta___order }) {
+    pages: allPagesJson(sort: { fields: meta___order }) {
       edges {
         node {
           meta {

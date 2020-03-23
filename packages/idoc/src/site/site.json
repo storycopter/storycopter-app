@@ -3,16 +3,19 @@
     "title": "Hiking Cima dell’Uomo",
     "publisher": "Storycopter",
     "summary": "An interactive documentary about something truly epic.",
+    "enableCover": false,
     "cover": {
-      "name": null
+      "name": ""
     }
   },
   "brand": {
     "backgColor": "#ffffff",
-    "brandColor": "#4051b5",
+    "brandColor": "#b20b05",
     "enableFavicon": false,
     "enableLogo": false,
-    "favicon": null,
+    "favicon": {
+      "name": null
+    },
     "logo": {
       "name": "logo.png"
     },
@@ -25,7 +28,8 @@
     "link": "https://storycopter.com"
   },
   "sound": {
-    "enableSound": false
+    "enableSound": false,
+    "track": "obudzanka.mp3"
   },
   "settings": {
     "fill": {
