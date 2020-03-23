@@ -147,12 +147,16 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={appTheme}>
-        <ErrorBoundary>
-          <CssBaseline />
-          <Baseline />
-          <AppBaseline />
-          <Editor />
-        </ErrorBoundary>
+        {data && data.currentProject ? (
+          <ErrorBoundary>
+            <CssBaseline />
+            <Baseline />
+            <AppBaseline />
+            <Editor />
+          </ErrorBoundary>
+        ) : (
+          'nothing'
+        )}
         {!child ? (
           <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
             Open Project
