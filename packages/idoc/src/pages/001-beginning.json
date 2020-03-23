@@ -1,11 +1,12 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": false,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 1,
     "path": "/beginning",
-    "text": "Some text",
+    "summary": "Some text",
     "title": "Beginning",
     "uid": "001-beginning"
   },

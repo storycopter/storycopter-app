@@ -63,7 +63,7 @@ const DocumentInspector = ({ data, update, ...props }) => {
                 }
                 label={
                   <Typography noWrap variant="subtitle2">
-                    Meta information
+                    Story details
                   </Typography>
                 }></FormControlLabel>
             </Grid>

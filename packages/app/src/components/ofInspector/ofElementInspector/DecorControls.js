@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   colorPaper: {
-    width: '270px',
+    width: '240px',
   },
   colorPreview: {
     height: theme.spacing(2),

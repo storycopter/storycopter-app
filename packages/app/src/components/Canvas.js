@@ -64,11 +64,11 @@ const Canvas = ({ data, update, ...props }) => {
     });
   };
 
-  console.group('Canvas.js');
-  console.log('activeElementId:', activeElementId);
+  // console.group('Canvas.js');
+  // console.log('activeElementId:', activeElementId);
   // console.log('data:', data);
   // console.log('props:', props);
-  console.groupEnd();
+  // console.groupEnd();
 
   return (
     <Box className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>

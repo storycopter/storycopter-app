@@ -1,11 +1,12 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": false,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 2,
     "path": "/middle",
-    "text": "This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.",
+    "summary": "Some text",
     "title": "Middle that may also have a lengthy title",
     "uid": "002-middle"
   },

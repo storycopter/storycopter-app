@@ -1,9 +1,5 @@
 {
   "meta": {
-    "cover": {
-      "name": "dummy.png"
-    },
-    "order": 0,
     "path": "/essentialsDummy",
     "text": "string",
     "title": "string",

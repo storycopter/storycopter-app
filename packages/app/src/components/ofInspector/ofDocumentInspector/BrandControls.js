@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   colorPaper: {
-    width: '270px',
+    width: '240px',
   },
   colorPreview: {
     height: theme.spacing(2),
@@ -120,9 +120,9 @@ const BrandControls = ({ data, update }) => {
     variant: 'filled',
   };
 
-  console.group('BrandControls.js');
-  console.log('typography', typography);
-  console.groupEnd();
+  // console.group('BrandControls.js');
+  // console.log('typography', typography);
+  // console.groupEnd();
 
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
@@ -318,7 +318,20 @@ const BrandControls = ({ data, update }) => {
 
       <TextField
         {...textFieldProps}
-        SelectProps={{ disableUnderline: true }}
+        SelectProps={{
+          disableUnderline: true,
+          MenuProps: {
+            getContentAnchorEl: null,
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center',
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'center',
+            },
+          },
+        }}
         label="Typography"
         onChange={e => {
           onBrandUpdate({ typography: e.target.value });

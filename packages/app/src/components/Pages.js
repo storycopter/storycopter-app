@@ -52,7 +52,7 @@ const Pages = ({ data, update, ...props }) => {
             <Avatar
               alt={`${page.meta.title}`}
               className={classes.avatar}
-              src={`file:///${basepath}/src/pages/${page.meta.uid}/${page.meta.cover.name}`}
+              src={`file:///${basepath}/src/pages/${page.meta.uid}/${page.meta.coverImage.name}`}
               variant="square"
               onClick={() => handleAvatarClick(page.meta.uid)}>
               {page.meta.order + 1}

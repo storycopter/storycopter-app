@@ -1,11 +1,12 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": false,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 5,
     "path": "/appendix",
-    "text": "Some text",
+    "summary": "Some text",
     "title": "Appendix",
     "uid": "005-appendix"
   },

@@ -95,7 +95,7 @@ const SoundControls = ({ data, update, ...props }) => {
             onChange={handleCheckboxChange}
           />
         }
-        label={<Typography variant="overline">Enable background sound</Typography>}
+        label={<Typography variant="overline">Enable soundtrack</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>

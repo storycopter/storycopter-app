@@ -37,9 +37,8 @@ const useStyles = makeStyles(theme => ({
 const LayoutControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor } = data;
-  const { basepath, pages } = currentProject;
-  const { activePageId, activeElementId } = editor;
+  const { basepath, pages } = data.currentProject;
+  const { activePageId, activeElementId } = data.editor;
 
   const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
   const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;

@@ -81,20 +81,25 @@ export default createMuiTheme({
     },
     MuiExpansionPanelSummary: {
       root: {
-        padding: '0',
-        margin: `0 ${muiTheme.spacing(3)}px`,
-        minHeight: 'auto',
         '&$expanded': {
-          minHeight: 'auto',
           borderBottom: `1px solid ${muiTheme.palette.divider}`,
+          marginLeft: `${muiTheme.spacing(3)}px`,
+          marginRight: `${muiTheme.spacing(3)}px`,
+          minHeight: 8 * 6,
+          padding: '0',
+        },
+        '&$focused': {
+          backgroundColor: muiTheme.palette.grey[300],
         },
       },
       content: {
+        margin: '12px 0',
         '&$expanded': {
-          margin: `${muiTheme.spacing(2)}px 0`,
+          margin: '12px 0',
         },
       },
     },
+
     MuiExpansionPanelDetails: {
       root: {
         padding: `${muiTheme.spacing(2)}px ${muiTheme.spacing(3)}px ${muiTheme.spacing(2)}px`,

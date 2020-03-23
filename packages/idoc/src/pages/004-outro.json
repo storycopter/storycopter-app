@@ -1,11 +1,12 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": false,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 4,
     "path": "/outro",
-    "text": "Some text",
+    "summary": "Some text",
     "title": "Outro",
     "uid": "004-outro"
   },

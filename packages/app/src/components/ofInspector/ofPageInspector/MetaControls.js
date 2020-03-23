@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
@@ -35,24 +36,35 @@ const useStyles = makeStyles(theme => ({
 const MetaControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { basepath, site } = data.currentProject;
-  const { meta } = site;
+  const { basepath, pages, site } = data.currentProject;
+  const { activePageId, activeElementId } = data.editor;
 
-  const [coverEnabled, setCoverEnabled] = useState(meta.coverEnabled);
-  const [publisher, setPublisher] = useState(meta.publisher);
-  const [summary, setSummary] = useState(meta.summary);
-  const [title, setTitle] = useState(meta.title);
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
+  // const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
+
+  const [coverEnabled, setCoverEnabled] = useState(activePage.meta.coverEnabled);
+  const [coverImage, setCoverImage] = useState(activePage.meta.coverImage);
+  const [summary, setSummary] = useState(activePage.meta.summary);
+  const [title, setTitle] = useState(activePage.meta.title);
 
   const onMetaUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.site.meta = {
-          ...nextData.currentProject.site.meta,
+        nextData.currentProject.pages[activePageIndex].meta = {
+          ...nextData.currentProject.pages[activePageIndex].meta,
           ...payload,
         };
       }),
     });
   };
+
+  useEffect(() => {
+    setCoverEnabled(activePage.meta.coverEnabled);
+    setCoverImage(activePage.meta.coverImage);
+    setSummary(activePage.meta.summary);
+    setTitle(activePage.meta.title);
+  }, [activePage]);
 
   const textFieldProps = {
     fullWidth: true,
@@ -64,35 +76,29 @@ const MetaControls = ({ data, update }) => {
     variant: 'filled',
   };
 
+  console.group('MetaControls.js');
+  console.log('activePageId', activePageId);
+  // console.log('activePage', activePage);
+  console.groupEnd();
+
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
       <TextField
         {...textFieldProps}
         inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
-        label="Title"
+        label="Page title"
         onChange={e => setTitle(e.target.value)}
-        placeholder="e.g. …"
         value={title || ''}
       />
       <TextField
         {...textFieldProps}
         inputProps={{ onBlur: e => onMetaUpdate({ summary: e.target.value }) }}
-        label="Summary"
+        label="Page summary"
         multiline
         onChange={e => setSummary(e.target.value)}
-        placeholder="e.g. …"
         rowsMax={4}
         value={summary || ''}
       />
-      <TextField
-        {...textFieldProps}
-        inputProps={{ onBlur: e => onMetaUpdate({ publisher: e.target.value }) }}
-        label="Publisher name"
-        onChange={e => setPublisher(e.target.value)}
-        placeholder="e.g. New York Times"
-        value={publisher || ''}
-      />
-
       <FormControlLabel
         control={
           <Checkbox
@@ -106,16 +112,16 @@ const MetaControls = ({ data, update }) => {
             }}
           />
         }
-        label={<Typography variant="overline">Enable cover</Typography>}
+        label={<Typography variant="overline">Enable page cover</Typography>}
       />
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {meta.cover && meta.cover.name ? (
+            {coverImage && coverImage.name ? (
               <img
                 alt="Cover"
                 height="100"
-                src={`file:///${basepath}/src/site/assets/${meta.cover.name}`}
+                src={`file:///${basepath}/src/pages/${activePageId}/${coverImage.name}`}
                 title="Cover"
               />
             ) : (

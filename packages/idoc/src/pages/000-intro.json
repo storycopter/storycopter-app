@@ -1,11 +1,12 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": true,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 0,
     "path": "/intro",
-    "text": "Some text",
+    "summary": "Some text",
     "title": "Intro, that may have a lengthy title",
     "uid": "000-intro"
   },
