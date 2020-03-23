@@ -11,10 +11,13 @@ import { remote } from 'electron';
 import { createGlobalStyle } from 'styled-components';
 import { update } from './reducers/data';
 
-import { Button, CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import { defaultTheme } from './themes';
+import Baseline from '@storycopter/ui/src/themes/styles/Baseline';
+import appTheme from '@storycopter/ui/src/themes/appTheme';
+
 import Editor from './Editor';
 
 const dialog = remote.dialog;
@@ -22,7 +25,7 @@ const WIN = remote.getCurrentWindow();
 const foo = remote.require('./foo');
 const node = foo.getNode();
 
-const GlobalStyle = createGlobalStyle`
+const AppBaseline = createGlobalStyle`
   html, body, #root {
     width: 100%;
     height: 100%;
@@ -128,18 +131,16 @@ class App extends React.Component {
   render() {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
-    const { currentProject } = data;
 
     console.group('App.js:');
-    console.log({ data });
-    console.log({ defaultTheme });
-    console.log({ currentProject });
+    console.log('data:', data);
     console.groupEnd();
 
     return (
-      <ThemeProvider theme={defaultTheme}>
-        <GlobalStyle />
+      <ThemeProvider theme={appTheme}>
         <CssBaseline />
+        <Baseline />
+        <AppBaseline />
         <Editor />
         {!child ? (
           <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>

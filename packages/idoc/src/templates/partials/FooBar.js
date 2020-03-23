@@ -10,11 +10,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
-import { CreditsIcon } from '@storycopter/ui/elements';
-import { breakpoint } from '@storycopter/ui/settings';
-import { setHeight, setSpace } from '@storycopter/ui/mixins';
-
-import AniLink from '../components/AniLink';
+import { CreditsIcon } from '@storycopter/ui/src/elements';
+import { breakpoint } from '@storycopter/ui/src/settings';
+import { setHeight, setSpace } from '@storycopter/ui/src/mixins';
 
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
@@ -85,11 +83,11 @@ class FooBar extends Component {
                   open={!isTransitioning && tooltip === 'credits'}
                   title="Credits">
                   <div style={{ display: 'inline-block' }}>
-                    <AniLink to="/credits" onClick={this.onLinkWTransitionClick}>
+                    <Link to="/credits" onClick={this.onLinkWTransitionClick}>
                       <IconButton>
                         <CreditsIcon />
                       </IconButton>
-                    </AniLink>
+                    </Link>
                   </div>
                 </Tooltip>
               </Grid>

@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "order": 1,
+    "path": "/beginning",
+    "text": "Some text",
+    "title": "Beginning",
+    "uid": "001-beginning"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "order": 0,
+        "settings": {
+          "align": "left",
+          "backgColor": "blue",
+          "backgImage": "",
+          "cover": true,
+          "maskColor": null,
+          "subtitle": "Some text",
+          "text": "More text",
+          "textColor": null,
+          "title": "Beginning"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

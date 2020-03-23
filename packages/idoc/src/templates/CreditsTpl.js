@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
-import { IdocProvider } from '@storycopter/ui/providers';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 import Layout from './partials/Layout';
+import { docTheme } from '@storycopter/ui/src/themes';
 
 class CreditsTpl extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class CreditsTpl extends Component {
     // console.groupEnd();
 
     return (
-      <IdocProvider>
+      <ThemeProvider theme={docTheme}>
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
@@ -26,7 +27,7 @@ class CreditsTpl extends Component {
           <h1>Credits</h1>
           <p>Some text</p>
         </Layout>
-      </IdocProvider>
+      </ThemeProvider>
     );
   }
 }

@@ -1,20 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { update } from './reducers/data';
 
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
-import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
-import LaunchIcon from '@material-ui/icons/Launch';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { AppBar, Box, Grid, IconButton, Toolbar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import LaunchIcon from '@material-ui/icons/Launch';
+import Toolbar from '@material-ui/core/Toolbar';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { defaultTheme } from './themes';
+import appTheme from '@storycopter/ui/src/themes/appTheme';
 
-import { Chapters, Inspector } from './components';
-
-const AppBarSpacer = styled(({ ...props }) => <div {...props} />)``;
+import { Canvas, Pages, Inspector } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   canvas: {
+    flexGrow: 1,
     flexBasis: '100%',
     overflow: 'hidden',
   },
@@ -36,8 +38,9 @@ const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
 }));
 
-const Editor = props => {
+const Editor = () => {
   const classes = useStyles();
+
   return (
     <Grid
       alignContent="stretch"
@@ -58,7 +61,7 @@ const Editor = props => {
                 </Box>
               </Grid>
               <Grid item className={classes.main}>
-                <Chapters />
+                <Pages />
               </Grid>
               <Grid item className={classes.side}>
                 <Box display="flex" justifyContent="flex-end">
@@ -76,16 +79,16 @@ const Editor = props => {
             </Grid>
           </Toolbar>
         </AppBar>
-        <AppBarSpacer className={classes.offset} />
+        <div className={classes.offset} />
       </Grid>
-      <Grid container className={[classes.main, classes.canvas]}>
-        <Grid item className={classes.side} style={{ overflowY: 'auto' }}>
-          <Box borderRight={`1px solid ${defaultTheme.palette.divider}`} minHeight="100%">
+      <Grid container className={classes.canvas} wrap="nowrap">
+        <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
+          <Box borderRight={`1px solid ${appTheme.palette.divider}`} minHeight="100%">
             <Inspector />
           </Box>
         </Grid>
-        <Grid item className={classes.main}>
-          Main
+        <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs>
+          <Canvas />
         </Grid>
       </Grid>
     </Grid>
