@@ -11,8 +11,8 @@
   "brand": {
     "backgColor": "#ffffff",
     "brandColor": "#b20b05",
-    "enableFavicon": false,
-    "enableLogo": false,
+    "faviconEnabled": false,
+    "logoEnabled": false,
     "favicon": {
       "name": null
     },

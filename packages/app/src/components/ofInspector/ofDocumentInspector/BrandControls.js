@@ -15,11 +15,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import Popover from '@material-ui/core/Popover';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -57,24 +55,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const BrandControls = ({ data, update, ...props }) => {
+const BrandControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { currentProject } = data;
-  const { basepath } = currentProject;
-  const { site } = currentProject;
+  const { basepath, site } = data.currentProject;
   const { brand } = site;
-
-  const [state, setState] = useState({
-    backgColor: brand.backgColor,
-    brandColor: brand.brandColor,
-    // textColor: brand.textColor,
-    typography: brand.typography,
-  });
 
   const [backgColor, setBackgColor] = useState(brand.backgColor || '#ffffff');
   const [brandColor, setBrandColor] = useState(brand.brandColor || '#4051b5');
+  const [faviconEnabled, setFaviconEnabled] = useState(brand.faviconEnabled || false);
+  const [logoEnabled, setLogoEnabled] = useState(brand.logoEnabled || false);
   const [textColor, setTextColor] = useState(brand.textColor || '#333333');
+  const [typography, setTypography] = useState(brand.typography || 'modern');
 
   const backgPickerState = usePopupState({
     variant: 'popover',
@@ -89,37 +81,8 @@ const BrandControls = ({ data, update, ...props }) => {
     popupId: 'textPicker',
   });
 
-  const handleUpdate = payload => {
-    update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...site,
-          brand: {
-            ...brand,
-            ...payload,
-          },
-        },
-      },
-    });
-  };
-
-  const handleInputChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleInputBlur = e => {
-    handleUpdate({ [e.target.name]: e.target.value });
-  };
-
-  const handleCheckboxChange = e => {
-    handleUpdate({ [e.target.name]: e.target.checked });
-  };
-
   const onBrandUpdate = payload => {
+    console.log('onBrandUpdate', payload);
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.brand = {
@@ -136,11 +99,11 @@ const BrandControls = ({ data, update, ...props }) => {
     },
     disablePortal: true,
     anchorOrigin: {
-      vertical: 'top',
+      vertical: 'bottom',
       horizontal: 'center',
     },
     transformOrigin: {
-      vertical: 'bottom',
+      vertical: 'top',
       horizontal: 'center',
     },
   };
@@ -150,13 +113,6 @@ const BrandControls = ({ data, update, ...props }) => {
     presetColors: [],
     width: 'auto',
   };
-  const resetButtonProps = {
-    className: classes.resetButton,
-    color: 'primary',
-    fullWidth: true,
-    size: 'small',
-    children: 'Reset',
-  };
   const textFieldProps = {
     fullWidth: true,
     margin: 'dense',
@@ -164,16 +120,23 @@ const BrandControls = ({ data, update, ...props }) => {
     variant: 'filled',
   };
 
+  console.group('BrandControls.js');
+  console.log('typography', typography);
+  console.groupEnd();
+
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
       <FormControlLabel
         control={
           <Checkbox
-            checked={brand.enableLogo}
+            checked={logoEnabled}
             color="primary"
-            id="enableLogo"
-            name="enableLogo"
-            onChange={handleCheckboxChange}
+            id="logoEnabled"
+            name="logoEnabled"
+            onChange={e => {
+              setLogoEnabled(e.target.checked);
+              onBrandUpdate({ logoEnabled: e.target.checked });
+            }}
             value="true"
           />
         }
@@ -186,7 +149,7 @@ const BrandControls = ({ data, update, ...props }) => {
               <img alt="Logo" height="100" src={`${basepath}src/site/assets/${brand.logo.name}`} title="Logo" />
             ) : (
               <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={brand.enableLogo ? 'action' : 'disabled'} />
+                <PanoramaOutlinedIcon color={logoEnabled ? 'action' : 'disabled'} />
               </Box>
             )}
           </CardMedia>
@@ -194,15 +157,15 @@ const BrandControls = ({ data, update, ...props }) => {
             <input
               accept="image/*"
               color="primary"
-              disabled={!brand.enableLogo}
+              disabled={!logoEnabled}
               id="logo"
               name="logo"
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="logo" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!brand.enableLogo} fullWidth size="small">
+              <Button color="primary" component="span" disabled={!logoEnabled} fullWidth size="small">
                 Choose file…
               </Button>
             </label>
@@ -212,11 +175,14 @@ const BrandControls = ({ data, update, ...props }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={brand.enableFavicon}
+            checked={faviconEnabled}
             color="primary"
-            id="enableFavicon"
-            name="enableFavicon"
-            onChange={handleCheckboxChange}
+            id="faviconEnabled"
+            name="faviconEnabled"
+            onChange={e => {
+              setFaviconEnabled(e.target.checked);
+              onBrandUpdate({ faviconEnabled: e.target.checked });
+            }}
             value="true"
           />
         }
@@ -229,7 +195,7 @@ const BrandControls = ({ data, update, ...props }) => {
               <img alt="Favicon" height="36" src={`${basepath}src/site/assets/${brand.favicon.name}`} title="Favicon" />
             ) : (
               <Box height="36px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={brand.enableFavicon ? 'action' : 'disabled'} />
+                <PanoramaOutlinedIcon color={faviconEnabled ? 'action' : 'disabled'} />
               </Box>
             )}
           </CardMedia>
@@ -237,15 +203,15 @@ const BrandControls = ({ data, update, ...props }) => {
             <input
               accept=".ico"
               color="primary"
-              disabled={!brand.enableFavicon}
+              disabled={!faviconEnabled}
               id="favicon"
               name="favicon"
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="favicon" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!brand.enableFavicon} fullWidth size="small">
+              <Button color="primary" component="span" disabled={!faviconEnabled} fullWidth size="small">
                 Choose file…
               </Button>
             </label>
@@ -340,22 +306,19 @@ const BrandControls = ({ data, update, ...props }) => {
         />
       </Popover>
 
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="typography">Typography</InputLabel>
-        <Select
-          disableUnderline
-          fullWidth
-          id="typography"
-          name="typography"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          required
-          type="text"
-          value={state.typography}>
-          <MenuItem value="modern">Modern</MenuItem>
-          <MenuItem value="classic">Classic</MenuItem>
-        </Select>
-      </FormControl>
+      <TextField
+        {...textFieldProps}
+        SelectProps={{ disableUnderline: true }}
+        label="Typography"
+        onChange={e => {
+          onBrandUpdate({ typography: e.target.value });
+          setTypography(e.target.value);
+        }}
+        select
+        value={typography}>
+        <MenuItem value="modern">Modern</MenuItem>
+        <MenuItem value="classic">Classic</MenuItem>
+      </TextField>
     </form>
   );
 };
