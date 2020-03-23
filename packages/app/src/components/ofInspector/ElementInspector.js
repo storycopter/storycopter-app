@@ -34,35 +34,24 @@ const ElementInspector = ({ data, update, ...props }) => {
 
   const { currentProject, editor, inspector } = data;
   const { elementInspector } = inspector;
-  const { basepath, chapters } = currentProject;
-  const { activeChapterId, activeElementId } = editor;
+  const { basepath, pages } = currentProject;
+  const { activePageId, activeElementId } = editor;
 
-  const activeChapter = activeChapterId ? _.find(chapters, o => o.meta.uid === activeChapterId) : null;
-  const activeChapterIndex = activeChapter ? _.findIndex(chapters, o => o.meta.uid === activeChapterId) : null;
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeElementIndex =
-    activeChapterId && activeElementId
-      ? _.findIndex(activeChapter.tree.components, o => o.id === activeElementId)
-      : null;
-  const activeElement = activeElementId ? activeChapter.tree.components[activeElementIndex] : null;
+    activePageId && activeElementId ? _.findIndex(activePage.tree.components, o => o.id === activeElementId) : null;
+  const activeElement = activeElementId ? activePage.tree.components[activeElementIndex] : null;
 
   const [state, setState] = React.useState({
     paint: activeElement ? activeElement.settings.paint : null,
   });
 
-  if (!activeChapterId || !activeElementId) return <>Select an element</>;
+  if (!activePageId || !activeElementId) return <>Select an element</>;
 
-  console.group('ElementInspector.js');
-  console.log('activeElement:', activeElement);
-  console.groupEnd();
-
-  // color = null,
-  // mask = null,
-  // paint = null,
-
-  // fill = null,
-
-  // align = 'left',
-  // cover = false,
+  // console.group('ElementInspector.js');
+  // console.log('activeElement:', activeElement);
+  // console.groupEnd();
 
   return (
     <>

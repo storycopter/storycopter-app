@@ -8,7 +8,7 @@ import { componentMap } from '@storycopter/ui/src/components';
 import { docTheme } from '@storycopter/ui/src/themes';
 
 import Layout from './partials/Layout';
-import utilFill from './utils/utilFill';
+import consolidateBackgImage from './utils/consolidateBackgImage';
 
 const merger = (someValues, otherValues) => {
   if (_.isArray(someValues)) {
@@ -16,7 +16,7 @@ const merger = (someValues, otherValues) => {
   }
 };
 
-class ChapterTpl extends Component {
+class PageTpl extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -25,14 +25,14 @@ class ChapterTpl extends Component {
   render() {
     const {
       data: {
-        chapter: {
+        page: {
           tree: { components },
         },
         files: { edges },
       },
     } = this.props;
 
-    // console.group('ChapterTpl.js');
+    // console.group('PageTpl.js');
     // console.log(this.props);
     // console.groupEnd();
 
@@ -41,27 +41,16 @@ class ChapterTpl extends Component {
         <Layout
           contextData={this.props.pageContext.contextData}
           location={this.props.location}
-          path={this.props.data.chapter.meta.path}>
+          path={this.props.data.page.meta.path}>
           {_.sortBy(components, [o => o.order]).map((component, i) => {
             const { settings } = component;
-            /*
-            CHECK ALL GRAPHQL-ed PROPS
-            - align?
-            - cover?
-            - subtitle?
-            - text?
-            - title?
-            √ fill
-            √ images
-            √ mask
-          */
 
-            // consolidate settings.fill w/ graphql-ed image data
-            const fill = utilFill(component, settings, edges);
+            // consolidate settings.backgImage w/ graphql-ed image data
+            const backgImage = consolidateBackgImage(component, settings, edges);
 
             // consolidate settings.images w/ graphql-ed image data
             const images =
-              settings.images.length > 0
+              settings.images && settings.images.length > 0
                 ? _.mergeWith(
                     _.sortBy(settings.images, [o => o.order]),
                     _.sortBy(
@@ -77,19 +66,15 @@ class ChapterTpl extends Component {
                   )
                 : null;
 
-            // dirty validate mask string values
-            const mask = ['dark', 'light'].includes(settings.mask) ? settings.mask : null;
-
             const RenderedComponent = componentMap[component.type];
 
             return (
               <RenderedComponent
                 {...settings}
-                fill={fill}
+                backgImage={backgImage}
                 id={component.id}
                 images={images}
                 key={component.id}
-                mask={mask}
               />
             );
           })}
@@ -99,11 +84,11 @@ class ChapterTpl extends Component {
   }
 }
 
-export default ChapterTpl;
+export default PageTpl;
 
 export const pageQuery = graphql`
-  query ChapterTplQuery($uid: String!) {
-    chapter: chaptersJson(meta: { uid: { eq: $uid } }) {
+  query PageTplQuery($uid: String!) {
+    page: pagesJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
@@ -116,18 +101,19 @@ export const pageQuery = graphql`
           type
           settings {
             align
+            backgColor
+            backgImage
             cover
-            fill
             images {
               alt
               caption
               name
               order
             }
-            mask
-            paint
+            maskColor
             subtitle
             text
+            textColor
             title
           }
         }

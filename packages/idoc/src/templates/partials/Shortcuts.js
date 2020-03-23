@@ -2,8 +2,7 @@ import Img from 'gatsby-image';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
-import { graphql, StaticQuery } from 'gatsby';
+import { Link } from 'gatsby';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -13,8 +12,6 @@ import { withTheme } from '@material-ui/styles';
 
 import { breakpoint, color, radius, time } from '@storycopter/ui/src//settings';
 import { setSpace, setType } from '@storycopter/ui/src//mixins';
-
-import AniLink from '../components/AniLink';
 
 const TileOverline = styled(Typography)`
   ${setType('x')}
@@ -72,7 +69,7 @@ const TileContent = styled.div`
   flex: 0 0 50%;
 `;
 
-const Tile = styled(({ prev, next, theme, ...props }) => <AniLink {...props} />)`
+const Tile = styled(({ prev, next, theme, ...props }) => <Link {...props} />)`
   border-radius: ${radius.x};
   display: block;
   position: relative;

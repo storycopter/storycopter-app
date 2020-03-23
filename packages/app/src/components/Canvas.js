@@ -35,51 +35,52 @@ const Canvas = ({ data, update, ...props }) => {
   const theme = useTheme();
 
   const { currentProject, editor } = data;
-  const { basepath, chapters } = currentProject;
-  const { activeChapterId, activeElementId } = editor;
+  const { basepath, pages } = currentProject;
+  const { activePageId, activeElementId } = editor;
 
-  const activeChapter = activeChapterId ? _.find(chapters, o => o.meta.uid === activeChapterId) : null;
-  const activeChapterIndex = activeChapterId ? _.findIndex(chapters, o => o.meta.uid === activeChapterId) : null;
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
 
   const onInspectElement = (e, componentId) => {
+    console.log('onInspectElement', e, componentId);
     e.stopPropagation();
     update({
       ...produce(data, nextData => {
-        nextData.inspector.activeInspector = 'element';
         nextData.editor.activeElementId = componentId;
+        if (componentId) nextData.inspector.activeInspector = 'element';
       }),
     });
   };
 
   const onElementUpdate = payload => {
-    const componentIndex = _.findIndex(activeChapter.tree.components, o => o.id === activeElementId);
+    const componentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.chapters[activeChapterIndex].tree.components[componentIndex].settings = {
-          ...nextData.currentProject.chapters[activeChapterIndex].tree.components[componentIndex].settings,
+        nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings,
           ...payload,
         };
       }),
     });
   };
 
-  // console.group('Canvas.js');
-  // console.log('activeChapter:', activeChapter);
+  console.group('Canvas.js');
+  console.log('activeElementId:', activeElementId);
   // console.log('data:', data);
   // console.log('props:', props);
-  // console.groupEnd();
+  console.groupEnd();
 
   return (
-    <Box className={classes.root} onClick={!activeElementId ? e => onInspectElement(e, null) : null}>
+    <Box className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
       <Grid container direction="column" className={classes.components}>
-        {activeChapter
-          ? _.sortBy(activeChapter.tree.components, [o => o.order]).map((component, i) => {
+        {activePage
+          ? _.sortBy(activePage.tree.components, [o => o.order]).map((component, i) => {
               // consolidate backgImage props with raw images
               const backgImage =
                 component.settings.backgImage && component.settings.backgImage.length > 0
                   ? {
                       ...component.settings.backgImage,
-                      raw: `${basepath}src/chapters/${activeChapterId}/${component.id}-${component.settings.backgImage}`,
+                      raw: `${basepath}src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
                     }
                   : component.settings.backgImage;
 
@@ -87,7 +88,7 @@ const Canvas = ({ data, update, ...props }) => {
               const images =
                 component.settings.images && component.settings.images.length > 0
                   ? component.settings.images.map(image => {
-                      const imagePath = `${basepath}src/chapters/${activeChapterId}/${component.id}-${image.name}`;
+                      const imagePath = `${basepath}src/pages/${activePageId}/${component.id}-${image.name}`;
                       return {
                         ...image,
                         raw: imagePath,
@@ -100,7 +101,7 @@ const Canvas = ({ data, update, ...props }) => {
               const isActiveComponent = activeElementId === component.id;
 
               return (
-                <Grid item key={`${activeChapter.meta.uid}${component.id}`} className={classes.componentWrap}>
+                <Grid item key={`${activePage.meta.uid}${component.id}`} className={classes.componentWrap}>
                   <ThemeProvider theme={docTheme}>
                     <div onClick={e => onInspectElement(e, component.id)}>
                       <RenderedComponent

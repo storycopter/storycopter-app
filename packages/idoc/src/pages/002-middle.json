@@ -3,29 +3,27 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 5,
-    "path": "/appendix",
-    "text": "Some text",
-    "title": "Appendix",
-    "uid": "005-appendix"
+    "order": 2,
+    "path": "/middle",
+    "text": "This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.",
+    "title": "Middle that may also have a lengthy title",
+    "uid": "002-middle"
   },
   "tree": {
     "components": [
       {
         "id": "000",
-        "invert": false,
         "order": 0,
         "settings": {
           "align": "left",
-          "animate": true,
           "backgColor": "",
-          "backgImage": "",
+          "backgImage": "image.jpg",
           "cover": true,
           "maskColor": null,
           "subtitle": "Some text",
           "text": "More text",
           "textColor": null,
-          "title": "Appendix"
+          "title": "Middle"
         },
         "type": "headline"
       }

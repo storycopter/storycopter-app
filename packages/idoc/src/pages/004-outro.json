@@ -3,21 +3,19 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 2,
-    "path": "/middle",
-    "text": "This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.",
-    "title": "Middle that may also have a lengthy title",
-    "uid": "002-middle"
+    "order": 4,
+    "path": "/outro",
+    "text": "Some text",
+    "title": "Outro",
+    "uid": "004-outro"
   },
   "tree": {
     "components": [
       {
         "id": "000",
-        "invert": true,
         "order": 0,
         "settings": {
           "align": "left",
-          "animate": true,
           "backgColor": "",
           "backgImage": "image.jpg",
           "cover": true,
@@ -25,7 +23,7 @@
           "subtitle": "Some text",
           "text": "More text",
           "textColor": null,
-          "title": "Middle"
+          "title": "Outro"
         },
         "type": "headline"
       }

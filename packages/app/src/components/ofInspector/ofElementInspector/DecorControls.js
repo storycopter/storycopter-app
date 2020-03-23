@@ -42,18 +42,15 @@ const DecorControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor, inspector } = data;
-  const { elementInspector } = inspector;
-  const { basepath, chapters, site } = currentProject;
-  const { activeChapterId, activeElementId } = editor;
+  const { basepath, pages, site } = currentProject;
+  const { activePageId, activeElementId } = editor;
   const { brand } = site;
 
-  const activeChapter = activeChapterId ? _.find(chapters, o => o.meta.uid === activeChapterId) : null;
-  const activeChapterIndex = activeChapter ? _.findIndex(chapters, o => o.meta.uid === activeChapterId) : null;
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeElementIndex =
-    activeChapterId && activeElementId
-      ? _.findIndex(activeChapter.tree.components, o => o.id === activeElementId)
-      : null;
-  const activeElement = activeElementId ? activeChapter.tree.components[activeElementIndex] : null;
+    activePageId && activeElementId ? _.findIndex(activePage.tree.components, o => o.id === activeElementId) : null;
+  const activeElement = activeElementId ? activePage.tree.components[activeElementIndex] : null;
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -75,8 +72,8 @@ const DecorControls = ({ data, update, ...props }) => {
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.chapters[activeChapterIndex].tree.components[activeElementIndex].settings = {
-          ...nextData.currentProject.chapters[activeChapterIndex].tree.components[activeElementIndex].settings,
+        nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings,
           ...payload,
         };
       }),

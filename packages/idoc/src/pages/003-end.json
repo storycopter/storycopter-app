@@ -13,11 +13,9 @@
     "components": [
       {
         "id": "000",
-        "invert": true,
         "order": 0,
         "settings": {
           "align": "left",
-          "animate": true,
           "backgColor": null,
           "backgImage": "image.jpg",
           "cover": true,

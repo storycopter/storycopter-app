@@ -39,13 +39,13 @@ const LayoutControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor } = data;
-  const { basepath, chapters } = currentProject;
-  const { activeChapterId, activeElementId } = editor;
+  const { basepath, pages } = currentProject;
+  const { activePageId, activeElementId } = editor;
 
-  const activeChapter = activeChapterId ? _.find(chapters, o => o.meta.uid === activeChapterId) : null;
-  const activeChapterIndex = activeChapterId ? _.findIndex(chapters, o => o.meta.uid === activeChapterId) : null;
-  const activeComponentIndex = _.findIndex(activeChapter.tree.components, o => o.id === activeElementId);
-  const activeComponent = chapters[activeChapterIndex].tree.components[activeComponentIndex];
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
+  const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
+  const activeComponent = pages[activePageIndex].tree.components[activeComponentIndex];
   const { settings } = activeComponent;
 
   const [state, setState] = React.useState({
@@ -57,8 +57,8 @@ const LayoutControls = ({ data, update, ...props }) => {
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.chapters[activeChapterIndex].tree.components[activeComponentIndex].settings = {
-          ...nextData.currentProject.chapters[activeChapterIndex].tree.components[activeComponentIndex].settings,
+        nextData.currentProject.pages[activePageIndex].tree.components[activeComponentIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].tree.components[activeComponentIndex].settings,
           ...payload,
         };
       }),
@@ -77,9 +77,9 @@ const LayoutControls = ({ data, update, ...props }) => {
     onElementUpdate({ [e.target.name]: e.target.value });
   };
 
-  console.group('LayoutControls.js');
-  console.log('activeComponent:', activeComponent);
-  console.groupEnd();
+  // console.group('LayoutControls.js');
+  // console.log('activeComponent:', activeComponent);
+  // console.groupEnd();
 
   return (
     <div {...props}>

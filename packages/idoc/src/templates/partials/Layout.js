@@ -12,17 +12,17 @@ import FooBar from './FooBar';
 import Shortcuts from './Shortcuts';
 import TopBar from './TopBar';
 
-const Main = styled(({ fill, theme, ...props }) => <main {...props} />)`
+const Main = styled(({ backgColor, backgImage, theme, ...props }) => <main {...props} />)`
   ${({ theme }) => theme.typography.body2};
-  ${({ fill, theme }) => {
-    if (fill.color) {
+  ${({ backgColor, backgImage, theme }) => {
+    if (backgColor) {
       return `
-        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
+        background-color: ${backgColor ? backgColor : theme.palette.background.accent};
         `;
     }
-    if (fill.image) {
+    if (backgImage) {
       return `
-        background-image: url(${fill.image.fixed.src});
+        background-image: url(${backgImage.fixed.src});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -67,11 +67,11 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, contextData, fill, path, theme } = this.props;
+    const { children, contextData, backgColor, backgImage, path, theme } = this.props;
 
-    // console.group('Layout.js');
-    // console.log({ contextData });
-    // console.groupEnd();
+    console.group('Layout.js');
+    console.log({ contextData });
+    console.groupEnd();
 
     return (
       <StaticQuery
@@ -80,7 +80,7 @@ class Layout extends Component {
           // fetch all pages’ covers
           const covers = data.covers.edges.map(el => el.node);
 
-          // make up chapters' and essentials' data
+          // make up pages' and essentials' data
           const consolidate = arr =>
             arr.map(el => ({
               ...el,
@@ -90,12 +90,12 @@ class Layout extends Component {
               },
             }));
 
-          const chapters = consolidate(contextData.allChapters);
+          const pages = consolidate(contextData.allPages);
           const essentials = consolidate(contextData.allEssentials);
           const site = contextData.allSiteData;
 
           // create allPages array
-          let allPages = chapters.map(el => el);
+          let allPages = pages.map(el => (el.uid !== 'pagesDummy' ? el : 'null'));
           allPages.unshift(_.find(essentials, o => o.uid === 'home'));
           allPages.push(_.find(essentials, o => o.uid === 'credits'));
 
@@ -121,7 +121,7 @@ class Layout extends Component {
           // construct Table of Contents object
           const toc = {
             allPages,
-            chapters,
+            pages,
             currentPage,
             currentPageI,
             essentials,
@@ -145,7 +145,7 @@ class Layout extends Component {
                 site={site}
                 toc={toc}
               />
-              <Main fill={fill} theme={theme}>
+              <Main backgColor={backgColor} backgImage={backgImage} theme={theme}>
                 {children}
               </Main>
               {!isCurrentEssential ? (
@@ -163,20 +163,16 @@ class Layout extends Component {
 export default withTheme(Layout);
 
 Layout.propTypes = {
+  backgColor: string,
+  backgImage: string,
   children: oneOfType([array, node, object, string]).isRequired,
-  fill: shape({
-    image: object,
-    color: string,
-  }),
   isCredits: bool,
   isHome: bool,
 };
 
 Layout.defaultProps = {
-  fill: {
-    color: 'transparent',
-    image: null,
-  },
+  backgColor: 'transparent',
+  backgImage: null,
   isCredits: null,
   isHome: null,
 };

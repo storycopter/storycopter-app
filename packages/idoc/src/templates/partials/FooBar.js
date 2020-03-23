@@ -14,8 +14,6 @@ import { CreditsIcon } from '@storycopter/ui/src/elements';
 import { breakpoint } from '@storycopter/ui/src/settings';
 import { setHeight, setSpace } from '@storycopter/ui/src/mixins';
 
-import AniLink from '../components/AniLink';
-
 const Side = styled(({ lx, rx, ...props }) => <div {...props} />)`
   display: flex;
   flex-direction: row;
@@ -85,11 +83,11 @@ class FooBar extends Component {
                   open={!isTransitioning && tooltip === 'credits'}
                   title="Credits">
                   <div style={{ display: 'inline-block' }}>
-                    <AniLink to="/credits" onClick={this.onLinkWTransitionClick}>
+                    <Link to="/credits" onClick={this.onLinkWTransitionClick}>
                       <IconButton>
                         <CreditsIcon />
                       </IconButton>
-                    </AniLink>
+                    </Link>
                   </div>
                 </Tooltip>
               </Grid>

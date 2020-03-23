@@ -3,29 +3,27 @@
     "cover": {
       "name": "cover.jpg"
     },
-    "order": 4,
-    "path": "/outro",
+    "order": 5,
+    "path": "/appendix",
     "text": "Some text",
-    "title": "Outro",
-    "uid": "004-outro"
+    "title": "Appendix",
+    "uid": "005-appendix"
   },
   "tree": {
     "components": [
       {
         "id": "000",
-        "invert": true,
         "order": 0,
         "settings": {
           "align": "left",
-          "animate": true,
           "backgColor": "",
-          "backgImage": "image.jpg",
+          "backgImage": "",
           "cover": true,
           "maskColor": null,
           "subtitle": "Some text",
           "text": "More text",
           "textColor": null,
-          "title": "Outro"
+          "title": "Appendix"
         },
         "type": "headline"
       }

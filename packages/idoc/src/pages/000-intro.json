@@ -13,7 +13,6 @@
     "components": [
       {
         "id": "000",
-        "invert": true,
         "order": 0,
         "settings": {
           "align": "right",
@@ -31,7 +30,6 @@
       },
       {
         "id": "001",
-        "invert": false,
         "order": 1,
         "settings": {
           "align": "center",
@@ -49,12 +47,12 @@
       },
       {
         "id": "002",
-        "invert": false,
         "order": 2,
         "settings": {
           "align": "left",
           "backgColor": "cyan",
           "backgImage": "",
+          "cover": null,
           "images": [],
           "maskColor": "rgba(0,0,0,0.3)",
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
@@ -66,7 +64,6 @@
       },
       {
         "id": "003",
-        "invert": true,
         "order": 3,
         "settings": {
           "backgColor": "cyan",

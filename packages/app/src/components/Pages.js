@@ -23,11 +23,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Chapters = ({ data, update, ...props }) => {
+const Pages = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor } = data;
-  const { chapters } = currentProject;
+  const { pages } = currentProject;
 
   const handleUpdate = payload => {
     update({
@@ -39,21 +39,23 @@ const Chapters = ({ data, update, ...props }) => {
   };
 
   const handleAvatarClick = value => {
-    handleUpdate({ activeChapterId: value, activeElementId: null });
+    handleUpdate({ activePageId: value, activeElementId: null });
   };
 
   return (
     <Box className={classes.root}>
-      {orderBy(chapters, [o => o.meta.order], ['asc']).map(chapter => {
+      {orderBy(pages, [o => o.meta.order], ['asc']).map(page => {
+        // do not render the dummy page (used by the idoc package)
+        if (page.uid === 'default') return null;
         return (
-          <Tooltip title={chapter.meta.title} key={chapter.meta.order}>
+          <Tooltip title={page.meta.title} key={page.meta.order}>
             <Avatar
-              alt={`${chapter.meta.title}`}
+              alt={`${page.meta.title}`}
               className={classes.avatar}
-              src={`${currentProject.basepath}src/chapters/${chapter.meta.uid}/${chapter.meta.cover.name}`}
+              src={`${currentProject.basepath}src/pages/${page.meta.uid}/${page.meta.cover.name}`}
               variant="square"
-              onClick={() => handleAvatarClick(chapter.meta.uid)}>
-              {chapter.meta.order + 1}
+              onClick={() => handleAvatarClick(page.meta.uid)}>
+              {page.meta.order + 1}
             </Avatar>
           </Tooltip>
         );
@@ -62,4 +64,4 @@ const Chapters = ({ data, update, ...props }) => {
   );
 };
 
-export default connect(({ data }) => ({ data }), { update })(Chapters);
+export default connect(({ data }) => ({ data }), { update })(Pages);

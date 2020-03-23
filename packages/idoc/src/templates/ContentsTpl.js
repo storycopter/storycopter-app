@@ -93,22 +93,22 @@ class ContentsTpl extends Component {
           : null,
       }));
 
-    const allChapters = consolidate(contextData.allChapters);
+    const allPages = consolidate(contextData.allPages);
     const allEssentials = consolidate(contextData.allEssentials);
     const allSiteData = contextData.allSiteData;
 
-    // create allPages array
-    let allPages = allChapters.map(el => el);
-    allPages.unshift(_.find(allEssentials, o => o.uid === 'home'));
-    allPages.push(_.find(allEssentials, o => o.uid === 'credits'));
+    // create pages array
+    let pages = allPages.map(el => el);
+    pages.unshift(_.find(allEssentials, o => o.uid === 'home'));
+    pages.push(_.find(allEssentials, o => o.uid === 'credits'));
 
     // define current page
-    const currentPage = _.find(allPages, o => o.path === path);
+    const currentPage = _.find(pages, o => o.path === path);
 
     // find out more about current page
-    const currentPageI = _.findIndex(allPages, o => o.path === path);
+    const currentPageI = _.findIndex(pages, o => o.path === path);
     const isCurrentFirst = currentPageI === 0;
-    const isCurrentLast = currentPageI === allPages.length - 1;
+    const isCurrentLast = currentPageI === pages.length - 1;
 
     const isCurrentContents = path === '/contents';
     const isCurrentCredits = path === '/credits';
@@ -117,14 +117,14 @@ class ContentsTpl extends Component {
     const isCurrentEssential = isCurrentContents || isCurrentCredits || isCurrentHome;
 
     // define next/prev pages
-    const prevPage = isCurrentHome ? allPages[allPages.length - 1] : allPages[currentPageI - 1];
-    const nextPage = isCurrentCredits ? allPages[0] : allPages[currentPageI + 1];
+    const prevPage = isCurrentHome ? pages[pages.length - 1] : pages[currentPageI - 1];
+    const nextPage = isCurrentCredits ? pages[0] : pages[currentPageI + 1];
 
     // construct Table of Contents object
     const toc = {
-      allChapters,
-      allEssentials,
       allPages,
+      allEssentials,
+      pages,
       allSiteData,
       currentPage,
       currentPageI,
@@ -139,7 +139,7 @@ class ContentsTpl extends Component {
     console.log({ contextData });
     console.log({ allCovers });
     console.log({ allEssentials });
-    console.log({ allPages });
+    console.log({ pages });
     console.log({ toc });
     console.groupEnd();
 
@@ -150,8 +150,8 @@ class ContentsTpl extends Component {
           location={this.props.location}
           path={this.props.data.pageData.meta.path}>
           <TileContainer>
-            <GridList cols={allChapters.length} spacing={1} cellHeight="auto" className={classes.gridList}>
-              {allChapters.map(chapter => {
+            <GridList cols={allPages.length} spacing={1} cellHeight="auto" className={classes.gridList}>
+              {allPages.map(chapter => {
                 const { cover, order, path, text, title } = chapter;
                 return (
                   <TileWrapper
@@ -186,25 +186,6 @@ export const pageQuery = graphql`
         path
         title
         uid
-      }
-      tree {
-        components {
-          id
-          invert
-          order
-          type
-          settings {
-            align
-            animate
-            cover
-            fill
-            mask
-            paint
-            subtitle
-            text
-            title
-          }
-        }
       }
     }
     allCovers: allFile(filter: { name: { eq: "cover" } }) {

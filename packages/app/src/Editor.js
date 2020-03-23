@@ -15,7 +15,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
-import { Canvas, Chapters, Inspector } from './components';
+import { Canvas, Pages, Inspector } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +61,7 @@ const Editor = () => {
                 </Box>
               </Grid>
               <Grid item className={classes.main}>
-                <Chapters />
+                <Pages />
               </Grid>
               <Grid item className={classes.side}>
                 <Box display="flex" justifyContent="flex-end">

@@ -15,9 +15,8 @@
         "invert": true,
         "order": 0,
         "settings": {
-          "align": "",
-          "animate": true,
-          "backgColor": "",
+          "align": null,
+          "backgColor": null,
           "backgImage": "image.jpg",
           "cover": true,
           "images": [],

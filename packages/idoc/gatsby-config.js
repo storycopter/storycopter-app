@@ -13,7 +13,6 @@ module.exports = {
         },
       },
     },
-    `gatsby-plugin-transition-link`,
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -45,8 +44,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `chapters`,
-        path: `${__dirname}/src/chapters/`,
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
       },
     },
   ],
