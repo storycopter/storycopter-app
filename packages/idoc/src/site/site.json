@@ -23,7 +23,7 @@
     "typography": "modern"
   },
   "motivation": {
-    "enable": true,
+    "enabled": true,
     "label": "Visit Storycopter!",
     "link": "https://storycopter.com"
   },
