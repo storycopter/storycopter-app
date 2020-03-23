@@ -127,8 +127,6 @@ exports.createPages = async ({ graphql, actions }) => {
         if (!dummyPages.includes(o.node.meta.uid)) return o.node.meta;
       });
 
-      console.log(pages);
-
       createPage({
         component: creator.tpl ? creator.tpl : tpls[uid],
         context: {
