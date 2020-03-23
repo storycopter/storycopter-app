@@ -88,7 +88,7 @@ const Canvas = ({ data, update, ...props }) => {
               const images =
                 component.settings.images && component.settings.images.length > 0
                   ? component.settings.images.map(image => {
-                      const imagePath = `file:///${basepath}src/pages/${activePageId}/${component.id}-${image.name}`;
+                      const imagePath = `file:///${basepath}/src/pages/${activePageId}/${component.id}-${image.name}`;
                       return {
                         ...image,
                         raw: imagePath,

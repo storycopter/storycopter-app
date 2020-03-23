@@ -9,6 +9,11 @@ console.log('muiTheme:', muiTheme);
 console.groupEnd();
 
 export default createMuiTheme({
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
+  },
   typography: {
     h1: {
       ...setType(900),

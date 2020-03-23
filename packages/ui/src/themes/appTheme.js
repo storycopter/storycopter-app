@@ -3,7 +3,27 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const muiTheme = createMuiTheme();
 
 export default createMuiTheme({
+  // transitions: {
+  //   // So we have `transition: none;` everywhere
+  //   create: () => 'none',
+  // },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
+  },
+
   overrides: {
+    // disable all animations
+    // MuiCssBaseline: {
+    //   '@global': {
+    //     '*, *::before, *::after': {
+    //       transition: 'none !important',
+    //       animation: 'none !important',
+    //     },
+    //   },
+    // },
+
     // Tabs
     MuiTab: {
       root: {

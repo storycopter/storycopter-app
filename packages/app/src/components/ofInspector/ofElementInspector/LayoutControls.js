@@ -70,7 +70,6 @@ const LayoutControls = ({ data, update, ...props }) => {
             <Tooltip title="Align left">
               <Button
                 className={settings.align === 'left' ? classes.activeButton : null}
-                disabled={false}
                 onClick={() => onElementUpdate({ align: 'left' })}>
                 <AlignLeftIcon fontSize="small" />
               </Button>
@@ -78,7 +77,6 @@ const LayoutControls = ({ data, update, ...props }) => {
             <Tooltip title="Align center">
               <Button
                 className={settings.align === 'center' ? classes.activeButton : null}
-                disabled={false}
                 onClick={() => onElementUpdate({ align: 'center' })}>
                 <AlignCenterHorizontalIcon fontSize="small" />
               </Button>
@@ -86,7 +84,6 @@ const LayoutControls = ({ data, update, ...props }) => {
             <Tooltip title="Align right">
               <Button
                 className={settings.align === 'right' ? classes.activeButton : null}
-                disabled={false}
                 onClick={() => onElementUpdate({ align: 'right' })}>
                 <AlignRightIcon fontSize="small" />
               </Button>
