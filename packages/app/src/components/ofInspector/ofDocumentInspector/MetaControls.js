@@ -68,10 +68,9 @@ const MetaControls = ({ data, update }) => {
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
       <TextField
         {...textFieldProps}
-        inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
+        inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }), maxLength: 30 }}
         label="Title"
         onChange={e => setTitle(e.target.value)}
-        placeholder="e.g. …"
         value={title || ''}
       />
       <TextField
@@ -80,7 +79,6 @@ const MetaControls = ({ data, update }) => {
         label="Summary"
         multiline
         onChange={e => setSummary(e.target.value)}
-        placeholder="e.g. …"
         rowsMax={4}
         value={summary || ''}
       />

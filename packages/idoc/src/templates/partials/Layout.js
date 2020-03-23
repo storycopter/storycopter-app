@@ -69,9 +69,9 @@ class Layout extends Component {
   render() {
     const { children, contextData, backgColor, backgImage, path, theme } = this.props;
 
-    console.group('Layout.js');
-    console.log({ contextData });
-    console.groupEnd();
+    // console.group('Layout.js');
+    // console.log({ contextData });
+    // console.groupEnd();
 
     return (
       <StaticQuery
@@ -128,10 +128,6 @@ class Layout extends Component {
             nextPage,
             prevPage,
           };
-
-          // console.group('Layout.js');
-          // console.log({ data });
-          // console.groupEnd();
 
           return (
             <>

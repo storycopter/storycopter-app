@@ -1,14 +1,14 @@
 import React from 'react';
+import ReactPlayer from 'react-player';
+import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
-import ReactPlayer from 'react-player';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
-import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -39,44 +39,29 @@ const SoundControls = ({ data, update, ...props }) => {
   const classes = useStyles();
   const player = React.createRef();
 
-  const { currentProject } = data;
-  const { basepath, site } = currentProject;
+  const { basepath, site } = data.currentProject;
   const { sound } = site;
-  const { enableSound, track } = sound;
-  const trackPath = `file:///${basepath}/src/site/assets/${track}`;
+  const trackPath = `file:///${basepath}/src/site/assets/${sound.track}`;
 
   const [trackDuration, setTrackDuration] = React.useState(0);
   const [trackPlaying, setTrackPlaying] = React.useState(false);
   const [trackProgress, setTrackProgress] = React.useState(0);
 
-  const handleUpdate = payload => {
+  const onSoundUpdate = payload => {
     update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...site,
-          sound: {
-            ...sound,
-            ...payload,
-          },
-        },
-      },
+      ...produce(data, nextData => {
+        nextData.currentProject.site.sound = {
+          ...nextData.currentProject.site.sound,
+          ...payload,
+        };
+      }),
     });
   };
 
-  const handleInputChange = e => {
-    handleUpdate({ [e.target.name]: e.target.value });
-  };
-
-  const handleCheckboxChange = e => {
-    setTrackPlaying(false);
-    handleUpdate({ [e.target.name]: e.target.checked });
-  };
-
-  const handleSliderChange = (e, newValue) => {
+  const onScrub = (e, newTime) => {
     setTrackPlaying(true);
-    setTrackProgress(newValue);
-    if (player && player.current) player.current.seekTo(newValue);
+    setTrackProgress(newTime);
+    if (player && player.current) player.current.seekTo(newTime);
   };
 
   return (
@@ -88,11 +73,14 @@ const SoundControls = ({ data, update, ...props }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={enableSound}
+            checked={sound.enabled}
             color="primary"
             id="enableSound"
             name="enableSound"
-            onChange={handleCheckboxChange}
+            onChange={e => {
+              onSoundUpdate({ enabled: e.target.checked });
+              if (e.target.checked === false) setTrackPlaying(false);
+            }}
           />
         }
         label={<Typography variant="overline">Enable soundtrack</Typography>}
@@ -106,7 +94,7 @@ const SoundControls = ({ data, update, ...props }) => {
               loop
               onReady={player => setTrackDuration(player.getDuration())}
               onProgress={progress => setTrackProgress(progress.playedSeconds)}
-              playing={trackPlaying}
+              playing={sound.enabled && trackPlaying}
               url={trackPath}
               width="100%"
               config={{
@@ -126,7 +114,7 @@ const SoundControls = ({ data, update, ...props }) => {
               <Grid item>
                 <IconButton
                   aria-label="Play"
-                  disabled={!enableSound}
+                  disabled={!sound.enabled}
                   onClick={() => setTrackPlaying(!trackPlaying)}
                   size="small">
                   {trackPlaying ? <PauseIcon fontSize="inherit" /> : <PlayArrowIcon fontSize="inherit" />}
@@ -135,10 +123,10 @@ const SoundControls = ({ data, update, ...props }) => {
               <Grid item xs>
                 <Slider
                   aria-labelledby="continuous-slider"
-                  disabled={!enableSound}
+                  disabled={!sound.enabled}
                   max={trackDuration}
                   min={0}
-                  onChange={handleSliderChange}
+                  onChange={onScrub}
                   value={trackProgress}
                 />
               </Grid>
@@ -148,15 +136,15 @@ const SoundControls = ({ data, update, ...props }) => {
             <input
               accept=".mp3,.m4a"
               color="primary"
-              disabled={!enableSound}
+              disabled={!sound.enabled}
               id="soundtrack"
               name="soundtrack"
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="soundtrack" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!enableSound} fullWidth size="small">
+              <Button color="primary" component="span" disabled={!sound.enabled} fullWidth size="small">
                 Select soundtrack
               </Button>
             </label>

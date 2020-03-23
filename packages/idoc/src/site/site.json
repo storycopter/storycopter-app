@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Hiking Cima dell’Uomo",
+    "title": "Storycopter",
     "publisher": "Storycopter",
-    "summary": "An interactive documentary about something truly epic.",
+    "summary": "Create engaging interactive stories! Focus on content and leave the heavy lifting to Storycopter. ",
     "coverEnabled": false,
     "cover": {
       "name": ""
@@ -13,9 +13,7 @@
     "brandColor": "#b20b05",
     "faviconEnabled": false,
     "logoEnabled": false,
-    "favicon": {
-      "name": null
-    },
+    "favicon": "storycopter.ico",
     "logo": {
       "name": "logo.png"
     },
@@ -24,29 +22,11 @@
   },
   "motivation": {
     "enabled": true,
-    "label": "Visit Storycopter!",
+    "label": "Download Storycopter App! (Mac)",
     "link": "https://storycopter.com"
   },
   "sound": {
-    "enableSound": false,
+    "enabled": false,
     "track": "obudzanka.mp3"
-  },
-  "settings": {
-    "fill": {
-      "color": "cyan",
-      "image": "cover.jpg"
-    },
-    "palette": {
-      "background": "white",
-      "main": "black",
-      "accent": "#ffd520"
-    },
-    "typography": {
-      "variant": "modern"
-    },
-    "assets": {
-      "favicon": "",
-      "brandmark": ""
-    }
   }
 }
