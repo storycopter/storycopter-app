@@ -43,7 +43,7 @@ const SoundControls = ({ data, update, ...props }) => {
   const { basepath, site } = currentProject;
   const { sound } = site;
   const { enableSound, track } = sound;
-  const trackPath = `${basepath}src/site/assets/${track}`;
+  const trackPath = `file:///${basepath}/src/site/assets/${track}`;
 
   const [trackDuration, setTrackDuration] = React.useState(0);
   const [trackPlaying, setTrackPlaying] = React.useState(false);
