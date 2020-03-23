@@ -27,7 +27,7 @@ const Pages = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor } = data;
-  const { pages } = currentProject;
+  const { basepath, pages } = currentProject;
 
   const handleUpdate = payload => {
     update({
@@ -52,7 +52,7 @@ const Pages = ({ data, update, ...props }) => {
             <Avatar
               alt={`${page.meta.title}`}
               className={classes.avatar}
-              src={`${currentProject.basepath}src/pages/${page.meta.uid}/${page.meta.cover.name}`}
+              src={`file:///${basepath}/src/pages/${page.meta.uid}/${page.meta.cover.name}`}
               variant="square"
               onClick={() => handleAvatarClick(page.meta.uid)}>
               {page.meta.order + 1}

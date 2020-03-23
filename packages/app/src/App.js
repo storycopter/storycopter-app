@@ -3,6 +3,7 @@
 // import path from 'path';
 import Ansi from 'ansi-to-react';
 import React from 'react';
+import fs from 'fs';
 import process from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
+import ErrorBoundary from './components/ErrorBoundary';
 import Editor from './Editor';
 
 const dialog = remote.dialog;
@@ -48,6 +50,36 @@ class App extends React.Component {
   };
 
   openProject(path) {
+    const siteJSON = JSON.parse(fs.readFileSync(`${path}/src/site/site.json`, 'utf8'));
+    const contentsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/contents.json`, 'utf8'));
+    const creditsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/credits.json`, 'utf8'));
+    const errorJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/error.json`, 'utf8'));
+    const homeJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/home.json`, 'utf8'));
+    const introJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/000-intro.json`, 'utf8'));
+    const beginningJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/001-beginning.json`, 'utf8'));
+    const middleJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/002-middle.json`, 'utf8'));
+    const outroJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/004-outro.json`, 'utf8'));
+    const appendixJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/005-appendix.json`, 'utf8'));
+    const endJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/003-end.json`, 'utf8'));
+
+    const currentProject = {
+      basepath: path,
+      site: siteJSON,
+      essentials: {
+        contents: contentsJSON,
+        credits: creditsJSON,
+        error: errorJSON,
+        home: homeJSON,
+      },
+      pages: [introJSON, beginningJSON, middleJSON, endJSON, outroJSON, appendixJSON],
+    };
+
+    console.log(currentProject);
+
+    this.props.update({ currentProject });
+  }
+
+  previewProject(path) {
     const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
       // cwd: '/Users/laurian/Projects/Storycopter/storycopter/packages/idoc',
       cwd: path,
@@ -106,15 +138,23 @@ class App extends React.Component {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
 
+    console.log(data);
+
     console.group('App.js:');
     console.log('data:', data);
     console.groupEnd();
 
     return (
       <ThemeProvider theme={appTheme}>
-        <CssBaseline />
-        <AppBaseline />
-        <Editor />
+        {data && data.currentProject ? (
+          <ErrorBoundary>
+            <CssBaseline />
+            <AppBaseline />
+            <Editor />
+          </ErrorBoundary>
+        ) : (
+          'nothing'
+        )}
         {!child ? (
           <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
             Open Project

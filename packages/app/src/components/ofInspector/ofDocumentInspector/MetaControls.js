@@ -112,7 +112,12 @@ const MetaControls = ({ data, update }) => {
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
             {meta.cover && meta.cover.name ? (
-              <img alt="Cover" height="100" src={`${basepath}src/site/assets/${meta.cover.name}`} title="Cover" />
+              <img
+                alt="Cover"
+                height="100"
+                src={`file:///${basepath}/src/site/assets/${meta.cover.name}`}
+                title="Cover"
+              />
             ) : (
               <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
                 <PanoramaOutlinedIcon color={coverEnabled ? 'action' : 'disabled'} />

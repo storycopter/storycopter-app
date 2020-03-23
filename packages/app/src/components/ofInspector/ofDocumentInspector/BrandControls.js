@@ -146,7 +146,12 @@ const BrandControls = ({ data, update }) => {
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
             {brand.logo && brand.logo.name ? (
-              <img alt="Logo" height="100" src={`${basepath}src/site/assets/${brand.logo.name}`} title="Logo" />
+              <img
+                alt="Logo"
+                height="100"
+                src={`file:///${basepath}/src/site/assets/${brand.logo.name}`}
+                title="Logo"
+              />
             ) : (
               <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
                 <PanoramaOutlinedIcon color={logoEnabled ? 'action' : 'disabled'} />
@@ -192,7 +197,12 @@ const BrandControls = ({ data, update }) => {
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
             {brand.favicon && brand.favicon.name ? (
-              <img alt="Favicon" height="36" src={`${basepath}src/site/assets/${brand.favicon.name}`} title="Favicon" />
+              <img
+                alt="Favicon"
+                height="36"
+                src={`file:///${basepath}/src/site/assets/${brand.favicon.name}`}
+                title="Favicon"
+              />
             ) : (
               <Box height="36px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
                 <PanoramaOutlinedIcon color={faviconEnabled ? 'action' : 'disabled'} />
