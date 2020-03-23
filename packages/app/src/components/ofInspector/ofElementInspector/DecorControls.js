@@ -218,8 +218,8 @@ const DecorControls = ({ data, update, ...props }) => {
           {...resetButtonProps}
           onClick={() => {
             maskPickerState.close();
-            onElementUpdate({ maskColor: null });
-            setMaskColor(null);
+            onElementUpdate({ maskColor: 'rgba(0,0,0,0.0)' });
+            setMaskColor('rgba(0,0,0,0.0)');
           }}
         />
       </Popover>
