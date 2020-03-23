@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import produce from 'immer';
+import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -11,10 +15,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import Popover from '@material-ui/core/Popover';
 import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -32,6 +39,23 @@ const useStyles = makeStyles(theme => ({
     margin: '0 !important',
     width: '100%',
   },
+  colorPaper: {
+    width: '270px',
+  },
+  colorPreview: {
+    height: theme.spacing(2),
+    width: theme.spacing(2),
+  },
+  colorPicker: {
+    ...theme.typography.caption,
+    background: 'none !important',
+    boxShadow: 'none !important',
+    border: 'none !important',
+  },
+  resetButton: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
 }));
 
 const BrandControls = ({ data, update, ...props }) => {
@@ -42,11 +66,28 @@ const BrandControls = ({ data, update, ...props }) => {
   const { site } = currentProject;
   const { brand } = site;
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     backgColor: brand.backgColor,
     brandColor: brand.brandColor,
-    textColor: brand.textColor,
+    // textColor: brand.textColor,
     typography: brand.typography,
+  });
+
+  const [backgColor, setBackgColor] = useState(brand.backgColor || '#ffffff');
+  const [brandColor, setBrandColor] = useState(brand.brandColor || '#4051b5');
+  const [textColor, setTextColor] = useState(brand.textColor || '#333333');
+
+  const backgPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'backgPicker',
+  });
+  const brandcPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'brandcPicker',
+  });
+  const textPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'textPicker',
   });
 
   const handleUpdate = payload => {
@@ -77,6 +118,50 @@ const BrandControls = ({ data, update, ...props }) => {
 
   const handleCheckboxChange = e => {
     handleUpdate({ [e.target.name]: e.target.checked });
+  };
+
+  const onBrandUpdate = payload => {
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.site.brand = {
+          ...nextData.currentProject.site.brand,
+          ...payload,
+        };
+      }),
+    });
+  };
+
+  const popoverProps = {
+    PaperProps: {
+      className: classes.colorPaper,
+    },
+    disablePortal: true,
+    anchorOrigin: {
+      vertical: 'top',
+      horizontal: 'center',
+    },
+    transformOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center',
+    },
+  };
+  const pickerProps = {
+    className: classes.colorPicker,
+    disableAlpha: true,
+    presetColors: [],
+    width: 'auto',
+  };
+  const resetButtonProps = {
+    className: classes.resetButton,
+    color: 'primary',
+    fullWidth: true,
+    size: 'small',
+    children: 'Reset',
+  };
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'dense',
+    variant: 'filled',
   };
 
   return (
@@ -167,45 +252,94 @@ const BrandControls = ({ data, update, ...props }) => {
           </CardActions>
         </Card>
       </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="brandColor">Brand color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="brandColor"
-          name="brandColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.brandColor}
+
+      <TextField
+        {...bindTrigger(brandcPickerState)}
+        {...textFieldProps}
+        label="Brand color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: brandColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={brandColor ? brandColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(brandcPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={brandColor ? brandColor : '#ffffff'}
+          onChange={({ hex }) => setBrandColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ brandColor: hex })}
         />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="backgColor">Background color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="backgColor"
-          name="backgColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.backgColor}
+      </Popover>
+
+      <TextField
+        {...bindTrigger(backgPickerState)}
+        {...textFieldProps}
+        label="Background color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: backgColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={backgColor ? backgColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(backgPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={backgColor ? backgColor : '#ffffff'}
+          onChange={({ hex }) => setBackgColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ backgColor: hex })}
         />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="textColor">Text color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="textColor"
-          name="textColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.textColor}
+      </Popover>
+
+      <TextField
+        {...bindTrigger(textPickerState)}
+        {...textFieldProps}
+        label="Text color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: textColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={textColor ? textColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(textPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={textColor ? textColor : '#333333'}
+          onChange={({ hex }) => setTextColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ textColor: hex })}
         />
-      </FormControl>
+      </Popover>
+
       <FormControl variant="filled" fullWidth margin="dense">
         <InputLabel htmlFor="typography">Typography</InputLabel>
         <Select

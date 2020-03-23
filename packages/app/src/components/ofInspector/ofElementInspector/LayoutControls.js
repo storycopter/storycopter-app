@@ -3,7 +3,6 @@ import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
-import { SketchPicker } from 'react-color';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -48,12 +47,6 @@ const LayoutControls = ({ data, update, ...props }) => {
   const activeComponent = pages[activePageIndex].tree.components[activeComponentIndex];
   const { settings } = activeComponent;
 
-  const [state, setState] = React.useState({
-    color: settings.color ? settings.color : currentProject.site.brand.textColor,
-    paint: settings.paint ? settings.paint : currentProject.site.brand.backgColor,
-    mask: settings.mask ? settings.mask : currentProject.site.brand.brandColor,
-  });
-
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
@@ -63,18 +56,6 @@ const LayoutControls = ({ data, update, ...props }) => {
         };
       }),
     });
-  };
-
-  const onInputBlur = e => {
-    onElementUpdate({ [e.targe.name]: e.target.value });
-  };
-
-  const onInputChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-    onElementUpdate({ [e.target.name]: e.target.value });
   };
 
   // console.group('LayoutControls.js');

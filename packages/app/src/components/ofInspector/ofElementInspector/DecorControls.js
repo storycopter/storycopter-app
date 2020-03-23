@@ -8,7 +8,6 @@ import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Fade from '@material-ui/core/Fade';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Popover from '@material-ui/core/Popover';
 import TextField from '@material-ui/core/TextField';
@@ -41,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 const DecorControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor, inspector } = data;
+  const { currentProject, editor } = data;
   const { basepath, pages, site } = currentProject;
   const { activePageId, activeElementId } = editor;
   const { brand } = site;
@@ -106,15 +105,18 @@ const DecorControls = ({ data, update, ...props }) => {
     size: 'small',
     children: 'Reset',
   };
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'dense',
+    variant: 'filled',
+  };
 
   return (
     <div {...props}>
       <TextField
         {...bindTrigger(textPickerState)}
+        {...textFieldProps}
         label="Text color"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (
@@ -150,10 +152,8 @@ const DecorControls = ({ data, update, ...props }) => {
       </Popover>
       <TextField
         {...bindTrigger(backgPickerState)}
+        {...textFieldProps}
         label="Background color"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (
@@ -189,10 +189,8 @@ const DecorControls = ({ data, update, ...props }) => {
       </Popover>
       <TextField
         {...bindTrigger(maskPickerState)}
+        {...textFieldProps}
         label="Background mask"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (

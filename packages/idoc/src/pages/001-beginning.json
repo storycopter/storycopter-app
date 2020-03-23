@@ -16,7 +16,7 @@
         "order": 0,
         "settings": {
           "align": "left",
-          "backgColor": "blue",
+          "backgColor": "#3d2698",
           "backgImage": "",
           "cover": true,
           "maskColor": null,

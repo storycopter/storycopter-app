@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import produce from 'immer';
-import _ from 'lodash';
+import React from 'react';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
@@ -32,20 +30,7 @@ const useStyles = makeStyles(theme => ({
 const ElementInspector = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor, inspector } = data;
-  const { elementInspector } = inspector;
-  const { basepath, pages } = currentProject;
-  const { activePageId, activeElementId } = editor;
-
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  const activeElementIndex =
-    activePageId && activeElementId ? _.findIndex(activePage.tree.components, o => o.id === activeElementId) : null;
-  const activeElement = activeElementId ? activePage.tree.components[activeElementIndex] : null;
-
-  const [state, setState] = React.useState({
-    paint: activeElement ? activeElement.settings.paint : null,
-  });
+  const { activePageId, activeElementId } = data.editor;
 
   if (!activePageId || !activeElementId) return <>Select an element</>;
 
