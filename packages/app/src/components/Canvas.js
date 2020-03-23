@@ -80,7 +80,7 @@ const Canvas = ({ data, update, ...props }) => {
                 component.settings.backgImage && component.settings.backgImage.length > 0
                   ? {
                       ...component.settings.backgImage,
-                      raw: `${basepath}src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
+                      raw: `${basepath}/src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
                     }
                   : component.settings.backgImage;
 
@@ -101,24 +101,26 @@ const Canvas = ({ data, update, ...props }) => {
               const isActiveComponent = activeElementId === component.id;
 
               return (
-                <Grid item key={`${activePage.meta.uid}${component.id}`} className={classes.componentWrap}>
+                <Grid
+                  className={classes.componentWrap}
+                  item
+                  key={`${activePage.meta.uid}${component.id}`}
+                  onClick={e => onInspectElement(e, component.id)}>
                   <ThemeProvider theme={docTheme}>
-                    <div onClick={e => onInspectElement(e, component.id)}>
-                      <RenderedComponent
-                        {...componentSettings}
-                        animate={false}
-                        cover={false}
-                        backgImage={backgImage}
-                        images={images}
-                        isEditable
-                        onElementUpdate={onElementUpdate}
-                        style={{
-                          boxShadow: isActiveComponent ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
-                          margin: isActiveComponent ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
-                          transition: 'margin 0.5s',
-                        }}
-                      />
-                    </div>
+                    <RenderedComponent
+                      {...componentSettings}
+                      animate={false}
+                      cover={false}
+                      backgImage={backgImage}
+                      images={images}
+                      isEditable
+                      onElementUpdate={onElementUpdate}
+                      style={{
+                        boxShadow: isActiveComponent ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
+                        margin: isActiveComponent ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
+                        transition: 'margin 0.5s',
+                      }}
+                    />
                   </ThemeProvider>
                 </Grid>
               );

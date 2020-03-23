@@ -15,8 +15,8 @@ const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =
       backgroundColor: backgColor ? backgColor : 'transparent',
       backgroundImage: backgImage
         ? backgImage.raw
-          ? `url(${backgImage.raw})`
-          : `url(${backgImage.fixed.src})`
+          ? `url("${backgImage.raw}")`
+          : `url("${backgImage.fixed.src}")`
         : 'none',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
