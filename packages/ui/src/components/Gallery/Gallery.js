@@ -6,6 +6,8 @@ import { sortBy } from 'lodash';
 
 import Image from './Image';
 
+import './react-slick.css';
+
 const Slide = styled(({ cover, ...props }) => <figure {...props} />)`
   position: relative;
   ${({ cover }) => {
