@@ -7,7 +7,7 @@
     "@material-ui/core": "4.9.7",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.46",
-    "gatsby-image": "2.3.0",
+    "gatsby-image": "2.3.1",
     "material-ui-popup-state": "1.5.3",
     "polished": "3.5.1",
     "react": "16.13.1",
