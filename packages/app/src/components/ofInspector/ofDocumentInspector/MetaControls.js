@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
@@ -8,11 +9,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Checkbox from '@material-ui/core/Checkbox';
-import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -32,105 +32,78 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MetaControls = ({ data, update, ...props }) => {
+const MetaControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { currentProject } = data;
-  const { basepath } = currentProject;
-  const { site } = currentProject;
+  const { basepath, site } = data.currentProject;
   const { meta } = site;
 
-  const [state, setState] = React.useState({
-    title: meta.title,
-    summary: meta.summary,
-    publisher: meta.publisher,
-  });
+  const [coverEnabled, setCoverEnabled] = useState(meta.coverEnabled);
+  const [publisher, setPublisher] = useState(meta.publisher);
+  const [summary, setSummary] = useState(meta.summary);
+  const [title, setTitle] = useState(meta.title);
 
-  const handleUpdate = payload => {
+  const onMetaUpdate = payload => {
     update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...site,
-          meta: {
-            ...meta,
-            ...payload,
-          },
-        },
-      },
+      ...produce(data, nextData => {
+        nextData.currentProject.site.meta = {
+          ...nextData.currentProject.site.meta,
+          ...payload,
+        };
+      }),
     });
   };
 
-  const handleInputChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleInputBlur = e => {
-    handleUpdate({ [e.target.name]: e.target.value });
-  };
-
-  const handleCheckboxChange = e => {
-    handleUpdate({ [e.target.name]: e.target.checked });
+  const textFieldProps = {
+    fullWidth: true,
+    InputProps: {
+      disableUnderline: true,
+    },
+    margin: 'dense',
+    type: 'text',
+    variant: 'filled',
   };
 
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="title">Name</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="title"
-          name="title"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          type="text"
-          value={state.title}
-        />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="summary">Summary</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="summary"
-          multiline={true}
-          name="summary"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          rowsMax={4}
-          type="text"
-          value={state.summary}
-        />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="publisher">Publisher</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="publisher"
-          name="publisher"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          type="text"
-          value={state.publisher}
-        />
-      </FormControl>
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
+        label="Document title"
+        onChange={e => setTitle(e.target.value)}
+        placeholder="e.g. …"
+        value={title || ''}
+      />
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ summary: e.target.value }) }}
+        label="Summary"
+        multiline
+        onChange={e => setSummary(e.target.value)}
+        placeholder="e.g. …"
+        rowsMax={4}
+        value={summary || ''}
+      />
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ publisher: e.target.value }) }}
+        label="Publisher"
+        onChange={e => setPublisher(e.target.value)}
+        placeholder="e.g. New York Times"
+        value={publisher || ''}
+      />
+
       <FormControlLabel
         control={
           <Checkbox
-            checked={meta.enableCover}
+            checked={coverEnabled}
             color="primary"
-            id="enableCover"
-            name="enableCover"
-            onChange={handleCheckboxChange}
-            value="true"
+            id="coverEnabled"
+            name="coverEnabled"
+            onChange={e => {
+              setCoverEnabled(e.target.checked);
+              onMetaUpdate({ coverEnabled: e.target.checked });
+            }}
           />
         }
         label={<Typography variant="overline">Enable cover</Typography>}
@@ -142,23 +115,23 @@ const MetaControls = ({ data, update, ...props }) => {
               <img alt="Cover" height="100" src={`${basepath}src/site/assets/${meta.cover.name}`} title="Cover" />
             ) : (
               <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={meta.enableCover ? 'action' : 'disabled'} />
+                <PanoramaOutlinedIcon color={coverEnabled ? 'action' : 'disabled'} />
               </Box>
             )}
           </CardMedia>
           <CardActions>
             <input
+              // onChange={handleInputChange}
               accept="image/*"
               color="primary"
-              disabled={!meta.enableCover}
+              disabled={!coverEnabled}
               id="cover"
               name="cover"
-              onChange={handleInputChange}
               style={{ display: 'none' }}
               type="file"
             />
             <label htmlFor="cover" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!meta.enableCover} fullWidth size="small">
+              <Button color="primary" component="span" disabled={!coverEnabled} fullWidth size="small">
                 Choose file…
               </Button>
             </label>

@@ -108,6 +108,7 @@ const DecorControls = ({ data, update, ...props }) => {
   const textFieldProps = {
     fullWidth: true,
     margin: 'dense',
+    type: 'text',
     variant: 'filled',
   };
 

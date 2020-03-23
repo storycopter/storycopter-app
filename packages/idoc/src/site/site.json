@@ -3,7 +3,7 @@
     "title": "Hiking Cima dell’Uomo",
     "publisher": "Storycopter",
     "summary": "An interactive documentary about something truly epic.",
-    "enableCover": false,
+    "coverEnabled": false,
     "cover": {
       "name": ""
     }

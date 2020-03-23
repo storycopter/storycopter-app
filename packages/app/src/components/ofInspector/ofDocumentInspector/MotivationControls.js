@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MotivationControls = ({ data, update, ...props }) => {
+const MotivationControls = ({ data, update }) => {
   const classes = useStyles();
 
   const { currentProject } = data;
@@ -43,6 +43,7 @@ const MotivationControls = ({ data, update, ...props }) => {
       disableUnderline: true,
     },
     margin: 'dense',
+    type: 'text',
     variant: 'filled',
   };
 
