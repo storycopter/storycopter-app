@@ -2,6 +2,7 @@ export * from './breakpoints';
 export * from './colors';
 export * from './fonts';
 export * from './fsizes';
+export * from './fontSizes';
 export * from './indexes';
 export * from './leading';
 export * from './radii';

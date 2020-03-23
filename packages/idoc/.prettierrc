@@ -1,14 +1,14 @@
 {
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "insertPragma": false,
+  "jsxBracketSameLine": true,
   "printWidth": 120,
-  "tabWidth": 2,
-  "useTabs": false,
+  "proseWrap": "always",
+  "requirePragma": false,
   "semi": true,
   "singleQuote": true,
+  "tabWidth": 2,
   "trailingComma": "es5",
-  "bracketSpacing": true,
-  "jsxBracketSameLine": true,
-  "arrowParens": "avoid",
-  "requirePragma": false,
-  "insertPragma": false,
-  "proseWrap": "always"
+  "useTabs": false
 }

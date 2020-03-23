@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "cover": {
+      "name": "cover.jpg"
+    },
+    "order": 5,
+    "path": "/appendix",
+    "text": "Some text",
+    "title": "Appendix",
+    "uid": "005-appendix"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "000",
+        "order": 0,
+        "settings": {
+          "align": "left",
+          "backgColor": "",
+          "backgImage": "",
+          "cover": true,
+          "maskColor": null,
+          "subtitle": "Some text",
+          "text": "More text",
+          "textColor": null,
+          "title": "Appendix"
+        },
+        "type": "headline"
+      }
+    ]
+  }
+}

@@ -1,13 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import _ from 'lodash';
+import produce from 'immer';
+import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 
 import { componentMap } from '@storycopter/ui/src/components';
-import { IdocProvider } from '@storycopter/ui/src/providers';
+import { docTheme } from '@storycopter/ui/src/themes';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: `${theme.spacing(5)}px`,
   },
   components: {
-    boxShadow: theme.shadows[4],
+    // boxShadow: theme.shadows[4],
     position: 'relative',
   },
   componentWrap: {
@@ -26,35 +30,65 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Canvas = props => {
+const Canvas = ({ data, update, ...props }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
-  const { data } = props;
   const { currentProject, editor } = data;
-  const { basepath, chapters } = currentProject;
-  const { activeChapter } = editor;
+  const { basepath, pages } = currentProject;
+  const { activePageId, activeElementId } = editor;
 
-  const chapterData = activeChapter ? _.find(chapters, o => o.meta.uid === editor.activeChapter) : null;
+  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
+  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
+
+  const onInspectElement = (e, componentId) => {
+    console.log('onInspectElement', e, componentId);
+    e.stopPropagation();
+    update({
+      ...produce(data, nextData => {
+        nextData.editor.activeElementId = componentId;
+        if (componentId) nextData.inspector.activeInspector = 'element';
+      }),
+    });
+  };
+
+  const onElementUpdate = payload => {
+    const componentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings,
+          ...payload,
+        };
+      }),
+    });
+  };
+
+  console.group('Canvas.js');
+  console.log('activeElementId:', activeElementId);
+  // console.log('data:', data);
+  // console.log('props:', props);
+  console.groupEnd();
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
       <Grid container direction="column" className={classes.components}>
-        {chapterData
-          ? _.sortBy(chapterData.tree.components, [o => o.order]).map((component, i) => {
-              // consolidate fill props with raw images
-              const fill =
-                component.props.fill && component.props.fill.image
+        {activePage
+          ? _.sortBy(activePage.tree.components, [o => o.order]).map((component, i) => {
+              // consolidate backgImage props with raw images
+              const backgImage =
+                component.settings.backgImage && component.settings.backgImage.length > 0
                   ? {
-                      ...component.props.fill,
-                      raw: `${basepath}src/chapters/${activeChapter}/${component.id}-${component.props.fill.image}`,
+                      ...component.settings.backgImage,
+                      raw: `${basepath}src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
                     }
-                  : component.props.fill;
+                  : component.settings.backgImage;
 
-              // consolidate component.props.images with raw images
+              // consolidate component.settings.images with raw images
               const images =
-                component.props.images.length > 0
-                  ? component.props.images.map(image => {
-                      const imagePath = `${basepath}src/chapters/${activeChapter}/${component.id}-${image.name}`;
+                component.settings.images && component.settings.images.length > 0
+                  ? component.settings.images.map(image => {
+                      const imagePath = `${basepath}src/pages/${activePageId}/${component.id}-${image.name}`;
                       return {
                         ...image,
                         raw: imagePath,
@@ -62,24 +96,30 @@ const Canvas = props => {
                     })
                   : [];
 
-              // dirty validate mask string values
-              const mask = ['dark', 'light'].includes(component.props.mask) ? component.props.mask : null;
-
               const RenderedComponent = componentMap[component.type];
-              const componentProps = component.props;
+              const componentSettings = component.settings;
+              const isActiveComponent = activeElementId === component.id;
 
               return (
-                <Grid item key={component.id} className={classes.componentWrap}>
-                  <IdocProvider invert={component.invert}>
-                    <RenderedComponent
-                      {...componentProps}
-                      mask={mask}
-                      cover={false}
-                      animate={false}
-                      fill={fill}
-                      images={images}
-                    />
-                  </IdocProvider>
+                <Grid item key={`${activePage.meta.uid}${component.id}`} className={classes.componentWrap}>
+                  <ThemeProvider theme={docTheme}>
+                    <div onClick={e => onInspectElement(e, component.id)}>
+                      <RenderedComponent
+                        {...componentSettings}
+                        animate={false}
+                        cover={false}
+                        backgImage={backgImage}
+                        images={images}
+                        isEditable
+                        onElementUpdate={onElementUpdate}
+                        style={{
+                          boxShadow: isActiveComponent ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
+                          margin: isActiveComponent ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
+                          transition: 'margin 0.5s',
+                        }}
+                      />
+                    </div>
+                  </ThemeProvider>
                 </Grid>
               );
             })

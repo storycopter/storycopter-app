@@ -1,255 +1,227 @@
-import 'rc-texty/assets/index.css';
-import Img from 'gatsby-image';
-import React, { Component } from 'react';
-import Texty from 'rc-texty';
-import styled from 'styled-components';
-import { bool, object, oneOfType, string, shape } from 'prop-types';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { withTheme } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { breakpoint, color } from '../../settings';
-import { setType, setSpace } from '../../mixins';
+import docTheme from '../../themes/docTheme';
 
-const Title = styled.div`
-  .TitleText {
-    ${setType('k')};
-    ${'' /* font-family: ${({ theme }) => theme.typography.stack.primary}; */}
-  }
-`;
-const Subtitle = styled.div`
-  ${setSpace('mtm')};
-  .SubtitleText {
-    ${setType('h')};
-    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
-  }
-`;
-const Text = styled.div`
-  ${setSpace('mtm')};
-  .TextText {
-    ${setType('l')};
-    ${'' /* font-family: ${({ theme }) => theme.typography.stack.secondary}; */}
-  }
-`;
-const Child = styled.div`
-  position: relative;
-  z-index: 2;
-`;
-const Parent = styled.div`
-  display: flex;
-  flex-direction: row;
-  max-width: 1600px;
-  width: 100%;
-`;
-const Append = styled.div`
-  ${setSpace('mtl')};
-`;
-const Element = styled(({ align, animate, cover, fill, mask, theme, ...props }) => <section {...props} />)`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =>
+  makeStyles(theme => ({
+    headlineRoot: {
+      backgroundColor: backgColor ? backgColor : 'transparent',
+      backgroundImage: backgImage
+        ? backgImage.raw
+          ? `url(${backgImage.raw})`
+          : `url(${backgImage.fixed.src})`
+        : 'none',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      color: textColor ? textColor : 'inherit',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      minHeight: cover ? '100vh' : 'auto',
+      paddingBottom: theme.spacing(5),
+      paddingTop: theme.spacing(5),
+      position: 'relative',
+      [theme.breakpoints.up('md')]: {
+        paddingTop: theme.spacing(10),
+        paddingBottom: theme.spacing(10),
+      },
+      [theme.breakpoints.up('xl')]: {
+        paddingTop: theme.spacing(20),
+        paddingBottom: theme.spacing(20),
+      },
+      '&:before': {
+        backgroundColor: maskColor ? maskColor : 'transparent',
+        bottom: 0,
+        content: maskColor ? `' '` : 'none',
+        display: maskColor ? 'block' : 'none',
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 1,
+      },
+    },
+    headlineContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start',
+      position: 'relative',
+      textAlign: align === 'center' ? 'center' : 'left',
+      zIndex: 2,
+    },
+    headlineContent: {
+      [theme.breakpoints.up('md')]: {
+        flex: `0 0 ${(100 / 3) * 2}%`,
+      },
+      [theme.breakpoints.up('lg')]: {
+        flex: `0 0 ${100 / 2}%`,
+      },
+    },
+    headlineTitle: {},
+    headlineSubtitle: {
+      marginTop: theme.spacing(1),
+      [theme.breakpoints.up('md')]: {
+        marginTop: theme.spacing(3),
+      },
+      [theme.breakpoints.up('xl')]: {
+        marginTop: theme.spacing(5),
+      },
+    },
+    headlineText: {
+      marginTop: theme.spacing(1),
+      [theme.breakpoints.up('md')]: {
+        marginTop: theme.spacing(3),
+      },
+      [theme.breakpoints.up('xl')]: {
+        marginTop: theme.spacing(5),
+      },
+    },
+    headlineTitleInput: {
+      ...docTheme.typography.h1,
+    },
+    headlineSubtitleInput: {
+      ...docTheme.typography.h3,
+    },
+    headlineTextInput: {
+      ...docTheme.typography.h5,
+    },
+    headlineActionbar: {
+      marginTop: theme.spacing(5),
+      [theme.breakpoints.up('md')]: {
+        marginTop: theme.spacing(5),
+      },
+      [theme.breakpoints.up('xl')]: {
+        marginTop: theme.spacing(5),
+      },
+    },
+  }));
 
-  color: ${({ theme }) => theme.palette.text.primary};
+export default function Headline({
+  align = 'left',
+  backgColor = null,
+  backgImage = null,
+  children = null,
+  cover = false,
+  isEditable = false,
+  maskColor = null,
+  style = null,
+  textColor = null,
+  ...props
+}) {
+  const classes = useStyles(align, backgColor, backgImage, cover, maskColor, textColor)();
 
-  ${breakpoint.phone} {
-    ${setSpace('pal')};
-  }
-  ${breakpoint.tablet} {
-    ${setSpace('pah')};
-  }
-  ${breakpoint.desktopPlus} {
-    ${setSpace('pak')};
-    ${Child} {
-      flex: 0 0 ${(100 / 3) * 2}%;
-    }
-  }
-  ${breakpoint.hdesktopPlus} {
-    ${setSpace('pak')};
-    ${Child} {
-      flex: 0 0 ${100 / 2}%;
-    }
-  }
+  const onInputBlur = (e, key) => {
+    props.onElementUpdate({
+      [key]: e.target.value,
+    });
+  };
 
-  ${({ align }) => {
-    if (align === 'center') {
-      return `
-        ${Parent} {
-          justify-content: center;
-          text-align: center;
-        }
-        `;
-    } else if (align === 'right')
-      return `
-        ${Parent} {
-          justify-content: flex-end;
-        }
-      `;
-  }};
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'none',
+    multiline: true,
+    rowsMax: '5',
+    type: 'text',
+    variant: 'outlined',
+  };
 
-  ${({ fill, theme }) => {
-    if (fill.color) {
-      return `
-        background-color: ${fill.color ? fill.color : theme.palette.background.accent};
-        `;
-    }
-    if (fill.image || fill.raw) {
-      return `
-        background-image: url(${fill.raw ? fill.raw : fill.image.fixed.src});
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        `;
-    }
-  }};
+  // console.group('Headline.js');
+  // console.log('maskColor:', maskColor);
+  // console.groupEnd();
 
-  ${({ mask }) => {
-    if (mask) {
-      return `
-      &:before {
-        background: ${mask === 'dark' ? color.shadow500 : color.flare500};
-        bottom: 0;
-        content: " ";
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
-      }
-        `;
-    }
-  }};
-
-  ${({ cover }) => {
-    if (cover) {
-      return `
-        min-height: 100vh;
-        width: 100%
-      `;
-    }
-  }};
-`;
-
-class Headline extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { align, animate, children, cover, fill, id, mask, subtitle, text, theme, title } = this.props;
-
-    const getSplit = e => {
-      const t = e.split(' ');
-      const c = [];
-      t.forEach((str, i) => {
-        c.push(<span key={`${str}-${i}`}>{str}</span>);
-        if (i < t.length - 1) {
-          c.push(<span key={` -${i}`}> </span>);
-        }
-      });
-      return c;
-    };
-
-    console.group('Headline.js');
-    console.log(this.props);
-    console.groupEnd();
-
-    return (
-      <Element align={align} animate={animate} cover={cover} fill={fill} id={id} mask={mask} theme={theme}>
-        {fill.image && fill.image.name ? (
-          <Img
-            fixed={fill.image.fixed}
-            style={{ height: '1px', width: '1px', overflow: 'hidden', visibility: 'hidden' }}
-          />
-        ) : null}
-        <Parent>
-          <Child>
-            {title ? (
-              <Title>
-                <h1 className="TitleText">
-                  {animate ? (
-                    <Texty component="span" duration={500} mode="smooth" split={getSplit} type="top">
-                      {title}
-                    </Texty>
-                  ) : (
-                    title
-                  )}
-                </h1>
-              </Title>
-            ) : null}
-            {subtitle ? (
-              <Subtitle>
-                <h2 className="SubtitleText">
-                  {animate ? (
-                    <Texty
-                      component="span"
-                      delay={300}
-                      duration={500}
-                      exclusive={true}
-                      mode="smooth"
-                      split={t => [t]}
-                      type="top">
-                      {subtitle}
-                    </Texty>
-                  ) : (
-                    subtitle
-                  )}
-                </h2>
-              </Subtitle>
-            ) : null}
-            {text ? (
-              <Text>
-                <h2 className="TextText">
-                  {animate ? (
-                    <Texty
-                      component="span"
-                      delay={600}
-                      duration={500}
-                      exclusive={true}
-                      mode="smooth"
-                      split={t => [t]}
-                      type="top">
-                      {text}
-                    </Texty>
-                  ) : (
-                    text
-                  )}
-                </h2>
-              </Text>
-            ) : null}
-            {children && animate ? <Append>{children}</Append> : children}
-          </Child>
-        </Parent>
-      </Element>
-    );
-  }
+  return (
+    <Box className={classes.headlineRoot} style={style}>
+      <Container className={classes.headlineContainer} maxWidth="xl">
+        <Box className={classes.headlineContent}>
+          {isEditable || props.title ? (
+            <Typography className={classes.headlineTitle} component="div" variant="h1" style={{ color: textColor }}>
+              {isEditable ? (
+                <TextField
+                  {...textFieldProps}
+                  defaultValue={props.title}
+                  id="title"
+                  inputProps={{
+                    className: classes.headlineTitleInput,
+                    maxLength: 150,
+                    onBlur: e => onInputBlur(e, 'title'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
+                  }}
+                  name="title"
+                  placeholder="Add title…"
+                />
+              ) : (
+                <h1>{props.title}</h1>
+              )}
+            </Typography>
+          ) : null}
+          {isEditable || props.subtitle ? (
+            <Typography className={classes.headlineSubtitle} component="div" variant="h3" style={{ color: textColor }}>
+              {isEditable ? (
+                <TextField
+                  {...textFieldProps}
+                  defaultValue={props.subtitle}
+                  id="subtitle"
+                  inputProps={{
+                    className: classes.headlineSubtitleInput,
+                    maxLength: 150,
+                    onBlur: e => onInputBlur(e, 'subtitle'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
+                  }}
+                  name="subtitle"
+                  placeholder="Add subtitle…"
+                />
+              ) : (
+                <h2>{props.subtitle}</h2>
+              )}
+            </Typography>
+          ) : null}
+          {isEditable || props.text ? (
+            <Typography className={classes.headlineText} component="div" variant="h5" style={{ color: textColor }}>
+              {isEditable ? (
+                <TextField
+                  {...textFieldProps}
+                  defaultValue={props.text}
+                  id="text"
+                  inputProps={{
+                    className: classes.headlineTextInput,
+                    maxLength: 250,
+                    onBlur: e => onInputBlur(e, 'text'),
+                    style: { textAlign: align === 'center' ? 'center' : 'left', color: textColor },
+                  }}
+                  name="text"
+                  placeholder="Add text…"
+                />
+              ) : (
+                <p>{props.text}</p>
+              )}
+            </Typography>
+          ) : null}
+          {children ? <Box className={classes.headlineActionbar}>{children}</Box> : null}
+        </Box>
+      </Container>
+    </Box>
+  );
 }
 
-export default withTheme(Headline);
-
 Headline.propTypes = {
-  align: string,
-  animate: bool,
-  cover: bool,
-  fill: shape({
-    image: oneOfType([object, string]),
-    color: string,
-  }),
-  mask: string,
-  subtitle: string.isRequired,
-  text: string,
-  theme: object.isRequired,
-};
-
-Headline.defaultProps = {
-  align: 'left',
-  animate: false,
-  cover: false,
-  fill: {
-    color: 'transparent',
-    image: null,
-  },
-  mask: null,
-  text: null,
+  align: PropTypes.string,
+  backgColor: PropTypes.string,
+  backgImage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  cover: PropTypes.bool,
+  isEditable: PropTypes.bool,
+  maskColor: PropTypes.string,
+  onElementUpdate: PropTypes.func,
+  subtitle: PropTypes.string,
+  text: PropTypes.string,
+  textColor: PropTypes.string,
+  title: PropTypes.string,
 };

@@ -2,12 +2,11 @@ import Img from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/styles';
+import { Link } from 'gatsby';
 
 import { Action } from '@storycopter/ui/src/components';
 import { color } from '@storycopter/ui/src/settings';
 import { setSpace, setType } from '@storycopter/ui/src/mixins';
-
-import AniLink from './AniLink';
 
 const TileEl = styled(({ ...props }) => <div {...props} />)`
   border: none;
@@ -21,14 +20,14 @@ const TileEl = styled(({ ...props }) => <div {...props} />)`
   width: 100%;
 `;
 
-const TileLink = styled(({ theme, ...props }) => <AniLink {...props} />)`
+const TileLink = styled(({ theme, ...props }) => <Link {...props} />)`
   display: block;
 `;
 
 const TileImage = styled(({ theme, ...props }) => <div {...props} />)``;
 const TileContent = styled(({ theme, ...props }) => <div {...props} />)`
   ${setSpace('pal')};
-  background: ${color.shadow500};
+  background: ${color.shadow[500]};
   bottom: 0;
   color: ${({ theme }) => theme.palette.common.white};
   display: flex;

@@ -1,3 +1,3 @@
 # Storycopter
 
-When in trouble do `npm update` and/or `npm rebuild`.
+When in trouble with `sharp`, run `$ npm rebuild` in the project root.

@@ -14,18 +14,16 @@
         "id": "001",
         "invert": true,
         "order": 0,
-        "props": {
-          "align": "",
-          "animate": true,
+        "settings": {
+          "align": null,
+          "backgColor": null,
+          "backgImage": "image.jpg",
           "cover": true,
-          "fill": {
-            "color": "",
-            "image": "image.jpg"
-          },
           "images": [],
-          "mask": "dark",
+          "maskColor": null,
           "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
           "text": "Some text",
+          "textColor": null,
           "title": "A title of the Headline"
         },
         "type": "headline"

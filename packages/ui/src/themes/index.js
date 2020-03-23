@@ -1,2 +1,3 @@
-export { default as defaultThm } from './defaultThm';
-export { default as negativeThm } from './negativeThm';
+export { default as appTheme } from './appTheme';
+export { default as docTheme } from './docTheme';
+export { default as siteTheme } from './siteTheme';

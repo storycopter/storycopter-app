@@ -5,12 +5,12 @@
     "summary": "An interactive documentary about something truly epic.",
     "enableCover": false,
     "cover": {
-      "name": null
+      "name": ""
     }
   },
   "brand": {
     "backgColor": "#ffffff",
-    "brandColor": "#4051b5",
+    "brandColor": "#b20b05",
     "enableFavicon": false,
     "enableLogo": false,
     "favicon": {

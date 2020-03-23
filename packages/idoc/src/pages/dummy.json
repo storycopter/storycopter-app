@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "cover": {
+      "name": "dummy.png"
+    },
+    "order": 0,
+    "path": "/pagesDummy",
+    "text": "string",
+    "title": "string",
+    "uid": "pagesDummy"
+  },
+  "tree": {
+    "components": [
+      {
+        "id": "string",
+        "order": 0,
+        "settings": {
+          "align": "string",
+          "backgColor": "string",
+          "backgImage": "string",
+          "cover": true,
+          "images": [
+            {
+              "alt": "string",
+              "caption": "string",
+              "name": "string",
+              "order": 0
+            }
+          ],
+          "maskColor": "string",
+          "subtitle": "string",
+          "text": "string",
+          "textColor": "string",
+          "title": "string"
+        },
+        "type": "string"
+      }
+    ]
+  }
+}
