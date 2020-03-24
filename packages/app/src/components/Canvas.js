@@ -4,14 +4,13 @@ import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../reducers/data';
 
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 
-import { componentMap } from '@storycopter/ui/src/components';
-import { docTheme } from '@storycopter/ui/src/themes';
+import componentMap from '@storycopter/ui/src/components/componentMap';
+import docTheme from '@storycopter/ui/src/themes/docTheme';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,18 +18,15 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     padding: `${theme.spacing(5)}px`,
   },
-  components: {
-    // boxShadow: theme.shadows[4],
-    position: 'relative',
-  },
-  componentWrap: {
+  elements: {},
+  elementWrap: {
     position: 'relative',
     width: '100%',
     height: 'auto',
   },
 }));
 
-const Canvas = ({ data, update, ...props }) => {
+const Canvas = ({ data, update }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -38,96 +34,84 @@ const Canvas = ({ data, update, ...props }) => {
   const { basepath, pages } = currentProject;
   const { activePageId, activeElementId } = editor;
 
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
+  if (!activePageId) return null;
 
-  const onInspectElement = (e, componentId) => {
-    console.log('onInspectElement', e, componentId);
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+
+  const onInspectElement = (e, elementId) => {
+    console.log({ elementId });
     e.stopPropagation();
     update({
       ...produce(data, nextData => {
-        nextData.editor.activeElementId = componentId;
-        if (componentId) nextData.inspector.activeInspector = 'element';
+        nextData.editor.activeElementId = elementId;
+        if (elementId) nextData.inspector.activeInspector = 'element';
       }),
     });
   };
 
   const onElementUpdate = payload => {
-    const componentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
+    const componentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].tree.components[componentIndex].settings,
+        nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings,
           ...payload,
         };
       }),
     });
   };
 
-  console.group('Canvas.js');
-  console.log('activeElementId:', activeElementId);
+  // TODO: scroll to active element on activeElementId change
+
+  // console.group('Canvas.js');
+  // console.log('activeElementId:', activeElementId);
   // console.log('data:', data);
   // console.log('props:', props);
-  console.groupEnd();
+  // console.groupEnd();
 
   return (
-    <Box className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
-      <Grid container direction="column" className={classes.components}>
-        {activePage
-          ? _.sortBy(activePage.tree.components, [o => o.order]).map((component, i) => {
-              // consolidate backgImage props with raw images
-              const backgImage =
-                component.settings.backgImage && component.settings.backgImage.length > 0
-                  ? {
-                      ...component.settings.backgImage,
-                      raw: `file:///${basepath}/src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
-                    }
-                  : component.settings.backgImage;
+    <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
+      <Grid container direction="column" className={classes.elements}>
+        {_.sortBy(activePage.elements, [o => o.order]).map(({ id, type, settings }, i) => {
+          // TODO: don’t do this:
+          if (type !== 'headline') return null;
 
-              // consolidate component.settings.images with raw images
-              const images =
-                component.settings.images && component.settings.images.length > 0
-                  ? component.settings.images.map(image => {
-                      const imagePath = `file:///${basepath}src/pages/${activePageId}/${component.id}-${image.name}`;
-                      return {
-                        ...image,
-                        raw: imagePath,
-                      };
-                    })
-                  : [];
+          const Component = componentMap[type];
+          const isElementActive = activeElementId === id;
 
-              const RenderedComponent = componentMap[component.type];
-              const componentSettings = component.settings;
-              const isActiveComponent = activeElementId === component.id;
+          // construct backgImage object
+          const backgImage = {
+            ...settings.backgImage,
+            raw: `file:///${basepath}/src/pages/${activePageId}/${settings.backgImage.name}`,
+          };
 
-              return (
-                <Grid
-                  className={classes.componentWrap}
-                  item
-                  key={`${activePage.meta.uid}${component.id}`}
-                  onClick={e => onInspectElement(e, component.id)}>
-                  <ThemeProvider theme={docTheme}>
-                    <RenderedComponent
-                      {...componentSettings}
-                      animate={false}
-                      cover={false}
-                      backgImage={backgImage}
-                      images={images}
-                      isEditable
-                      onElementUpdate={onElementUpdate}
-                      style={{
-                        boxShadow: isActiveComponent ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
-                        margin: isActiveComponent ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
-                        transition: 'margin 0.5s',
-                      }}
-                    />
-                  </ThemeProvider>
-                </Grid>
-              );
-            })
-          : null}
+          return (
+            <Grid
+              className={classes.elementWrap}
+              item
+              key={`${activePageId}-${id}`}
+              onClick={e => onInspectElement(e, id)}>
+              <div
+                style={{
+                  boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
+                  margin: isElementActive ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
+                  transition: 'margin 0.5s',
+                }}>
+                <ThemeProvider theme={docTheme}>
+                  <Component
+                    {...settings}
+                    backgImage={settings.backgImageEnabled ? backgImage : null}
+                    isEditable
+                    onElementUpdate={onElementUpdate}
+                  />
+                </ThemeProvider>
+              </div>
+            </Grid>
+          );
+        })}
       </Grid>
-    </Box>
+    </div>
   );
 };
 

@@ -1,32 +1,34 @@
 {
   "meta": {
-    "cover": {
+    "coverEnabled": false,
+    "coverImage": {
       "name": "cover.jpg"
     },
     "order": 1,
     "path": "/beginning",
-    "text": "Some text",
+    "summary": "Some text",
     "title": "Beginning",
     "uid": "001-beginning"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "000",
-        "order": 0,
-        "settings": {
-          "align": "left",
-          "backgColor": "blue",
-          "backgImage": "",
-          "cover": true,
-          "maskColor": null,
-          "subtitle": "Some text",
-          "text": "More text",
-          "textColor": null,
-          "title": "Beginning"
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": "#3d2698",
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
-      }
-    ]
-  }
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": null,
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "Beginning"
+      },
+      "type": "headline"
+    }
+  ]
 }

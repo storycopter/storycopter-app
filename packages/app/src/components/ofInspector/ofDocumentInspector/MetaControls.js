@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import uploadFile from '../../../utils/uploadFile';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -8,11 +10,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Checkbox from '@material-ui/core/Checkbox';
-import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -32,105 +33,86 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MetaControls = ({ data, update, ...props }) => {
+const MetaControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { currentProject } = data;
-  const { basepath } = currentProject;
-  const { site } = currentProject;
+  const { basepath, site } = data.currentProject;
   const { meta } = site;
 
-  const [state, setState] = React.useState({
-    title: meta.title,
-    summary: meta.summary,
-    publisher: meta.publisher,
-  });
+  const [coverImage, setCoverImage] = useState(meta.coverImage);
+  const [publisher, setPublisher] = useState(meta.publisher);
+  const [summary, setSummary] = useState(meta.summary);
+  const [title, setTitle] = useState(meta.title);
 
-  const handleUpdate = payload => {
+  const onMetaUpdate = payload => {
     update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...site,
-          meta: {
-            ...meta,
-            ...payload,
-          },
+      ...produce(data, nextData => {
+        nextData.currentProject.site.meta = {
+          ...nextData.currentProject.site.meta,
+          ...payload,
+        };
+      }),
+    });
+  };
+
+  const onAddCover = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    if (file) {
+      onMetaUpdate({
+        coverImage: {
+          name: file.name,
         },
-      },
-    });
+      });
+      setCoverImage(file);
+    }
   };
 
-  const handleInputChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleInputBlur = e => {
-    handleUpdate({ [e.target.name]: e.target.value });
-  };
-
-  const handleCheckboxChange = e => {
-    handleUpdate({ [e.target.name]: e.target.checked });
+  const textFieldProps = {
+    fullWidth: true,
+    InputProps: {
+      disableUnderline: true,
+    },
+    margin: 'dense',
+    type: 'text',
+    variant: 'filled',
   };
 
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="title">Name</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="title"
-          name="title"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          type="text"
-          value={state.title}
-        />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="summary">Summary</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="summary"
-          multiline={true}
-          name="summary"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          rowsMax={4}
-          type="text"
-          value={state.summary}
-        />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="publisher">Publisher</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="publisher"
-          name="publisher"
-          onBlur={handleInputBlur}
-          onChange={handleInputChange}
-          required
-          type="text"
-          value={state.publisher}
-        />
-      </FormControl>
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }), maxLength: 30 }}
+        label="Title"
+        onChange={e => setTitle(e.target.value)}
+        value={title || ''}
+      />
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ summary: e.target.value }) }}
+        label="Summary"
+        multiline
+        onChange={e => setSummary(e.target.value)}
+        rowsMax={4}
+        value={summary || ''}
+      />
+      <TextField
+        {...textFieldProps}
+        inputProps={{ onBlur: e => onMetaUpdate({ publisher: e.target.value }) }}
+        label="Publisher name"
+        onChange={e => setPublisher(e.target.value)}
+        placeholder="e.g. New York Times"
+        value={publisher || ''}
+      />
+
       <FormControlLabel
         control={
           <Checkbox
-            checked={meta.enableCover}
+            checked={meta.coverEnabled}
             color="primary"
-            id="enableCover"
-            name="enableCover"
-            onChange={handleCheckboxChange}
-            value="true"
+            id="coverEnabled"
+            name="coverEnabled"
+            onChange={e => onMetaUpdate({ coverEnabled: e.target.checked })}
           />
         }
         label={<Typography variant="overline">Enable cover</Typography>}
@@ -138,35 +120,23 @@ const MetaControls = ({ data, update, ...props }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {meta.cover && meta.cover.name ? (
-              <img
-                alt="Cover"
-                height="100"
-                src={`file:///${basepath}/src/site/assets/${meta.cover.name}`}
-                title="Cover"
-              />
-            ) : (
-              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={meta.enableCover ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {coverImage && coverImage.name ? (
+                <img
+                  alt="Cover"
+                  height="60"
+                  src={`file:///${basepath}/src/site/assets/${coverImage.name}`}
+                  title="Cover"
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={meta.coverEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              accept="image/*"
-              color="primary"
-              disabled={!meta.enableCover}
-              id="cover"
-              name="cover"
-              onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="cover" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!meta.enableCover} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!meta.coverEnabled} fullWidth onClick={onAddCover} size="small">
+              Choose file…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>

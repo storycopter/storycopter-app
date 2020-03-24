@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
+import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Checkbox from '@material-ui/core/Checkbox';
-import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
-import Select from '@material-ui/core/Select';
+import Popover from '@material-ui/core/Popover';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -32,63 +37,129 @@ const useStyles = makeStyles(theme => ({
     margin: '0 !important',
     width: '100%',
   },
+  colorPaper: {
+    width: '240px',
+  },
+  colorPreview: {
+    height: theme.spacing(2),
+    width: theme.spacing(2),
+  },
+  colorPicker: {
+    ...theme.typography.caption,
+    background: 'none !important',
+    boxShadow: 'none !important',
+    border: 'none !important',
+  },
+  resetButton: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
 }));
 
-const BrandControls = ({ data, update, ...props }) => {
+const BrandControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { currentProject } = data;
-  const { basepath } = currentProject;
-  const { site } = currentProject;
+  const { basepath, site } = data.currentProject;
   const { brand } = site;
 
-  const [state, setState] = React.useState({
-    backgColor: brand.backgColor,
-    brandColor: brand.brandColor,
-    textColor: brand.textColor,
-    typography: brand.typography,
+  const [backgColor, setBackgColor] = useState(brand.backgColor || '#ffffff');
+  const [brandColor, setBrandColor] = useState(brand.brandColor || '#4051b5');
+  const [favicon, setFavicon] = useState(brand.favicon);
+  const [logo, setLogo] = useState(brand.logo);
+  const [textColor, setTextColor] = useState(brand.textColor || '#333333');
+  const [typography, setTypography] = useState(brand.typography || 'modern');
+
+  const backgPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'backgPicker',
+  });
+  const brandcPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'brandcPicker',
+  });
+  const textPickerState = usePopupState({
+    variant: 'popover',
+    popupId: 'textPicker',
   });
 
-  const handleUpdate = payload => {
+  const onBrandUpdate = payload => {
     update({
-      currentProject: {
-        ...currentProject,
-        site: {
-          ...site,
-          brand: {
-            ...brand,
-            ...payload,
-          },
+      ...produce(data, nextData => {
+        nextData.currentProject.site.brand = {
+          ...nextData.currentProject.site.brand,
+          ...payload,
+        };
+      }),
+    });
+  };
+
+  const onAddFavicon = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['ico']);
+    if (file) {
+      onBrandUpdate({
+        favicon: {
+          name: file.name,
         },
-      },
-    });
+      });
+      setFavicon(file);
+    }
   };
 
-  const handleInputChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+  const onAddLogo = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['png', 'jpg']);
+    if (file) {
+      onBrandUpdate({
+        logo: {
+          name: file.name,
+        },
+      });
+      setLogo(file);
+    }
   };
 
-  const handleInputBlur = e => {
-    handleUpdate({ [e.target.name]: e.target.value });
+  const popoverProps = {
+    PaperProps: {
+      className: classes.colorPaper,
+    },
+    disablePortal: true,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center',
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center',
+    },
+  };
+  const pickerProps = {
+    className: classes.colorPicker,
+    disableAlpha: true,
+    presetColors: [],
+    width: 'auto',
+  };
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'dense',
+    type: 'text',
+    variant: 'filled',
   };
 
-  const handleCheckboxChange = e => {
-    handleUpdate({ [e.target.name]: e.target.checked });
-  };
+  // console.group('BrandControls.js');
+  // console.log('typography', typography);
+  // console.groupEnd();
 
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
       <FormControlLabel
         control={
           <Checkbox
-            checked={brand.enableLogo}
+            checked={brand.logoEnabled}
             color="primary"
-            id="enableLogo"
-            name="enableLogo"
-            onChange={handleCheckboxChange}
+            id="logoEnabled"
+            name="logoEnabled"
+            onChange={e => onBrandUpdate({ logoEnabled: e.target.checked })}
             value="true"
           />
         }
@@ -97,46 +168,29 @@ const BrandControls = ({ data, update, ...props }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {brand.logo && brand.logo.name ? (
-              <img
-                alt="Logo"
-                height="100"
-                src={`file:///${basepath}/src/site/assets/${brand.logo.name}`}
-                title="Logo"
-              />
-            ) : (
-              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={brand.enableLogo ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {brand.logo && brand.logo.name ? (
+                <img alt="Logo" height="60" src={`file:///${basepath}/src/site/assets/${logo.name}`} title="Logo" />
+              ) : (
+                <PanoramaOutlinedIcon color={brand.logoEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              accept="image/*"
-              color="primary"
-              disabled={!brand.enableLogo}
-              id="logo"
-              name="logo"
-              onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="logo" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!brand.enableLogo} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!brand.logoEnabled} fullWidth onClick={onAddLogo} size="small">
+              Choose logo…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>
       <FormControlLabel
         control={
           <Checkbox
-            checked={brand.enableFavicon}
+            checked={brand.faviconEnabled}
             color="primary"
-            id="enableFavicon"
-            name="enableFavicon"
-            onChange={handleCheckboxChange}
+            id="faviconEnabled"
+            name="faviconEnabled"
+            onChange={e => onBrandUpdate({ faviconEnabled: e.target.checked })}
             value="true"
           />
         }
@@ -145,93 +199,141 @@ const BrandControls = ({ data, update, ...props }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {brand.favicon && brand.favicon.name ? (
-              <img
-                alt="Favicon"
-                height="36"
-                src={`file:///${basepath}/src/site/assets/${brand.favicon.name}`}
-                title="Favicon"
-              />
-            ) : (
-              <Box height="36px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={brand.enableFavicon ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="36px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {favicon && favicon.name ? (
+                <img
+                  // alt="not found"
+                  height="16px"
+                  src={`file:///${basepath}/src/site/assets/${favicon.name}`}
+                  // title="Favicon"
+                  width="16px"
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={brand.faviconEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              accept=".ico"
-              color="primary"
-              disabled={!brand.enableFavicon}
-              id="favicon"
-              name="favicon"
-              onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="favicon" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!brand.enableFavicon} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!brand.faviconEnabled} fullWidth onClick={onAddFavicon} size="small">
+              Choose favicon…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="brandColor">Brand color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="brandColor"
-          name="brandColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.brandColor}
+
+      <TextField
+        {...bindTrigger(brandcPickerState)}
+        {...textFieldProps}
+        label="Brand color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: brandColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={brandColor ? brandColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(brandcPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={brandColor ? brandColor : '#ffffff'}
+          onChange={({ hex }) => setBrandColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ brandColor: hex })}
         />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="backgColor">Background color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="backgColor"
-          name="backgColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.backgColor}
+      </Popover>
+
+      <TextField
+        {...bindTrigger(backgPickerState)}
+        {...textFieldProps}
+        label="Background color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: backgColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={backgColor ? backgColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(backgPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={backgColor ? backgColor : '#ffffff'}
+          onChange={({ hex }) => setBackgColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ backgColor: hex })}
         />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="textColor">Text color</InputLabel>
-        <FilledInput
-          disableUnderline
-          fullWidth
-          id="textColor"
-          name="textColor"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          type="color"
-          value={state.textColor}
+      </Popover>
+
+      <TextField
+        {...bindTrigger(textPickerState)}
+        {...textFieldProps}
+        label="Text color"
+        InputProps={{
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <Avatar
+                className={classes.colorPreview}
+                style={{ backgroundColor: textColor || 'transparent' }}
+                variant="rounded">
+                <></>
+              </Avatar>
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">#</InputAdornment>,
+        }}
+        value={textColor ? textColor.substr(1, 6) : ''}
+      />
+      <Popover {...bindPopover(textPickerState)} {...popoverProps}>
+        <SketchPicker
+          {...pickerProps}
+          color={textColor ? textColor : '#333333'}
+          onChange={({ hex }) => setTextColor(hex)}
+          onChangeComplete={({ hex }) => onBrandUpdate({ textColor: hex })}
         />
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="dense">
-        <InputLabel htmlFor="typography">Typography</InputLabel>
-        <Select
-          disableUnderline
-          fullWidth
-          id="typography"
-          name="typography"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          required
-          type="text"
-          value={state.typography}>
-          <MenuItem value="modern">Modern</MenuItem>
-          <MenuItem value="classic">Classic</MenuItem>
-        </Select>
-      </FormControl>
+      </Popover>
+
+      <TextField
+        {...textFieldProps}
+        SelectProps={{
+          disableUnderline: true,
+          MenuProps: {
+            getContentAnchorEl: null,
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center',
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'center',
+            },
+          },
+        }}
+        label="Typography"
+        onChange={e => {
+          onBrandUpdate({ typography: e.target.value });
+          setTypography(e.target.value);
+        }}
+        select
+        value={typography}>
+        <MenuItem value="modern">Modern</MenuItem>
+        <MenuItem value="classic">Classic</MenuItem>
+      </TextField>
     </form>
   );
 };

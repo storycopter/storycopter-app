@@ -27,7 +27,10 @@ const initialState = {
       motivation: false,
     },
     elementInspector: {},
-    pageInspector: {},
+    pageInspector: {
+      meta: true,
+      tree: false,
+    },
   },
   // currentProject: {
   //   basepath: 'file:///Users/pio/Playground/storycopter/packages/idoc/',

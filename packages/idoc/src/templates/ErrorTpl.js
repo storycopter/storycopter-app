@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
+import React from 'react';
+import { graphql } from 'gatsby';
 
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import { docTheme } from '@storycopter/ui/src/themes';
 import Layout from './partials/Layout';
+import docTheme from '@storycopter/ui/src/themes/docTheme';
 
-class ErrorTpl extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+export default function ErrorTpl(props) {
+  console.group('ErrorTpl.js');
+  console.log(props);
+  console.groupEnd();
 
-  render() {
-    const {} = this.props;
-
-    // console.group('ErrorTpl.js');
-    // console.log(this.props);
-    // console.groupEnd();
-
-    return (
-      <ThemeProvider theme={docTheme}>
-        <Layout contextData={this.props.pageContext.contextData} location={this.props.location} path={this.props.path}>
-          <h1>Error</h1>
-          <p>Some text</p>
-        </Layout>
-      </ThemeProvider>
-    );
-  }
+  return (
+    <ThemeProvider theme={docTheme}>
+      <Layout contextData={props.pageContext.contextData}>
+        <h1>Error</h1>
+      </Layout>
+    </ThemeProvider>
+  );
 }
 
-export default ErrorTpl;
+export const pageQuery = graphql`
+  query ErrorTplQuery($uid: String!) {
+    essential: essentialsJson(meta: { uid: { eq: $uid } }) {
+      meta {
+        path
+        title
+        uid
+      }
+    }
+  }
+`;

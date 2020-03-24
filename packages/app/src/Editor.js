@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
   },
   side: {
-    flexBasis: '320px',
+    flexBasis: '310px',
     flexGrow: 0,
     height: '100%',
     overflowY: 'auto',

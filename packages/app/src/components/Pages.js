@@ -1,10 +1,10 @@
 import React from 'react';
+import _ from 'lodash';
+import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../reducers/data';
-import { orderBy } from 'lodash';
 
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -17,9 +17,10 @@ const useStyles = makeStyles(theme => ({
     },
   },
   avatar: {
+    ...theme.typography.button,
     cursor: 'pointer',
     height: theme.spacing(4),
-    width: theme.spacing(4),
+    width: theme.spacing(3),
   },
 }));
 
@@ -29,38 +30,34 @@ const Pages = ({ data, update, ...props }) => {
   const { currentProject, editor } = data;
   const { basepath, pages } = currentProject;
 
-  const handleUpdate = payload => {
+  const onAvatarClick = pageId => {
     update({
-      editor: {
-        ...editor,
-        ...payload,
-      },
+      ...produce(data, nextData => {
+        nextData.editor.activePageId = pageId;
+        nextData.editor.activeElementId = null;
+      }),
     });
   };
 
-  const handleAvatarClick = value => {
-    handleUpdate({ activePageId: value, activeElementId: null });
-  };
-
   return (
-    <Box className={classes.root}>
-      {orderBy(pages, [o => o.meta.order], ['asc']).map(page => {
+    <div className={classes.root}>
+      {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
         // do not render the dummy page (used by the idoc package)
-        if (page.uid === 'default') return null;
+        if (meta.uid === 'pagesDummy') return null;
         return (
-          <Tooltip title={page.meta.title} key={page.meta.order}>
+          <Tooltip title={`${i + 1}. ${meta.title}`} key={meta.order}>
             <Avatar
-              alt={`${page.meta.title}`}
+              alt={`${meta.title}`}
               className={classes.avatar}
-              src={`file:///${basepath}/src/pages/${page.meta.uid}/${page.meta.cover.name}`}
-              variant="square"
-              onClick={() => handleAvatarClick(page.meta.uid)}>
-              {page.meta.order + 1}
+              onClick={() => onAvatarClick(meta.uid)}
+              src={meta.coverEnabled ? `file:///${basepath}/src/pages/${meta.uid}/${meta.coverImage.name}` : null}
+              variant="rounded">
+              {i + 1}
             </Avatar>
           </Tooltip>
         );
       })}
-    </Box>
+    </div>
   );
 };
 

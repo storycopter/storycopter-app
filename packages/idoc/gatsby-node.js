@@ -33,11 +33,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              cover {
-                name
-              }
               path
-              text
               title
               uid
             }
@@ -52,12 +48,13 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              cover {
+              coverEnabled
+              coverImage {
                 name
               }
               order
               path
-              text
+              summary
               title
               uid
             }
@@ -72,21 +69,37 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              title
+              coverEnabled
+              coverImage {
+                name
+              }
               publisher
+              summary
+              title
             }
-            settings {
-              assets {
-                brandmark
-                favicon
+            brand {
+              backgColor
+              brandColor
+              faviconEnabled
+              logoEnabled
+              favicon {
+                name
               }
-              palette {
-                accent
-                background
-                main
+              logo {
+                name
               }
-              typography {
-                variant
+              textColor
+              typography
+            }
+            motivation {
+              enabled
+              label
+              link
+            }
+            sound {
+              enabled
+              track {
+                name
               }
             }
           }
@@ -115,14 +128,12 @@ exports.createPages = async ({ graphql, actions }) => {
       // skip the dummy pages (used to sanitise Gatsby’s graphql queries)
       const dummyPages = ['essentialsDummy', 'pagesDummy'];
       if (dummyPages.includes(uid)) return null;
-      const pages = _.filter(allPages.data.allPagesJson.edges, function (o) {
+      const pages = _.filter(allPages.data.allPagesJson.edges, function(o) {
         if (!dummyPages.includes(o.node.meta.uid)) return o.node.meta;
       });
-      const essentials = _.filter(allEssentials.data.allEssentialsJson.edges, function (o) {
+      const essentials = _.filter(allEssentials.data.allEssentialsJson.edges, function(o) {
         if (!dummyPages.includes(o.node.meta.uid)) return o.node.meta;
       });
-
-      console.log(pages);
 
       createPage({
         component: creator.tpl ? creator.tpl : tpls[uid],

@@ -1,106 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
 import _ from 'lodash';
-import styled from 'styled-components';
 import { graphql } from 'gatsby';
-import { Link } from 'gatsby';
 
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import { docTheme } from '@storycopter/ui/src/themes';
-import { Action, ActionBar, Headline } from '@storycopter/ui/src/components';
-import { track } from '@storycopter/ui/src/settings';
-import { setSpace, setType } from '@storycopter/ui/src/mixins';
-
 import Layout from './partials/Layout';
-import consolidateBackgImage from './utils/consolidateBackgImage';
+import componentMap from '@storycopter/ui/src/components/componentMap';
+import docTheme from '@storycopter/ui/src/themes/docTheme';
+import findChildImageSharp from './utils/findChildImageSharp';
 
-const StartButton = styled(Link)`
-  border-color: white;
-`;
-const IndexButton = styled(Link)`
-  border-color: transparent;
-`;
-const OpeningActions = styled.div`
-  ${setSpace('mtl')};
-  align-items: center;
-  display: flex;
-  flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};
-  & > * {
-    ${setSpace('mas')}
-    ${setSpace('phm')};
-    ${setSpace('pvs')};
-    ${setType('s')};
-    border-style: solid;
-    border-width: 2px;
-    color: white;
-    letter-spacing: ${track.m};
-    text-transform: uppercase;
-    &:hover {
-      background-color: white;
-      border-color: white;
-      color: black;
-    }
-  }
-`;
-const OpeningTitles = styled(Headline)``;
+export default function HomeTpl({
+  data: {
+    essential: { elements: pageElements, meta: pageMeta },
+    files: { edges: pageFiles },
+  },
+  pageContext,
+  ...pageProps
+}) {
+  // console.group('HomeTpl.js');
+  // console.log('pageMeta', pageMeta);
+  // console.log('pageFiles', pageFiles);
+  // console.log('pageContext', pageContext);
+  // console.groupEnd();
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  return (
+    <ThemeProvider theme={docTheme}>
+      <Layout pageContext={pageContext} location={pageProps.location}>
+        {_.sortBy(pageElements, [o => o.order]).map(({ id, type, settings }, i) => {
+          const Component = componentMap[type];
 
-  render() {
-    const {
-      data: {
-        essential: {
-          tree: { components },
-        },
-        files: { edges },
-      },
-    } = this.props;
+          // construct backgImage object
+          const backgImage = {
+            ...settings.backgImage,
+            ...findChildImageSharp(pageFiles, settings.backgImage.name),
+          };
 
-    const titlesProps = this.props.data.essential.tree.components[0].settings;
-    const initialPath = this.props.data.pages.edges[0].node.meta.path;
-
-    return (
-      <ThemeProvider theme={docTheme}>
-        <Layout
-          contextData={this.props.pageContext.contextData}
-          location={this.props.location}
-          path={this.props.data.essential.meta.path}>
-          {_.sortBy(components, [o => o.order]).map(component => {
-            const { settings } = component;
-
-            // consolidate settings.backgImage w/ graphql-ed image data
-            const backgImage = consolidateBackgImage(component, settings, edges);
-
-            // console.group('Home.js');
-            // console.log(this.props);
-            // console.groupEnd();
-
-            return (
-              <OpeningTitles {...titlesProps} cover backgImage={backgImage} id={component.id} key={component.id}>
-                <ActionBar>
-                  <StartButton to={initialPath}>
-                    <Action as="span" primary>
-                      Start exploring
-                    </Action>
-                  </StartButton>
-                  <IndexButton to="/contents">
-                    <Action as="span">Discover contents</Action>
-                  </IndexButton>
-                </ActionBar>
-              </OpeningTitles>
-            );
-          })}
-        </Layout>
-      </ThemeProvider>
-    );
-  }
+          return <Component {...settings} key={id} backgImage={backgImage} fullSize />;
+        })}
+      </Layout>
+    </ThemeProvider>
+  );
 }
-
-export default Home;
 
 export const pageQuery = graphql`
   query HomeTplQuery($uid: String!) {
@@ -110,33 +50,23 @@ export const pageQuery = graphql`
         title
         uid
       }
-      tree {
-        components {
-          id
-          order
-          type
-          settings {
-            align
-            backgColor
-            backgImage
-            cover
-            maskColor
-            subtitle
-            text
-            textColor
-            title
+      elements {
+        id
+        order
+        type
+        settings {
+          align
+          backgColor
+          backgImageEnabled
+          backgImage {
+            name
           }
-        }
-      }
-    }
-    pages: allPagesJson(sort: { fields: meta___order }) {
-      edges {
-        node {
-          meta {
-            order
-            path
-            title
-          }
+          fullSize
+          maskColor
+          subtitle
+          text
+          textColor
+          title
         }
       }
     }

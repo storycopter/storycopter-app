@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import Fade from '@material-ui/core/Fade';
+import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import Popover from '@material-ui/core/Popover';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   colorPaper: {
-    width: '270px',
+    width: '240px',
   },
   colorPreview: {
     height: theme.spacing(2),
@@ -41,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 const DecorControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor, inspector } = data;
+  const { currentProject, editor } = data;
   const { basepath, pages, site } = currentProject;
   const { activePageId, activeElementId } = editor;
   const { brand } = site;
@@ -49,8 +58,8 @@ const DecorControls = ({ data, update, ...props }) => {
   const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
   const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeElementIndex =
-    activePageId && activeElementId ? _.findIndex(activePage.tree.components, o => o.id === activeElementId) : null;
-  const activeElement = activeElementId ? activePage.tree.components[activeElementIndex] : null;
+    activePageId && activeElementId ? _.findIndex(activePage.elements, o => o.id === activeElementId) : null;
+  const activeElement = activeElementId ? activePage.elements[activeElementIndex] : null;
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -72,12 +81,26 @@ const DecorControls = ({ data, update, ...props }) => {
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings,
+        nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
           ...payload,
         };
       }),
     });
+  };
+
+  const onAddBackgImage = () => {
+    const destination = `src/pages/${activePage.meta.uid}/`;
+    // console.log({ destination });
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    if (file) {
+      onElementUpdate({
+        backgImage: {
+          name: file.name,
+        },
+      });
+      // onElementUpdate(file);
+    }
   };
 
   const popoverProps = {
@@ -106,15 +129,19 @@ const DecorControls = ({ data, update, ...props }) => {
     size: 'small',
     children: 'Reset',
   };
+  const textFieldProps = {
+    fullWidth: true,
+    margin: 'dense',
+    type: 'text',
+    variant: 'filled',
+  };
 
   return (
     <div {...props}>
       <TextField
         {...bindTrigger(textPickerState)}
+        {...textFieldProps}
         label="Text color"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (
@@ -150,10 +177,8 @@ const DecorControls = ({ data, update, ...props }) => {
       </Popover>
       <TextField
         {...bindTrigger(backgPickerState)}
+        {...textFieldProps}
         label="Background color"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (
@@ -189,10 +214,8 @@ const DecorControls = ({ data, update, ...props }) => {
       </Popover>
       <TextField
         {...bindTrigger(maskPickerState)}
+        {...textFieldProps}
         label="Background mask"
-        variant="filled"
-        fullWidth
-        margin="dense"
         InputProps={{
           disableUnderline: true,
           endAdornment: (
@@ -219,11 +242,51 @@ const DecorControls = ({ data, update, ...props }) => {
           {...resetButtonProps}
           onClick={() => {
             maskPickerState.close();
-            onElementUpdate({ maskColor: null });
-            setMaskColor(null);
+            onElementUpdate({ maskColor: 'rgba(0,0,0,0.0)' });
+            setMaskColor('rgba(0,0,0,0.0)');
           }}
         />
       </Popover>
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={activeElement.settings.backgImageEnabled}
+            color="primary"
+            id="logoEnabled"
+            name="logoEnabled"
+            onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}
+            value="true"
+          />
+        }
+        label={<Typography variant="overline">Enable background image</Typography>}
+      />
+      <FormControl variant="filled" fullWidth margin="dense">
+        <Card elevation={0}>
+          <CardMedia className={classes.cardMedia}>
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {activeElement.settings.backgImage && activeElement.settings.backgImage.name ? (
+                <img
+                  height="60"
+                  src={`file:///${basepath}/src/pages/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={activeElement.settings.backgImageEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
+          </CardMedia>
+          <CardActions>
+            <Button
+              color="primary"
+              disabled={!activeElement.settings.backgImageEnabled}
+              fullWidth
+              onClick={onAddBackgImage}
+              size="small">
+              Choose background image…
+            </Button>
+          </CardActions>
+        </Card>
+      </FormControl>
     </div>
   );
 };
