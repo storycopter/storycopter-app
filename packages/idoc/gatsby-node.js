@@ -83,7 +83,9 @@ exports.createPages = async ({ graphql, actions }) => {
               brandColor
               faviconEnabled
               logoEnabled
-              favicon
+              favicon {
+                name
+              }
               logo {
                 name
               }
@@ -97,7 +99,9 @@ exports.createPages = async ({ graphql, actions }) => {
             }
             sound {
               enabled
-              track
+              track {
+                name
+              }
             }
           }
         }
