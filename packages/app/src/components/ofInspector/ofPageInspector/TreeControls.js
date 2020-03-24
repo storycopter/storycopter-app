@@ -5,16 +5,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
+import DragHandleIcon from '@material-ui/icons/DragHandle';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import DragHandleIcon from '@material-ui/icons/DragHandle';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import TitleIcon from '@material-ui/icons/Title';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
@@ -26,9 +25,16 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     position: 'relative',
+    '& .liSecAction': {
+      background: 'yellow',
+    },
   },
   listItemSecondaryAction: {
     right: 0,
+  },
+  iconButton: {
+    opacity: 0.33,
+    '&:hover': { opacity: 1 },
   },
 }));
 
@@ -91,23 +97,8 @@ const TreeControls = ({ data, update }) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided, droppableSnapshot) => (
-          <List
-            {...provided.droppableProps}
-            dense
-            disablePadding
-            ref={provided.innerRef}
-            className={classes.list}
-            // style={getListStyle(snapshot.isDraggingOver)}
-          >
+          <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
             {elements.map((element, index) => {
-              {
-                /* const { settings } = element;
-              const secondaryText = () => {
-                if (element.type === 'headline') {
-                  return element.settings.title || element.settings.subtitle || element.settings.text;
-                }
-              }; */
-              }
               return (
                 <Draggable key={element.id} draggableId={element.id} index={index}>
                   {(provided, draggableSnapshot) => (
@@ -129,11 +120,19 @@ const TreeControls = ({ data, update }) => {
                         </Typography>
                       </ListItemAvatar>
                       <ListItemText primary={elementTypes[element.type]} />
-                      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-                        <IconButton onClick={e => onInspectElement(e, element.id)}>
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                      </ListItemSecondaryAction>
+                      {!droppableSnapshot.isDraggingOver ? (
+                        <ListItemSecondaryAction className={`${classes.listItemSecondaryAction} liSecAction`}>
+                          <IconButton
+                            className={classes.iconButton}
+                            edge="end"
+                            disableFocusRipple
+                            disableRipple
+                            onClick={e => onInspectElement(e, element.id)}
+                            size="small">
+                            <EditIcon fontSize="inherit" />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      ) : null}
                     </ListItem>
                   )}
                 </Draggable>
