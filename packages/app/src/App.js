@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 // import is from 'electron-is';
-// import path from 'path';
+import path from 'path';
 import Ansi from 'ansi-to-react';
 import React from 'react';
 import fs from 'fs';
@@ -42,6 +42,19 @@ class App extends React.Component {
 
     this.iframeRef = React.createRef();
   }
+
+  addFile = async (basepath, dest) => {
+    const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openFile'] });
+    const src = filePaths.pop();
+
+    if (src) {
+      const destPath = path.join(dest, path.basename(src));
+      fs.copyFileSync(src, path.join(basepath, destPath));
+
+      console.log(destPath);
+      return destPath;
+    }
+  };
 
   openProjectDialog = async () => {
     const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openDirectory'] });
@@ -153,6 +166,12 @@ class App extends React.Component {
         ) : (
           'nothing'
         )}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.addFile(data.currentProject.basepath, 'src/site/assets/')}>
+          ADD FILE
+        </Button>
         {!child ? (
           <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
             Open Project
