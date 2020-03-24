@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
@@ -63,8 +64,8 @@ const BrandControls = ({ data, update }) => {
 
   const [backgColor, setBackgColor] = useState(brand.backgColor || '#ffffff');
   const [brandColor, setBrandColor] = useState(brand.brandColor || '#4051b5');
-  const [faviconEnabled, setFaviconEnabled] = useState(brand.faviconEnabled || false);
-  const [logoEnabled, setLogoEnabled] = useState(brand.logoEnabled || false);
+  const [favicon, setFavicon] = useState(brand.favicon);
+  const [logo, setLogo] = useState(brand.logo);
   const [textColor, setTextColor] = useState(brand.textColor || '#333333');
   const [typography, setTypography] = useState(brand.typography || 'modern');
 
@@ -82,7 +83,6 @@ const BrandControls = ({ data, update }) => {
   });
 
   const onBrandUpdate = payload => {
-    console.log('onBrandUpdate', payload);
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.brand = {
@@ -91,6 +91,32 @@ const BrandControls = ({ data, update }) => {
         };
       }),
     });
+  };
+
+  const onAddFavicon = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['ico']);
+    if (file) {
+      onBrandUpdate({
+        favicon: {
+          name: file.name,
+        },
+      });
+      setFavicon(file);
+    }
+  };
+
+  const onAddLogo = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['png', 'jpg']);
+    if (file) {
+      onBrandUpdate({
+        logo: {
+          name: file.name,
+        },
+      });
+      setLogo(file);
+    }
   };
 
   const popoverProps = {
@@ -129,14 +155,11 @@ const BrandControls = ({ data, update }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={logoEnabled}
+            checked={brand.logoEnabled}
             color="primary"
             id="logoEnabled"
             name="logoEnabled"
-            onChange={e => {
-              setLogoEnabled(e.target.checked);
-              onBrandUpdate({ logoEnabled: e.target.checked });
-            }}
+            onChange={e => onBrandUpdate({ logoEnabled: e.target.checked })}
             value="true"
           />
         }
@@ -145,49 +168,29 @@ const BrandControls = ({ data, update }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {brand.logo && brand.logo.name ? (
-              <img
-                alt="Logo"
-                height="100"
-                src={`file:///${basepath}/src/site/assets/${brand.logo.name}`}
-                title="Logo"
-              />
-            ) : (
-              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={logoEnabled ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {brand.logo && brand.logo.name ? (
+                <img alt="Logo" height="60" src={`file:///${basepath}/src/site/assets/${logo.name}`} title="Logo" />
+              ) : (
+                <PanoramaOutlinedIcon color={brand.logoEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              accept="image/*"
-              color="primary"
-              disabled={!logoEnabled}
-              id="logo"
-              name="logo"
-              // onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="logo" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!logoEnabled} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!brand.logoEnabled} fullWidth onClick={onAddLogo} size="small">
+              Choose logo…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>
       <FormControlLabel
         control={
           <Checkbox
-            checked={faviconEnabled}
+            checked={brand.faviconEnabled}
             color="primary"
             id="faviconEnabled"
             name="faviconEnabled"
-            onChange={e => {
-              setFaviconEnabled(e.target.checked);
-              onBrandUpdate({ faviconEnabled: e.target.checked });
-            }}
+            onChange={e => onBrandUpdate({ faviconEnabled: e.target.checked })}
             value="true"
           />
         }
@@ -196,35 +199,24 @@ const BrandControls = ({ data, update }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {brand.favicon && brand.favicon.name ? (
-              <img
-                alt="Favicon"
-                height="36"
-                src={`file:///${basepath}/src/site/assets/${brand.favicon.name}`}
-                title="Favicon"
-              />
-            ) : (
-              <Box height="36px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={faviconEnabled ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="36px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {favicon && favicon.name ? (
+                <img
+                  // alt="not found"
+                  height="16px"
+                  src={`file:///${basepath}/src/site/assets/${favicon.name}`}
+                  // title="Favicon"
+                  width="16px"
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={brand.faviconEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              accept=".ico"
-              color="primary"
-              disabled={!faviconEnabled}
-              id="favicon"
-              name="favicon"
-              // onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="favicon" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!faviconEnabled} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!brand.faviconEnabled} fullWidth onClick={onAddFavicon} size="small">
+              Choose favicon…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>

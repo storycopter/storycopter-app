@@ -39,8 +39,7 @@ const MetaControls = ({ data, update }) => {
   const { basepath, site } = data.currentProject;
   const { meta } = site;
 
-  const [coverEnabled, setCoverEnabled] = useState(meta.coverEnabled);
-  const [coverImage, setCoverImage] = useState(meta.coverImage && meta.coverImage.name ? meta.coverImage.name : null);
+  const [coverImage, setCoverImage] = useState(meta.coverImage);
   const [publisher, setPublisher] = useState(meta.publisher);
   const [summary, setSummary] = useState(meta.summary);
   const [title, setTitle] = useState(meta.title);
@@ -58,14 +57,14 @@ const MetaControls = ({ data, update }) => {
 
   const onAddCover = () => {
     const destination = 'src/site/assets/';
-    const file = uploadFile(basepath, destination);
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
     if (file) {
       onMetaUpdate({
         coverImage: {
           name: file.name,
         },
       });
-      setCoverImage(file.name);
+      setCoverImage(file);
     }
   };
 
@@ -109,14 +108,11 @@ const MetaControls = ({ data, update }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={coverEnabled}
+            checked={meta.coverEnabled}
             color="primary"
             id="coverEnabled"
             name="coverEnabled"
-            onChange={e => {
-              setCoverEnabled(e.target.checked);
-              onMetaUpdate({ coverEnabled: e.target.checked });
-            }}
+            onChange={e => onMetaUpdate({ coverEnabled: e.target.checked })}
           />
         }
         label={<Typography variant="overline">Enable cover</Typography>}
@@ -124,22 +120,21 @@ const MetaControls = ({ data, update }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {coverImage ? (
-              <img alt="Cover" height="100" src={`file:///${basepath}/src/site/assets/${coverImage}`} title="Cover" />
-            ) : (
-              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={coverEnabled ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {coverImage && coverImage.name ? (
+                <img
+                  alt="Cover"
+                  height="60"
+                  src={`file:///${basepath}/src/site/assets/${coverImage.name}`}
+                  title="Cover"
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={meta.coverEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <Button
-              color="primary"
-              component="span"
-              disabled={!coverEnabled}
-              fullWidth
-              onClick={onAddCover}
-              size="small">
+            <Button color="primary" disabled={!meta.coverEnabled} fullWidth onClick={onAddCover} size="small">
               Choose file…
             </Button>
           </CardActions>

@@ -6,20 +6,24 @@ import { remote } from 'electron';
 const { dialog } = remote;
 const mainWindow = remote.getCurrentWindow();
 
-export default function uploadFile(basePath, toPath) {
+export default function uploadFile(basePath, toPath, extensions) {
   const [src] = dialog.showOpenDialogSync(mainWindow, {
     properties: ['openFile'],
-    filters: [
-      { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
-      { name: 'Movies', extensions: ['mp4'] },
-    ],
+    filters: [{ name: 'Assets', extensions: extensions }],
+    multiSelections: false,
+    openDirectory: false,
   });
-  if (src) {
-    const filePath = path.join(toPath, sanitize(path.basename(src)).replace(/ /g, ''));
-    fs.copyFileSync(src, path.join(basePath, filePath));
+  console.log({ src });
+  if (src && src !== undefined) {
+    const timestamp = Date.now();
+    const srcExtension = path.extname(src);
+    const srcName = path.basename(src, srcExtension);
+    const newName = `${srcName.replace(/\s/g, '')}-${timestamp}${srcExtension}`;
+    const newPath = path.join(toPath, sanitize(newName));
+    fs.copyFileSync(src, path.join(basePath, newPath));
     return {
-      name: path.basename(filePath),
-      path: filePath,
+      name: newName,
+      path: newPath,
     };
   }
 }

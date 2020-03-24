@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
@@ -35,13 +36,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SoundControls = ({ data, update, ...props }) => {
+const SoundControls = ({ data, update }) => {
   const classes = useStyles();
   const player = React.createRef();
 
   const { basepath, site } = data.currentProject;
   const { sound } = site;
-  const trackPath = `file:///${basepath}/src/site/assets/${sound.track}`;
 
   const [trackDuration, setTrackDuration] = React.useState(0);
   const [trackPlaying, setTrackPlaying] = React.useState(false);
@@ -56,6 +56,18 @@ const SoundControls = ({ data, update, ...props }) => {
         };
       }),
     });
+  };
+
+  const onAddTrack = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination, ['mp3']);
+    if (file) {
+      onSoundUpdate({
+        favicon: {
+          name: file.name,
+        },
+      });
+    }
   };
 
   const onScrub = (e, newTime) => {
@@ -95,7 +107,7 @@ const SoundControls = ({ data, update, ...props }) => {
               onReady={player => setTrackDuration(player.getDuration())}
               onProgress={progress => setTrackProgress(progress.playedSeconds)}
               playing={sound.enabled && trackPlaying}
-              url={trackPath}
+              url={`file:///${basepath}/src/site/assets/${sound.track}`}
               width="100%"
               config={{
                 file: {
@@ -133,19 +145,9 @@ const SoundControls = ({ data, update, ...props }) => {
             </Grid>
           </CardContent>
           <CardActions>
-            <input
-              accept=".mp3,.m4a"
-              color="primary"
-              disabled={!sound.enabled}
-              id="soundtrack"
-              name="soundtrack"
-              // onChange={handleInputChange}
-              style={{ display: 'none' }}
-              type="file"
-            />
             <label htmlFor="soundtrack" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!sound.enabled} fullWidth size="small">
-                Select soundtrack
+              <Button color="primary" disabled={!sound.enabled} fullWidth onClick={onAddTrack} size="small">
+                Select track…
               </Button>
             </label>
           </CardActions>

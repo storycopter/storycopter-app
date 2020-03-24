@@ -13,7 +13,9 @@
     "brandColor": "#b20b05",
     "faviconEnabled": false,
     "logoEnabled": false,
-    "favicon": "storycopter.ico",
+    "favicon": {
+      "name": ""
+    },
     "logo": {
       "name": "logo.png"
     },
@@ -27,6 +29,8 @@
   },
   "sound": {
     "enabled": false,
-    "track": "obudzanka.mp3"
+    "track": {
+      "name": ""
+    }
   }
 }
