@@ -3,10 +3,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const muiTheme = createMuiTheme();
 
 export default createMuiTheme({
-  // transitions: {
-  //   // So we have `transition: none;` everywhere
-  //   create: () => 'none',
-  // },
   props: {
     MuiButtonBase: {
       disableRipple: true,
