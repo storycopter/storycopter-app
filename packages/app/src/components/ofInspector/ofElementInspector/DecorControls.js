@@ -58,8 +58,8 @@ const DecorControls = ({ data, update, ...props }) => {
   const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
   const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeElementIndex =
-    activePageId && activeElementId ? _.findIndex(activePage.tree.components, o => o.id === activeElementId) : null;
-  const activeElement = activeElementId ? activePage.tree.components[activeElementIndex] : null;
+    activePageId && activeElementId ? _.findIndex(activePage.elements, o => o.id === activeElementId) : null;
+  const activeElement = activeElementId ? activePage.elements[activeElementIndex] : null;
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -81,8 +81,8 @@ const DecorControls = ({ data, update, ...props }) => {
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].tree.components[activeElementIndex].settings,
+        nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
           ...payload,
         };
       }),

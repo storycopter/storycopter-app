@@ -10,35 +10,33 @@
     "title": "string",
     "uid": "pagesDummy"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "string",
-        "order": 0,
-        "settings": {
-          "align": "string",
-          "backgColor": "string",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": true,
-          "cover": true,
-          "images": [
-            {
-              "alt": "string",
-              "caption": "string",
-              "name": "string",
-              "order": 0
-            }
-          ],
-          "maskColor": "string",
-          "subtitle": "string",
-          "text": "string",
-          "textColor": "string",
-          "title": "string"
+  "elements": [
+    {
+      "id": "string",
+      "order": 0,
+      "settings": {
+        "align": "string",
+        "backgColor": "string",
+        "backgImage": {
+          "name": null
         },
-        "type": "string"
-      }
-    ]
-  }
+        "backgImageEnabled": true,
+        "fullSize": true,
+        "images": [
+          {
+            "alt": "string",
+            "caption": "string",
+            "name": "string",
+            "order": 0
+          }
+        ],
+        "maskColor": "string",
+        "subtitle": "string",
+        "text": "string",
+        "textColor": "string",
+        "title": "string"
+      },
+      "type": "string"
+    }
+  ]
 }

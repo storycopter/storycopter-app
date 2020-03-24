@@ -10,27 +10,25 @@
     "title": "Appendix",
     "uid": "005-appendix"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "000",
-        "order": 0,
-        "settings": {
-          "align": "left",
-          "backgColor": "",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "maskColor": null,
-          "subtitle": "Some text",
-          "text": "More text",
-          "textColor": null,
-          "title": "Appendix"
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": "",
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
-      }
-    ]
-  }
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": null,
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "Appendix"
+      },
+      "type": "headline"
+    }
+  ]
 }

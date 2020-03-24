@@ -9,7 +9,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import docTheme from '../../themes/docTheme';
 
-const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =>
+const useStyles = (align, backgColor, backgImage, fullSize, maskColor, textColor) =>
   makeStyles(theme => ({
     headlineRoot: {
       backgroundColor: backgColor ? backgColor : 'transparent',
@@ -26,7 +26,7 @@ const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      minHeight: cover ? '100vh' : 'auto',
+      minHeight: fullSize ? '100vh' : 'auto',
       paddingBottom: theme.spacing(5),
       paddingTop: theme.spacing(5),
       position: 'relative',
@@ -110,14 +110,14 @@ export default function Headline({
   backgColor = null,
   backgImage = null,
   children = null,
-  cover = false,
+  fullSize = false,
   isEditable = false,
   maskColor = null,
   style = null,
   textColor = null,
   ...props
 }) {
-  const classes = useStyles(align, backgColor, backgImage, cover, maskColor, textColor)();
+  const classes = useStyles(align, backgColor, backgImage, fullSize, maskColor, textColor)();
 
   const onInputBlur = (e, key) => {
     props.onElementUpdate({
@@ -135,7 +135,7 @@ export default function Headline({
   };
 
   // console.group('Headline.js');
-  // console.log('maskColor:', maskColor);
+  // console.log({ backgImage });
   // console.groupEnd();
 
   return (
@@ -219,7 +219,7 @@ Headline.propTypes = {
     name: PropTypes.string,
   }),
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  cover: PropTypes.bool,
+  fullSize: PropTypes.bool,
   isEditable: PropTypes.bool,
   maskColor: PropTypes.string,
   onElementUpdate: PropTypes.func,

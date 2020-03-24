@@ -1,121 +1,75 @@
-import React, { Component } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import { graphql } from 'gatsby';
 
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-import { componentMap } from '@storycopter/ui/src/components';
-import { docTheme } from '@storycopter/ui/src/themes';
-
 import Layout from './partials/Layout';
-import consolidateBackgImage from './utils/consolidateBackgImage';
+import componentMap from '@storycopter/ui/src/components/componentMap';
+import docTheme from '@storycopter/ui/src/themes/docTheme';
+import findChildImageSharp from './utils/findChildImageSharp';
 
-const merger = (someValues, otherValues) => {
-  if (_.isArray(someValues)) {
-    return someValues.concat(otherValues);
-  }
-};
+export default function PageTpl({
+  data: {
+    essential: { elements: pageElements, meta: pageMeta },
+    files: { edges: pageFiles },
+  },
+  pageContext,
+  ...pageProps
+}) {
+  // console.group('PageTpl.js');
+  // console.log('pageMeta', pageMeta);
+  // console.log('pageFiles', pageFiles);
+  // console.log('pageContext', pageContext);
+  // console.groupEnd();
 
-class PageTpl extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  return (
+    <ThemeProvider theme={docTheme}>
+      <Layout pageContext={pageContext} location={pageProps.location}>
+        {_.sortBy(pageElements, [o => o.order]).map(({ id, type, settings }, i) => {
+          // TODO: don’t do this
+          if (type !== 'headline') return null;
 
-  render() {
-    const {
-      data: {
-        page: {
-          tree: { components },
-        },
-        files: { edges },
-      },
-    } = this.props;
+          const Component = componentMap[type];
 
-    // console.group('PageTpl.js');
-    // console.log(this.props);
-    // console.groupEnd();
+          // construct backgImage object
+          const backgImage = {
+            ...settings.backgImage,
+            ...findChildImageSharp(pageFiles, settings.backgImage.name),
+          };
 
-    return (
-      <ThemeProvider theme={docTheme}>
-        <Layout
-          contextData={this.props.pageContext.contextData}
-          location={this.props.location}
-          path={this.props.data.page.meta.path}>
-          {_.sortBy(components, [o => o.order]).map((component, i) => {
-            const { settings } = component;
-
-            // consolidate settings.backgImage w/ graphql-ed image data
-            const backgImage = consolidateBackgImage(component, settings, edges);
-
-            // consolidate settings.images w/ graphql-ed image data
-            const images =
-              settings.images && settings.images.length > 0
-                ? _.mergeWith(
-                    _.sortBy(settings.images, [o => o.order]),
-                    _.sortBy(
-                      _.map(
-                        _.filter(edges, o =>
-                          o.node.childImageSharp.resize.originalName.startsWith(`${component.id}-images`)
-                        ),
-                        o => _.get(o, 'node.childImageSharp')
-                      ),
-                      [o => o.order]
-                    ),
-                    merger
-                  )
-                : null;
-
-            const RenderedComponent = componentMap[component.type];
-
-            return (
-              <RenderedComponent
-                {...settings}
-                backgImage={backgImage}
-                id={component.id}
-                images={images}
-                key={component.id}
-              />
-            );
-          })}
-        </Layout>
-      </ThemeProvider>
-    );
-  }
+          return <Component {...settings} key={id} backgImage={backgImage} />;
+        })}
+      </Layout>
+    </ThemeProvider>
+  );
 }
-
-export default PageTpl;
 
 export const pageQuery = graphql`
   query PageTplQuery($uid: String!) {
-    page: pagesJson(meta: { uid: { eq: $uid } }) {
+    essential: pagesJson(meta: { uid: { eq: $uid } }) {
       meta {
         path
         title
         uid
       }
-      tree {
-        components {
-          id
-          order
-          type
-          settings {
-            align
-            backgColor
-            backgImage
-            cover
-            images {
-              alt
-              caption
-              name
-              order
-            }
-            maskColor
-            subtitle
-            text
-            textColor
-            title
+      elements {
+        id
+        order
+        type
+        settings {
+          align
+          backgColor
+          backgImageEnabled
+          backgImage {
+            name
           }
+          fullSize
+          maskColor
+          subtitle
+          text
+          textColor
+          title
         }
       }
     }

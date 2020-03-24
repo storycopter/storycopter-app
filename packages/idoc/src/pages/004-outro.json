@@ -10,27 +10,25 @@
     "title": "Outro",
     "uid": "004-outro"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "000",
-        "order": 0,
-        "settings": {
-          "align": "left",
-          "backgColor": "",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "maskColor": null,
-          "subtitle": "Some text",
-          "text": "More text",
-          "textColor": null,
-          "title": "Outro"
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": "",
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
-      }
-    ]
-  }
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": null,
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "Outro"
+      },
+      "type": "headline"
+    }
+  ]
 }

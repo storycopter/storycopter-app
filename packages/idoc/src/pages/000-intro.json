@@ -8,105 +8,103 @@
     "path": "/intro",
     "summary": "Some text",
     "title": "Intro, that may have a lengthy title",
-    "uid": "000-intro"
+    "uid": "intro"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "000",
-        "order": 0,
-        "settings": {
-          "align": "right",
-          "backgColor": null,
-          "backgImage": {
-            "name": "cover.jpg"
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "images": [],
-          "maskColor": "rgba(0,0,0,0.3)",
-          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
-          "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-          "textColor": "#ffffff",
-          "title": "Intro"
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "right",
+        "backgColor": null,
+        "backgImage": {
+          "name": "cover.jpg"
         },
-        "type": "headline"
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "images": [],
+        "maskColor": "rgba(0,0,0,0.3)",
+        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+        "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        "textColor": "#ffffff",
+        "title": "Intro"
       },
-      {
-        "id": "001",
-        "order": 1,
-        "settings": {
-          "align": "center",
-          "backgColor": "#4051b5",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "images": [],
-          "maskColor": "rgba(0,0,0,0.3)",
-          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
-          "text": "",
-          "textColor": "#ff0100",
-          "title": "A title of the Headline"
+      "type": "headline"
+    },
+    {
+      "id": "001",
+      "order": 1,
+      "settings": {
+        "align": "center",
+        "backgColor": "#4051b5",
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "images": [],
+        "maskColor": "rgba(0,0,0,0.3)",
+        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+        "text": "",
+        "textColor": "#ff0100",
+        "title": "A title of the Headline"
       },
-      {
-        "id": "002",
-        "order": 2,
-        "settings": {
-          "align": "left",
-          "backgColor": "#3d2698",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": null,
-          "images": [],
-          "maskColor": "rgba(0,0,0,0.3)",
-          "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
-          "text": "",
-          "textColor": "#ffffff",
-          "title": ""
+      "type": "headline"
+    },
+    {
+      "id": "002",
+      "order": 2,
+      "settings": {
+        "align": "left",
+        "backgColor": "#3d2698",
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
+        "backgImageEnabled": false,
+        "fullSize": null,
+        "images": [],
+        "maskColor": "rgba(0,0,0,0.3)",
+        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+        "text": "",
+        "textColor": "#ffffff",
+        "title": ""
       },
-      {
-        "id": "003",
-        "order": 3,
-        "settings": {
-          "backgColor": "#ff548c",
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "images": [
-            {
-              "alt": "Alt text",
-              "caption": "The first gallery item",
-              "name": "images-000.jpg",
-              "order": 1
-            },
-            {
-              "alt": "Alt text",
-              "caption": "The third gallery item",
-              "name": "images-001.jpg",
-              "order": 3
-            },
-            {
-              "alt": "Alt text",
-              "caption": "The second gallery item",
-              "name": "images-002.jpg",
-              "order": 2
-            }
-          ],
-          "maskColor": "rgba(0,0,0,0.3)",
-          "textColor": null
+      "type": "headline"
+    },
+    {
+      "id": "003",
+      "order": 3,
+      "settings": {
+        "backgColor": "#ff548c",
+        "backgImage": {
+          "name": null
         },
-        "type": "gallery"
-      }
-    ]
-  }
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "images": [
+          {
+            "alt": "Alt text",
+            "caption": "The first gallery item",
+            "name": "images-000.jpg",
+            "order": 1
+          },
+          {
+            "alt": "Alt text",
+            "caption": "The third gallery item",
+            "name": "images-001.jpg",
+            "order": 3
+          },
+          {
+            "alt": "Alt text",
+            "caption": "The second gallery item",
+            "name": "images-002.jpg",
+            "order": 2
+          }
+        ],
+        "maskColor": "rgba(0,0,0,0.3)",
+        "textColor": null
+      },
+      "type": "gallery"
+    }
+  ]
 }

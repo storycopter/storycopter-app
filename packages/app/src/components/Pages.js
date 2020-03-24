@@ -1,7 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { update } from '../reducers/data';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   avatar: {
+    ...theme.typography.button,
     cursor: 'pointer',
     height: theme.spacing(4),
     width: theme.spacing(3),

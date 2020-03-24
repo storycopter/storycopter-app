@@ -34,7 +34,6 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             meta {
               path
-              text
               title
               uid
             }

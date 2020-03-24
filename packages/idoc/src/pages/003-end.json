@@ -10,27 +10,25 @@
     "title": "The End",
     "uid": "003-end"
   },
-  "tree": {
-    "components": [
-      {
-        "id": "000",
-        "order": 0,
-        "settings": {
-          "align": "left",
-          "backgColor": null,
-          "backgImage": {
-            "name": null
-          },
-          "backgImageEnabled": false,
-          "cover": true,
-          "maskColor": "rgba(0,0,0,0.3)",
-          "subtitle": "Some text",
-          "text": "More text",
-          "textColor": null,
-          "title": "End"
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": null,
+        "backgImage": {
+          "name": null
         },
-        "type": "headline"
-      }
-    ]
-  }
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": "rgba(0,0,0,0.3)",
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "End"
+      },
+      "type": "headline"
+    }
+  ]
 }

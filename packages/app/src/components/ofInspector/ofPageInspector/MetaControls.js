@@ -3,6 +3,7 @@ import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import uploadFile from '../../../utils/uploadFile';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -43,7 +44,6 @@ const MetaControls = ({ data, update }) => {
   const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   // const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
 
-  const [coverEnabled, setCoverEnabled] = useState(activePage.meta.coverEnabled);
   const [coverImage, setCoverImage] = useState(activePage.meta.coverImage);
   const [summary, setSummary] = useState(activePage.meta.summary);
   const [title, setTitle] = useState(activePage.meta.title);
@@ -59,12 +59,18 @@ const MetaControls = ({ data, update }) => {
     });
   };
 
-  useEffect(() => {
-    setCoverEnabled(activePage.meta.coverEnabled);
-    setCoverImage(activePage.meta.coverImage);
-    setSummary(activePage.meta.summary);
-    setTitle(activePage.meta.title);
-  }, [activePage]);
+  const onAddCover = () => {
+    const destination = `src/pages/${activePageId}/`;
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    if (file) {
+      onMetaUpdate({
+        coverImage: {
+          name: file.name,
+        },
+      });
+      setCoverImage(file);
+    }
+  };
 
   const textFieldProps = {
     fullWidth: true,
@@ -102,14 +108,11 @@ const MetaControls = ({ data, update }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={coverEnabled}
+            checked={activePage.meta.coverEnabled}
             color="primary"
             id="coverEnabled"
             name="coverEnabled"
-            onChange={e => {
-              setCoverEnabled(e.target.checked);
-              onMetaUpdate({ coverEnabled: e.target.checked });
-            }}
+            onChange={e => onMetaUpdate({ coverEnabled: e.target.checked })}
           />
         }
         label={<Typography variant="overline">Enable page cover</Typography>}
@@ -117,35 +120,28 @@ const MetaControls = ({ data, update }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {coverImage && coverImage.name ? (
-              <img
-                alt="Cover"
-                height="100"
-                src={`file:///${basepath}/src/pages/${activePageId}/${coverImage.name}`}
-                title="Cover"
-              />
-            ) : (
-              <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
-                <PanoramaOutlinedIcon color={coverEnabled ? 'action' : 'disabled'} />
-              </Box>
-            )}
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {coverImage && coverImage.name ? (
+                <img
+                  alt="Cover"
+                  height="60"
+                  src={`file:///${basepath}/src/pages/${activePageId}/${coverImage.name}`}
+                  title="Cover"
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={activePage.meta.coverEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
           </CardMedia>
           <CardActions>
-            <input
-              // onChange={handleInputChange}
-              accept="image/*"
+            <Button
               color="primary"
-              disabled={!coverEnabled}
-              id="cover"
-              name="cover"
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="cover" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!coverEnabled} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+              disabled={!activePage.meta.coverEnabled}
+              fullWidth
+              onClick={onAddCover}
+              size="small">
+              Choose file…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>

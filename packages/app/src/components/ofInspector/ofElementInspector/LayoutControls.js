@@ -40,15 +40,15 @@ const LayoutControls = ({ data, update, ...props }) => {
 
   const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
   const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
-  const activeComponent = pages[activePageIndex].tree.components[activeComponentIndex];
+  const activeComponentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
+  const activeComponent = pages[activePageIndex].elements[activeComponentIndex];
   const { settings } = activeComponent;
 
   const onElementUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].tree.components[activeComponentIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].tree.components[activeComponentIndex].settings,
+        nextData.currentProject.pages[activePageIndex].elements[activeComponentIndex].settings = {
+          ...nextData.currentProject.pages[activePageIndex].elements[activeComponentIndex].settings,
           ...payload,
         };
       }),
@@ -91,8 +91,8 @@ const LayoutControls = ({ data, update, ...props }) => {
             <ToggleButton
               size="small"
               value="check"
-              selected={settings.cover}
-              onChange={() => onElementUpdate({ cover: !settings.cover })}>
+              selected={settings.fullSize}
+              onChange={() => onElementUpdate({ fullSize: !settings.fullSize })}>
               <FullscreenIcon fontSize="small" />
             </ToggleButton>
           </Tooltip>
