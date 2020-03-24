@@ -52,6 +52,7 @@
     "redux": "4.0.5",
     "redux-localstorage-simple": "2.1.6",
     "redux-logger": "3.0.6",
+    "sanitize-filename": "^1.6.3",
     "shelljs": "0.8.3",
     "strip-ansi": "6.0.0",
     "styled-components": "5.0.1"

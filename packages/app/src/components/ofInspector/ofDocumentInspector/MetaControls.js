@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
+import uploadFile from '../../../utils/uploadFile';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -39,6 +40,7 @@ const MetaControls = ({ data, update }) => {
   const { meta } = site;
 
   const [coverEnabled, setCoverEnabled] = useState(meta.coverEnabled);
+  const [coverImage, setCoverImage] = useState(meta.coverImage && meta.coverImage.name ? meta.coverImage.name : null);
   const [publisher, setPublisher] = useState(meta.publisher);
   const [summary, setSummary] = useState(meta.summary);
   const [title, setTitle] = useState(meta.title);
@@ -52,6 +54,19 @@ const MetaControls = ({ data, update }) => {
         };
       }),
     });
+  };
+
+  const onAddCover = () => {
+    const destination = 'src/site/assets/';
+    const file = uploadFile(basepath, destination);
+    if (file) {
+      onMetaUpdate({
+        coverImage: {
+          name: file.name,
+        },
+      });
+      setCoverImage(file.name);
+    }
   };
 
   const textFieldProps = {
@@ -109,13 +124,8 @@ const MetaControls = ({ data, update }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            {meta.cover && meta.cover.name ? (
-              <img
-                alt="Cover"
-                height="100"
-                src={`file:///${basepath}/src/site/assets/${meta.cover.name}`}
-                title="Cover"
-              />
+            {coverImage ? (
+              <img alt="Cover" height="100" src={`file:///${basepath}/src/site/assets/${coverImage}`} title="Cover" />
             ) : (
               <Box height="100px" display="flex" flexDirection="column" justifyContent="center" marginTop={2}>
                 <PanoramaOutlinedIcon color={coverEnabled ? 'action' : 'disabled'} />
@@ -123,21 +133,15 @@ const MetaControls = ({ data, update }) => {
             )}
           </CardMedia>
           <CardActions>
-            <input
-              // onChange={handleInputChange}
-              accept="image/*"
+            <Button
               color="primary"
+              component="span"
               disabled={!coverEnabled}
-              id="cover"
-              name="cover"
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <label htmlFor="cover" className={classes.cardLabel}>
-              <Button color="primary" component="span" disabled={!coverEnabled} fullWidth size="small">
-                Choose file…
-              </Button>
-            </label>
+              fullWidth
+              onClick={onAddCover}
+              size="small">
+              Choose file…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>
