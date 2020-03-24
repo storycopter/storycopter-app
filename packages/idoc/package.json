@@ -44,6 +44,6 @@
     "start": "./node_modules/.bin/gatsby develop",
     "start-vsc": "node --nolazy --inspect-brk ./node_modules/.bin/gatsby develop",
     "build": "./node_modules/.bin/gatsby build",
-    "stage": "./node_modules/.bin/gatsby build && now ./public --name 'storycopter-idoc'"
+    "stage": "./node_modules/.bin/gatsby build && now --prod"
   }
 }
