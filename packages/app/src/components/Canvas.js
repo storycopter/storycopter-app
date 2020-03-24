@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
@@ -42,7 +42,6 @@ const Canvas = ({ data, update, ...props }) => {
   const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
 
   const onInspectElement = (e, componentId) => {
-    console.log('onInspectElement', e, componentId);
     e.stopPropagation();
     update({
       ...produce(data, nextData => {
@@ -63,6 +62,14 @@ const Canvas = ({ data, update, ...props }) => {
       }),
     });
   };
+
+  // TODO: scroll to active element on activeElementId change
+
+  // useEffect(() => {
+  //   console.log('Canvas.js useEffect', activeElementId);
+  //   if (!activeElementId) return;
+  //   const activeElRef =
+  // }, [activeElementId]);
 
   // console.group('Canvas.js');
   // console.log('activeElementId:', activeElementId);
