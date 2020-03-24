@@ -18,7 +18,10 @@
         "settings": {
           "align": "right",
           "backgColor": null,
-          "backgImage": "headline-image.jpg",
+          "backgImage": {
+            "name": "cover.jpg"
+          },
+          "backgImageEnabled": false,
           "cover": true,
           "images": [],
           "maskColor": "rgba(0,0,0,0.3)",
@@ -35,7 +38,10 @@
         "settings": {
           "align": "center",
           "backgColor": "#4051b5",
-          "backgImage": "",
+          "backgImage": {
+            "name": null
+          },
+          "backgImageEnabled": false,
           "cover": true,
           "images": [],
           "maskColor": "rgba(0,0,0,0.3)",
@@ -52,7 +58,10 @@
         "settings": {
           "align": "left",
           "backgColor": "#3d2698",
-          "backgImage": "",
+          "backgImage": {
+            "name": null
+          },
+          "backgImageEnabled": false,
           "cover": null,
           "images": [],
           "maskColor": "rgba(0,0,0,0.3)",
@@ -68,7 +77,10 @@
         "order": 3,
         "settings": {
           "backgColor": "#ff548c",
-          "backgImage": "",
+          "backgImage": {
+            "name": null
+          },
+          "backgImageEnabled": false,
           "cover": true,
           "images": [
             {

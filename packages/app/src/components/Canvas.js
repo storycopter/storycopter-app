@@ -84,10 +84,10 @@ const Canvas = ({ data, update, ...props }) => {
           ? _.sortBy(activePage.tree.components, [o => o.order]).map((component, i) => {
               // consolidate backgImage props with raw images
               const backgImage =
-                component.settings.backgImage && component.settings.backgImage.length > 0
+                component.settings.backgImage && component.settings.backgImage.name
                   ? {
                       ...component.settings.backgImage,
-                      raw: `file:///${basepath}/src/pages/${activePageId}/${component.id}-${component.settings.backgImage}`,
+                      raw: `file:///${basepath}/src/pages/${activePageId}/${component.settings.backgImage.name}`,
                     }
                   : component.settings.backgImage;
 
@@ -117,8 +117,8 @@ const Canvas = ({ data, update, ...props }) => {
                     <RenderedComponent
                       {...componentSettings}
                       animate={false}
+                      backgImage={component.settings.backgImageEnabled ? backgImage : null}
                       cover={false}
-                      backgImage={backgImage}
                       images={images}
                       isEditable
                       onElementUpdate={onElementUpdate}

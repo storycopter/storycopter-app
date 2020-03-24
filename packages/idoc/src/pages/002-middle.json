@@ -18,7 +18,10 @@
         "settings": {
           "align": "left",
           "backgColor": "",
-          "backgImage": "image.jpg",
+          "backgImage": {
+            "name": null
+          },
+          "backgImageEnabled": false,
           "cover": true,
           "maskColor": null,
           "subtitle": "Some text",

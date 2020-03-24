@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import Popover from '@material-ui/core/Popover';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
@@ -77,6 +87,20 @@ const DecorControls = ({ data, update, ...props }) => {
         };
       }),
     });
+  };
+
+  const onAddBackgImage = () => {
+    const destination = `src/pages/${activePage.meta.uid}/`;
+    // console.log({ destination });
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    if (file) {
+      onElementUpdate({
+        backgImage: {
+          name: file.name,
+        },
+      });
+      // onElementUpdate(file);
+    }
   };
 
   const popoverProps = {
@@ -223,6 +247,46 @@ const DecorControls = ({ data, update, ...props }) => {
           }}
         />
       </Popover>
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={activeElement.settings.backgImageEnabled}
+            color="primary"
+            id="logoEnabled"
+            name="logoEnabled"
+            onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}
+            value="true"
+          />
+        }
+        label={<Typography variant="overline">Enable background image</Typography>}
+      />
+      <FormControl variant="filled" fullWidth margin="dense">
+        <Card elevation={0}>
+          <CardMedia className={classes.cardMedia}>
+            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              {activeElement.settings.backgImage && activeElement.settings.backgImage.name ? (
+                <img
+                  height="60"
+                  src={`file:///${basepath}/src/pages/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
+                />
+              ) : (
+                <PanoramaOutlinedIcon color={activeElement.settings.backgImageEnabled ? 'action' : 'disabled'} />
+              )}
+            </Box>
+          </CardMedia>
+          <CardActions>
+            <Button
+              color="primary"
+              disabled={!activeElement.settings.backgImageEnabled}
+              fullWidth
+              onClick={onAddBackgImage}
+              size="small">
+              Choose background image…
+            </Button>
+          </CardActions>
+        </Card>
+      </FormControl>
     </div>
   );
 };

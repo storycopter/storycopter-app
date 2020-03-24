@@ -13,11 +13,12 @@ const useStyles = (align, backgColor, backgImage, cover, maskColor, textColor) =
   makeStyles(theme => ({
     headlineRoot: {
       backgroundColor: backgColor ? backgColor : 'transparent',
-      backgroundImage: backgImage
-        ? backgImage.raw
-          ? `url("${backgImage.raw}")`
-          : `url("${backgImage.fixed.src}")`
-        : 'none',
+      backgroundImage:
+        backgImage && backgImage.name
+          ? backgImage.raw
+            ? `url("${backgImage.raw}")`
+            : `url("${backgImage.fixed.src}")`
+          : 'none',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
@@ -214,7 +215,9 @@ export default function Headline({
 Headline.propTypes = {
   align: PropTypes.string,
   backgColor: PropTypes.string,
-  backgImage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  backgImage: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   cover: PropTypes.bool,
   isEditable: PropTypes.bool,
