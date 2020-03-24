@@ -43,9 +43,8 @@ class App extends React.Component {
     this.iframeRef = React.createRef();
   }
 
-  addFile = async (basepath, dest) => {
-    const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openFile'] });
-    const src = filePaths.pop();
+  addFile = (basepath, dest) => {
+    const [src] = dialog.showOpenDialogSync(WIN, { properties: ['openFile'] });
 
     if (src) {
       const destPath = path.join(dest, path.basename(src));
