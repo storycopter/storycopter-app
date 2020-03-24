@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import AlignCenterHorizontalIcon from '@storycopter/ui/src/elements/Icons/AlignCenterHorizontalIcon';
 import AlignLeftIcon from '@storycopter/ui/src/elements/Icons/AlignLeftIcon';
@@ -28,9 +29,6 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     margin: '0 !important',
     width: '100%',
-  },
-  activeButton: {
-    background: theme.palette.primary.light,
   },
 }));
 
@@ -63,40 +61,41 @@ const LayoutControls = ({ data, update, ...props }) => {
 
   return (
     <div {...props}>
-      <Grid container justify="space-between" alignContent="center" spacing={2}>
-        <Grid item xs={true}>
-          <ButtonGroup variant="outlined" fullWidth aria-label="Align items" size="large">
-            <Tooltip title="Align left">
-              <Button
-                className={settings.align === 'left' ? classes.activeButton : null}
-                onClick={() => onElementUpdate({ align: 'left' })}>
+      <Grid container alignContent="center" spacing={2}>
+        <Grid item>
+          <Tooltip title="Align content">
+            <ToggleButtonGroup
+              aria-label="Align content"
+              exclusive
+              onChange={(e, v) => onElementUpdate({ align: v || 'left' })}
+              size="small"
+              value={settings.align}
+              className={classes.toggleButtonGroup}
+              //  variant="outlined" fullWidth aria-label="Align items" size="large"
+            >
+              <ToggleButton disableRipple value="left">
                 <AlignLeftIcon fontSize="small" />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Align center">
-              <Button
-                className={settings.align === 'center' ? classes.activeButton : null}
-                onClick={() => onElementUpdate({ align: 'center' })}>
+              </ToggleButton>
+
+              <ToggleButton disableRipple value="center">
                 <AlignCenterHorizontalIcon fontSize="small" />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Align right">
-              <Button
-                className={settings.align === 'right' ? classes.activeButton : null}
-                onClick={() => onElementUpdate({ align: 'right' })}>
+              </ToggleButton>
+              <ToggleButton disableRipple value="right">
                 <AlignRightIcon fontSize="small" />
-              </Button>
-            </Tooltip>
-          </ButtonGroup>
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Tooltip>
         </Grid>
         <Grid item>
-          <Button
-            className={settings.cover ? classes.activeButton : null}
-            onClick={() => onElementUpdate({ cover: !settings.cover })}
-            size="large"
-            variant="outlined">
-            <FullscreenIcon fontSize="small" />
-          </Button>
+          <Tooltip title="Make element fit browser window">
+            <ToggleButton
+              size="small"
+              value="check"
+              selected={settings.cover}
+              onChange={() => onElementUpdate({ cover: !settings.cover })}>
+              <FullscreenIcon fontSize="small" />
+            </ToggleButton>
+          </Tooltip>
         </Grid>
       </Grid>
     </div>
