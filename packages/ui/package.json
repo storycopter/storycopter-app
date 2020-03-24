@@ -48,8 +48,7 @@
   "scripts": {
     "build": "yarn run clean-dist && NODE_ENV=production `yarn bin`/babel ./src --out-dir ./dist",
     "build-storybook": "build-storybook -o ./public -s ./static",
-    "clean-dist": "rm -rf ./dist",
-    "stage": "build-storybook -o ./public -s ./static && now --prod",
+    "deploy": "build-storybook -o ./public -s ./static && netlify deploy --dir=public --prod",
     "start": "start-storybook -p 8080 -s ./static --ci"
   }
 }

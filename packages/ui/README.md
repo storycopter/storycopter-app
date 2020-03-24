@@ -1,3 +1,3 @@
-# Welcome to Storycopter UI
+# Storycopter UI
 
-— [Docs](https://storycopter-docs.piotrf.now.sh)
+[Playground](https://storycopter-ui.netlify.com/)

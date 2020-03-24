@@ -1,13 +1,3 @@
-# Welcome to Storycopter iDoc Starter
+# Storycopter Doc starter
 
-## Develop
-
-```
-$ yarn start
-```
-
-## Create bundle
-
-```
-$ yarn build
-```
+[Playground](https://storycopter-doc.netlify.com/)

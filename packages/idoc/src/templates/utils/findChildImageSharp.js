@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default function findChildImageSharp(edges, name) {
   if (!name) return null;
   return _.find(
