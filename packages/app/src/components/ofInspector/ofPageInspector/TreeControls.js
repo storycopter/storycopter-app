@@ -41,9 +41,8 @@ const TreeControls = ({ data, update }) => {
   const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
   const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   // const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
-  const propElements = activePage.tree.components;
 
-  const [elements, setElements] = useState(propElements || []);
+  const [elements, setElements] = useState(activePage.tree.components || []);
 
   const reorder = (arr, startIndex, endIndex) => {
     const result = Array.from(arr);
@@ -65,14 +64,14 @@ const TreeControls = ({ data, update }) => {
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
     const payload = reorder(elements, source.index, destination.index);
-    console.log('onDragEnd', payload);
     setElements(payload);
     update({
       ...produce(data, nextData => {
         nextData.currentProject.pages[activePageIndex].tree = {
           ...nextData.currentProject.pages[activePageIndex].tree,
-          ...payload,
+          components: payload,
         };
+        nextData.editor.activeElementId = null;
       }),
     });
   };
