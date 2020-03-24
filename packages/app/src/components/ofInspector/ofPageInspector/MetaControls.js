@@ -76,10 +76,10 @@ const MetaControls = ({ data, update }) => {
     variant: 'filled',
   };
 
-  console.group('MetaControls.js');
-  console.log('activePageId', activePageId);
+  // console.group('MetaControls.js');
+  // console.log('activePageId', activePageId);
   // console.log('activePage', activePage);
-  console.groupEnd();
+  // console.groupEnd();
 
   return (
     <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>

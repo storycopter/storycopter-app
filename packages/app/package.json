@@ -43,6 +43,7 @@
     "npm": "6.13.7",
     "npm-commands": "1.0.2",
     "react": "16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-color": "^2.18.0",
     "react-dom": "16.13.1",
     "react-player": "^1.15.2",

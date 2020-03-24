@@ -138,8 +138,6 @@ class App extends React.Component {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
 
-    console.log(data);
-
     console.group('App.js:');
     console.log('data:', data);
     console.groupEnd();
