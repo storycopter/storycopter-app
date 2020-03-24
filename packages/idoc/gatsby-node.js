@@ -70,8 +70,13 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             meta {
-              title
+              coverEnabled
+              coverImage {
+                name
+              }
               publisher
+              summary
+              title
             }
             brand {
               backgColor
