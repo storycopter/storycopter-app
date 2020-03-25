@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -44,11 +44,11 @@ const TreeControls = ({ data, update }) => {
   const { basepath, pages, site } = data.currentProject;
   const { activePageId, activeElementId } = data.editor;
 
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  // const activeComponentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
+  if (!activePageId) return null;
 
-  const [elements, setElements] = useState(activePage.elements || []);
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  // const activeComponentIndex = _.findIndex(elements, o => o.id === activeElementId);
 
   const reorder = (arr, startIndex, endIndex) => {
     const result = Array.from(arr);
@@ -69,20 +69,14 @@ const TreeControls = ({ data, update }) => {
 
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return null;
-    const payload = reorder(elements, source.index, destination.index);
-    setElements(payload);
+    const payload = reorder(activePage.elements, source.index, destination.index);
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].tree = {
-          ...nextData.currentProject.pages[activePageIndex].tree,
-          components: payload,
-        };
+        nextData.currentProject.pages[activePageIndex].elements = payload;
         nextData.editor.activeElementId = null;
       }),
     });
   };
-
-  // useEffect(() => {}, []);
 
   // console.group('TreeControls.js');
   // console.log('activePageId', activePageId);
@@ -98,9 +92,9 @@ const TreeControls = ({ data, update }) => {
       <Droppable droppableId="droppable">
         {(provided, droppableSnapshot) => (
           <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
-            {elements.map((element, index) => {
+            {activePage.elements.map((element, index) => {
               return (
-                <Draggable key={element.id} draggableId={element.id} index={index}>
+                <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
                   {(provided, draggableSnapshot) => (
                     <ListItem
                       {...provided.dragHandleProps}
