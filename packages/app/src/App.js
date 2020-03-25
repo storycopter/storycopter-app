@@ -22,8 +22,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
 import Toolbar from '@material-ui/core/Toolbar';
-import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
-import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
