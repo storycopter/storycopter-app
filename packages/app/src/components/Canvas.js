@@ -73,7 +73,7 @@ const Canvas = ({ data, update }) => {
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
       <Grid container direction="column" className={classes.elements}>
-        {_.sortBy(activePage.elements, [o => o.order]).map(({ id, type, settings }, i) => {
+        {_.sortBy(activePage.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
           // TODO: don’t do this:
           if (type !== 'headline') return null;
 
@@ -86,6 +86,8 @@ const Canvas = ({ data, update }) => {
             raw: `file:///${basepath}/src/pages/${activePageId}/${settings.backgImage.name}`,
           };
 
+          const isFirstOrLastChild = i === 0 || i === activePage.elements.length - 1;
+
           return (
             <Grid
               className={classes.elementWrap}
@@ -95,7 +97,7 @@ const Canvas = ({ data, update }) => {
               <div
                 style={{
                   boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
-                  margin: isElementActive ? (i === 0 ? '0 0 20px' : '20px 0') : '0',
+                  margin: isElementActive ? (isFirstOrLastChild ? '0 0 20px' : '20px 0') : '0',
                   transition: 'margin 0.5s',
                 }}>
                 <ThemeProvider theme={docTheme}>
