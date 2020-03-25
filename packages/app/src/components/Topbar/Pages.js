@@ -4,11 +4,12 @@ import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import PanoramaWideAngleIcon from '@material-ui/icons/PanoramaWideAngle';
 import Tooltip from '@material-ui/core/Tooltip';
-import Divider from '@material-ui/core/Divider';
-
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.button,
     cursor: 'pointer',
     height: theme.spacing(4),
-    width: theme.spacing(3),
+    width: theme.spacing(3.5),
   },
 }));
 
@@ -72,6 +73,9 @@ const Pages = ({ data, update, ...props }) => {
           </Tooltip>
         );
       })}
+      <IconButton size="small">
+        <AddCircleOutlineIcon />
+      </IconButton>
       <Divider orientation="vertical" flexItem />
       <Tooltip title="Credits">
         <Avatar

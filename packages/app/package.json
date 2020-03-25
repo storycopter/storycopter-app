@@ -40,6 +40,7 @@
     "electron-is-dev": "1.1.0",
     "gatsby": "2.20.5",
     "hazardous": "0.3.0",
+    "material-ui-popup-state": "^1.5.3",
     "npm": "6.13.7",
     "npm-commands": "1.0.2",
     "react": "16.13.1",
