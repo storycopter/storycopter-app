@@ -1,23 +1,16 @@
 import React from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import LaunchIcon from '@material-ui/icons/Launch';
-import Toolbar from '@material-ui/core/Toolbar';
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
-import Canvas from './Canvas';
-import Pages from './Pages';
-import Inspector from './Inspector';
+import Canvas from './Canvas/Canvas';
+import Inspector from './Inspector/Inspector';
+import Topbar from './Topbar/Topbar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Editor({ hasProject, onProjectOpen }) {
+export default function Editor({ ...props }) {
   const classes = useStyles();
   return (
     <ThemeProvider theme={appTheme}>
@@ -49,36 +42,9 @@ export default function Editor({ hasProject, onProjectOpen }) {
         direction="column"
         wrap="nowrap">
         <Grid item>
-          <AppBar>
-            <Toolbar>
-              <Grid container direction="row" justify="space-between" alignItems="center">
-                <Grid item>
-                  <Box display="flex" justifyContent="flex-start">
-                    <Button variant="contained" onClick={onProjectOpen}>
-                      Open Project
-                    </Button>
-                  </Box>
-                </Grid>
-                <Grid item>{hasProject ? <Pages /> : null}</Grid>
-                <Grid item>
-                  <Box display="flex" justifyContent="flex-end">
-                    <IconButton>
-                      <LaunchIcon />
-                    </IconButton>
-                    <IconButton>
-                      <GetAppIcon />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon />
-                    </IconButton>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Toolbar>
-          </AppBar>
-          <Toolbar />
+          <Topbar {...props} />
         </Grid>
-        {hasProject ? (
+        {props.hasProject ? (
           <Grid container className={classes.editor} wrap="nowrap">
             <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
               <Box borderRight={`1px solid ${appTheme.palette.divider}`} minHeight="100%">

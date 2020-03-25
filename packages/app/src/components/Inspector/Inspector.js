@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { update } from '../reducers/data';
+import { update } from '../../reducers/data';
 
 import Box from '@material-ui/core/Box';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import DocumentInspector from './ofInspector/DocumentInspector';
-import ElementInspector from './ofInspector/ElementInspector';
-import PageInspector from './ofInspector/PageInspector';
+import DocumentInspector from './DocumentInspector';
+import ElementInspector from './ElementInspector';
+import PageInspector from './PageInspector';
 
 import { appTheme } from '@storycopter/ui/src/themes';
 
