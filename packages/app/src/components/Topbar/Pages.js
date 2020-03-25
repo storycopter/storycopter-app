@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
 import Avatar from '@material-ui/core/Avatar';
+import PanoramaWideAngleIcon from '@material-ui/icons/PanoramaWideAngle';
 import Tooltip from '@material-ui/core/Tooltip';
+import Divider from '@material-ui/core/Divider';
+
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
@@ -48,9 +52,10 @@ const Pages = ({ data, update, ...props }) => {
           // onClick={() => onAvatarClick(meta.uid)}
           // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
           variant="rounded">
-          H
+          <PanoramaWideAngleIcon fontSize="inherit" />
         </Avatar>
       </Tooltip>
+      <Divider orientation="vertical" flexItem />
       {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
         // do not render the dummy page (used by the idoc package)
         if (meta.uid === 'pagesDummy') return null;
@@ -67,6 +72,7 @@ const Pages = ({ data, update, ...props }) => {
           </Tooltip>
         );
       })}
+      <Divider orientation="vertical" flexItem />
       <Tooltip title="Credits">
         <Avatar
           alt="Credits"
@@ -74,7 +80,7 @@ const Pages = ({ data, update, ...props }) => {
           // onClick={() => onAvatarClick(meta.uid)}
           // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
           variant="rounded">
-          C
+          <ViewHeadlineIcon fontSize="inherit" />
         </Avatar>
       </Tooltip>
     </div>
