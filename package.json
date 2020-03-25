@@ -17,9 +17,9 @@
     }
   },
   "devDependencies": {
-    "eslint-config-prettier": "6.10.0",
-    "husky": "4.2.1",
-    "lint-staged": "10.0.7"
+    "eslint-config-prettier": "6.10.1",
+    "husky": "4.2.3",
+    "lint-staged": "10.0.9"
   },
   "lint-staged": {
     "*.{js,jsx}": [
