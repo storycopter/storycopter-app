@@ -8,38 +8,21 @@ import process from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
-import { createGlobalStyle } from 'styled-components';
 import { update } from './reducers/data';
 
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import CloseIcon from '@material-ui/icons/Close';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import LaunchIcon from '@material-ui/icons/Launch';
-import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
-import Editor from './components/Editor';
+import './App.css';
 import ErrorBoundary from './components/ErrorBoundary';
-import Pages from './components/Pages';
+import Interface from './components/Interface';
 
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
 const foo = remote.require('./foo');
 const node = foo.getNode();
-
-const AppBaseline = createGlobalStyle`
-  html, body, #root {
-    width: 100%;
-    height: 100%;
-  }
-`;
 
 class App extends React.Component {
   constructor(props) {
@@ -166,57 +149,9 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={appTheme}>
-        {data && data.currentProject ? (
-          <ErrorBoundary>
-            <CssBaseline />
-            <AppBaseline />
-            <Grid
-              alignContent="stretch"
-              alignItems="stretch"
-              style={{ height: '100vh' }}
-              container
-              direction="column"
-              wrap="nowrap">
-              <Grid item>
-                <AppBar>
-                  <Toolbar>
-                    <Grid container direction="row" justify="space-between" alignItems="center">
-                      <Grid item>
-                        <Box display="flex" justifyContent="flex-start">
-                          {!child ? (
-                            <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
-                              Open Project
-                            </Button>
-                          ) : null}
-                        </Box>
-                      </Grid>
-                      <Grid item>
-                        <Pages />
-                      </Grid>
-                      <Grid item>
-                        <Box display="flex" justifyContent="flex-end">
-                          <IconButton>
-                            <LaunchIcon />
-                          </IconButton>
-                          <IconButton>
-                            <GetAppIcon />
-                          </IconButton>
-                          <IconButton>
-                            <CloseIcon />
-                          </IconButton>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Toolbar>
-                </AppBar>
-                <Toolbar />
-              </Grid>
-              <Editor />
-            </Grid>
-          </ErrorBoundary>
-        ) : (
-          'nothing'
-        )}
+        <ErrorBoundary>
+          <Interface hasProject={data && data.currentProject} onProjectOpen={this.openProjectDialog} />
+        </ErrorBoundary>
         {child ? (
           <Button variant="contained" color="secondary" onClick={() => this.kill()}>
             Kill Gatsby
