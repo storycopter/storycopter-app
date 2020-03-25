@@ -27,8 +27,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
+import Editor from './components/Editor';
 import ErrorBoundary from './components/ErrorBoundary';
-import Editor from './Editor';
 import Pages from './components/Pages';
 
 const dialog = remote.dialog;
