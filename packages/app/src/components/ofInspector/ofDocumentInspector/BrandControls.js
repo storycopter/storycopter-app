@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import produce from 'immer';
 import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
@@ -202,7 +202,7 @@ const BrandControls = ({ data, update }) => {
             <Box height="36px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
               {favicon && favicon.name ? (
                 <img
-                  // alt="not found"
+                  alt=""
                   height="16px"
                   src={`file:///${basepath}/src/site/assets/${favicon.name}`}
                   // title="Favicon"

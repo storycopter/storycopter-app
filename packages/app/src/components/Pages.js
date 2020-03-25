@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 const Pages = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject, editor } = data;
+  const { currentProject } = data;
   const { basepath, pages } = currentProject;
 
   const onAvatarClick = pageId => {

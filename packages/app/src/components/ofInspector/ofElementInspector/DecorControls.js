@@ -9,13 +9,13 @@ import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
+import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import Popover from '@material-ui/core/Popover';
@@ -55,11 +55,10 @@ const DecorControls = ({ data, update, ...props }) => {
   const { activePageId, activeElementId } = editor;
   const { brand } = site;
 
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePage ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  const activeElementIndex =
-    activePageId && activeElementId ? _.findIndex(activePage.elements, o => o.id === activeElementId) : null;
-  const activeElement = activeElementId ? activePage.elements[activeElementIndex] : null;
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  const activeElementIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
+  const activeElement = activePage.elements[activeElementIndex];
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -91,7 +90,6 @@ const DecorControls = ({ data, update, ...props }) => {
 
   const onAddBackgImage = () => {
     const destination = `src/pages/${activePage.meta.uid}/`;
-    // console.log({ destination });
     const file = uploadFile(basepath, destination, ['jpg', 'png']);
     if (file) {
       onElementUpdate({
@@ -99,7 +97,6 @@ const DecorControls = ({ data, update, ...props }) => {
           name: file.name,
         },
       });
-      // onElementUpdate(file);
     }
   };
 
@@ -267,6 +264,7 @@ const DecorControls = ({ data, update, ...props }) => {
             <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
               {activeElement.settings.backgImage && activeElement.settings.backgImage.name ? (
                 <img
+                  alt=""
                   height="60"
                   src={`file:///${basepath}/src/pages/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
                 />

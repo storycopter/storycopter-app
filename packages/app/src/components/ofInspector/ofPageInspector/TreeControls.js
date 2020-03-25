@@ -41,10 +41,8 @@ const useStyles = makeStyles(theme => ({
 const TreeControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { basepath, pages, site } = data.currentProject;
+  const { pages } = data.currentProject;
   const { activePageId, activeElementId } = data.editor;
-
-  if (!activePageId) return null;
 
   const activePage = _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);

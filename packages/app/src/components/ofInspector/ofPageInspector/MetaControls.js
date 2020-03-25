@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
+import uploadFile from '../../../utils/uploadFile';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
-import uploadFile from '../../../utils/uploadFile';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -37,12 +37,11 @@ const useStyles = makeStyles(theme => ({
 const MetaControls = ({ data, update }) => {
   const classes = useStyles();
 
-  const { basepath, pages, site } = data.currentProject;
-  const { activePageId, activeElementId } = data.editor;
+  const { basepath, pages } = data.currentProject;
+  const { activePageId } = data.editor;
 
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  // const activeComponentIndex = _.findIndex(activePage.tree.components, o => o.id === activeElementId);
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
 
   const [coverImage, setCoverImage] = useState(activePage.meta.coverImage);
   const [summary, setSummary] = useState(activePage.meta.summary);

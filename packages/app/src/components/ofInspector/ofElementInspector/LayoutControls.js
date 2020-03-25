@@ -4,7 +4,6 @@ import produce from 'immer';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 
-import Button from '@material-ui/core/Button';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -35,11 +34,11 @@ const useStyles = makeStyles(theme => ({
 const LayoutControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { basepath, pages } = data.currentProject;
+  const { pages } = data.currentProject;
   const { activePageId, activeElementId } = data.editor;
 
-  const activePage = activePageId ? _.find(pages, o => o.meta.uid === activePageId) : null;
-  const activePageIndex = activePageId ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
   const activeComponentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
   const activeComponent = pages[activePageIndex].elements[activeComponentIndex];
   const { settings } = activeComponent;
