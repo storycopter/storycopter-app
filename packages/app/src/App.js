@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 // import is from 'electron-is';
-import path from 'path';
+// import path from 'path';
 import Ansi from 'ansi-to-react';
 import React from 'react';
 import fs from 'fs';
@@ -10,10 +10,7 @@ import { connect } from 'react-redux';
 import { remote } from 'electron';
 import { update } from './reducers/data';
 
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import Button from '@material-ui/core/Button';
-
-import appTheme from '@storycopter/ui/src/themes/appTheme';
 
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -55,11 +52,14 @@ class App extends React.Component {
   };
 
   openProject(path) {
+    // these file names should be always the same
     const siteJSON = JSON.parse(fs.readFileSync(`${path}/src/site/site.json`, 'utf8'));
     const contentsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/contents.json`, 'utf8'));
     const creditsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/credits.json`, 'utf8'));
     const errorJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/error.json`, 'utf8'));
     const homeJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/home.json`, 'utf8'));
+
+    // these file names depend on page title that is user-generated, if page title changes after the page has been created, the id will not, hence the file name should not change after being created.
     const introJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/000-intro.json`, 'utf8'));
     const beginningJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/001-beginning.json`, 'utf8'));
     const middleJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/002-middle.json`, 'utf8'));
@@ -148,7 +148,7 @@ class App extends React.Component {
     console.groupEnd();
 
     return (
-      <ThemeProvider theme={appTheme}>
+      <>
         <ErrorBoundary>
           <Interface hasProject={data && data.currentProject} onProjectOpen={this.openProjectDialog} />
         </ErrorBoundary>
@@ -160,7 +160,7 @@ class App extends React.Component {
         {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
         {status ? <h1>{status}</h1> : null}
         <Ansi>{log}</Ansi>
-      </ThemeProvider>
+      </>
     );
   }
 }

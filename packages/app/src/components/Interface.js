@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
 import Toolbar from '@material-ui/core/Toolbar';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
@@ -19,6 +20,9 @@ import Pages from './Pages';
 import Inspector from './Inspector';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100vh',
+  },
   editor: {
     flexGrow: 1,
     flexBasis: '100%',
@@ -35,12 +39,12 @@ const useStyles = makeStyles(theme => ({
 export default function Editor({ hasProject, onProjectOpen }) {
   const classes = useStyles();
   return (
-    <>
+    <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <Grid
         alignContent="stretch"
         alignItems="stretch"
-        style={{ height: '100vh' }}
+        className={classes.root}
         container
         direction="column"
         wrap="nowrap">
@@ -50,7 +54,7 @@ export default function Editor({ hasProject, onProjectOpen }) {
               <Grid container direction="row" justify="space-between" alignItems="center">
                 <Grid item>
                   <Box display="flex" justifyContent="flex-start">
-                    <Button variant="contained" color="primary" onClick={onProjectOpen}>
+                    <Button variant="contained" onClick={onProjectOpen}>
                       Open Project
                     </Button>
                   </Box>
@@ -89,6 +93,6 @@ export default function Editor({ hasProject, onProjectOpen }) {
           'Open a project…'
         )}
       </Grid>
-    </>
+    </ThemeProvider>
   );
 }
