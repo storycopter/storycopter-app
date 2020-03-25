@@ -15,7 +15,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
-import { Canvas, Pages, Inspector } from './components';
+import Canvas from './components/Canvas';
+import Inspector from './components/Inspector';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   main: {
     flexGrow: 1,
   },
-  canvas: {
+  editor: {
     flexGrow: 1,
     flexBasis: '100%',
     overflow: 'hidden',
@@ -42,54 +43,14 @@ const Editor = () => {
   const classes = useStyles();
 
   return (
-    <Grid
-      alignContent="stretch"
-      alignItems="stretch"
-      className={classes.root}
-      container
-      direction="column"
-      wrap="nowrap">
-      <Grid item>
-        <AppBar>
-          <Toolbar>
-            <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item className={classes.side}>
-                <Box display="flex" justifyContent="flex-start">
-                  <IconButton>
-                    <VerticalSplitIcon />
-                  </IconButton>
-                </Box>
-              </Grid>
-              <Grid item className={classes.main}>
-                <Pages />
-              </Grid>
-              <Grid item className={classes.side}>
-                <Box display="flex" justifyContent="flex-end">
-                  <IconButton>
-                    <LaunchIcon />
-                  </IconButton>
-                  <IconButton>
-                    <GetAppIcon />
-                  </IconButton>
-                  <IconButton>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-        <div className={classes.offset} />
+    <Grid container className={classes.editor} wrap="nowrap">
+      <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
+        <Box borderRight={`1px solid ${appTheme.palette.divider}`} minHeight="100%">
+          <Inspector />
+        </Box>
       </Grid>
-      <Grid container className={classes.canvas} wrap="nowrap">
-        <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
-          <Box borderRight={`1px solid ${appTheme.palette.divider}`} minHeight="100%">
-            <Inspector />
-          </Box>
-        </Grid>
-        <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs>
-          <Canvas />
-        </Grid>
+      <Grid item className={classes.main} style={{ overflowY: 'auto' }} xs>
+        <Canvas />
       </Grid>
     </Grid>
   );

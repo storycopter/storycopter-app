@@ -14,11 +14,22 @@ import { update } from './reducers/data';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import CloseIcon from '@material-ui/icons/Close';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import LaunchIcon from '@material-ui/icons/Launch';
+import Toolbar from '@material-ui/core/Toolbar';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import appTheme from '@storycopter/ui/src/themes/appTheme';
 
 import ErrorBoundary from './components/ErrorBoundary';
 import Editor from './Editor';
+import Pages from './components/Pages';
 
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
@@ -43,18 +54,18 @@ class App extends React.Component {
     this.iframeRef = React.createRef();
   }
 
-  addFile = async (basepath, dest) => {
-    const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openFile'] });
-    const src = filePaths.pop();
+  // addFile = async (basepath, dest) => {
+  //   const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openFile'] });
+  //   const src = filePaths.pop();
 
-    if (src) {
-      const destPath = path.join(dest, path.basename(src));
-      fs.copyFileSync(src, path.join(basepath, destPath));
+  //   if (src) {
+  //     const destPath = path.join(dest, path.basename(src));
+  //     fs.copyFileSync(src, path.join(basepath, destPath));
 
-      console.log(destPath);
-      return destPath;
-    }
-  };
+  //     console.log(destPath);
+  //     return destPath;
+  //   }
+  // };
 
   openProjectDialog = async () => {
     const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openDirectory'] });
@@ -161,22 +172,53 @@ class App extends React.Component {
           <ErrorBoundary>
             <CssBaseline />
             <AppBaseline />
-            <Editor />
+            <Grid
+              alignContent="stretch"
+              alignItems="stretch"
+              style={{ height: '100vh' }}
+              container
+              direction="column"
+              wrap="nowrap">
+              <Grid item>
+                <AppBar>
+                  <Toolbar>
+                    <Grid container direction="row" justify="space-between" alignItems="center">
+                      <Grid item>
+                        <Box display="flex" justifyContent="flex-start">
+                          {!child ? (
+                            <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
+                              Open Project
+                            </Button>
+                          ) : null}
+                        </Box>
+                      </Grid>
+                      <Grid item>
+                        <Pages />
+                      </Grid>
+                      <Grid item>
+                        <Box display="flex" justifyContent="flex-end">
+                          <IconButton>
+                            <LaunchIcon />
+                          </IconButton>
+                          <IconButton>
+                            <GetAppIcon />
+                          </IconButton>
+                          <IconButton>
+                            <CloseIcon />
+                          </IconButton>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Toolbar>
+                </AppBar>
+                <Toolbar />
+              </Grid>
+              <Editor />
+            </Grid>
           </ErrorBoundary>
         ) : (
           'nothing'
         )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.addFile(data.currentProject.basepath, 'src/site/assets/')}>
-          ADD FILE
-        </Button>
-        {!child ? (
-          <Button variant="contained" color="primary" onClick={() => this.openProjectDialog()}>
-            Open Project
-          </Button>
-        ) : null}
         {child ? (
           <Button variant="contained" color="secondary" onClick={() => this.kill()}>
             Kill Gatsby
