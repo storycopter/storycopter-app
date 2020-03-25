@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MotivationControls = ({ data, update }) => {
+const MotivationControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject } = data;
@@ -48,7 +48,7 @@ const MotivationControls = ({ data, update }) => {
   };
 
   return (
-    <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
+    <div {...props}>
       <Typography variant="body2" gutterBottom>
         Your call to action will become part of the main navigation. It will open destination link in the same browser
         tab.
@@ -84,7 +84,7 @@ const MotivationControls = ({ data, update }) => {
         onChange={e => setLink(e.target.value)}
         value={link || ''}
       />
-    </form>
+    </div>
   );
 };
 

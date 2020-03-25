@@ -17,6 +17,9 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+  },
   listAvatar: {
     minWidth: theme.spacing(5),
   },
@@ -38,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TreeControls = ({ data, update }) => {
+const TreeControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { pages } = data.currentProject;
@@ -86,55 +89,57 @@ const TreeControls = ({ data, update }) => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided, droppableSnapshot) => (
-          <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
-            {activePage.elements.map((element, index) => {
-              return (
-                <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
-                  {(provided, draggableSnapshot) => (
-                    <ListItem
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                      className={classes.listItem}
-                      disableGutters
-                      ref={provided.innerRef}>
-                      <ListItemAvatar className={classes.listAvatar}>
-                        <Typography color="textSecondary" variant="body2">
-                          {droppableSnapshot.isDraggingOver && draggableSnapshot.isDragging ? (
-                            <DragHandleIcon fontSize="small" />
-                          ) : (
-                            <span style={{ opacity: droppableSnapshot.isDraggingOver ? 0.5 : 1 }}>
-                              {element.order + 1}.
-                            </span>
-                          )}
-                        </Typography>
-                      </ListItemAvatar>
-                      <ListItemText primary={elementTypes[element.type]} />
-                      {!droppableSnapshot.isDraggingOver ? (
-                        <ListItemSecondaryAction className={`${classes.listItemSecondaryAction} liSecAction`}>
-                          <IconButton
-                            className={classes.iconButton}
-                            edge="end"
-                            disableFocusRipple
-                            disableRipple
-                            onClick={e => onInspectElement(e, element.id)}
-                            size="small">
-                            <EditIcon fontSize="inherit" />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      ) : null}
-                    </ListItem>
-                  )}
-                </Draggable>
-              );
-            })}
-            {provided.placeholder}
-          </List>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <div {...props} className={classes.root}>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, droppableSnapshot) => (
+            <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
+              {activePage.elements.map((element, index) => {
+                return (
+                  <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
+                    {(provided, draggableSnapshot) => (
+                      <ListItem
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        className={classes.listItem}
+                        disableGutters
+                        ref={provided.innerRef}>
+                        <ListItemAvatar className={classes.listAvatar}>
+                          <Typography color="textSecondary" variant="body2">
+                            {droppableSnapshot.isDraggingOver && draggableSnapshot.isDragging ? (
+                              <DragHandleIcon fontSize="small" />
+                            ) : (
+                              <span style={{ opacity: droppableSnapshot.isDraggingOver ? 0.5 : 1 }}>
+                                {element.order + 1}.
+                              </span>
+                            )}
+                          </Typography>
+                        </ListItemAvatar>
+                        <ListItemText primary={elementTypes[element.type]} />
+                        {!droppableSnapshot.isDraggingOver ? (
+                          <ListItemSecondaryAction className={`${classes.listItemSecondaryAction} liSecAction`}>
+                            <IconButton
+                              className={classes.iconButton}
+                              edge="end"
+                              disableFocusRipple
+                              disableRipple
+                              onClick={e => onInspectElement(e, element.id)}
+                              size="small">
+                              <EditIcon fontSize="inherit" />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        ) : null}
+                      </ListItem>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </List>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
   );
 };
 

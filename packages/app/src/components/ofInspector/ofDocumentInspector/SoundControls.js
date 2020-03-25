@@ -21,9 +21,6 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-  },
   cardContent: {
     display: 'flex',
     flexDirection: 'row',
@@ -36,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SoundControls = ({ data, update }) => {
+const SoundControls = ({ data, update, ...props }) => {
   const classes = useStyles();
   const player = React.createRef();
 
@@ -77,7 +74,7 @@ const SoundControls = ({ data, update }) => {
   };
 
   return (
-    <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
+    <div {...props}>
       <Typography variant="body2" gutterBottom>
         Background sound will autoplay and crossfade with any inline media that readers may interact with. It may be
         silenced at any time with document’s volume controls.
@@ -153,7 +150,7 @@ const SoundControls = ({ data, update }) => {
           </CardActions>
         </Card>
       </FormControl>
-    </form>
+    </div>
   );
 };
 

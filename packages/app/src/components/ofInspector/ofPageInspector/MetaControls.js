@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MetaControls = ({ data, update }) => {
+const MetaControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { basepath, pages } = data.currentProject;
@@ -87,7 +87,7 @@ const MetaControls = ({ data, update }) => {
   // console.groupEnd();
 
   return (
-    <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
+    <div {...props}>
       <TextField
         {...textFieldProps}
         inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
@@ -144,7 +144,7 @@ const MetaControls = ({ data, update }) => {
           </CardActions>
         </Card>
       </FormControl>
-    </form>
+    </div>
   );
 };
 

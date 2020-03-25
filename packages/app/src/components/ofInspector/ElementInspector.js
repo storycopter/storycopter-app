@@ -39,7 +39,7 @@ const ElementInspector = ({ data, update, ...props }) => {
   // console.groupEnd();
 
   return (
-    <>
+    <form noValidate autoComplete="off" onSubmit={e => e.preventDefault()}>
       <ExpansionPanel expanded={true} square elevation={0}>
         <ExpansionPanelSummary aria-controls="panel1bh-content" id="panel1bh-header" className={classes.panelSummary}>
           <Grid container direction="row" justify="space-between" alignItems="center">
@@ -58,13 +58,11 @@ const ElementInspector = ({ data, update, ...props }) => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
-          <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
-            <LayoutControls className={classes.layoutControls} />
-            <DecorControls className={classes.decorControls} />
-          </form>
+          <LayoutControls className={classes.layoutControls} />
+          <DecorControls className={classes.decorControls} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </>
+    </form>
   );
 };
 

@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const BrandControls = ({ data, update }) => {
+const BrandControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { basepath, site } = data.currentProject;
@@ -151,7 +151,7 @@ const BrandControls = ({ data, update }) => {
   // console.groupEnd();
 
   return (
-    <form noValidate autoComplete="off" className={classes.root} onSubmit={e => e.preventDefault()}>
+    <div {...props}>
       <FormControlLabel
         control={
           <Checkbox
@@ -334,7 +334,7 @@ const BrandControls = ({ data, update }) => {
         <MenuItem value="modern">Modern</MenuItem>
         <MenuItem value="classic">Classic</MenuItem>
       </TextField>
-    </form>
+    </div>
   );
 };
 

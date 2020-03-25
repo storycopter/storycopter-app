@@ -46,7 +46,7 @@ const DocumentInspector = ({ data, update, ...props }) => {
   };
 
   return (
-    <>
+    <form noValidate autoComplete="off" onSubmit={e => e.preventDefault()}>
       <ExpansionPanel expanded={documentInspector.meta} onChange={() => togglePanel('meta')} square elevation={0}>
         <ExpansionPanelSummary aria-controls="panel1bh-content" id="panel1bh-header">
           <Grid container direction="row" justify="space-between" alignItems="center">
@@ -183,7 +183,7 @@ const DocumentInspector = ({ data, update, ...props }) => {
           <MotivationControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </>
+    </form>
   );
 };
 
