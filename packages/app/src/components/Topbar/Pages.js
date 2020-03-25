@@ -41,6 +41,16 @@ const Pages = ({ data, update, ...props }) => {
 
   return (
     <div className={classes.root}>
+      <Tooltip title="Opening titles">
+        <Avatar
+          alt="Opening titles"
+          className={classes.avatar}
+          // onClick={() => onAvatarClick(meta.uid)}
+          // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
+          variant="rounded">
+          H
+        </Avatar>
+      </Tooltip>
       {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
         // do not render the dummy page (used by the idoc package)
         if (meta.uid === 'pagesDummy') return null;
@@ -57,6 +67,16 @@ const Pages = ({ data, update, ...props }) => {
           </Tooltip>
         );
       })}
+      <Tooltip title="Credits">
+        <Avatar
+          alt="Credits"
+          className={classes.avatar}
+          // onClick={() => onAvatarClick(meta.uid)}
+          // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
+          variant="rounded">
+          C
+        </Avatar>
+      </Tooltip>
     </div>
   );
 };
