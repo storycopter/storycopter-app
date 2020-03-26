@@ -73,9 +73,6 @@ const Pages = ({ data, update, ...props }) => {
           </Tooltip>
         );
       })}
-      <IconButton size="small">
-        <AddCircleOutlineIcon />
-      </IconButton>
       <Divider orientation="vertical" flexItem />
       <Tooltip title="Credits">
         <Avatar
@@ -86,6 +83,11 @@ const Pages = ({ data, update, ...props }) => {
           variant="rounded">
           <ViewHeadlineIcon fontSize="inherit" />
         </Avatar>
+      </Tooltip>
+      <Tooltip title="New page">
+        <IconButton size="small">
+          <AddCircleOutlineIcon />
+        </IconButton>
       </Tooltip>
     </div>
   );

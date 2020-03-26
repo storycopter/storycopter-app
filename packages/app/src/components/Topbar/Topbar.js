@@ -48,7 +48,7 @@ const Topbar = ({ data, update, ...props }) => {
                     Open project…
                   </MenuItem>
                   <MenuItem dense onClick={null}>
-                    Something else
+                    Save changes
                   </MenuItem>
                 </Menu>
               </Box>
