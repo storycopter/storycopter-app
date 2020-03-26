@@ -31,6 +31,11 @@ const useStyles = makeStyles(theme => ({
     margin: '0 !important',
     width: '100%',
   },
+  sliderParent: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 }));
 
 const SoundControls = ({ data, update, ...props }) => {
@@ -104,8 +109,13 @@ const SoundControls = ({ data, update, ...props }) => {
               onReady={player => setTrackDuration(player.getDuration())}
               onProgress={progress => setTrackProgress(progress.playedSeconds)}
               playing={sound.enabled && trackPlaying}
-              url={`file:///${basepath}/src/site/assets/${sound.track}`}
-              width="100%"
+              url={`file:///${basepath}/src/site/assets/${sound.track.name}`}
+              style={{
+                height: '1px',
+                overflow: 'hidden',
+                position: 'absolute',
+                width: '1px',
+              }}
               config={{
                 file: {
                   forceAudio: true,
@@ -118,8 +128,8 @@ const SoundControls = ({ data, update, ...props }) => {
               container
               direction="row"
               justify="space-between"
-              wrap="nowrap"
-              spacing={2}>
+              spacing={2}
+              wrap="nowrap">
               <Grid item>
                 <IconButton
                   aria-label="Play"
@@ -129,7 +139,7 @@ const SoundControls = ({ data, update, ...props }) => {
                   {trackPlaying ? <PauseIcon fontSize="inherit" /> : <PlayArrowIcon fontSize="inherit" />}
                 </IconButton>
               </Grid>
-              <Grid item xs>
+              <Grid item xs className={classes.sliderParent}>
                 <Slider
                   aria-labelledby="continuous-slider"
                   disabled={!sound.enabled}
@@ -142,11 +152,9 @@ const SoundControls = ({ data, update, ...props }) => {
             </Grid>
           </CardContent>
           <CardActions>
-            <label htmlFor="soundtrack" className={classes.cardLabel}>
-              <Button color="primary" disabled={!sound.enabled} fullWidth onClick={onAddTrack} size="small">
-                Select track…
-              </Button>
-            </label>
+            <Button color="primary" disabled={!sound.enabled} fullWidth onClick={onAddTrack} size="small">
+              Select track…
+            </Button>
           </CardActions>
         </Card>
       </FormControl>
