@@ -13,7 +13,7 @@ import { update } from './reducers/data';
 import Button from '@material-ui/core/Button';
 
 import './App.css';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 import Interface from './components/Interface';
 
 const dialog = remote.dialog;
