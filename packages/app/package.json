@@ -40,7 +40,7 @@
     "electron-is-dev": "1.1.0",
     "gatsby": "2.20.5",
     "hazardous": "0.3.0",
-    "material-ui-popup-state": "^1.5.3",
+    "material-ui-popup-state": "1.5.3",
     "npm": "6.13.7",
     "npm-commands": "1.0.2",
     "react": "16.13.1",
@@ -53,7 +53,7 @@
     "redux": "4.0.5",
     "redux-localstorage-simple": "2.1.6",
     "redux-logger": "3.0.6",
-    "sanitize-filename": "^1.6.3",
+    "sanitize-filename": "1.6.3",
     "shelljs": "0.8.3",
     "strip-ansi": "6.0.0"
   },
