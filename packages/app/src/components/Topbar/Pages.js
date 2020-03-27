@@ -27,12 +27,16 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(4),
     width: theme.spacing(3.5),
   },
+  avatarActive: {
+    boxShadow: `0 0 0 ${theme.spacing(0.4)}px ${theme.colors.flare[500]}, 0 0 1px 1px ${theme.colors.shadow[900]}`,
+  },
 }));
 
 const Pages = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { currentProject } = data;
+  const { currentProject, editor } = data;
+  const { activePageId } = editor;
   const { basepath, pages } = currentProject;
 
   const onAvatarClick = pageId => {
@@ -64,7 +68,7 @@ const Pages = ({ data, update, ...props }) => {
           <Tooltip title={`${i + 1}. ${meta.title}`} key={meta.order}>
             <Avatar
               alt={`${meta.title}`}
-              className={classes.avatar}
+              className={`${classes.avatar} ${activePageId === meta.uid ? classes.avatarActive : ''}`}
               onClick={() => onAvatarClick(meta.uid)}
               src={meta.coverEnabled ? `file:///${basepath}/src/pages/${meta.uid}/${meta.coverImage.name}` : null}
               variant="rounded">

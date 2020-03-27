@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListItemText from '@material-ui/core/ListItemText';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -43,6 +44,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Editor({ ...props }) {
   const classes = useStyles();
+
+  console.group('Interface.js');
+  console.log({ appTheme });
+  console.groupEnd();
+
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
@@ -75,7 +81,13 @@ export default function Editor({ ...props }) {
                 <ListItemIcon>
                   <FolderIcon />
                 </ListItemIcon>
-                <ListItemText primary="Open project…" />
+                <ListItemText primary="Open story…" />
+              </ListItem>
+              <ListItem button onClick={() => console.log()}>
+                <ListItemIcon>
+                  <AddCircleOutlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Create new story…" />
               </ListItem>
             </List>
           </Grid>

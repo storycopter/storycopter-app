@@ -1,14 +1,17 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
+import colors from './settings/colors';
 import setType from './mixins/setType';
 
 const muiTheme = createMuiTheme();
 
-console.group('docTheme.js');
-console.log('muiTheme:', muiTheme);
-console.groupEnd();
+// console.group('docTheme.js');
+// console.log('muiTheme:', muiTheme);
+// console.groupEnd();
 
 export default createMuiTheme({
+  colors: colors,
+
   props: {
     MuiButtonBase: {
       disableRipple: true,

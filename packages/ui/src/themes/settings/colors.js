@@ -1,6 +1,6 @@
 import { darken, lighten } from 'polished';
 
-export const colors = {
+export default {
   grey: {
     100: lighten(0.48, '#767269'),
     200: lighten(0.36, '#767269'),
@@ -39,5 +39,3 @@ export const colors = {
     900: 'rgba(255,255,255,.9)',
   },
 };
-
-export const color = colors;

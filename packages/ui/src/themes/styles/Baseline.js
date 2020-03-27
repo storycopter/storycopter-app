@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { color } from '../settings';
+import colors from '../settings/colors';
 
 const Baseline = createGlobalStyle`
 
@@ -74,10 +74,10 @@ const Baseline = createGlobalStyle`
   }
 
   ::selection {
-    background: ${color.flare[200]};
+    background: ${colors.flare[200]};
   }
   ::-moz-selection {
-    background: ${color.flare[200]};
+    background: ${colors.flare[200]};
   }
 
 `;
