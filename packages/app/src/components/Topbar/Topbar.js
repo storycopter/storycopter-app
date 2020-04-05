@@ -47,7 +47,12 @@ const Topbar = ({ data, update, ...props }) => {
                     }}>
                     Open project…
                   </MenuItem>
-                  <MenuItem dense onClick={null}>
+                  <MenuItem
+                    dense
+                    onClick={() => {
+                      popupState.close();
+                      props.onSaveChanges();
+                    }}>
                     Save changes
                   </MenuItem>
                 </Menu>

@@ -51,7 +51,7 @@ class App extends React.Component {
     path && this.openProject(path);
   };
 
-  openProject(path) {
+  openProject = path => {
     // these file names should be always the same. we could rely on them to detect if the app is opening a Storycopter project and—if not—feed back to the user.
     const contentsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/contents.json`, 'utf8'));
     const creditsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/credits.json`, 'utf8'));
@@ -89,7 +89,22 @@ class App extends React.Component {
     console.log(currentProject);
 
     this.props.update({ currentProject });
-  }
+  };
+
+  saveProject = () => {
+    const {
+      data: {
+        currentProject: { basepath, essentials, pages },
+      },
+    } = this.props;
+
+    ['contents', 'credits', 'error', 'home'].forEach(essential =>
+      fs.writeFileSync(`${basepath}/src/essentials/${essential}.json`, JSON.stringify(essentials[essential], null, 2))
+    );
+    pages.forEach(page =>
+      fs.writeFileSync(`${basepath}/src/pages/${page.meta.uid}.json`, JSON.stringify(page, null, 2))
+    );
+  };
 
   previewProject(path) {
     const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
@@ -157,7 +172,11 @@ class App extends React.Component {
     return (
       <>
         <ErrorBoundary>
-          <Interface hasProject={data && data.currentProject} onProjectOpen={this.openProjectDialog} />
+          <Interface
+            hasProject={data && data.currentProject}
+            onProjectOpen={this.openProjectDialog}
+            onSaveChanges={this.saveProject}
+          />
         </ErrorBoundary>
         {child ? (
           <Button variant="contained" color="secondary" onClick={() => this.kill()}>
