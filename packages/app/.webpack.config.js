@@ -1,5 +1,7 @@
 // define child rescript
 module.exports = config => {
+  // config.entry = ['@babel/polyfill', './src/index.js'];
+
   config.target = 'electron-renderer';
 
   // console.log(config.module.rules);

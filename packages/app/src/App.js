@@ -18,8 +18,8 @@ import Interface from './components/Interface';
 
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
-const foo = remote.require('./foo');
-const node = foo.getNode();
+// const foo = remote.require('./foo');
+// const node = foo.getNode();
 
 class App extends React.Component {
   constructor(props) {
@@ -106,41 +106,41 @@ class App extends React.Component {
     );
   };
 
-  previewProject(path) {
-    const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
-      // cwd: '/Users/laurian/Projects/Storycopter/storycopter/packages/idoc',
-      cwd: path,
-    });
+  // previewProject(path) {
+  //   const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
+  //     // cwd: '/Users/laurian/Projects/Storycopter/storycopter/packages/idoc',
+  //     cwd: path,
+  //   });
 
-    child.stdin.setEncoding('utf-8');
+  //   child.stdin.setEncoding('utf-8');
 
-    this.setState({ child });
-    console.log(child);
+  //   this.setState({ child });
+  //   console.log(child);
 
-    child.on('error', err => {
-      this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
-    });
+  //   child.on('error', err => {
+  //     this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
+  //   });
 
-    child.stdout.on('data', data => {
-      this.setState({ log: `${this.state.log}${data}` });
-      if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
-      if (data.indexOf('http://localhost:') !== -1) {
-        const src = stripAnsi(`${data}`)
-          .split(/\s/)
-          .find(t => t.indexOf('http://localhost') !== -1)
-          .trim();
-        src.indexOf('graphql') === -1 && this.setState({ src });
-      }
-    });
+  //   child.stdout.on('data', data => {
+  //     this.setState({ log: `${this.state.log}${data}` });
+  //     if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
+  //     if (data.indexOf('http://localhost:') !== -1) {
+  //       const src = stripAnsi(`${data}`)
+  //         .split(/\s/)
+  //         .find(t => t.indexOf('http://localhost') !== -1)
+  //         .trim();
+  //       src.indexOf('graphql') === -1 && this.setState({ src });
+  //     }
+  //   });
 
-    child.stderr.on('data', data => {
-      this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
-    });
+  //   child.stderr.on('data', data => {
+  //     this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
+  //   });
 
-    child.on('close', code => {
-      this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
-    });
-  }
+  //   child.on('close', code => {
+  //     this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
+  //   });
+  // }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.src && prevState.log !== this.state.log) {
