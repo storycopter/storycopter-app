@@ -173,7 +173,7 @@ class App extends React.Component {
       <>
         <ErrorBoundary>
           <Interface
-            hasProject={data && data.currentProject}
+            hasProject={data?.currentProject}
             onProjectOpen={this.openProjectDialog}
             onSaveChanges={this.saveProject}
           />

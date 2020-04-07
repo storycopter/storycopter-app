@@ -57,7 +57,7 @@ const Inspector = ({ data, update, ...props }) => {
       <Box {...boxProps} display={activeInspector === 'page' ? 'flex' : 'none'}>
         <PageInspector />
       </Box>
-      <Box {...boxProps} display={inspector.activeInspector === 'element' ? 'flex' : 'none'}>
+      <Box {...boxProps} display={activeInspector === 'element' ? 'flex' : 'none'}>
         <ElementInspector />
       </Box>
     </>
