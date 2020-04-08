@@ -6,9 +6,9 @@ console.log({ colors });
 
 const muiTheme = createMuiTheme();
 
-// console.group('appTheme.js');
-// console.log('muiTheme:', muiTheme);
-// console.groupEnd();
+console.group('appTheme.js');
+console.log('muiTheme:', muiTheme);
+console.groupEnd();
 
 export default createMuiTheme({
   colors: colors,

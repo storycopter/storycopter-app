@@ -12,3 +12,6 @@ body,
   -webkit-user-select: none;
   user-select: none;
 }
+img {
+  line-height: 0;
+}
