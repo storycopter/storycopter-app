@@ -94,7 +94,7 @@ const Topbar = ({ data, update, ...props }) => {
           <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item>
               <Box display="flex" justifyContent="flex-start">
-                <Button {...bindTrigger(popupState)} disableElevation variant="contained">
+                <Button {...bindTrigger(popupState)} size="small" variant="contained">
                   Menu
                 </Button>
                 <Menu
@@ -143,12 +143,12 @@ const Topbar = ({ data, update, ...props }) => {
               {props.hasProject ? (
                 <Box display="flex" justifyContent="flex-end">
                   <Tooltip title="Preview story">
-                    <Button disableElevation variant="contained" style={{ marginRight: theme.spacing(1) }}>
+                    <Button size="small" style={{ marginRight: theme.spacing(1) }} variant="contained">
                       <PlayArrowIcon fontSize="small" />
                     </Button>
                   </Tooltip>
                   <Tooltip title="Export story…">
-                    <Button disableElevation variant="contained" color="primary">
+                    <Button color="primary" size="small" variant="contained">
                       <PresentToAllIcon fontSize="small" />
                     </Button>
                   </Tooltip>
