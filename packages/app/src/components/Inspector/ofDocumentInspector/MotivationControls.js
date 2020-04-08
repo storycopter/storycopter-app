@@ -7,16 +7,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+// import makeStyles from '@material-ui/core/styles/makeStyles';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-  },
-}));
+// const useStyles = makeStyles(theme => ({}));
 
 const MotivationControls = ({ data, update, ...props }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const { currentProject } = data;
   const { site } = currentProject;
