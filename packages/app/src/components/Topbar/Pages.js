@@ -9,11 +9,9 @@ import { usePopupState, bindHover, bindPopover } from 'material-ui-popup-state/h
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import PanoramaWideAngleIcon from '@material-ui/icons/PanoramaWideAngle';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
@@ -79,6 +77,9 @@ const Pages = ({ data, update, ...props }) => {
 
   const [pageDetails, setPageDetails] = useState(null);
 
+  const isEssential = ['home', 'credits'].includes(pageDetails?.uid);
+  const targetEntity = isEssential ? 'essentials' : 'pages';
+
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'pageDetailsPopover',
@@ -138,7 +139,9 @@ const Pages = ({ data, update, ...props }) => {
     disableRestoreFocus: true,
   };
 
-  // console.log({ pageDetails });
+  // console.group('Pages.js');
+  // console.log('pageDetails:', pageDetails);
+  // console.groupEnd();
 
   return (
     <>
@@ -170,12 +173,11 @@ const Pages = ({ data, update, ...props }) => {
                     <Draggable key={meta.order} draggableId={meta.uid} index={i}>
                       {(provided, draggableSnapshot) => (
                         <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
                           {...provided.dragHandleProps}
+                          {...provided.draggableProps}
                           onMouseEnter={() => setPageDetails(meta)}
+                          ref={provided.innerRef}
                           style={provided.draggableProps.style}>
-                          {/* <Tooltip title={`${i + 1}. ${meta.title}`}> */}
                           <Avatar
                             {...avatarProps}
                             {...bindHover(popupState)}
@@ -209,7 +211,7 @@ const Pages = ({ data, update, ...props }) => {
             onClick={() => onAvatarClick('credits')}
             src={
               essentials.credits?.meta?.coverEnabled
-                ? `file:///${basepath}/src/essentials/home/${essentials.home.credits?.meta?.coverImage?.name}`
+                ? `file:///${basepath}/src/essentials/credits/${essentials.credits?.meta?.coverImage?.name}`
                 : null
             }>
             <ViewHeadlineIcon fontSize="inherit" />
@@ -233,7 +235,7 @@ const Pages = ({ data, update, ...props }) => {
             <Grid className={classes.pageCardHead} item>
               {pageDetails.coverEnabled && pageDetails.coverImage?.name ? (
                 <img
-                  src={`file:///${basepath}/src/pages/${pageDetails.uid}/${pageDetails.coverImage.name}`}
+                  src={`file:///${basepath}/src/${targetEntity}/${pageDetails.uid}/${pageDetails.coverImage.name}`}
                   width={PAGE_DETAILS_CARD_WIDTH}
                 />
               ) : (

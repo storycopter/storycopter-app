@@ -58,7 +58,6 @@ export default function Interface({ ...props }) {
         className={classes.root}
         container
         direction="column"
-        justifyContent={props.hasProject ? 'flexStart' : 'center'}
         wrap="nowrap">
         <Grid item className={classes.topbar}>
           <Topbar {...props} />
