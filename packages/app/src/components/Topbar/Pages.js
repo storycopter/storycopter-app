@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import produce from 'immer';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
@@ -17,6 +18,14 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
+    '& > *': {
+      margin: `0 ${theme.spacing(1)}px`,
+    },
+  },
+  list: {
+    display: 'flex',
+    userSelect: 'none',
+    width: '100%',
     '& > *': {
       margin: `0 ${theme.spacing(1)}px`,
     },
@@ -39,6 +48,13 @@ const Pages = ({ data, update, ...props }) => {
   const { activePageId } = editor;
   const { basepath, pages } = currentProject;
 
+  const reorder = (arr, startIndex, endIndex) => {
+    const result = Array.from(arr);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result.map((o, i) => ({ ...o, meta: { ...o.meta, order: i } }));
+  };
+
   const onAvatarClick = pageId => {
     update({
       ...produce(data, nextData => {
@@ -48,43 +64,83 @@ const Pages = ({ data, update, ...props }) => {
     });
   };
 
+  const onDragEnd = ({ source, destination }) => {
+    if (!destination) return;
+    const payload = reorder(pages, source.index, destination.index);
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.pages = payload;
+      }),
+    });
+  };
+
+  const avatarProps = {
+    className: classes.avatar,
+    variant: 'rounded',
+  };
+
   return (
     <div className={classes.root}>
       <Tooltip title="Opening titles">
         <Avatar
+          {...avatarProps}
           alt="Opening titles"
-          className={classes.avatar}
           // onClick={() => onAvatarClick(meta.uid)}
           // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
-          variant="rounded">
+        >
           <PanoramaWideAngleIcon fontSize="inherit" />
         </Avatar>
       </Tooltip>
       <Divider orientation="vertical" flexItem />
-      {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
-        // do not render the dummy page (used by the idoc package)
-        if (meta.uid === 'pagesDummy') return null;
-        return (
-          <Tooltip title={`${i + 1}. ${meta.title}`} key={meta.order}>
-            <Avatar
-              alt={`${meta.title}`}
-              className={`${classes.avatar} ${activePageId === meta.uid ? classes.avatarActive : ''}`}
-              onClick={() => onAvatarClick(meta.uid)}
-              src={meta.coverEnabled ? `file:///${basepath}/src/pages/${meta.uid}/${meta.coverImage.name}` : null}
-              variant="rounded">
-              {i + 1}
-            </Avatar>
-          </Tooltip>
-        );
-      })}
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable" direction="horizontal">
+          {(provided, droppableSnapshot) => (
+            <div {...provided.droppableProps} className={classes.list} ref={provided.innerRef}>
+              {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
+                // do not render the dummy page (used by the idoc package)
+                if (meta.uid === 'pagesDummy') return null;
+                return (
+                  <Draggable key={meta.order} draggableId={meta.uid} index={i}>
+                    {(provided, draggableSnapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={provided.draggableProps.style}>
+                        <Tooltip title={`${i + 1}. ${meta.title}`}>
+                          <Avatar
+                            {...avatarProps}
+                            alt={`${meta.title}`}
+                            className={`${classes.avatar} ${activePageId === meta.uid ? classes.avatarActive : ''}`}
+                            onClick={() => onAvatarClick(meta.uid)}
+                            src={
+                              meta.coverEnabled
+                                ? `file:///${basepath}/src/pages/${meta.uid}/${meta.coverImage.name}`
+                                : null
+                            }>
+                            {i + 1}
+                          </Avatar>
+                        </Tooltip>
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+
       <Divider orientation="vertical" flexItem />
       <Tooltip title="Credits">
         <Avatar
+          {...avatarProps}
           alt="Credits"
-          className={classes.avatar}
           // onClick={() => onAvatarClick(meta.uid)}
           // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
-          variant="rounded">
+        >
           <ViewHeadlineIcon fontSize="inherit" />
         </Avatar>
       </Tooltip>
