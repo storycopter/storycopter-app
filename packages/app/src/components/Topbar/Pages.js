@@ -31,14 +31,15 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     display: 'flex',
+    margin: '0',
     '& > *': {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
     },
   },
   divider: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   avatar: {
     ...theme.typography.button,
@@ -153,7 +154,7 @@ const Pages = ({ data, update, ...props }) => {
             <PanoramaWideAngleIcon fontSize="inherit" />
           </Avatar>
         </div>
-        <Divider flexItem orientation="vertical" />
+        <Divider className={classes.divider} flexItem orientation="vertical" />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="pagesList" direction="horizontal">
             {provided => (
@@ -193,7 +194,7 @@ const Pages = ({ data, update, ...props }) => {
             )}
           </Droppable>
         </DragDropContext>
-        <Divider flexItem orientation="vertical" />
+        <Divider className={classes.divider} flexItem orientation="vertical" />
         <div onMouseEnter={() => setPageDetails(essentials.credits.meta)}>
           <Avatar
             {...avatarProps}
