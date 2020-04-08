@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     boxShadow: `0 0 0 ${theme.spacing(0.4)}px ${theme.colors.flare[500]}, 0 0 1px 1px ${theme.colors.shadow[900]}`,
   },
   popover: {
-    // paddingTop: theme.spacing(1),
+    transform: `translateY(${theme.spacing(1)}px)`,
   },
   pageCard: {
     display: 'flex',
