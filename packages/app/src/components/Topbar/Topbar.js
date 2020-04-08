@@ -27,8 +27,7 @@ import Pages from './Pages';
 
 const useStyles = makeStyles(theme => ({
   dialogTitle: {
-    // margin: 0,
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(4),
     padding: theme.spacing(3),
   },
   dialogCloseButton: {
