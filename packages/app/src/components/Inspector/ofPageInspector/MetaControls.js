@@ -205,25 +205,27 @@ const MetaControls = ({ data, update, ...props }) => {
             </CardActions>
           </Card>
         </FormControl>
-        <FormControl variant="filled" fullWidth margin="dense">
-          <Button {...bindTrigger(popupState)} color="primary" fullWidth size="small" startIcon={<SettingsIcon />}>
-            Advanced…
-          </Button>
-          <Menu
-            {...bindMenu(popupState)}
-            getContentAnchorEl={null}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
-            <MenuItem
-              dense
-              onClick={() => {
-                popupState.close();
-                setDeleteDialogState(true);
-              }}>
-              Delete page…
-            </MenuItem>
-          </Menu>
-        </FormControl>
+        {!isEssential ? (
+          <FormControl variant="filled" fullWidth margin="dense">
+            <Button {...bindTrigger(popupState)} color="primary" fullWidth size="small" startIcon={<SettingsIcon />}>
+              Advanced…
+            </Button>
+            <Menu
+              {...bindMenu(popupState)}
+              getContentAnchorEl={null}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
+              <MenuItem
+                dense
+                onClick={() => {
+                  popupState.close();
+                  setDeleteDialogState(true);
+                }}>
+                Delete page…
+              </MenuItem>
+            </Menu>
+          </FormControl>
+        ) : null}
       </div>
       <Dialog
         aria-labelledby="delete-page-title"
