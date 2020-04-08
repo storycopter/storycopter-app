@@ -19,6 +19,7 @@ import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const PAGE_DETAILS_CARD_WIDTH = 200;
+const MAX_PAGES_NUMBER = 8;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,9 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     display: 'flex',
-    // userSelect: 'none',
     '& > *': {
-      margin: `0 ${theme.spacing(1)}px`,
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
   },
   divider: {
@@ -104,6 +105,8 @@ const Pages = ({ data, update, ...props }) => {
 
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
+    if (destination.index === source.index) return;
+
     const payload = reorder(pages, source.index, destination.index);
     update({
       ...produce(data, nextData => {
@@ -163,15 +166,15 @@ const Pages = ({ data, update, ...props }) => {
         </div>
         <Divider flexItem orientation="vertical" />
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable" direction="horizontal">
-            {(provided, droppableSnapshot) => (
-              <div {...provided.droppableProps} className={classes.list} ref={provided.innerRef}>
+          <Droppable droppableId="pagesList" direction="horizontal">
+            {provided => (
+              <div ref={provided.innerRef} {...provided.droppableProps} className={classes.list}>
                 {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
                   // do not render the dummy page (used by the idoc package)
                   if (meta.uid === 'pagesDummy') return null;
                   return (
                     <Draggable key={meta.order} draggableId={meta.uid} index={i}>
-                      {(provided, draggableSnapshot) => (
+                      {provided => (
                         <div
                           {...provided.dragHandleProps}
                           {...provided.draggableProps}
@@ -217,10 +220,13 @@ const Pages = ({ data, update, ...props }) => {
             <ViewHeadlineIcon fontSize="inherit" />
           </Avatar>
         </div>
-        <Tooltip title="New page">
-          <IconButton size="small">
-            <AddCircleOutlineIcon />
-          </IconButton>
+        <Tooltip
+          title={pages.length >= MAX_PAGES_NUMBER ? `Stories are limited to ${MAX_PAGES_NUMBER} pages` : `New page`}>
+          <span>
+            <IconButton size="small" disabled={pages.length >= MAX_PAGES_NUMBER}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </div>
       {pageDetails ? (
