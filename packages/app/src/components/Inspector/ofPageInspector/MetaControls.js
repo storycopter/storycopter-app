@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import uploadFile from '../../../utils/uploadFile';
@@ -37,11 +37,14 @@ const useStyles = makeStyles(theme => ({
 const MetaControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { basepath, pages } = data.currentProject;
+  const { basepath, pages, essentials } = data.currentProject;
   const { activePageId } = data.editor;
 
-  const activePage = _.find(pages, o => o.meta.uid === activePageId);
-  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  const isEssential = ['home', 'credits'].includes(activePageId);
+  const targetEntity = isEssential ? 'essentials' : 'pages';
+
+  const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = isEssential ? null : _.findIndex(pages, o => o.meta.uid === activePageId);
 
   const [coverImage, setCoverImage] = useState(activePage.meta.coverImage);
   const [summary, setSummary] = useState(activePage.meta.summary);
@@ -50,16 +53,23 @@ const MetaControls = ({ data, update, ...props }) => {
   const onMetaUpdate = payload => {
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].meta = {
-          ...nextData.currentProject.pages[activePageIndex].meta,
-          ...payload,
-        };
+        if (isEssential) {
+          nextData.currentProject.essentials[activePageId].meta = {
+            ...nextData.currentProject.essentials[activePageId].meta,
+            ...payload,
+          };
+        } else {
+          nextData.currentProject.pages[activePageIndex].meta = {
+            ...nextData.currentProject.pages[activePageIndex].meta,
+            ...payload,
+          };
+        }
       }),
     });
   };
 
   const onAddCover = () => {
-    const destination = `src/pages/${activePageId}/`;
+    const destination = `src/${targetEntity}/${activePageId}/`;
     const file = uploadFile(basepath, destination, ['jpg', 'png']);
     if (file) {
       onMetaUpdate({
@@ -71,6 +81,12 @@ const MetaControls = ({ data, update, ...props }) => {
     }
   };
 
+  useEffect(() => {
+    setCoverImage(activePage.meta.coverImage);
+    setSummary(activePage.meta.summary);
+    setTitle(activePage.meta.title);
+  }, [activePage]);
+
   const textFieldProps = {
     fullWidth: true,
     InputProps: {
@@ -81,29 +97,33 @@ const MetaControls = ({ data, update, ...props }) => {
     variant: 'filled',
   };
 
-  // console.group('MetaControls.js');
+  console.group('MetaControls.js');
   // console.log('activePageId', activePageId);
-  // console.log('activePage', activePage);
-  // console.groupEnd();
+  console.log('activePage', activePage);
+  console.groupEnd();
 
   return (
     <div {...props}>
       <TextField
         {...textFieldProps}
+        disabled={isEssential}
         inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
         label="Page title"
         onChange={e => setTitle(e.target.value)}
         value={title || ''}
       />
-      <TextField
-        {...textFieldProps}
-        inputProps={{ onBlur: e => onMetaUpdate({ summary: e.target.value }) }}
-        label="Page summary"
-        multiline
-        onChange={e => setSummary(e.target.value)}
-        rowsMax={4}
-        value={summary || ''}
-      />
+      {!isEssential ? (
+        <TextField
+          {...textFieldProps}
+          disabled={isEssential}
+          inputProps={{ onBlur: e => onMetaUpdate({ summary: e.target.value }) }}
+          label="Page summary"
+          multiline
+          onChange={e => setSummary(e.target.value)}
+          rowsMax={4}
+          value={summary || ''}
+        />
+      ) : null}
       <FormControlLabel
         control={
           <Checkbox
@@ -120,11 +140,11 @@ const MetaControls = ({ data, update, ...props }) => {
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
             <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              {coverImage && coverImage.name ? (
+              {coverImage?.name ? (
                 <img
                   alt="Cover"
                   height="60"
-                  src={`file:///${basepath}/src/pages/${activePageId}/${coverImage.name}`}
+                  src={`file:///${basepath}/src/${targetEntity}/${activePageId}/${coverImage.name}`}
                   title="Cover"
                 />
               ) : (

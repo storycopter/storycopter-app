@@ -34,7 +34,7 @@ const Canvas = ({ data, update }) => {
   const { basepath, pages } = currentProject;
   const { activePageId, activeElementId } = editor;
 
-  if (!activePageId) return null;
+  if (!activePageId || activePageId === 'home' || activePageId === 'credits') return null;
 
   const activePage = _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);

@@ -32,8 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     display: 'flex',
-    userSelect: 'none',
-    width: '100%',
+    // userSelect: 'none',
     '& > *': {
       margin: `0 ${theme.spacing(1)}px`,
     },
@@ -62,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   pageCardHead: {
     lineHeight: 0,
   },
-  pageCoverButton: {
+  pageCoverAlt: {
     background: theme.palette.background.default,
     padding: theme.spacing(1),
   },
@@ -76,7 +75,7 @@ const Pages = ({ data, update, ...props }) => {
 
   const { currentProject, editor } = data;
   const { activePageId } = editor;
-  const { basepath, pages } = currentProject;
+  const { basepath, essentials, pages } = currentProject;
 
   const [pageDetails, setPageDetails] = useState(null);
 
@@ -97,6 +96,7 @@ const Pages = ({ data, update, ...props }) => {
       ...produce(data, nextData => {
         nextData.editor.activePageId = pageId;
         nextData.editor.activeElementId = null;
+        // nextData.inspector.activeInspector = 'page';
       }),
     });
   };
@@ -143,14 +143,18 @@ const Pages = ({ data, update, ...props }) => {
   return (
     <>
       <div className={classes.root}>
-        <div onMouseEnter={() => setPageDetails(currentProject.essentials.home.meta)}>
+        <div onMouseEnter={() => setPageDetails(essentials.home.meta)}>
           <Avatar
             {...avatarProps}
             {...bindHover(popupState)}
             alt="Opening titles"
-            // onClick={() => onAvatarClick(meta.uid)}
-            // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
-          >
+            className={`${classes.avatar} ${activePageId === 'home' ? classes.avatarActive : ''}`}
+            onClick={() => onAvatarClick('home')}
+            src={
+              essentials.home?.meta?.coverEnabled
+                ? `file:///${basepath}/src/essentials/home/${essentials.home?.meta?.coverImage?.name}`
+                : null
+            }>
             <PanoramaWideAngleIcon fontSize="inherit" />
           </Avatar>
         </div>
@@ -196,14 +200,18 @@ const Pages = ({ data, update, ...props }) => {
           </Droppable>
         </DragDropContext>
         <Divider flexItem orientation="vertical" />
-        <div onMouseEnter={() => setPageDetails(currentProject.essentials.credits.meta)}>
+        <div onMouseEnter={() => setPageDetails(essentials.credits.meta)}>
           <Avatar
             {...avatarProps}
             {...bindHover(popupState)}
             alt="Credits"
-            // onClick={() => onAvatarClick(meta.uid)}
-            // src={meta.coverEnabled ? `file:///${basepath}/src/essentials/home/${meta.coverImage.name}` : null}
-          >
+            className={`${classes.avatar} ${activePageId === 'credits' ? classes.avatarActive : ''}`}
+            onClick={() => onAvatarClick('credits')}
+            src={
+              essentials.credits?.meta?.coverEnabled
+                ? `file:///${basepath}/src/essentials/home/${essentials.home.credits?.meta?.coverImage?.name}`
+                : null
+            }>
             <ViewHeadlineIcon fontSize="inherit" />
           </Avatar>
         </div>
@@ -229,16 +237,9 @@ const Pages = ({ data, update, ...props }) => {
                   width={PAGE_DETAILS_CARD_WIDTH}
                 />
               ) : (
-                <div className={classes.pageCoverButton}>
-                  <Button
-                    color="primary"
-                    fullWidth
-                    onClick={onSelectPage}
-                    size="small"
-                    startIcon={<PanoramaOutlinedIcon fontSize="small" />}>
-                    Add page cover…
-                  </Button>
-                </div>
+                <Typography className={classes.pageCoverAlt} component="p" variant="caption" color="textSecondary">
+                  Add page cover…
+                </Typography>
               )}
             </Grid>
             <Grid className={classes.pageCardBody} item>

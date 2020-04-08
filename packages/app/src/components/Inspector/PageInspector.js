@@ -31,6 +31,7 @@ const PageInspector = ({ data, update }) => {
 
   const { activePageId } = data.editor;
   const { pageInspector } = data.inspector;
+  const isEssential = ['home', 'credits'].includes(activePageId);
 
   if (!activePageId) return <>Select a page</>;
 
@@ -84,43 +85,45 @@ const PageInspector = ({ data, update }) => {
           <MetaControls />
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel
-        expanded={pageInspector.tree}
-        onChange={() => onUpdatePageInspector({ tree: !pageInspector.tree })}
-        square
-        elevation={0}>
-        <ExpansionPanelSummary aria-controls="panel2bh-content" id="panel2bh-header">
-          <Grid container direction="row" justify="space-between" alignItems="center">
-            <Grid item>
-              <FormControlLabel
-                aria-label="Expand"
-                onClick={() => onUpdatePageInspector({ tree: !pageInspector.tree })}
-                control={
-                  pageInspector.tree ? (
-                    <ExpandLessIcon fontSize="small" className={classes.expandIcon} />
-                  ) : (
-                    <ExpandMoreIcon fontSize="small" className={classes.expandIcon} />
-                  )
-                }
-                label={
-                  <Typography noWrap variant="subtitle2">
-                    Elements
-                  </Typography>
-                }></FormControlLabel>
+      {!isEssential ? (
+        <ExpansionPanel
+          expanded={pageInspector.tree}
+          onChange={() => onUpdatePageInspector({ tree: !pageInspector.tree })}
+          square
+          elevation={0}>
+          <ExpansionPanelSummary aria-controls="panel2bh-content" id="panel2bh-header">
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              <Grid item>
+                <FormControlLabel
+                  aria-label="Expand"
+                  onClick={() => onUpdatePageInspector({ tree: !pageInspector.tree })}
+                  control={
+                    pageInspector.tree ? (
+                      <ExpandLessIcon fontSize="small" className={classes.expandIcon} />
+                    ) : (
+                      <ExpandMoreIcon fontSize="small" className={classes.expandIcon} />
+                    )
+                  }
+                  label={
+                    <Typography noWrap variant="subtitle2">
+                      Elements
+                    </Typography>
+                  }></FormControlLabel>
+              </Grid>
+              <Grid item>
+                <Tooltip title="The information you provide here will be used to populate your document’s main navigation as well as SEO tree tags of the current page.">
+                  <IconButton aria-label="More details…" size="small" onClick={e => e.stopPropagation()}>
+                    <InfoOutlinedIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Tooltip title="The information you provide here will be used to populate your document’s main navigation as well as SEO tree tags of the current page.">
-                <IconButton aria-label="More details…" size="small" onClick={e => e.stopPropagation()}>
-                  <InfoOutlinedIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <TreeControls />
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <TreeControls />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ) : null}
     </>
   );
 };

@@ -1,6 +1,11 @@
 {
   "meta": {
+    "coverEnabled": true,
+    "coverImage": {
+      "name": "cover.jpg"
+    },
     "path": "/",
+    // "summary": "Some text",
     "title": "Opening Titles",
     "uid": "home"
   },
