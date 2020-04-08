@@ -115,17 +115,6 @@ const Pages = ({ data, update, ...props }) => {
     });
   };
 
-  const onSelectPage = () => {
-    if (!pageDetails) return;
-    popupState.close();
-    update({
-      ...produce(data, nextData => {
-        nextData.editor.activePageId = pageDetails.uid;
-        nextData.inspector.activeInspector = 'page';
-      }),
-    });
-  };
-
   const avatarProps = {
     className: classes.avatar,
     variant: 'rounded',

@@ -15,13 +15,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import LaunchIcon from '@material-ui/icons/Launch';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PresentToAllIcon from '@material-ui/icons/PresentToAll';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 
 import Pages from './Pages';
 
@@ -46,6 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 const Topbar = ({ data, update, ...props }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   const { currentProject } = data;
 
@@ -90,7 +94,9 @@ const Topbar = ({ data, update, ...props }) => {
           <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item>
               <Box display="flex" justifyContent="flex-start">
-                <Button {...bindTrigger(popupState)}>Menu</Button>
+                <Button {...bindTrigger(popupState)} disableElevation variant="contained">
+                  Menu
+                </Button>
                 <Menu
                   {...bindMenu(popupState)}
                   getContentAnchorEl={null}
@@ -134,14 +140,20 @@ const Topbar = ({ data, update, ...props }) => {
             </Grid>
             <Grid item>{props.hasProject ? <Pages /> : null}</Grid>
             <Grid item>
-              <Box display="flex" justifyContent="flex-end">
-                <IconButton>
-                  <LaunchIcon />
-                </IconButton>
-                <IconButton>
-                  <CloseIcon />
-                </IconButton>
-              </Box>
+              {props.hasProject ? (
+                <Box display="flex" justifyContent="flex-end">
+                  <Tooltip title="Preview story">
+                    <Button disableElevation variant="contained" style={{ marginRight: theme.spacing(1) }}>
+                      <PlayArrowIcon fontSize="small" />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Export story…">
+                    <Button disableElevation variant="contained" color="primary">
+                      <PresentToAllIcon fontSize="small" />
+                    </Button>
+                  </Tooltip>
+                </Box>
+              ) : null}
             </Grid>
           </Grid>
         </Toolbar>
