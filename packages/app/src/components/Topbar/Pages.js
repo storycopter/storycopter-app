@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
       margin: `0 ${theme.spacing(1)}px`,
     },
   },
+  divider: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
   avatar: {
     ...theme.typography.button,
     cursor: 'pointer',
@@ -91,8 +95,7 @@ const Pages = ({ data, update, ...props }) => {
           <PanoramaWideAngleIcon fontSize="inherit" />
         </Avatar>
       </Tooltip>
-      <Divider orientation="vertical" flexItem />
-
+      <Divider flexItem orientation="vertical" />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
           {(provided, droppableSnapshot) => (
@@ -132,8 +135,7 @@ const Pages = ({ data, update, ...props }) => {
           )}
         </Droppable>
       </DragDropContext>
-
-      <Divider orientation="vertical" flexItem />
+      <Divider flexItem orientation="vertical" />
       <Tooltip title="Credits">
         <Avatar
           {...avatarProps}

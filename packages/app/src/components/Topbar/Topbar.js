@@ -12,6 +12,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -37,6 +38,10 @@ const useStyles = makeStyles(theme => ({
   },
   dialogActions: {
     padding: theme.spacing(3),
+  },
+  menuDivider: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -102,13 +107,13 @@ const Topbar = ({ data, update, ...props }) => {
                   </MenuItem>
                   <MenuItem
                     dense
-                    divider
                     onClick={() => {
                       popupState.close();
                       props.onProjectOpen();
                     }}>
                     Open story…
                   </MenuItem>
+                  <Divider className={classes.menuDivider} />
                   <MenuItem
                     dense
                     disabled={!currentProject?.basepath}
@@ -118,9 +123,10 @@ const Topbar = ({ data, update, ...props }) => {
                     }}>
                     Save changes
                   </MenuItem>
-                  <MenuItem dense disabled={!currentProject?.basepath} divider onClick={onProjectClose}>
+                  <MenuItem dense disabled={!currentProject?.basepath} onClick={onProjectClose}>
                     Close story
                   </MenuItem>
+                  <Divider className={classes.menuDivider} />
                   <MenuItem dense onClick={props.onAppClose}>
                     Quit Storycopter
                   </MenuItem>
