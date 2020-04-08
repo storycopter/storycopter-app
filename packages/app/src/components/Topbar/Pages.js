@@ -173,7 +173,7 @@ const Pages = ({ data, update, ...props }) => {
                   // do not render the dummy page (used by the idoc package)
                   if (meta.uid === 'pagesDummy') return null;
                   return (
-                    <Draggable key={meta.order} draggableId={meta.uid} index={i}>
+                    <Draggable key={`${i}-${meta.uid}`} draggableId={meta.uid} index={i}>
                       {provided => (
                         <div
                           {...provided.dragHandleProps}
