@@ -42,12 +42,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Editor({ ...props }) {
+export default function Interface({ ...props }) {
   const classes = useStyles();
 
-  console.group('Interface.js');
-  console.log({ appTheme });
-  console.groupEnd();
+  // console.group('Interface.js');
+  // console.log({ appTheme });
+  // console.groupEnd();
 
   return (
     <ThemeProvider theme={appTheme}>
