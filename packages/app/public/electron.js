@@ -4,18 +4,15 @@ const isDev = require('electron-is-dev');
 
 let mainWindow;
 
-console.log('THIS PATH', __dirname + '/storycopter.icns');
-
 function createWindow() {
   mainWindow = new BrowserWindow({
-    height: 680,
+    height: 700,
     webPreferences: { nodeIntegration: true, webSecurity: false },
+    icon: path.join(__dirname, 'icon/storycopter.icns'),
     width: 900,
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   if (isDev) {
-    // Open the DevTools.
-    // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on('closed', () => (mainWindow = null));
