@@ -1,6 +1,7 @@
 import Popover from 'material-ui-popup-state/HoverPopover';
 import React, { useState } from 'react';
 import _ from 'lodash';
+import createPage from '../../utils/createPage';
 import produce from 'immer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
@@ -107,11 +108,22 @@ const Pages = ({ data, update, ...props }) => {
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
     if (destination.index === source.index) return;
-
     const payload = reorder(pages, source.index, destination.index);
     update({
       ...produce(data, nextData => {
         nextData.currentProject.pages = payload;
+      }),
+    });
+  };
+
+  const onPageCreate = () => {
+    const newPage = createPage(basepath, pages.length);
+    if (!newPage) return;
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.pages.push(newPage);
+        nextData.editor.activePageId = newPage.meta.uid;
+        nextData.inspector.activeInspector = 'page';
       }),
     });
   };
@@ -213,7 +225,7 @@ const Pages = ({ data, update, ...props }) => {
         <Tooltip
           title={pages.length >= MAX_PAGES_NUMBER ? `Stories are limited to ${MAX_PAGES_NUMBER} pages` : `New page`}>
           <span>
-            <IconButton size="small" disabled={pages.length >= MAX_PAGES_NUMBER}>
+            <IconButton disabled={pages.length >= MAX_PAGES_NUMBER} size="small" onClick={onPageCreate}>
               <AddCircleOutlineIcon />
             </IconButton>
           </span>
@@ -242,7 +254,7 @@ const Pages = ({ data, update, ...props }) => {
             </Grid>
             <Grid className={classes.pageCardBody} item>
               <Typography component="h2" variant="subtitle2">
-                {pageDetails.title}
+                {pageDetails.title && pageDetails.title.length > 0 ? pageDetails.title : 'Add page title…'}
               </Typography>
             </Grid>
           </Grid>
