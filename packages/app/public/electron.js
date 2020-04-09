@@ -4,14 +4,15 @@ const isDev = require('electron-is-dev');
 
 let mainWindow;
 
-// console.log(path.join(__dirname, 'icons/icon.icns'));
-
 function createWindow() {
   mainWindow = new BrowserWindow({
-    height: 700,
+    center: true,
+    height: 900,
+    icon: `${__dirname}/icons/icon.ico`,
+    minHeight: 800,
+    minWidth: 1000,
     webPreferences: { nodeIntegration: true, webSecurity: false },
-    icon: path.join(__dirname, 'icons/icon.icns'),
-    width: 900,
+    width: 1100,
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   if (isDev) {

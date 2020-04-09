@@ -29,6 +29,9 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import Pages from './Pages';
 
 const useStyles = makeStyles(theme => ({
+  side: {
+    flexBasis: '20%',
+  },
   dialogTitle: {
     marginRight: theme.spacing(4),
     padding: theme.spacing(3),
@@ -92,7 +95,7 @@ const Topbar = ({ data, update, ...props }) => {
       <AppBar>
         <Toolbar>
           <Grid container direction="row" justify="space-between" alignItems="center">
-            <Grid item>
+            <Grid item className={classes.side}>
               <Box display="flex" justifyContent="flex-start">
                 <Button {...bindTrigger(popupState)} size="small" variant="contained">
                   Menu
@@ -139,7 +142,7 @@ const Topbar = ({ data, update, ...props }) => {
               </Box>
             </Grid>
             <Grid item>{props.hasProject ? <Pages /> : null}</Grid>
-            <Grid item>
+            <Grid item className={classes.side}>
               {props.hasProject ? (
                 <Box display="flex" justifyContent="flex-end">
                   <Tooltip title="Preview story">
