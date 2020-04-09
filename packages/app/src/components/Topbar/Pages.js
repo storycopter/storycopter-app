@@ -100,7 +100,9 @@ const Pages = ({ data, update, ...props }) => {
       ...produce(data, nextData => {
         nextData.editor.activePageId = pageId;
         nextData.editor.activeElementId = null;
-        // nextData.inspector.activeInspector = 'page';
+        if (data.inspector.activeInspector !== 'element') {
+          nextData.inspector.activeInspector = 'page';
+        }
       }),
     });
   };

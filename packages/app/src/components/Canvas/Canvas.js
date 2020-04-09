@@ -40,7 +40,6 @@ const Canvas = ({ data, update }) => {
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
 
   const onInspectElement = (e, elementId) => {
-    console.log({ elementId });
     e.stopPropagation();
     update({
       ...produce(data, nextData => {
@@ -54,21 +53,30 @@ const Canvas = ({ data, update }) => {
     const componentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
     update({
       ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings,
-          ...payload,
-        };
+        if (isEssential) {
+          return nextData.currentProject.essentials[activePageId].elements[
+            (componentIndex.settings = {
+              ...nextData.currentProject.essentials[activePageId].elements[componentIndex].settings,
+              ...payload,
+            })
+          ];
+        } else {
+          return (nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
+            ...nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings,
+            ...payload,
+          });
+        }
       }),
     });
   };
 
   // TODO: scroll to active element on activeElementId change
 
-  console.group('Canvas.js');
+  // console.group('Canvas.js');
   // console.log('activeElementId:', activeElementId);
-  console.log('activePage:', activePage);
+  // console.log('activePage:', activePage);
   // console.log('props:', props);
-  console.groupEnd();
+  // console.groupEnd();
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>

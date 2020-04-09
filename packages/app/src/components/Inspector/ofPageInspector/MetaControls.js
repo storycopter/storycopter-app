@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
-import uploadFile from '../../../utils/uploadFile';
 import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
+
+import deletePage from '../../../utils/deletePage';
+import duplicatePage from '../../../utils/duplicatePage';
+import uploadFile from '../../../utils/uploadFile';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -69,9 +72,9 @@ const MetaControls = ({ data, update, ...props }) => {
   const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = isEssential ? null : _.findIndex(pages, o => o.meta.uid === activePageId);
 
-  const [coverImage, setCoverImage] = useState(activePage.meta.coverImage);
-  const [summary, setSummary] = useState(activePage.meta.summary);
-  const [title, setTitle] = useState(activePage.meta.title);
+  const [coverImage, setCoverImage] = useState(activePage?.meta.coverImage);
+  const [summary, setSummary] = useState(activePage?.meta.summary);
+  const [title, setTitle] = useState(activePage?.meta.title);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
   const popupState = usePopupState({ variant: 'popover', popupId: 'advancedPageMenu' });
 
@@ -91,6 +94,21 @@ const MetaControls = ({ data, update, ...props }) => {
         }
       }),
     });
+  };
+
+  const onTitleChange = e => {
+    if (isEssential) return;
+    if (e.target.value.length === 0) return;
+    if (e.target.value === title) return;
+    const newPage = duplicatePage(basepath, activePage?.meta.uid, e.target.value);
+    const oldPageUID = activePage.meta.uid;
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.pages[activePageIndex] = newPage;
+        nextData.editor.activePageId = newPage.meta.uid;
+      }),
+    });
+    deletePage(basepath, oldPageUID);
   };
 
   const onAddCover = () => {
@@ -118,13 +136,13 @@ const MetaControls = ({ data, update, ...props }) => {
       }),
     });
     setDeleteDialogState(false);
-    // TODO: delete page folder
+    deletePage(basepath, activePageId);
   };
 
   useEffect(() => {
-    setCoverImage(activePage.meta.coverImage);
-    setSummary(activePage.meta.summary);
-    setTitle(activePage.meta.title);
+    setCoverImage(activePage?.meta.coverImage);
+    setSummary(activePage?.meta.summary);
+    setTitle(activePage?.meta.title);
   }, [activePage]);
 
   const textFieldProps = {
@@ -137,18 +155,19 @@ const MetaControls = ({ data, update, ...props }) => {
     variant: 'filled',
   };
 
-  console.group('MetaControls.js');
+  // console.group('MetaControls.js');
   // console.log('activePageId', activePageId);
-  console.log('activePage', activePage);
-  console.groupEnd();
+  // console.log('activePage', activePage);
+  // console.groupEnd();
 
   return (
     <>
       <div {...props}>
         <TextField
           {...textFieldProps}
+          autoFocus={!title || title.length === 0}
           disabled={isEssential}
-          inputProps={{ onBlur: e => onMetaUpdate({ title: e.target.value }) }}
+          inputProps={{ onBlur: onTitleChange }}
           label="Page title"
           onChange={e => setTitle(e.target.value)}
           value={title || ''}
@@ -168,7 +187,7 @@ const MetaControls = ({ data, update, ...props }) => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={activePage.meta.coverEnabled}
+              checked={activePage?.meta.coverEnabled}
               color="primary"
               id="coverEnabled"
               name="coverEnabled"
@@ -189,14 +208,14 @@ const MetaControls = ({ data, update, ...props }) => {
                     title="Cover"
                   />
                 ) : (
-                  <PanoramaOutlinedIcon color={activePage.meta.coverEnabled ? 'action' : 'disabled'} />
+                  <PanoramaOutlinedIcon color={activePage?.meta.coverEnabled ? 'action' : 'disabled'} />
                 )}
               </Box>
             </CardMedia>
             <CardActions>
               <Button
                 color="primary"
-                disabled={!activePage.meta.coverEnabled}
+                disabled={!activePage?.meta.coverEnabled}
                 fullWidth
                 onClick={onAddCover}
                 size="small">
