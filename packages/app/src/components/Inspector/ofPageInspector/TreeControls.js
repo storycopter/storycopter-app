@@ -28,9 +28,6 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     position: 'relative',
-    '& .liSecAction': {
-      background: 'yellow',
-    },
   },
   listItemSecondaryAction: {
     right: 0,
@@ -94,7 +91,7 @@ const TreeControls = ({ data, update, ...props }) => {
         <Droppable droppableId="droppable">
           {(provided, droppableSnapshot) => (
             <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
-              {activePage.elements.map((element, index) => {
+              {activePage?.elements.map((element, index) => {
                 return (
                   <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
                     {(provided, draggableSnapshot) => (
@@ -117,7 +114,7 @@ const TreeControls = ({ data, update, ...props }) => {
                         </ListItemAvatar>
                         <ListItemText primary={elementTypes[element.type]} />
                         {!droppableSnapshot.isDraggingOver ? (
-                          <ListItemSecondaryAction className={`${classes.listItemSecondaryAction} liSecAction`}>
+                          <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
                             <IconButton
                               className={classes.iconButton}
                               edge="end"

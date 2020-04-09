@@ -1,5 +1,9 @@
 {
   "meta": {
+    "coverEnabled": true,
+    "coverImage": {
+      "name": "cover.jpg"
+    },
     "path": "/credits",
     "title": "Credits",
     "uid": "credits"

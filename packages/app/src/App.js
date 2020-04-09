@@ -4,8 +4,8 @@
 import Ansi from 'ansi-to-react';
 import React from 'react';
 import fs from 'fs';
-import process from 'child_process';
-import stripAnsi from 'strip-ansi';
+// import process from 'child_process';
+// import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
 import { update } from './reducers/data';
@@ -45,6 +45,10 @@ class App extends React.Component {
   //   }
   // };
 
+  onAppClose = () => {
+    console.log('should quit app');
+  };
+
   openProjectDialog = async () => {
     const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openDirectory'] });
     const path = filePaths.pop();
@@ -60,17 +64,9 @@ class App extends React.Component {
     const siteJSON = JSON.parse(fs.readFileSync(`${path}/src/site/site.json`, 'utf8'));
 
     // these file names depend on page title that is user-generated, if page title changes after the page has been created, the id will not, hence the file name should not change after being created.
-    // const appendixJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/005-appendix.json`, 'utf8'));
-    // const beginningJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/001-beginning.json`, 'utf8'));
-    // const endJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/003-end.json`, 'utf8'));
-    // const introJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/000-intro.json`, 'utf8'));
-    // const middleJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/002-middle.json`, 'utf8'));
-    // const outroJSON = JSON.parse(fs.readFileSync(`${path}/src/pages/004-outro.json`, 'utf8'));
-
     const pages = fs
       .readdirSync(`${path}/src/pages`)
-      .filter(name => name.match(/^\d\d\d-(.*).json/i))
-      .sort((a, b) => parseInt(a.substring(0, 3)) - parseInt(b.substring(0, 3)))
+      .filter(name => name.match(/^(.*).json/i) && name !== `dummy.json`) // skip gatsby dummy page
       .map(name => JSON.parse(fs.readFileSync(`${path}/src/pages/${name}`, 'utf8')));
 
     const currentProject = {
@@ -82,7 +78,6 @@ class App extends React.Component {
         error: errorJSON,
         home: homeJSON,
       },
-      // pages: [introJSON, beginningJSON, middleJSON, endJSON, outroJSON, appendixJSON],
       pages,
     };
 
@@ -174,6 +169,7 @@ class App extends React.Component {
         <ErrorBoundary>
           <Interface
             hasProject={data?.currentProject}
+            onAppClose={this.onAppClose}
             onProjectOpen={this.openProjectDialog}
             onSaveChanges={this.saveProject}
           />

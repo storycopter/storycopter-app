@@ -42,12 +42,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Editor({ ...props }) {
+export default function Interface({ ...props }) {
   const classes = useStyles();
 
-  console.group('Interface.js');
-  console.log({ appTheme });
-  console.groupEnd();
+  // console.group('Interface.js');
+  // console.log({ appTheme });
+  // console.groupEnd();
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -58,7 +58,6 @@ export default function Editor({ ...props }) {
         className={classes.root}
         container
         direction="column"
-        justifyContent={props.hasProject ? 'flexStart' : 'center'}
         wrap="nowrap">
         <Grid item className={classes.topbar}>
           <Topbar {...props} />
