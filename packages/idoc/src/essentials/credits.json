@@ -1,6 +1,6 @@
 {
   "meta": {
-    "coverEnabled": true,
+    "coverEnabled": false,
     "coverImage": {
       "name": "cover.jpg"
     },
@@ -22,7 +22,7 @@
         "backgImageEnabled": null,
         "fullSize": true,
         "images": [],
-        "maskColor": "rgba(255, 169, 0, 0.5)",
+        "maskColor": "rgba(255, 169, 0, 1)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
         "text": "Some text",
         "textColor": "#000000",

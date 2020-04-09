@@ -1,6 +1,6 @@
 {
   "meta": {
-    "coverEnabled": true,
+    "coverEnabled": false,
     "coverImage": {
       "name": "cover.jpg"
     },
@@ -15,7 +15,7 @@
       "order": 0,
       "settings": {
         "align": null,
-        "backgColor": null,
+        "backgColor": "#ffa900",
         "backgImage": {
           "name": "cover-1586450178511.jpg"
         },
