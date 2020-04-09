@@ -31,12 +31,12 @@ const Canvas = ({ data, update }) => {
   const theme = useTheme();
 
   const { currentProject, editor } = data;
-  const { basepath, pages } = currentProject;
+  const { basepath, pages, essentials } = currentProject;
   const { activePageId, activeElementId } = editor;
 
-  if (!activePageId || activePageId === 'home' || activePageId === 'credits') return null;
+  const isEssential = ['home', 'credits'].includes(activePageId);
 
-  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
 
   const onInspectElement = (e, elementId) => {
@@ -64,16 +64,16 @@ const Canvas = ({ data, update }) => {
 
   // TODO: scroll to active element on activeElementId change
 
-  // console.group('Canvas.js');
+  console.group('Canvas.js');
   // console.log('activeElementId:', activeElementId);
-  // console.log('data:', data);
+  console.log('activePage:', activePage);
   // console.log('props:', props);
-  // console.groupEnd();
+  console.groupEnd();
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
       <Grid container direction="column" className={classes.elements}>
-        {_.sortBy(activePage.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
+        {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
           // TODO: don’t do this:
           if (type !== 'headline') return null;
 
