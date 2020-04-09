@@ -7,5 +7,28 @@
     "path": "/credits",
     "title": "Credits",
     "uid": "credits"
-  }
+  },
+  "elements": [
+    {
+      "id": "001",
+      "invert": true,
+      "order": 0,
+      "settings": {
+        "align": null,
+        "backgColor": "#690fc3",
+        "backgImage": {
+          "name": "image.jpg"
+        },
+        "backgImageEnabled": null,
+        "fullSize": true,
+        "images": [],
+        "maskColor": null,
+        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+        "text": "Some text",
+        "textColor": "#ffffff",
+        "title": "Credits"
+      },
+      "type": "headline"
+    }
+  ]
 }

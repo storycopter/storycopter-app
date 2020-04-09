@@ -17,16 +17,16 @@
         "align": null,
         "backgColor": null,
         "backgImage": {
-          "name": "image.jpg"
+          "name": "cover-1586450178511.jpg"
         },
-        "backgImageEnabled": null,
+        "backgImageEnabled": true,
         "fullSize": true,
         "images": [],
         "maskColor": null,
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
         "text": "Some text",
         "textColor": null,
-        "title": "A title of the Headline"
+        "title": "Opening Titles"
       },
       "type": "headline"
     }

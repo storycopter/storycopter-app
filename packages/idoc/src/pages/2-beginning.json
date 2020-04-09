@@ -25,7 +25,7 @@
         "maskColor": null,
         "subtitle": "Some text",
         "text": "More text",
-        "textColor": null,
+        "textColor": "#ffffff",
         "title": "Beginning"
       },
       "type": "headline"
