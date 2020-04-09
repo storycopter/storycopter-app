@@ -39,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 0,
     height: '100%',
     overflowY: 'auto',
+    overflowX: 'hidden',
   },
 }));
 
