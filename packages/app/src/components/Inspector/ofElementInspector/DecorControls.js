@@ -51,14 +51,19 @@ const DecorControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { currentProject, editor } = data;
-  const { basepath, pages, site } = currentProject;
+  const { basepath, essentials, pages, site } = currentProject;
   const { activePageId, activeElementId } = editor;
   const { brand } = site;
 
-  const activePage = _.find(pages, o => o.meta.uid === activePageId);
-  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  const isEssential = ['credits', 'home'].includes(activePageId);
+  const targetEntity = isEssential ? 'essentials' : 'pages';
+
+  const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = !isEssential ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeElementIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
-  const activeElement = activePage.elements[activeElementIndex];
+  const activeElement = isEssential
+    ? activePage.elements[activeElementIndex]
+    : pages[activePageIndex].elements[activeElementIndex];
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -78,19 +83,32 @@ const DecorControls = ({ data, update, ...props }) => {
   });
 
   const onElementUpdate = payload => {
-    update({
-      ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
-          ...payload,
-        };
-      }),
-    });
+    if (isEssential) {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
+            ...payload,
+          };
+        }),
+      });
+    } else {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
+            ...payload,
+          };
+        }),
+      });
+    }
+    return null;
   };
 
   const onAddBackgImage = () => {
-    const destination = `src/pages/${activePage.meta.uid}/`;
+    const destination = `src/${targetEntity}/${activePage.meta.uid}`;
     const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    console.log('onAddBackgImage', { file });
     if (file) {
       onElementUpdate({
         backgImage: {

@@ -41,23 +41,37 @@ const LayoutControls = ({ data, update, ...props }) => {
 
   const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = !isEssential ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
-  const activeComponentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
-  const activeComponent = pages[activePageIndex].elements[activeComponentIndex];
-  const { settings } = activeComponent;
+  const activeElementIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
+  const activeElement = isEssential
+    ? activePage.elements[activeElementIndex]
+    : pages[activePageIndex].elements[activeElementIndex];
+  const { settings } = activeElement;
 
   const onElementUpdate = payload => {
-    update({
-      ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].elements[activeComponentIndex].settings = {
-          ...nextData.currentProject.pages[activePageIndex].elements[activeComponentIndex].settings,
-          ...payload,
-        };
-      }),
-    });
+    if (isEssential) {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
+            ...payload,
+          };
+        }),
+      });
+    } else {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
+            ...payload,
+          };
+        }),
+      });
+    }
+    return null;
   };
 
   // console.group('LayoutControls.js');
-  // console.log('activeComponent:', activeComponent);
+  // console.log('activeElement:', activeElement);
   // console.groupEnd();
 
   return (
@@ -77,7 +91,6 @@ const LayoutControls = ({ data, update, ...props }) => {
               <ToggleButton disableRipple value="left">
                 <AlignLeftIcon fontSize="small" />
               </ToggleButton>
-
               <ToggleButton disableRipple value="center">
                 <AlignCenterHorizontalIcon fontSize="small" />
               </ToggleButton>
@@ -87,17 +100,19 @@ const LayoutControls = ({ data, update, ...props }) => {
             </ToggleButtonGroup>
           </Tooltip>
         </Grid>
-        <Grid item>
-          <Tooltip title="Make element fit browser window">
-            <ToggleButton
-              size="small"
-              value="check"
-              selected={settings.fullSize}
-              onChange={() => onElementUpdate({ fullSize: !settings.fullSize })}>
-              <FullscreenIcon fontSize="small" />
-            </ToggleButton>
-          </Tooltip>
-        </Grid>
+        {!isEssential ? (
+          <Grid item>
+            <Tooltip title="Make element fit browser window">
+              <ToggleButton
+                size="small"
+                value="check"
+                selected={settings.fullSize}
+                onChange={() => onElementUpdate({ fullSize: !settings.fullSize })}>
+                <FullscreenIcon fontSize="small" />
+              </ToggleButton>
+            </Tooltip>
+          </Grid>
+        ) : null}
       </Grid>
     </div>
   );

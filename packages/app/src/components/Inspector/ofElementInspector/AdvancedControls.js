@@ -48,18 +48,22 @@ const AdvancedControls = ({ data, update, ...props }) => {
 
   return (
     <div {...props}>
-      <Button {...bindTrigger(popupState)} color="primary" fullWidth size="small" startIcon={<SettingsIcon />}>
-        Advanced…
-      </Button>
-      <Menu
-        {...bindMenu(popupState)}
-        getContentAnchorEl={null}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <MenuItem dense onClick={onElementDelete}>
-          Delete selected element
-        </MenuItem>
-      </Menu>
+      {!isEssential ? (
+        <>
+          <Button {...bindTrigger(popupState)} color="primary" fullWidth size="small" startIcon={<SettingsIcon />}>
+            Advanced…
+          </Button>
+          <Menu
+            {...bindMenu(popupState)}
+            getContentAnchorEl={null}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <MenuItem dense onClick={onElementDelete}>
+              Delete selected element
+            </MenuItem>
+          </Menu>
+        </>
+      ) : null}
     </div>
   );
 };
