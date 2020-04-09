@@ -209,7 +209,6 @@ const Pages = ({ data, update, ...props }) => {
         </div>
         <NewElPopover />
       </div>
-
       {pageDetails ? (
         <Popover {...bindPopover(detailsPopupState)} {...popoverProps} className={classes.popover}>
           <Grid
@@ -222,6 +221,7 @@ const Pages = ({ data, update, ...props }) => {
             <Grid className={classes.pageCardHead} item>
               {pageDetails.coverEnabled && pageDetails.coverImage?.name ? (
                 <img
+                  alt=""
                   src={`file:///${basepath}/src/${targetEntity}/${pageDetails.uid}/${pageDetails.coverImage.name}`}
                   width={PAGE_DETAILS_CARD_WIDTH}
                 />

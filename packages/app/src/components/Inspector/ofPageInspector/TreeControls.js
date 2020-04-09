@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import findIndex from 'lodash/findIndex';
 import produce from 'immer';
@@ -140,13 +140,11 @@ const TreeControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
   const { pages } = data.currentProject;
-  const { activePageId, activeElementId } = data.editor;
+  const { activePageId } = data.editor;
 
   const activePage = _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
   // const activeComponentIndex = _.findIndex(elements, o => o.id === activeElementId);
-
-  const [activePopup, setActivePopup] = useState(null);
 
   const newElPopupState = usePopupState({ variant: 'popover', popupId: 'addElementMenu' });
 

@@ -15,8 +15,8 @@
       "id": "002",
       "order": 0,
       "settings": {
-        "align": "center",
-        "backgColor": "#4f2ae2",
+        "align": "left",
+        "backgColor": null,
         "backgImage": {
           "name": "cover-1586396285839-1586431054856-1586444693175.jpg"
         },

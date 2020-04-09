@@ -9,14 +9,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SettingsIcon from '@material-ui/icons/Settings';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
-const useStyles = makeStyles(theme => ({}));
 
 const AdvancedControls = ({ data, update, ...props }) => {
-  const classes = useStyles();
-
-  const { essentials, pages } = data.currentProject;
   const { activePageId, activeElementId } = data.editor;
 
   const isEssential = ['credits', 'home'].includes(activePageId);
