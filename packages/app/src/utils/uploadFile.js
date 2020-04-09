@@ -13,13 +13,12 @@ export default function uploadFile(basePath, toPath, extensions) {
     multiSelections: false,
     openDirectory: false,
   });
-  console.log({ src });
   if (src && src !== undefined) {
     const timestamp = Date.now();
     const srcExtension = path.extname(src);
     const srcName = path.basename(src, srcExtension);
-    const newName = `${srcName.replace(/\s/g, '')}-${timestamp}${srcExtension}`;
-    const newPath = path.join(toPath, sanitize(newName));
+    const newName = `${srcName.replace(/\s/g, '-')}-${timestamp}${srcExtension}`;
+    const newPath = path.join(toPath, sanitize(newName.toLowerCase()));
     fs.copyFileSync(src, path.join(basePath, newPath));
     return {
       name: newName,
