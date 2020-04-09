@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import findIndex from 'lodash/findIndex';
 import produce from 'immer';
@@ -47,24 +47,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TreeControls = ({ data, update, ...props }) => {
-  const classes = useStyles();
-
-  const { pages } = data.currentProject;
-  const { activePageId, activeElementId } = data.editor;
-
-  const activePage = _.find(pages, o => o.meta.uid === activePageId);
-  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
-  // const activeComponentIndex = _.findIndex(elements, o => o.id === activeElementId);
-
-  const newElPopupState = usePopupState({ variant: 'popover', popupId: 'addElementMenu' });
+const TreeListItem = ({
+  activePageIndex,
+  classes,
+  data,
+  draggableSnapshot,
+  droppableSnapshot,
+  element,
+  provided,
+  update,
+  ...props
+}) => {
   const moreActionsPopupState = usePopupState({ variant: 'popover', popupId: 'moreElementMenu' });
 
-  const reorder = (arr, startIndex, endIndex) => {
-    const result = Array.from(arr);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result.map((o, i) => ({ ...o, order: i }));
+  const onElementDelete = (e, elementId) => {
+    e.stopPropagation();
+    moreActionsPopupState.close();
+    const activeElIndex = findIndex(data.currentProject.pages[activePageIndex].elements, o => o.id === elementId);
+    update({
+      ...produce(data, nextData => {
+        nextData.currentProject.pages[activePageIndex].elements = [
+          ...data.currentProject.pages[activePageIndex].elements.slice(0, activeElIndex),
+          ...data.currentProject.pages[activePageIndex].elements.slice(activeElIndex + 1),
+        ];
+      }),
+    });
   };
 
   const onElementInspect = (e, elementId) => {
@@ -78,6 +85,78 @@ const TreeControls = ({ data, update, ...props }) => {
     });
   };
 
+  return (
+    <ListItem
+      {...provided.dragHandleProps}
+      {...provided.draggableProps}
+      ref={provided.innerRef}
+      className={classes.listItem}
+      disableGutters>
+      <ListItemAvatar className={classes.listAvatar}>
+        <Typography color="textSecondary" variant="body2">
+          {droppableSnapshot.isDraggingOver && draggableSnapshot.isDragging ? (
+            <DragHandleIcon fontSize="small" />
+          ) : (
+            <span style={{ opacity: droppableSnapshot.isDraggingOver ? 0.5 : 1 }}>{element.order + 1}.</span>
+          )}
+        </Typography>
+      </ListItemAvatar>
+      <ListItemText primary={elementMap[element.type].name} />
+      {!droppableSnapshot.isDraggingOver ? (
+        <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+          <IconButton
+            {...bindTrigger(moreActionsPopupState)}
+            className={classes.iconButton}
+            disableFocusRipple
+            disableRipple
+            edge="end"
+            // onClick={() => {
+            //   moreActionsPopupState.setAnchorEl();
+            //   setActivePopup(element.id);
+            //   moreActionsPopupState.open();
+            // }}
+            size="small">
+            <MoreHorizIcon fontSize="inherit" />
+          </IconButton>
+          <Menu
+            {...bindMenu(moreActionsPopupState)}
+            getContentAnchorEl={null}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <MenuItem dense onClick={e => onElementInspect(e, element.id)}>
+              Edit
+            </MenuItem>
+            <MenuItem dense onClick={e => onElementDelete(e, element.id)}>
+              Delete
+            </MenuItem>
+          </Menu>
+        </ListItemSecondaryAction>
+      ) : null}
+    </ListItem>
+  );
+};
+
+const TreeControls = ({ data, update, ...props }) => {
+  const classes = useStyles();
+
+  const { pages } = data.currentProject;
+  const { activePageId, activeElementId } = data.editor;
+
+  const activePage = _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  // const activeComponentIndex = _.findIndex(elements, o => o.id === activeElementId);
+
+  const [activePopup, setActivePopup] = useState(null);
+
+  const newElPopupState = usePopupState({ variant: 'popover', popupId: 'addElementMenu' });
+
+  const reorder = (arr, startIndex, endIndex) => {
+    const result = Array.from(arr);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result.map((o, i) => ({ ...o, order: i }));
+  };
+
   const onElementAdd = type => {
     newElPopupState.close();
     const payload = elementMap[type].schema;
@@ -88,20 +167,6 @@ const TreeControls = ({ data, update, ...props }) => {
           id: `${activePageId}-${Date.now()}`,
           order: data.currentProject.pages[activePageIndex].elements.length,
         });
-      }),
-    });
-  };
-
-  const onElementDelete = (e, elementId) => {
-    e.stopPropagation();
-    moreActionsPopupState.close();
-    const activeElIndex = findIndex(data.currentProject.pages[activePageIndex].elements, o => o.id === elementId);
-    update({
-      ...produce(data, nextData => {
-        nextData.currentProject.pages[activePageIndex].elements = [
-          ...data.currentProject.pages[activePageIndex].elements.slice(0, activeElIndex),
-          ...data.currentProject.pages[activePageIndex].elements.slice(activeElIndex + 1),
-        ];
       }),
     });
   };
@@ -124,6 +189,35 @@ const TreeControls = ({ data, update, ...props }) => {
   return (
     <Grid {...props} container className={classes.root} direction="column" spacing={1}>
       <Grid item>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, droppableSnapshot) => (
+              <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
+                {activePage?.elements.map((element, index) => {
+                  return (
+                    <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
+                      {(provided, draggableSnapshot) => (
+                        <TreeListItem
+                          activePageIndex={activePageIndex}
+                          classes={classes}
+                          data={data}
+                          draggableSnapshot={draggableSnapshot}
+                          droppableSnapshot={droppableSnapshot}
+                          element={element}
+                          provided={provided}
+                          update={update}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </Grid>
+      <Grid item>
         <Button
           {...bindTrigger(newElPopupState)}
           color="primary"
@@ -137,73 +231,12 @@ const TreeControls = ({ data, update, ...props }) => {
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
-          <MenuItem dense onClick={() => onElementAdd('headline')}>
-            Headline
-          </MenuItem>
+          {_.sortBy(Object.keys(elementMap), o => o.name).map(o => (
+            <MenuItem dense key={elementMap[o].schema.type} onClick={() => onElementAdd(elementMap[o].schema.type)}>
+              {elementMap[o].name}
+            </MenuItem>
+          ))}
         </Menu>
-      </Grid>
-      <Grid item>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, droppableSnapshot) => (
-              <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
-                {activePage?.elements.map((element, index) => {
-                  return (
-                    <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
-                      {(provided, draggableSnapshot) => (
-                        <ListItem
-                          {...provided.dragHandleProps}
-                          {...provided.draggableProps}
-                          className={classes.listItem}
-                          disableGutters
-                          ref={provided.innerRef}>
-                          <ListItemAvatar className={classes.listAvatar}>
-                            <Typography color="textSecondary" variant="body2">
-                              {droppableSnapshot.isDraggingOver && draggableSnapshot.isDragging ? (
-                                <DragHandleIcon fontSize="small" />
-                              ) : (
-                                <span style={{ opacity: droppableSnapshot.isDraggingOver ? 0.5 : 1 }}>
-                                  {element.order + 1}.
-                                </span>
-                              )}
-                            </Typography>
-                          </ListItemAvatar>
-                          <ListItemText primary={elementMap[element.type].name} />
-                          {!droppableSnapshot.isDraggingOver ? (
-                            <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-                              <IconButton
-                                {...bindTrigger(moreActionsPopupState)}
-                                className={classes.iconButton}
-                                edge="end"
-                                disableFocusRipple
-                                disableRipple
-                                size="small">
-                                <MoreHorizIcon fontSize="inherit" />
-                              </IconButton>
-                              <Menu
-                                {...bindMenu(moreActionsPopupState)}
-                                getContentAnchorEl={null}
-                                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                                transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                                <MenuItem dense onClick={e => onElementInspect(e, element.id)}>
-                                  Edit
-                                </MenuItem>
-                                <MenuItem dense onClick={e => onElementDelete(e, element.id)}>
-                                  Delete
-                                </MenuItem>
-                              </Menu>
-                            </ListItemSecondaryAction>
-                          ) : null}
-                        </ListItem>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </List>
-            )}
-          </Droppable>
-        </DragDropContext>
       </Grid>
     </Grid>
   );

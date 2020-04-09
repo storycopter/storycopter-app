@@ -12,6 +12,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import LayoutControls from './ofElementInspector/LayoutControls';
 import DecorControls from './ofElementInspector/DecorControls';
+import AdvancedControls from './ofElementInspector/AdvancedControls';
 
 const useStyles = makeStyles(theme => ({
   panelSummary: {
@@ -23,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   layoutControls: {},
   decorControls: {
+    marginTop: theme.spacing(1),
+  },
+  advancedControls: {
     marginTop: theme.spacing(1),
   },
 }));
@@ -60,6 +64,7 @@ const ElementInspector = ({ data, update, ...props }) => {
         <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
           <LayoutControls className={classes.layoutControls} />
           <DecorControls className={classes.decorControls} />
+          <AdvancedControls className={classes.advancedControls} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </form>
