@@ -8,7 +8,7 @@ export default {
       name: null,
     },
     backgImageEnabled: false,
-    fullSize: true,
+    fullSize: false,
     maskColor: null,
     subtitle: '',
     text: '',

@@ -21,7 +21,7 @@
           "name": null
         },
         "backgImageEnabled": false,
-        "fullSize": true,
+        "fullSize": false,
         "maskColor": null,
         "subtitle": "Some text",
         "text": "More text",
