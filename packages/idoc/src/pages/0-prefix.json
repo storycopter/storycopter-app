@@ -1,8 +1,8 @@
 {
   "meta": {
-    "coverEnabled": false,
+    "coverEnabled": true,
     "coverImage": {
-      "name": ""
+      "name": "cover-1586396285839-1586431054856.jpg"
     },
     "order": 0,
     "path": "/0-prefix",
@@ -10,5 +10,25 @@
     "title": "0 Prefix",
     "uid": "0-prefix"
   },
-  "elements": []
+  "elements": [
+    {
+      "settings": {
+        "align": "left",
+        "backgColor": null,
+        "backgImage": {
+          "name": null
+        },
+        "backgImageEnabled": false,
+        "fullSize": false,
+        "maskColor": null,
+        "subtitle": "",
+        "text": "",
+        "textColor": null,
+        "title": ""
+      },
+      "type": "headline",
+      "id": "0-prefix-1586445453825",
+      "order": 0
+    }
+  ]
 }

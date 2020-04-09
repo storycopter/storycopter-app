@@ -34,6 +34,13 @@ export default createMuiTheme({
     // },
 
     // Tabs
+
+    MuiButton: {
+      root: {
+        minWidth: 'none',
+      },
+    },
+
     MuiTab: {
       root: {
         minWidth: 64,

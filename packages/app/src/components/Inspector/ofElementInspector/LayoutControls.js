@@ -34,11 +34,13 @@ const useStyles = makeStyles(theme => ({
 const LayoutControls = ({ data, update, ...props }) => {
   const classes = useStyles();
 
-  const { pages } = data.currentProject;
+  const { essentials, pages } = data.currentProject;
   const { activePageId, activeElementId } = data.editor;
 
-  const activePage = _.find(pages, o => o.meta.uid === activePageId);
-  const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  const isEssential = ['credits', 'home'].includes(activePageId);
+
+  const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
+  const activePageIndex = !isEssential ? _.findIndex(pages, o => o.meta.uid === activePageId) : null;
   const activeComponentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
   const activeComponent = pages[activePageIndex].elements[activeComponentIndex];
   const { settings } = activeComponent;

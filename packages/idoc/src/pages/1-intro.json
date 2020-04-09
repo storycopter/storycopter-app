@@ -1,6 +1,6 @@
 {
   "meta": {
-    "coverEnabled": false,
+    "coverEnabled": true,
     "coverImage": {
       "name": "cover.jpg"
     },
@@ -12,8 +12,28 @@
   },
   "elements": [
     {
-      "id": "000",
+      "id": "002",
       "order": 0,
+      "settings": {
+        "align": "center",
+        "backgColor": "#4f2ae2",
+        "backgImage": {
+          "name": "cover-1586396285839-1586431054856-1586444693175.jpg"
+        },
+        "backgImageEnabled": true,
+        "fullSize": false,
+        "images": [],
+        "maskColor": "rgba(31, 41, 189, 0.3)",
+        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
+        "text": "",
+        "textColor": "#b6ffbb",
+        "title": ""
+      },
+      "type": "headline"
+    },
+    {
+      "id": "000",
+      "order": 1,
       "settings": {
         "align": "right",
         "backgColor": null,
@@ -21,7 +41,7 @@
           "name": "cover.jpg"
         },
         "backgImageEnabled": false,
-        "fullSize": true,
+        "fullSize": false,
         "images": [],
         "maskColor": "rgba(0,0,0,0.3)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
@@ -33,7 +53,7 @@
     },
     {
       "id": "001",
-      "order": 1,
+      "order": 2,
       "settings": {
         "align": "center",
         "backgColor": "#4051b5",
@@ -41,33 +61,13 @@
           "name": null
         },
         "backgImageEnabled": false,
-        "fullSize": true,
+        "fullSize": false,
         "images": [],
         "maskColor": "rgba(0,0,0,0.3)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
         "text": "",
         "textColor": "#ff0100",
         "title": "A title of the Headline"
-      },
-      "type": "headline"
-    },
-    {
-      "id": "002",
-      "order": 2,
-      "settings": {
-        "align": "left",
-        "backgColor": "#3d2698",
-        "backgImage": {
-          "name": null
-        },
-        "backgImageEnabled": false,
-        "fullSize": null,
-        "images": [],
-        "maskColor": "rgba(0,0,0,0.3)",
-        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
-        "text": "",
-        "textColor": "#ffffff",
-        "title": ""
       },
       "type": "headline"
     },
@@ -102,7 +102,8 @@
           }
         ],
         "maskColor": "rgba(0,0,0,0.3)",
-        "textColor": null
+        "textColor": null,
+        "align": "center"
       },
       "type": "gallery"
     }

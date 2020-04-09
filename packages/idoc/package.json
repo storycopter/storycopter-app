@@ -8,7 +8,7 @@
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.48",
     "@storycopter/ui": "1.0.0",
-    "gatsby": "2.20.13",
+    "gatsby": "2.20.15",
     "gatsby-link": "2.3.2",
     "gatsby-plugin-material-ui": "2.1.6",
     "gatsby-plugin-sharp": "2.5.4",
