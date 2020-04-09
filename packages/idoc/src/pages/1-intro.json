@@ -30,42 +30,6 @@
         "title": "Intro"
       },
       "type": "headline"
-    },
-    {
-      "id": "003",
-      "order": 3,
-      "settings": {
-        "backgColor": "#ff548c",
-        "backgImage": {
-          "name": null
-        },
-        "backgImageEnabled": false,
-        "fullSize": true,
-        "images": [
-          {
-            "alt": "Alt text",
-            "caption": "The first gallery item",
-            "name": "images-000.jpg",
-            "order": 1
-          },
-          {
-            "alt": "Alt text",
-            "caption": "The third gallery item",
-            "name": "images-001.jpg",
-            "order": 3
-          },
-          {
-            "alt": "Alt text",
-            "caption": "The second gallery item",
-            "name": "images-002.jpg",
-            "order": 2
-          }
-        ],
-        "maskColor": "rgba(0,0,0,0.3)",
-        "textColor": null,
-        "align": "center"
-      },
-      "type": "gallery"
     }
   ]
 }

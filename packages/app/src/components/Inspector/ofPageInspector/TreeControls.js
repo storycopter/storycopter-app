@@ -224,7 +224,7 @@ const TreeControls = ({ data, update, ...props }) => {
           fullWidth
           size="small"
           startIcon={<AddCircleOutlineIcon />}>
-          Add new…
+          Add element…
         </Button>
         <Menu
           {...bindMenu(newElPopupState)}
