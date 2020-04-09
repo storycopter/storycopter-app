@@ -4,11 +4,13 @@ const isDev = require('electron-is-dev');
 
 let mainWindow;
 
+// console.log(path.join(__dirname, 'icons/icon.icns'));
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     height: 700,
     webPreferences: { nodeIntegration: true, webSecurity: false },
-    icon: path.join(__dirname, 'icon/storycopter.icns'),
+    icon: path.join(__dirname, 'icons/icon.icns'),
     width: 900,
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
@@ -28,7 +30,7 @@ let template = [
       },
       {
         label: 'Open Project',
-        click: function(item, focusedWindow) {
+        click: function (item, focusedWindow) {
           if (focusedWindow) {
             // const options = {
             //   type: 'info',
@@ -150,7 +152,7 @@ let template = [
       },
       {
         label: 'App Menu Demo',
-        click: function(item, focusedWindow) {
+        click: function (item, focusedWindow) {
           if (focusedWindow) {
             const options = {
               type: 'info',
@@ -159,7 +161,7 @@ let template = [
               message:
                 'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.',
             };
-            dialog.showMessageBox(focusedWindow, options, function() {});
+            dialog.showMessageBox(focusedWindow, options, function () {});
           }
         },
       },

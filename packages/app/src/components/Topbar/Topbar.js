@@ -148,8 +148,12 @@ const Topbar = ({ data, update, ...props }) => {
                     </Button>
                   </Tooltip>
                   <Tooltip title="Export story…">
-                    <Button color="primary" size="small" variant="contained">
-                      <PresentToAllIcon fontSize="small" />
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      startIcon={<PresentToAllIcon fontSize="small" />}>
+                      Export
                     </Button>
                   </Tooltip>
                 </Box>
