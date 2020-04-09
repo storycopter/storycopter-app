@@ -94,7 +94,14 @@ const Canvas = ({ data, update }) => {
             raw: `file:///${basepath}/src/pages/${activePageId}/${settings.backgImage.name}`,
           };
 
-          const isFirstOrLastChild = i === 0 || i === activePage.elements.length - 1;
+          const isFirstChild = i === 0;
+          const isLastChild = i === activePage.elements.length - 1;
+          const activeMargin = isElementActive
+            ? {
+                marginTop: isFirstChild ? 0 : '20px',
+                marginBottom: isLastChild ? 0 : '20px',
+              }
+            : null;
 
           return (
             <Grid
@@ -104,9 +111,12 @@ const Canvas = ({ data, update }) => {
               onClick={e => onInspectElement(e, id)}>
               <div
                 style={{
-                  boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[4],
-                  margin: isElementActive ? (isFirstOrLastChild ? '0 0 20px' : '20px 0') : '0',
+                  ...activeMargin,
+                  backgroundColor: currentProject.site.brand.backgColor,
+                  boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[2],
+                  position: 'relative',
                   transition: 'margin 0.5s',
+                  zIndex: 1,
                 }}>
                 <ThemeProvider theme={docTheme}>
                   <Component
