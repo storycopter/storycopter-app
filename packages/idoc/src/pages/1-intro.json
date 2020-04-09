@@ -21,7 +21,7 @@
           "name": "cover-1586396285839-1586431054856-1586444693175.jpg"
         },
         "backgImageEnabled": true,
-        "fullSize": false,
+        "fullSize": true,
         "images": [],
         "maskColor": "rgba(255, 169, 0, 0.5)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
