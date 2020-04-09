@@ -15,17 +15,17 @@
       "order": 0,
       "settings": {
         "align": null,
-        "backgColor": "#690fc3",
+        "backgColor": null,
         "backgImage": {
           "name": "image.jpg"
         },
         "backgImageEnabled": null,
         "fullSize": true,
         "images": [],
-        "maskColor": null,
+        "maskColor": "rgba(255, 169, 0, 0.5)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
         "text": "Some text",
-        "textColor": "#ffffff",
+        "textColor": "#000000",
         "title": "Credits"
       },
       "type": "headline"

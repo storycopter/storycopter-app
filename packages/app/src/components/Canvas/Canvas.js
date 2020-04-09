@@ -121,6 +121,7 @@ const Canvas = ({ data, update }) => {
                   position: 'relative',
                   transition: 'margin 0.5s',
                   zIndex: 1,
+                  // minHeight: settings.fullScreen ? `` : 'auto',
                 }}>
                 <ThemeProvider theme={docTheme}>
                   <Component

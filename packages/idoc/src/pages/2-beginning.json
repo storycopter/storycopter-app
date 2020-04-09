@@ -16,16 +16,16 @@
       "order": 0,
       "settings": {
         "align": "left",
-        "backgColor": "#3d2698",
+        "backgColor": null,
         "backgImage": {
           "name": null
         },
         "backgImageEnabled": false,
         "fullSize": false,
-        "maskColor": null,
+        "maskColor": "rgba(255, 169, 0, 0.5)",
         "subtitle": "Some text",
         "text": "More text",
-        "textColor": "#ffffff",
+        "textColor": "#000000",
         "title": "Beginning"
       },
       "type": "headline"

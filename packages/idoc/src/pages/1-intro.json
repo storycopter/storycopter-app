@@ -23,10 +23,10 @@
         "backgImageEnabled": true,
         "fullSize": false,
         "images": [],
-        "maskColor": "rgba(31, 41, 189, 0.3)",
+        "maskColor": "rgba(255, 169, 0, 0.5)",
         "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
         "text": "",
-        "textColor": "#b6ffbb",
+        "textColor": "#000000",
         "title": "Intro"
       },
       "type": "headline"
