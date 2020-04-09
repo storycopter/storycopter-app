@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
     overflow: 'auto',
-    padding: `${theme.spacing(5)}px`,
+    padding: theme.spacing(5),
   },
   elements: {},
   elementWrap: {
@@ -29,10 +29,13 @@ const useStyles = makeStyles(theme => ({
 const Canvas = ({ data, update }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const canvasNode = useRef();
 
   const { currentProject, editor } = data;
   const { basepath, pages, essentials } = currentProject;
   const { activePageId, activeElementId } = editor;
+
+  const [canvasRect, setCanvasRect] = useState(null);
 
   const isEssential = ['home', 'credits'].includes(activePageId);
   const targetEntity = isEssential ? 'essentials' : 'pages';
@@ -76,15 +79,26 @@ const Canvas = ({ data, update }) => {
 
   // TODO: scroll to active element on activeElementId change
 
-  // console.group('Canvas.js');
-  // console.log('activeElementId:', activeElementId);
-  // console.log('activePage:', activePage);
-  // console.log('props:', props);
-  // console.groupEnd();
+  const getCanvasRect = () => {
+    if (canvasNode?.current) setCanvasRect(canvasNode.current.getBoundingClientRect());
+  };
+
+  useEffect(() => {
+    getCanvasRect();
+  }, [canvasNode]);
+
+  useEffect(() => {
+    window.addEventListener('resize', getCanvasRect);
+    return () => window.removeEventListener('resize', getCanvasRect);
+  });
+
+  console.group('Canvas.js');
+  console.log('canvasRect:', canvasRect);
+  console.groupEnd();
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
-      <Grid container direction="column" className={classes.elements}>
+      <Grid container direction="column" className={classes.elements} ref={canvasNode}>
         {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
           // TODO: don’t do this:
           if (type !== 'headline') return null;
@@ -121,7 +135,6 @@ const Canvas = ({ data, update }) => {
                   position: 'relative',
                   transition: 'margin 0.5s',
                   zIndex: 1,
-                  // minHeight: settings.fullScreen ? `` : 'auto',
                 }}>
                 <ThemeProvider theme={docTheme}>
                   <Component
@@ -129,6 +142,15 @@ const Canvas = ({ data, update }) => {
                     backgImage={settings.backgImageEnabled ? backgImage : null}
                     isEditable
                     onElementUpdate={onElementUpdate}
+                    style={
+                      settings.fullSize && canvasRect
+                        ? {
+                            minHeight: `${
+                              window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right)
+                            }px`,
+                          }
+                        : null
+                    }
                   />
                 </ThemeProvider>
               </div>
