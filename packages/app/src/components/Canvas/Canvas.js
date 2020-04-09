@@ -35,6 +35,7 @@ const Canvas = ({ data, update }) => {
   const { activePageId, activeElementId } = editor;
 
   const isEssential = ['home', 'credits'].includes(activePageId);
+  const targetEntity = isEssential ? 'essentials' : 'pages';
 
   const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
@@ -51,23 +52,26 @@ const Canvas = ({ data, update }) => {
 
   const onElementUpdate = payload => {
     const componentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
-    update({
-      ...produce(data, nextData => {
-        if (isEssential) {
-          return nextData.currentProject.essentials[activePageId].elements[
-            (componentIndex.settings = {
-              ...nextData.currentProject.essentials[activePageId].elements[componentIndex].settings,
-              ...payload,
-            })
-          ];
-        } else {
-          return (nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
+    if (isEssential) {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.essentials[activePageId].elements[componentIndex].settings = {
+            ...nextData.currentProject.essentials[activePageId].elements[componentIndex].settings,
+            ...payload,
+          };
+        }),
+      });
+    } else {
+      update({
+        ...produce(data, nextData => {
+          nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
             ...nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings,
             ...payload,
-          });
-        }
-      }),
-    });
+          };
+        }),
+      });
+    }
+    return null;
   };
 
   // TODO: scroll to active element on activeElementId change
@@ -91,7 +95,7 @@ const Canvas = ({ data, update }) => {
           // construct backgImage object
           const backgImage = {
             ...settings.backgImage,
-            raw: `file:///${basepath}/src/pages/${activePageId}/${settings.backgImage.name}`,
+            raw: `file:///${basepath}/src/${targetEntity}/${activePageId}/${settings.backgImage.name}`,
           };
 
           const isFirstChild = i === 0;
