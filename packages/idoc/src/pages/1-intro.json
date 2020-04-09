@@ -20,7 +20,7 @@
         "backgImage": {
           "name": "cover-1586396285839-1586431054856-1586444693175.jpg"
         },
-        "backgImageEnabled": true,
+        "backgImageEnabled": false,
         "fullSize": true,
         "images": [],
         "maskColor": "rgba(255, 169, 0, 0.5)",

@@ -14,18 +14,18 @@
       "invert": true,
       "order": 0,
       "settings": {
-        "align": null,
+        "align": "left",
         "backgColor": null,
         "backgImage": {
           "name": "cover-1586450178511.jpg"
         },
-        "backgImageEnabled": true,
+        "backgImageEnabled": false,
         "fullSize": true,
         "images": [],
         "maskColor": "rgba(255, 169, 0, 1)",
-        "subtitle": "A subtitle belonging to the Headline. Such item can contain lenghty text.",
-        "text": "Some text",
-        "textColor": null,
+        "subtitle": "Some text",
+        "text": "",
+        "textColor": "#000000",
         "title": "Opening Titles"
       },
       "type": "headline"

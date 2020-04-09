@@ -12,17 +12,16 @@ import docTheme from '../../themes/docTheme';
 const useStyles = (align, backgColor, backgImage, fullSize, maskColor, textColor) =>
   makeStyles(theme => ({
     headlineRoot: {
-      backgroundColor: backgColor ? backgColor : 'transparent',
-      backgroundImage:
-        backgImage && backgImage.name
-          ? backgImage.raw
-            ? `url("${backgImage.raw}")`
-            : `url("${backgImage.fixed.src}")`
-          : 'none',
+      backgroundColor: backgColor || 'transparent',
+      backgroundImage: backgImage?.name
+        ? backgImage.raw
+          ? `url("${backgImage.raw}")`
+          : `url("${backgImage.fixed.src}")`
+        : 'none',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      color: textColor ? textColor : 'inherit',
+      color: textColor || 'inherit',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

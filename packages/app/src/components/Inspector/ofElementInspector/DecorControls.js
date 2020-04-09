@@ -284,7 +284,7 @@ const DecorControls = ({ data, update, ...props }) => {
                 <img
                   alt=""
                   height="60"
-                  src={`file:///${basepath}/src/pages/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
+                  src={`file:///${basepath}/src/${targetEntity}/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
                 />
               ) : (
                 <PanoramaOutlinedIcon color={activeElement.settings.backgImageEnabled ? 'action' : 'disabled'} />

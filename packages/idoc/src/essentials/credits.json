@@ -14,7 +14,7 @@
       "invert": true,
       "order": 0,
       "settings": {
-        "align": null,
+        "align": "left",
         "backgColor": null,
         "backgImage": {
           "name": "image.jpg"
