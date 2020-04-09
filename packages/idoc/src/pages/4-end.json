@@ -1,1 +1,34 @@
-{"meta":{"coverEnabled":false,"coverImage":{"name":"cover.jpg"},"order":3,"path":"/4-end","summary":"Some text","title":"4 End","uid":"4-end"},"elements":[{"id":"000","order":0,"settings":{"align":"left","backgColor":null,"backgImage":{"name":null},"backgImageEnabled":false,"fullSize":true,"maskColor":"rgba(0,0,0,0.3)","subtitle":"Some text","text":"More text","textColor":null,"title":"End"},"type":"headline"}]}
+{
+  "meta": {
+    "coverEnabled": false,
+    "coverImage": {
+      "name": "cover.jpg"
+    },
+    "order": 4,
+    "path": "/4-end",
+    "summary": "Some text",
+    "title": "4 End",
+    "uid": "4-end"
+  },
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": null,
+        "backgImage": {
+          "name": null
+        },
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": "rgba(0,0,0,0.3)",
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "End"
+      },
+      "type": "headline"
+    }
+  ]
+}

@@ -1,1 +1,34 @@
-{"meta":{"coverEnabled":false,"coverImage":{"name":"cover.jpg"},"order":1,"path":"/2-beginning","summary":"Some text","title":"2 Beginning","uid":"2-beginning"},"elements":[{"id":"000","order":0,"settings":{"align":"left","backgColor":"#3d2698","backgImage":{"name":null},"backgImageEnabled":false,"fullSize":true,"maskColor":null,"subtitle":"Some text","text":"More text","textColor":null,"title":"Beginning"},"type":"headline"}]}
+{
+  "meta": {
+    "coverEnabled": false,
+    "coverImage": {
+      "name": "cover.jpg"
+    },
+    "order": 2,
+    "path": "/2-beginning",
+    "summary": "Some text",
+    "title": "2 Beginning",
+    "uid": "2-beginning"
+  },
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": "#3d2698",
+        "backgImage": {
+          "name": null
+        },
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": null,
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "Beginning"
+      },
+      "type": "headline"
+    }
+  ]
+}

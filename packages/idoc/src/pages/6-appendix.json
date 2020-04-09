@@ -1,1 +1,34 @@
-{"meta":{"coverEnabled":false,"coverImage":{"name":"cover.jpg"},"order":5,"path":"/6-appendix","summary":"Some text","title":"6 Appendix","uid":"6-appendix"},"elements":[{"id":"000","order":0,"settings":{"align":"left","backgColor":"","backgImage":{"name":null},"backgImageEnabled":false,"fullSize":true,"maskColor":null,"subtitle":"Some text","text":"More text","textColor":null,"title":"Appendix"},"type":"headline"}]}
+{
+  "meta": {
+    "coverEnabled": false,
+    "coverImage": {
+      "name": "cover.jpg"
+    },
+    "order": 6,
+    "path": "/6-appendix",
+    "summary": "Some text",
+    "title": "6 Appendix",
+    "uid": "6-appendix"
+  },
+  "elements": [
+    {
+      "id": "000",
+      "order": 0,
+      "settings": {
+        "align": "left",
+        "backgColor": "",
+        "backgImage": {
+          "name": null
+        },
+        "backgImageEnabled": false,
+        "fullSize": true,
+        "maskColor": null,
+        "subtitle": "Some text",
+        "text": "More text",
+        "textColor": null,
+        "title": "Appendix"
+      },
+      "type": "headline"
+    }
+  ]
+}
