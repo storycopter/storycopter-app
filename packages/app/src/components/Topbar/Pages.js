@@ -1,26 +1,23 @@
 import Popover from 'material-ui-popup-state/HoverPopover';
 import React, { useState } from 'react';
 import _ from 'lodash';
-import createPage from '../../utils/createPage';
 import produce from 'immer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { bindHover, bindPopover, usePopupState } from 'material-ui-popup-state/hooks';
 import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
-import { usePopupState, bindHover, bindPopover } from 'material-ui-popup-state/hooks';
 
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import PanoramaWideAngleIcon from '@material-ui/icons/PanoramaWideAngle';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import NewElPopover from './NewElPopover';
+
 const PAGE_DETAILS_CARD_WIDTH = 200;
-const MAX_PAGES_NUMBER = 8;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -83,10 +80,7 @@ const Pages = ({ data, update, ...props }) => {
   const isEssential = ['home', 'credits'].includes(pageDetails?.uid);
   const targetEntity = isEssential ? 'essentials' : 'pages';
 
-  const popupState = usePopupState({
-    variant: 'popover',
-    popupId: 'pageDetailsPopover',
-  });
+  const detailsPopupState = usePopupState({ popupId: 'detailsPopup', variant: 'popover' });
 
   const reorder = (arr, startIndex, endIndex) => {
     const result = Array.from(arr);
@@ -118,18 +112,6 @@ const Pages = ({ data, update, ...props }) => {
     });
   };
 
-  const onPageCreate = () => {
-    const newPage = createPage(basepath, pages.length);
-    if (!newPage) return;
-    update({
-      ...produce(data, nextData => {
-        nextData.currentProject.pages.push(newPage);
-        nextData.editor.activePageId = newPage.meta.uid;
-        nextData.inspector.activeInspector = 'page';
-      }),
-    });
-  };
-
   const avatarProps = {
     className: classes.avatar,
     variant: 'rounded',
@@ -148,6 +130,7 @@ const Pages = ({ data, update, ...props }) => {
 
   // console.group('Pages.js');
   // console.log('pageDetails:', pageDetails);
+  // console.log('elementMap:', elementMap);
   // console.groupEnd();
 
   return (
@@ -156,7 +139,7 @@ const Pages = ({ data, update, ...props }) => {
         <div onMouseEnter={() => setPageDetails(essentials.home.meta)}>
           <Avatar
             {...avatarProps}
-            {...bindHover(popupState)}
+            {...bindHover(detailsPopupState)}
             alt="Opening titles"
             className={`${classes.avatar} ${activePageId === 'home' ? classes.avatarActive : ''}`}
             onClick={() => onAvatarClick('home')}
@@ -187,7 +170,7 @@ const Pages = ({ data, update, ...props }) => {
                           style={provided.draggableProps.style}>
                           <Avatar
                             {...avatarProps}
-                            {...bindHover(popupState)}
+                            {...bindHover(detailsPopupState)}
                             alt={`${meta.title}`}
                             className={`${classes.avatar} ${activePageId === meta.uid ? classes.avatarActive : ''}`}
                             onClick={() => onAvatarClick(meta.uid)}
@@ -212,7 +195,7 @@ const Pages = ({ data, update, ...props }) => {
         <div onMouseEnter={() => setPageDetails(essentials.credits.meta)}>
           <Avatar
             {...avatarProps}
-            {...bindHover(popupState)}
+            {...bindHover(detailsPopupState)}
             alt="Credits"
             className={`${classes.avatar} ${activePageId === 'credits' ? classes.avatarActive : ''}`}
             onClick={() => onAvatarClick('credits')}
@@ -224,17 +207,11 @@ const Pages = ({ data, update, ...props }) => {
             <ViewHeadlineIcon fontSize="inherit" />
           </Avatar>
         </div>
-        <Tooltip
-          title={pages.length >= MAX_PAGES_NUMBER ? `Stories are limited to ${MAX_PAGES_NUMBER} pages` : `New page`}>
-          <span>
-            <IconButton disabled={pages.length >= MAX_PAGES_NUMBER} size="small" onClick={onPageCreate}>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </span>
-        </Tooltip>
+        <NewElPopover />
       </div>
+
       {pageDetails ? (
-        <Popover {...bindPopover(popupState)} {...popoverProps} className={classes.popover}>
+        <Popover {...bindPopover(detailsPopupState)} {...popoverProps} className={classes.popover}>
           <Grid
             alignItems="stretch"
             className={classes.pageCard}
