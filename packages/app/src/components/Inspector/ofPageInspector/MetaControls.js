@@ -99,7 +99,7 @@ const MetaControls = ({ data, update, ...props }) => {
   const onTitleChange = e => {
     if (isEssential) return;
     if (e.target.value.length === 0) return;
-    if (e.target.value === title) return;
+    if (e.target.value === activePage.meta.title) return;
     const newPage = duplicatePage(basepath, activePage?.meta.uid, e.target.value);
     const oldPageUID = activePage.meta.uid;
     update({
