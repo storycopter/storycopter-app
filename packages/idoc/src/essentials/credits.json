@@ -17,7 +17,7 @@
         "align": "left",
         "backgColor": null,
         "backgImage": {
-          "name": "image.jpg"
+          "name": null
         },
         "backgImageEnabled": null,
         "fullSize": true,
