@@ -31,7 +31,7 @@ let template = [
       },
       {
         label: 'Open Project',
-        click: function(item, focusedWindow) {
+        click: function (item, focusedWindow) {
           if (focusedWindow) {
             // const options = {
             //   type: 'info',
@@ -153,7 +153,7 @@ let template = [
       },
       {
         label: 'App Menu Demo',
-        click: function(item, focusedWindow) {
+        click: function (item, focusedWindow) {
           if (focusedWindow) {
             const options = {
               type: 'info',
@@ -162,7 +162,7 @@ let template = [
               message:
                 'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.',
             };
-            dialog.showMessageBox(focusedWindow, options, function() {});
+            dialog.showMessageBox(focusedWindow, options, function () {});
           }
         },
       },
@@ -264,7 +264,8 @@ function findReopenMenuItem() {
 }
 
 if (process.platform === 'darwin') {
-  const name = app.getName();
+  const { name } = app;
+  // const name = app.getName();
   template.unshift({
     label: name,
     submenu: [
