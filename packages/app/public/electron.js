@@ -11,56 +11,18 @@ function createWindow() {
     icon: `${__dirname}/icon.icns`,
     minHeight: 800,
     minWidth: 1000,
-    webPreferences: { nodeIntegration: true, webSecurity: false },
+    webPreferences: { nodeIntegration: true, webSecurity: false, nativeWindowOpen: true },
     width: 1100,
   });
+
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
+
+  if (isDev) mainWindow.webContents.openDevTools();
+
   mainWindow.on('closed', () => (mainWindow = null));
 }
 
 let template = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New Project',
-        enabled: false,
-      },
-      {
-        label: 'Open Project',
-        click: function (item, focusedWindow) {
-          if (focusedWindow) {
-            // const options = {
-            //   type: 'info',
-            //   title: 'Application Menu Demo',
-            //   buttons: ['Ok'],
-            //   message:
-            //     'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.',
-            // };
-            // dialog.showMessageBox(focusedWindow, options, function() {});
-          }
-        },
-      },
-      {
-        label: 'Build Project',
-        enabled: false,
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Add page',
-        enabled: false,
-      },
-      {
-        label: 'Add resource',
-        enabled: false,
-      },
-    ],
-  },
   {
     label: 'Edit',
     submenu: [
@@ -150,21 +112,6 @@ let template = [
       },
       {
         type: 'separator',
-      },
-      {
-        label: 'App Menu Demo',
-        click: function (item, focusedWindow) {
-          if (focusedWindow) {
-            const options = {
-              type: 'info',
-              title: 'Application Menu Demo',
-              buttons: ['Ok'],
-              message:
-                'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.',
-            };
-            dialog.showMessageBox(focusedWindow, options, function () {});
-          }
-        },
       },
     ],
   },

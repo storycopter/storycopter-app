@@ -1,25 +1,27 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-// import is from 'electron-is';
+import is from 'electron-is';
 // import path from 'path';
 import Ansi from 'ansi-to-react';
 import React from 'react';
 import fs from 'fs';
-// import process from 'child_process';
-// import stripAnsi from 'strip-ansi';
+import process from 'child_process';
+import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
-import { remote } from 'electron';
-import { update } from './reducers/data';
+import { remote, shell } from 'electron';
+import NewWindow from 'react-new-window';
 
 import Button from '@material-ui/core/Button';
 
-import './App.css';
+import { update } from './reducers/data';
 import ErrorBoundary from './ErrorBoundary';
 import Interface from './components/Interface';
 
+import './App.css';
+
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
-// const foo = remote.require('./foo');
-// const node = foo.getNode();
+const node = 'node'; // remote.getGlobal('node');
+console.log({ node });
 
 class App extends React.Component {
   constructor(props) {
@@ -89,11 +91,13 @@ class App extends React.Component {
   saveProject = () => {
     const {
       data: {
-        currentProject: { basepath, essentials, pages },
+        currentProject: { basepath, site, essentials, pages },
       },
     } = this.props;
 
-    ['contents', 'credits', 'error', 'home'].forEach(essential =>
+    fs.writeFileSync(`${basepath}/src/site/site.json`, JSON.stringify(site, null, 2))[
+      ('contents', 'credits', 'error', 'home')
+    ].forEach(essential =>
       fs.writeFileSync(`${basepath}/src/essentials/${essential}.json`, JSON.stringify(essentials[essential], null, 2))
     );
     pages.forEach(page =>
@@ -101,41 +105,68 @@ class App extends React.Component {
     );
   };
 
-  // previewProject(path) {
-  //   const child = process.spawn(node, ['./node_modules/.bin/gatsby', 'develop'], {
-  //     // cwd: '/Users/laurian/Projects/Storycopter/storycopter/packages/idoc',
-  //     cwd: path,
-  //   });
+  previewProject = () => {
+    const path = this.props.data.currentProject.basepath;
+    const child = process.spawn('./preview.sh', { cwd: path });
 
-  //   child.stdin.setEncoding('utf-8');
+    child.stdin.setEncoding('utf-8');
 
-  //   this.setState({ child });
-  //   console.log(child);
+    this.setState({ child });
+    console.log(child);
 
-  //   child.on('error', err => {
-  //     this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
-  //   });
+    child.on('error', err => {
+      this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
+    });
 
-  //   child.stdout.on('data', data => {
-  //     this.setState({ log: `${this.state.log}${data}` });
-  //     if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
-  //     if (data.indexOf('http://localhost:') !== -1) {
-  //       const src = stripAnsi(`${data}`)
-  //         .split(/\s/)
-  //         .find(t => t.indexOf('http://localhost') !== -1)
-  //         .trim();
-  //       src.indexOf('graphql') === -1 && this.setState({ src });
-  //     }
-  //   });
+    child.stdout.on('data', data => {
+      this.setState({ log: `${this.state.log}${data}` });
+      if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
+      if (data.indexOf('http://localhost:') !== -1) {
+        const src = stripAnsi(`${data}`)
+          .split(/\s/)
+          .find(t => t.indexOf('http://localhost') !== -1)
+          .trim();
+        src.indexOf('graphql') === -1 && this.setState({ src });
+      }
+    });
 
-  //   child.stderr.on('data', data => {
-  //     this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
-  //   });
+    child.stderr.on('data', data => {
+      this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
+    });
 
-  //   child.on('close', code => {
-  //     this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
-  //   });
-  // }
+    child.on('close', code => {
+      this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
+    });
+  };
+
+  buildProject = () => {
+    const path = this.props.data.currentProject.basepath;
+    const child = process.spawn('./build.sh', { cwd: path });
+
+    child.stdin.setEncoding('utf-8');
+
+    this.setState({ child });
+    console.log(child);
+
+    child.on('error', err => {
+      this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
+    });
+
+    child.stdout.on('data', data => {
+      this.setState({ log: `${this.state.log}${data}` });
+      if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
+    });
+
+    child.stderr.on('data', data => {
+      this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
+    });
+
+    child.on('close', code => {
+      this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
+      // this.setState({ child: null, src: null, log: '' });
+      shell.openItem(path);
+    });
+  };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.src && prevState.log !== this.state.log) {
@@ -174,18 +205,25 @@ class App extends React.Component {
             onSaveChanges={this.saveProject}
           />
         </ErrorBoundary>
+        <button onClick={() => this.previewProject()}>preview</button>
+        <button onClick={() => this.buildProject()}>build</button>
+
         {child ? (
-          <Button variant="contained" color="secondary" onClick={() => this.kill()}>
-            Kill Gatsby
-          </Button>
+          <NewWindow>
+            {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
+            {status ? <h1>{status}</h1> : null}
+            <pre>
+              <Ansi>{log}</Ansi>
+            </pre>
+
+            <Button variant="contained" color="secondary" onClick={() => this.kill()}>
+              Kill Gatsby
+            </Button>
+          </NewWindow>
         ) : null}
-        {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}
-        {status ? <h1>{status}</h1> : null}
-        <Ansi>{log}</Ansi>
       </>
     );
   }
 }
 
-// export default App;
 export default connect(({ data }) => ({ data }), { update })(App);
