@@ -14,7 +14,8 @@ module.exports = config => {
     },
     {
       test: /\.(js|mjs|jsx|ts|tsx)$/,
-      exclude: /(node_modules)/,
+      // exclude: /(node_modules)/,
+      exclude: /node_modules\/(?!(@storycopter\/idoc|@storycopter\/ui)\/).*/,
       use: [
         {
           loader: 'babel-loader',
