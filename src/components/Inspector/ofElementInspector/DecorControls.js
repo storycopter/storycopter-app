@@ -107,7 +107,7 @@ const DecorControls = ({ data, update, ...props }) => {
 
   const onAddBackgImage = () => {
     const destination = `src/${targetEntity}/${activePage.meta.uid}`;
-    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    const file = uploadFile(basepath, destination, ['jpg', 'png', 'svg']);
     console.log('onAddBackgImage', { file });
     if (file) {
       onElementUpdate({
