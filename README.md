@@ -1,3 +1,11 @@
-# Storycopter
+# Storycopter App
 
-When in trouble with `sharp`, run `$ npm rebuild` in the project root.
+[Home Page](https://storycopter.com/)
+
+## Local dev env: 
+
+`$ yarn && yarn electron-dev`
+
+## App packaging
+
+`$ yarn electron-pack`
