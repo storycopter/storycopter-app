@@ -94,7 +94,7 @@ const BrandControls = ({ data, update, ...props }) => {
   };
 
   const onAddFavicon = () => {
-    const destination = 'src/site/assets/';
+    const destination = 'static/';
     const file = uploadFile(basepath, destination, ['ico']);
     if (file) {
       onBrandUpdate({
@@ -204,7 +204,7 @@ const BrandControls = ({ data, update, ...props }) => {
                 <img
                   alt=""
                   height="16px"
-                  src={`file:///${basepath}/src/site/assets/${favicon.name}`}
+                  src={`file:///${basepath}/static/${favicon.name}`}
                   // title="Favicon"
                   width="16px"
                 />
