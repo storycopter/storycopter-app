@@ -236,6 +236,7 @@ const MetaControls = ({ data, update, ...props }) => {
               transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
               <MenuItem
                 dense
+                disabled={pages.length <= 1}
                 onClick={() => {
                   popupState.close();
                   setDeleteDialogState(true);
