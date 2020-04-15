@@ -95,9 +95,8 @@ class App extends React.Component {
       },
     } = this.props;
 
-    fs.writeFileSync(`${basepath}/src/site/site.json`, JSON.stringify(site, null, 2))[
-      ('contents', 'credits', 'error', 'home')
-    ].forEach(essential =>
+    fs.writeFileSync(`${basepath}/src/site/site.json`, JSON.stringify(site, null, 2));
+    ['contents', 'credits', 'error', 'home'].forEach(essential =>
       fs.writeFileSync(`${basepath}/src/essentials/${essential}.json`, JSON.stringify(essentials[essential], null, 2))
     );
     pages.forEach(page =>
