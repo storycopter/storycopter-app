@@ -56,7 +56,7 @@ const MetaControls = ({ data, update, ...props }) => {
   };
 
   const onAddCover = () => {
-    const destination = 'src/site/assets/';
+    const destination = 'static/';
     const file = uploadFile(basepath, destination, ['jpg', 'png']);
     if (file) {
       onMetaUpdate({
@@ -122,12 +122,7 @@ const MetaControls = ({ data, update, ...props }) => {
           <CardMedia className={classes.cardMedia}>
             <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
               {coverImage && coverImage.name ? (
-                <img
-                  alt="Cover"
-                  height="60"
-                  src={`file:///${basepath}/src/site/assets/${coverImage.name}`}
-                  title="Cover"
-                />
+                <img alt="Cover" height="60" src={`file:///${basepath}/static/${coverImage.name}`} title="Cover" />
               ) : (
                 <PanoramaOutlinedIcon color={meta.coverEnabled ? 'action' : 'disabled'} />
               )}
