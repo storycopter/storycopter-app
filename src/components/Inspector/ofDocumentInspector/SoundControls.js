@@ -61,7 +61,7 @@ const SoundControls = ({ data, update, ...props }) => {
   };
 
   const onAddTrack = () => {
-    const destination = 'src/site/assets/';
+    const destination = 'static/';
     const file = uploadFile(basepath, destination, ['mp3']);
     if (file) {
       onSoundUpdate({
@@ -109,7 +109,7 @@ const SoundControls = ({ data, update, ...props }) => {
               onReady={player => setTrackDuration(player.getDuration())}
               onProgress={progress => setTrackProgress(progress.playedSeconds)}
               playing={sound.enabled && trackPlaying}
-              url={`file:///${basepath}/src/site/assets/${sound.track.name}`}
+              url={`file:///${basepath}/static/${sound.track.name}`}
               style={{
                 height: '1px',
                 overflow: 'hidden',
