@@ -12,7 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import appTheme from '@storycopter/ui/src/themes/appTheme';
+import { appTheme } from '@storycopter/ui';
 
 import Canvas from './Canvas/Canvas';
 import Inspector from './Inspector/Inspector';

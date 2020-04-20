@@ -11,7 +11,7 @@ import DocumentInspector from './DocumentInspector';
 import ElementInspector from './ElementInspector';
 import PageInspector from './PageInspector';
 
-import appTheme from '@storycopter/ui/src/themes/appTheme';
+import { appTheme } from '@storycopter/ui';
 
 const useStyles = makeStyles(theme => ({
   tab: {

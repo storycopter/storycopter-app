@@ -1,9 +1,9 @@
 import headline from './headline';
-import gallery from './gallery';
+import slideshow from './slideshow';
 
 const elementMap = {
   headline: { name: 'Headline', schema: headline },
-  gallery: { name: 'Gallery', schema: gallery },
+  slideshow: { name: 'Slideshow', schema: slideshow },
 };
 
 export default elementMap;

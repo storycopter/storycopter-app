@@ -15,5 +15,5 @@ export default {
   //   textColor: null,
   //   title: '',
   // },
-  type: 'gallery',
+  type: 'slideshow',
 };

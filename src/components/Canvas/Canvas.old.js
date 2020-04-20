@@ -120,6 +120,9 @@ const Canvas = ({ data, update }) => {
               }
             : null;
 
+          console.log({ settings });
+          console.log({ backgImage });
+
           return (
             <Grid
               className={classes.elementWrap}
@@ -135,7 +138,23 @@ const Canvas = ({ data, update }) => {
                   transition: 'margin 0.5s',
                   zIndex: 1,
                 }}>
-                <ThemeProvider theme={docTheme}>This should render a component (look at Canvas.old.js)</ThemeProvider>
+                <ThemeProvider theme={docTheme}>
+                  <Component
+                    {...settings}
+                    backgImage={settings.backgImageEnabled ? backgImage : null}
+                    isEditable
+                    onElementUpdate={onElementUpdate}
+                    style={
+                      settings.fullSize && canvasRect
+                        ? {
+                            minHeight: `${
+                              window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right)
+                            }px`,
+                          }
+                        : null
+                    }
+                  />
+                </ThemeProvider>
               </div>
             </Grid>
           );
