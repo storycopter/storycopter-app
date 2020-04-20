@@ -120,9 +120,6 @@ const Canvas = ({ data, update }) => {
               }
             : null;
 
-          console.log({ settings });
-          console.log({ backgImage });
-
           return (
             <Grid
               className={classes.elementWrap}
