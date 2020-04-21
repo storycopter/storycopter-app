@@ -100,7 +100,9 @@ const Canvas = ({ data, update }) => {
       <Grid container direction="column" className={classes.elements} ref={canvasNode}>
         {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
           // TODO: don’t do this:
-          if (type !== 'headline') return null;
+          {
+            /* if (type !== 'headline') return null; */
+          }
 
           const Component = componentMap[type];
           const isElementActive = activeElementId === id;
@@ -108,8 +110,13 @@ const Canvas = ({ data, update }) => {
           // construct backgImage object
           const backgImage = {
             ...settings?.backgImage,
-            publicURL: `file:///${basepath}/src/${targetEntity}/${activePageId}/${settings.backgImage.name}`,
+            publicURL: `file:///${basepath}/src/${targetEntity}/${activePageId}/${settings?.backgImage?.name}`,
           };
+
+          const images = settings?.images?.map(image => ({
+            ...image,
+            publicURL: `file:///${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
+          }));
 
           const isFirstChild = i === 0;
           const isLastChild = i === activePage.elements.length - 1;
@@ -125,8 +132,7 @@ const Canvas = ({ data, update }) => {
               className={classes.elementWrap}
               item
               key={`${activePageId}-${id}`}
-              // onClick={e => onInspectElement(e, id)}
-            >
+              onClick={e => onInspectElement(e, id)}>
               <div
                 style={{
                   ...activeMargin,
@@ -138,22 +144,21 @@ const Canvas = ({ data, update }) => {
                 }}>
                 <ThemeProvider theme={docTheme}>
                   <Component
-                  // {...settings}
-                  // backgImage={settings.backgImageEnabled ? backgImage : null}
-                  // isEditable
-                  // onElementUpdate={onElementUpdate}
-                  // style={
-                  //   settings.fullSize && canvasRect
-                  //     ? {
-                  //         minHeight: `${
-                  //           window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right)
-                  //         }px`,
-                  //       }
-                  //     : null
-                  // }
-                  >
-                    A component of type: {type}
-                  </Component>
+                    {...settings}
+                    backgImage={settings.backgImageEnabled ? backgImage : null}
+                    isEditable
+                    images={images}
+                    onElementUpdate={onElementUpdate}
+                    style={
+                      settings.fullSize && canvasRect
+                        ? {
+                            minHeight: `${
+                              window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right)
+                            }px`,
+                          }
+                        : null
+                    }
+                  />
                 </ThemeProvider>
               </div>
             </Grid>
