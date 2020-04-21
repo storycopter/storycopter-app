@@ -33,7 +33,7 @@ const Canvas = ({ data, update }) => {
   const { basepath, pages, essentials } = currentProject;
   const { activePageId, activeElementId } = editor;
 
-  const [canvasRect, setCanvasRect] = useState(null);
+  const [canvasHeight, setCanvasSize] = useState(null);
 
   const isEssential = ['home', 'credits'].includes(activePageId);
   const targetEntity = isEssential ? 'essentials' : 'pages';
@@ -77,21 +77,24 @@ const Canvas = ({ data, update }) => {
 
   // TODO: scroll to active element on activeElementId change
 
-  const getCanvasRect = () => {
-    if (canvasNode?.current) setCanvasRect(canvasNode.current.getBoundingClientRect());
+  const getCanvasSize = () => {
+    if (!canvasNode?.current) return null;
+    const canvasRect = canvasNode.current.getBoundingClientRect();
+    const size = window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right);
+    setCanvasSize(size);
   };
 
   useEffect(() => {
-    getCanvasRect();
+    getCanvasSize();
   }, [canvasNode]);
 
   useEffect(() => {
-    window.addEventListener('resize', getCanvasRect);
-    return () => window.removeEventListener('resize', getCanvasRect);
+    window.addEventListener('resize', getCanvasSize);
+    return () => window.removeEventListener('resize', getCanvasSize);
   });
 
   // console.group('Canvas.js');
-  // console.log('canvasRect:', canvasRect);
+  // console.log('canvasHeight:', canvasHeight);
   // console.groupEnd();
 
   return (
@@ -140,18 +143,13 @@ const Canvas = ({ data, update }) => {
                   <Component
                     {...settings}
                     backgImage={settings.backgImageEnabled ? backgImage : null}
-                    isEditable
+                    canvasHeight={canvasHeight}
                     images={images}
+                    isEditable
                     onElementUpdate={onElementUpdate}
-                    style={
-                      settings.fullSize && canvasRect
-                        ? {
-                            minHeight: `${
-                              window.innerHeight - canvasRect.top - (window.innerWidth - canvasRect.right)
-                            }px`,
-                          }
-                        : null
-                    }
+                    style={{
+                      minHeight: settings.fullSize ? `${canvasHeight}px` || 'auto' : 'auto',
+                    }}
                   />
                 </ThemeProvider>
               </div>
