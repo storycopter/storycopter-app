@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
+import elementMap from '../../../elements/elementMap';
+
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -64,6 +66,7 @@ const DecorControls = ({ data, update, ...props }) => {
   const activeElement = isEssential
     ? activePage.elements[activeElementIndex]
     : pages[activePageIndex].elements[activeElementIndex];
+  const availableSettings = elementMap[activeElement?.type]?.settings;
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -151,6 +154,10 @@ const DecorControls = ({ data, update, ...props }) => {
     variant: 'filled',
   };
 
+  // console.group('DecorControls.js');
+  // console.log(activeElement.type);
+  // console.groupEnd();
+
   return (
     <div {...props}>
       <TextField
@@ -159,6 +166,7 @@ const DecorControls = ({ data, update, ...props }) => {
         label="Text color"
         InputProps={{
           disableUnderline: true,
+          disabled: !availableSettings.includes('textColor'),
           endAdornment: (
             <InputAdornment position="end">
               <Avatar
@@ -190,119 +198,134 @@ const DecorControls = ({ data, update, ...props }) => {
           }}
         />
       </Popover>
-      <TextField
-        {...bindTrigger(backgPickerState)}
-        {...textFieldProps}
-        label="Background color"
-        InputProps={{
-          disableUnderline: true,
-          endAdornment: (
-            <InputAdornment position="end">
-              <Avatar
-                className={classes.colorPreview}
-                style={{ backgroundColor: backgColor ? backgColor : 'transparent' }}
-                variant="rounded">
-                <></>
-              </Avatar>
-            </InputAdornment>
-          ),
-          startAdornment: <InputAdornment position="start">#</InputAdornment>,
-        }}
-        value={backgColor ? backgColor.substr(1, 6) : ''}
-      />
-      <Popover {...bindPopover(backgPickerState)} {...popoverProps}>
-        <SketchPicker
-          {...pickerProps}
-          color={brand.backgColor ? (backgColor ? backgColor : brand.backgColor) : '#cccccc'}
-          disableAlpha
-          onChange={({ hex }) => setBackgColor(hex)}
-          onChangeComplete={({ hex }) => onElementUpdate({ backgColor: hex })}
-        />
-        <Button
-          {...resetButtonProps}
-          onClick={() => {
-            backgPickerState.close();
-            onElementUpdate({ backgColor: null });
-            setBackgColor(null);
-          }}
-        />
-      </Popover>
-      <TextField
-        {...bindTrigger(maskPickerState)}
-        {...textFieldProps}
-        label="Background mask"
-        InputProps={{
-          disableUnderline: true,
-          endAdornment: (
-            <InputAdornment position="end">
-              <Avatar
-                className={classes.colorPreview}
-                style={{ backgroundColor: maskColor ? maskColor : 'transparent' }}
-                variant="rounded">
-                <></>
-              </Avatar>
-            </InputAdornment>
-          ),
-        }}
-        value={maskColor ? maskColor : ''}
-      />
-      <Popover {...bindPopover(maskPickerState)} {...popoverProps}>
-        <SketchPicker
-          {...pickerProps}
-          color={brand.brandColor ? (maskColor ? maskColor : brand.brandColor) : 'rgba(0,0,0,0.0)'}
-          onChange={({ rgb }) => setMaskColor(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`)}
-          onChangeComplete={({ rgb }) => onElementUpdate({ maskColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})` })}
-        />
-        <Button
-          {...resetButtonProps}
-          onClick={() => {
-            maskPickerState.close();
-            onElementUpdate({ maskColor: 'rgba(0,0,0,0.0)' });
-            setMaskColor('rgba(0,0,0,0.0)');
-          }}
-        />
-      </Popover>
-
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={activeElement.settings.backgImageEnabled}
-            color="primary"
-            id="logoEnabled"
-            name="logoEnabled"
-            onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}
-            value="true"
+      {availableSettings.includes('backgColor') ? (
+        <>
+          <TextField
+            {...bindTrigger(backgPickerState)}
+            {...textFieldProps}
+            label="Background color"
+            InputProps={{
+              disableUnderline: true,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Avatar
+                    className={classes.colorPreview}
+                    style={{ backgroundColor: backgColor ? backgColor : 'transparent' }}
+                    variant="rounded">
+                    <></>
+                  </Avatar>
+                </InputAdornment>
+              ),
+              startAdornment: <InputAdornment position="start">#</InputAdornment>,
+            }}
+            value={backgColor ? backgColor.substr(1, 6) : ''}
           />
-        }
-        label={<Typography variant="overline">Enable background image</Typography>}
-      />
-      <FormControl variant="filled" fullWidth margin="dense">
-        <Card elevation={0}>
-          <CardMedia className={classes.cardMedia}>
-            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              {activeElement.settings.backgImage && activeElement.settings.backgImage.name ? (
-                <img
-                  alt=""
-                  height="60"
-                  src={`file:///${basepath}/src/${targetEntity}/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
-                />
-              ) : (
-                <PanoramaOutlinedIcon color={activeElement.settings.backgImageEnabled ? 'action' : 'disabled'} />
-              )}
-            </Box>
-          </CardMedia>
-          <CardActions>
+          <Popover {...bindPopover(backgPickerState)} {...popoverProps}>
+            <SketchPicker
+              {...pickerProps}
+              color={brand.backgColor ? (backgColor ? backgColor : brand.backgColor) : '#cccccc'}
+              disableAlpha
+              onChange={({ hex }) => setBackgColor(hex)}
+              onChangeComplete={({ hex }) => onElementUpdate({ backgColor: hex })}
+            />
             <Button
-              color="primary"
-              disabled={!activeElement.settings.backgImageEnabled}
-              fullWidth
-              onClick={onAddBackgImage}
-              size="small">
-              Choose background image…
-            </Button>
-          </CardActions>
-        </Card>
-      </FormControl>
+              {...resetButtonProps}
+              onClick={() => {
+                backgPickerState.close();
+                onElementUpdate({ backgColor: null });
+                setBackgColor(null);
+              }}
+            />
+          </Popover>
+        </>
+      ) : null}
+      {availableSettings.includes('maskColor') ? (
+        <>
+          <TextField
+            {...bindTrigger(maskPickerState)}
+            {...textFieldProps}
+            label="Mask color"
+            InputProps={{
+              disableUnderline: true,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Avatar
+                    className={classes.colorPreview}
+                    style={{ backgroundColor: maskColor ? maskColor : 'transparent' }}
+                    variant="rounded">
+                    <></>
+                  </Avatar>
+                </InputAdornment>
+              ),
+            }}
+            value={maskColor ? maskColor : ''}
+          />
+          <Popover {...bindPopover(maskPickerState)} {...popoverProps}>
+            <SketchPicker
+              {...pickerProps}
+              color={brand.brandColor ? (maskColor ? maskColor : brand.brandColor) : 'rgba(0,0,0,0.0)'}
+              onChange={({ rgb }) => setMaskColor(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`)}
+              onChangeComplete={({ rgb }) =>
+                onElementUpdate({ maskColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})` })
+              }
+            />
+            <Button
+              {...resetButtonProps}
+              onClick={() => {
+                maskPickerState.close();
+                onElementUpdate({ maskColor: 'rgba(0,0,0,0.0)' });
+                setMaskColor('rgba(0,0,0,0.0)');
+              }}
+            />
+          </Popover>
+        </>
+      ) : null}
+
+      {availableSettings.includes('backgImageEnabled') ? (
+        <>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={activeElement.settings.backgImageEnabled}
+                color="primary"
+                disabled={!availableSettings.includes('backgImageEnabled')}
+                id="backgImageEnabled"
+                name="backgImageEnabled"
+                onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}
+                value="true"
+              />
+            }
+            label={<Typography variant="overline">Enable background image</Typography>}
+          />
+          <FormControl variant="filled" fullWidth margin="dense">
+            <Card elevation={0}>
+              <CardMedia className={classes.cardMedia}>
+                <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                  {activeElement.settings.backgImage && activeElement.settings.backgImage.name ? (
+                    <img
+                      alt=""
+                      height="60"
+                      src={`file:///${basepath}/src/${targetEntity}/${activePage.meta.uid}//${activeElement.settings.backgImage.name}`}
+                    />
+                  ) : (
+                    <PanoramaOutlinedIcon color={activeElement.settings.backgImageEnabled ? 'action' : 'disabled'} />
+                  )}
+                </Box>
+              </CardMedia>
+              <CardActions>
+                <Button
+                  color="primary"
+                  disabled={!activeElement.settings.backgImageEnabled}
+                  fullWidth
+                  onClick={onAddBackgImage}
+                  size="small">
+                  Choose background image…
+                </Button>
+              </CardActions>
+            </Card>
+          </FormControl>
+        </>
+      ) : null}
     </div>
   );
 };
