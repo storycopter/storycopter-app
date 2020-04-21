@@ -324,6 +324,7 @@ const BrandControls = ({ data, update, ...props }) => {
             },
           },
         }}
+        disabled
         label="Typography"
         onChange={e => {
           onBrandUpdate({ typography: e.target.value });
