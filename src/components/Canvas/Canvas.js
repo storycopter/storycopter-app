@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
   elementWrap: {
     position: 'relative',
     width: '100%',
-    height: 'auto',
   },
 }));
 
@@ -97,25 +96,20 @@ const Canvas = ({ data, update }) => {
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
-      <Grid container direction="column" className={classes.elements} ref={canvasNode}>
+      <Grid className={classes.elements} ref={canvasNode}>
         {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
-          // TODO: don’t do this:
-          {
-            /* if (type !== 'headline') return null; */
-          }
-
           const Component = componentMap[type];
           const isElementActive = activeElementId === id;
 
           // construct backgImage object
           const backgImage = {
             ...settings?.backgImage,
-            publicURL: `file:///${basepath}/src/${targetEntity}/${activePageId}/${settings?.backgImage?.name}`,
+            publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${settings?.backgImage?.name}`,
           };
 
           const images = settings?.images?.map(image => ({
             ...image,
-            publicURL: `file:///${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
+            publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
           }));
 
           const isFirstChild = i === 0;
