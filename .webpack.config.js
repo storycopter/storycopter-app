@@ -1,3 +1,5 @@
+const path = require('path');
+
 // define child rescript
 module.exports = config => {
   // config.entry = ['@babel/polyfill', './src/index.js'];
@@ -27,6 +29,11 @@ module.exports = config => {
       ],
     }
   );
+
+  config.resolve.alias = {
+    react: path.resolve('./node_modules/react'),
+    'react-dom': path.resolve('./node_modules/react-dom'),
+  };
 
   return config;
 };
