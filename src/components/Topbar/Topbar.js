@@ -146,16 +146,21 @@ const Topbar = ({ data, update, ...props }) => {
               {props.hasProject ? (
                 <Box display="flex" justifyContent="flex-end">
                   <Tooltip title="Preview story">
-                    <Button size="small" style={{ marginRight: theme.spacing(2) }} variant="contained">
+                    <Button
+                      onClick={props.onProjectPreview}
+                      size="small"
+                      style={{ marginRight: theme.spacing(2) }}
+                      variant="contained">
                       <PlayArrowIcon fontSize="small" />
                     </Button>
                   </Tooltip>
                   <Tooltip title="Export story…">
                     <Button
                       color="primary"
+                      onClick={props.onProjectBuild}
                       size="small"
-                      variant="contained"
-                      startIcon={<PresentToAllIcon fontSize="small" />}>
+                      startIcon={<PresentToAllIcon fontSize="small" />}
+                      variant="contained">
                       Export
                     </Button>
                   </Tooltip>

@@ -200,12 +200,12 @@ class App extends React.Component {
           <Interface
             hasProject={data?.currentProject}
             onAppClose={this.onAppClose}
+            onProjectBuild={this.buildProject}
             onProjectOpen={this.openProjectDialog}
+            onProjectPreview={this.previewProject}
             onSaveChanges={this.saveProject}
           />
         </ErrorBoundary>
-        <button onClick={() => this.previewProject()}>preview</button>
-        <button onClick={() => this.buildProject()}>build</button>
 
         {child ? (
           <NewWindow>
