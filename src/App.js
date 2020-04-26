@@ -4,6 +4,8 @@ import is from 'electron-is';
 import Ansi from 'ansi-to-react';
 import React from 'react';
 import fs from 'fs';
+import request from 'request';
+import admZip from 'adm-zip';
 import process from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { connect } from 'react-redux';
@@ -174,6 +176,34 @@ class App extends React.Component {
     });
   };
 
+  createProject = async () => {
+    const { filePaths } = await dialog.showOpenDialog(WIN, { properties: ['openDirectory'] });
+    const path = filePaths.pop();
+    if (path) {
+      const now = Date.now();
+      const req = request({
+        method: 'GET',
+        uri: 'https://github.com/storycopter/storycopter-idoc/archive/next.zip',
+      });
+
+      fs.mkdirSync(`${path}/idoc-temp-${now}`);
+
+      const out = fs.createWriteStream(`${path}/idoc-temp-${now}/next.zip`);
+      req.pipe(out);
+
+      req.on('end', () => {
+        const zip = new admZip(`${path}/idoc-temp-${now}/next.zip`);
+        zip.extractAllTo(`${path}/idoc-temp-${now}`, true);
+
+        fs.renameSync(`${path}/idoc-temp-${now}/storycopter-idoc-next`, `${path}/storycopter-idoc-${now}`);
+        fs.unlinkSync(`${path}/idoc-temp-${now}/next.zip`);
+        fs.rmdirSync(`${path}/idoc-temp-${now}`);
+
+        this.openProject(`${path}/storycopter-idoc-${now}`);
+      });
+    }
+  };
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.src && prevState.log !== this.state.log) {
       const lastLog = document.querySelector('code > span:last-child');
@@ -211,6 +241,7 @@ class App extends React.Component {
             onProjectOpen={this.openProjectDialog}
             onProjectPreview={this.previewProject}
             onSaveChanges={this.saveProject}
+            onProjectCreate={this.createProject}
           />
         </ErrorBoundary>
 
