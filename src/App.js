@@ -196,10 +196,36 @@ class App extends React.Component {
         zip.extractAllTo(`${path}/idoc-temp-${now}`, true);
 
         fs.renameSync(`${path}/idoc-temp-${now}/storycopter-idoc-next`, `${path}/storycopter-idoc-${now}`);
+        fs.chmodSync(`${path}/storycopter-idoc-${now}`, 0o777);
+        fs.chmodSync(`${path}/storycopter-idoc-${now}/setup.sh`, 0o755);
+        fs.chmodSync(`${path}/storycopter-idoc-${now}/preview.sh`, 0o755);
+        fs.chmodSync(`${path}/storycopter-idoc-${now}/build.sh`, 0o755);
         fs.unlinkSync(`${path}/idoc-temp-${now}/next.zip`);
         fs.rmdirSync(`${path}/idoc-temp-${now}`);
 
         this.openProject(`${path}/storycopter-idoc-${now}`);
+
+        const child = process.spawn('./setup.sh', { cwd: `${path}/storycopter-idoc-${now}` });
+        child.stdin.setEncoding('utf-8');
+        this.setState({ child });
+
+        child.on('error', err => {
+          this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
+        });
+
+        child.stdout.on('data', data => {
+          this.setState({ log: `${this.state.log}${data}` });
+          if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
+        });
+
+        child.stderr.on('data', data => {
+          this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
+        });
+
+        child.on('close', code => {
+          this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
+          this.setState({ child: null, src: null, log: '' });
+        });
       });
     }
   };
