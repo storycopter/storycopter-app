@@ -77,7 +77,7 @@ class App extends React.Component {
     // these file names depend on page title that is user-generated, if page title changes after the page has been created, the id will not, hence the file name should not change after being created.
     const pages = fs
       .readdirSync(`${path}/src/pages`)
-      .filter(name => name.match(/^(.*).json/i) && name !== `dummy.json`) // skip gatsby dummy page
+      .filter(name => name.match(/^(.*).json/i) && name !== `schema.json`) // skip gatsby dummy page
       .map(name => JSON.parse(fs.readFileSync(`${path}/src/pages/${name}`, 'utf8')));
 
     const currentProject = {

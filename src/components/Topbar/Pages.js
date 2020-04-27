@@ -158,7 +158,7 @@ const Pages = ({ data, update, ...props }) => {
               <div ref={provided.innerRef} {...provided.droppableProps} className={classes.list}>
                 {_.orderBy(pages, [o => o.meta.order], ['asc']).map(({ meta }, i) => {
                   // do not render the dummy page (used by the idoc package)
-                  if (meta.uid === 'pagesDummy') return null;
+                  if (meta.uid === 'schema') return null;
                   return (
                     <Draggable key={`${i}-${meta.uid}`} draggableId={meta.uid} index={i}>
                       {provided => (

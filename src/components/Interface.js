@@ -12,11 +12,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { appTheme } from '@storycopter/ui';
-
 import Canvas from './Canvas/Canvas';
 import Inspector from './Inspector/Inspector';
 import Topbar from './Topbar/Topbar';
+import theme from './theme';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,11 +46,11 @@ export default function Interface({ ...props }) {
   const classes = useStyles();
 
   // console.group('Interface.js');
-  // console.log({ appTheme });
+  // console.log({ theme });
   // console.groupEnd();
 
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Grid
         alignContent="stretch"
@@ -66,7 +65,7 @@ export default function Interface({ ...props }) {
         {props.hasProject ? (
           <Grid container item className={classes.editor} wrap="nowrap">
             <Grid item className={classes.side} style={{ overflowY: 'auto' }} xs>
-              <Box borderRight={`1px solid ${appTheme.palette.divider}`} minHeight="100%">
+              <Box borderRight={`1px solid ${theme.palette.divider}`} minHeight="100%">
                 <Inspector />
               </Box>
             </Grid>

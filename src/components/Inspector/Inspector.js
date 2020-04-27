@@ -6,12 +6,11 @@ import Box from '@material-ui/core/Box';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 
 import DocumentInspector from './DocumentInspector';
 import ElementInspector from './ElementInspector';
 import PageInspector from './PageInspector';
-
-import { appTheme } from '@storycopter/ui';
 
 const useStyles = makeStyles(theme => ({
   tab: {
@@ -23,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const Inspector = ({ data, update, ...props }) => {
   const classes = useStyles();
+  const theme = useTheme();
   const { inspector } = data;
   const { activeInspector } = inspector;
 
@@ -41,7 +41,7 @@ const Inspector = ({ data, update, ...props }) => {
 
   const boxProps = {
     flexDirection: 'column',
-    borderTop: `1px solid ${appTheme.palette.divider}`,
+    borderTop: `1px solid ${theme.palette.divider}`,
   };
 
   return (

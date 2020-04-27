@@ -9,7 +9,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 
-import { componentMap, docTheme } from '@storycopter/ui';
+import { componentMap, docTheme } from '@storycopter/idoc';
 
 const useStyles = makeStyles(theme => ({
   root: {
