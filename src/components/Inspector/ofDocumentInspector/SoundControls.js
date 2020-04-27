@@ -109,17 +109,12 @@ const SoundControls = ({ data, update, ...props }) => {
               onReady={player => setTrackDuration(player.getDuration())}
               onProgress={progress => setTrackProgress(progress.playedSeconds)}
               playing={sound.enabled && trackPlaying}
-              url={`file:///${basepath}/static/${sound.track.name}`}
+              url={sound?.track?.name ? `file:///${basepath}/static/${sound.track.name}` : null}
               style={{
                 height: '1px',
                 overflow: 'hidden',
                 position: 'absolute',
                 width: '1px',
-              }}
-              config={{
-                file: {
-                  forceAudio: true,
-                },
               }}
             />
             <Grid
