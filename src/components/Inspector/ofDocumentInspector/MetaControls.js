@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import uploadFile from '../../../utils/uploadFile';
 
+import { colors } from '@storycopter/idoc';
+
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -22,9 +24,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   cardMedia: {
+    background: `radial-gradient(${colors.flare[100]}, ${colors.shadow[100]}, ${colors.shadow[200]})`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    padding: theme.spacing(2),
   },
   cardLabel: {
     display: 'block',

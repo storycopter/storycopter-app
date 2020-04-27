@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
+import { colors } from '@storycopter/idoc';
+
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -28,6 +30,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   cardMedia: {
+    background: `radial-gradient(${colors.flare[100]}, ${colors.shadow[100]}, ${colors.shadow[200]})`,
+    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -168,9 +172,21 @@ const BrandControls = ({ data, update, ...props }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+            <Box
+              className={classes.imageCanvas}
+              height="80px"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center">
               {brand.logo && brand.logo.name ? (
-                <img alt="Logo" height="60" src={`file:///${basepath}/src/site/assets/${logo.name}`} title="Logo" />
+                <img
+                  alt="Logo"
+                  height="60"
+                  src={`file:///${basepath}/static/${logo.name}`}
+                  style={{ maxWidth: '100%', position: 'relative' }}
+                  title="Logo"
+                />
               ) : (
                 <PanoramaOutlinedIcon color={brand.logoEnabled ? 'action' : 'disabled'} />
               )}
@@ -199,7 +215,13 @@ const BrandControls = ({ data, update, ...props }) => {
       <FormControl variant="filled" fullWidth margin="dense">
         <Card elevation={0}>
           <CardMedia className={classes.cardMedia}>
-            <Box height="36px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+            <Box
+              alignItems="center"
+              className={classes.imageCanvas}
+              display="flex"
+              flexDirection="column"
+              height="36px"
+              justifyContent="center">
               {favicon && favicon.name ? (
                 <img
                   alt=""

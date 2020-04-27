@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import { update } from '../../../reducers/data';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 
-import deletePage from '../../../utils/deletePage';
-import duplicatePage from '../../../utils/duplicatePage';
-import uploadFile from '../../../utils/uploadFile';
-
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -32,11 +28,19 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import { colors } from '@storycopter/idoc';
+
+import deletePage from '../../../utils/deletePage';
+import duplicatePage from '../../../utils/duplicatePage';
+import uploadFile from '../../../utils/uploadFile';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
   cardMedia: {
+    background: `radial-gradient(${colors.flare[100]}, ${colors.shadow[100]}, ${colors.shadow[200]})`,
+    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
