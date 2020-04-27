@@ -281,14 +281,14 @@ const DecorControls = ({ data, update, ...props }) => {
         </>
       ) : null}
 
-      {availableSettings.includes('backgImageEnabled') ? (
+      {availableSettings.includes('backgImage') ? (
         <>
           <FormControlLabel
             control={
               <Checkbox
                 checked={activeElement.settings.backgImageEnabled}
                 color="primary"
-                disabled={!availableSettings.includes('backgImageEnabled')}
+                disabled={!availableSettings.includes('backgImage')}
                 id="backgImageEnabled"
                 name="backgImageEnabled"
                 onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}
