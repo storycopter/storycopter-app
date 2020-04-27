@@ -82,7 +82,7 @@ export default function Interface({ ...props }) {
                 </ListItemIcon>
                 <ListItemText primary="Open story…" />
               </ListItem>
-              <ListItem button onClick={() => console.log()}>
+              <ListItem button onClick={props.onProjectCreate}>
                 <ListItemIcon>
                   <AddCircleOutlineIcon />
                 </ListItemIcon>
