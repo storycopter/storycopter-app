@@ -9,7 +9,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 
-import { componentMap, docTheme } from '@storycopter/idoc';
+import { componentMap, constructTheme } from '@storycopter/idoc';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,7 +30,7 @@ const Canvas = ({ data, update }) => {
   const canvasNode = useRef();
 
   const { currentProject, editor } = data;
-  const { basepath, pages, essentials } = currentProject;
+  const { site, basepath, pages, essentials } = currentProject;
   const { activePageId, activeElementId } = editor;
 
   const [canvasHeight, setCanvasSize] = useState(null);
@@ -93,9 +93,9 @@ const Canvas = ({ data, update }) => {
     return () => window.removeEventListener('resize', getCanvasSize);
   });
 
-  // console.group('Canvas.js');
-  // console.log('canvasHeight:', canvasHeight);
-  // console.groupEnd();
+  console.group('Canvas.js');
+  console.log('constructTheme:', constructTheme(site.brand));
+  console.groupEnd();
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
@@ -139,7 +139,7 @@ const Canvas = ({ data, update }) => {
                   transition: 'margin 0.5s',
                   zIndex: 1,
                 }}>
-                <ThemeProvider theme={docTheme}>
+                <ThemeProvider theme={constructTheme(site.brand)}>
                   <Component
                     {...settings}
                     backgImage={settings.backgImageEnabled ? backgImage : null}
