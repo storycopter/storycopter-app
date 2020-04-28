@@ -166,7 +166,7 @@ const MetaControls = ({ data, update, ...props }) => {
 
   return (
     <>
-      <div {...props}>
+      <div {...props} style={{ width: '100%' }}>
         <TextField
           {...textFieldProps}
           autoFocus={!title || title.length === 0}
@@ -188,46 +188,51 @@ const MetaControls = ({ data, update, ...props }) => {
             value={summary || ''}
           />
         ) : null}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={activePage?.meta.coverEnabled}
-              color="primary"
-              id="coverEnabled"
-              name="coverEnabled"
-              onChange={e => onMetaUpdate({ coverEnabled: e.target.checked })}
+
+        {!isEssential ? (
+          <>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={activePage?.meta.coverEnabled}
+                  color="primary"
+                  id="coverEnabled"
+                  name="coverEnabled"
+                  onChange={e => onMetaUpdate({ coverEnabled: e.target.checked })}
+                />
+              }
+              label={<Typography variant="overline">Enable page cover</Typography>}
             />
-          }
-          label={<Typography variant="overline">Enable page cover</Typography>}
-        />
-        <FormControl variant="filled" fullWidth margin="dense">
-          <Card elevation={0}>
-            <CardMedia className={classes.cardMedia}>
-              <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                {coverImage?.name ? (
-                  <img
-                    alt="Cover"
-                    height="60"
-                    src={`file:///${basepath}/src/${targetEntity}/${activePageId}/${coverImage.name}`}
-                    title="Cover"
-                  />
-                ) : (
-                  <PanoramaOutlinedIcon color={activePage?.meta.coverEnabled ? 'action' : 'disabled'} />
-                )}
-              </Box>
-            </CardMedia>
-            <CardActions>
-              <Button
-                color="primary"
-                disabled={!activePage?.meta.coverEnabled}
-                fullWidth
-                onClick={onAddCover}
-                size="small">
-                Choose file…
-              </Button>
-            </CardActions>
-          </Card>
-        </FormControl>
+            <FormControl variant="filled" fullWidth margin="dense">
+              <Card elevation={0}>
+                <CardMedia className={classes.cardMedia}>
+                  <Box height="80px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                    {coverImage?.name ? (
+                      <img
+                        alt="Cover"
+                        height="60"
+                        src={`file:///${basepath}/src/${targetEntity}/${activePageId}/${coverImage.name}`}
+                        title="Cover"
+                      />
+                    ) : (
+                      <PanoramaOutlinedIcon color={activePage?.meta.coverEnabled ? 'action' : 'disabled'} />
+                    )}
+                  </Box>
+                </CardMedia>
+                <CardActions>
+                  <Button
+                    color="primary"
+                    disabled={!activePage?.meta.coverEnabled}
+                    fullWidth
+                    onClick={onAddCover}
+                    size="small">
+                    Choose file…
+                  </Button>
+                </CardActions>
+              </Card>
+            </FormControl>
+          </>
+        ) : null}
         {!isEssential ? (
           <FormControl variant="filled" fullWidth margin="dense">
             <Button {...bindTrigger(popupState)} color="primary" fullWidth size="small" startIcon={<SettingsIcon />}>
