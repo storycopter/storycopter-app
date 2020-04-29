@@ -31,8 +31,10 @@ module.exports = config => {
   );
 
   config.resolve.alias = {
-    react: path.resolve('./node_modules/react'),
+    '@material-ui/core': path.resolve('node_modules', '@material-ui/core'),
+    '@material-ui/icons': path.resolve('node_modules', '@material-ui/icons'),
     'react-dom': path.resolve('./node_modules/react-dom'),
+    react: path.resolve('./node_modules/react'),
   };
 
   return config;

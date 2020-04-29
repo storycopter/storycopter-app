@@ -268,7 +268,6 @@ class App extends React.Component {
             onProjectCreate={this.createProject}
           />
         </ErrorBoundary>
-
         {child ? (
           <NewWindow>
             {src ? <iframe ref={this.iframeRef} src={src} style={{ width: '100%', height: '75vh' }}></iframe> : null}

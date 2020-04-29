@@ -93,9 +93,9 @@ const Canvas = ({ data, update }) => {
     return () => window.removeEventListener('resize', getCanvasSize);
   });
 
-  console.group('Canvas.js');
-  console.log('constructTheme:', constructTheme(site.brand));
-  console.groupEnd();
+  // console.group('Canvas.js');
+  // console.log('constructTheme:', constructTheme(site.brand));
+  // console.groupEnd();
 
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
