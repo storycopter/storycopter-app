@@ -144,7 +144,7 @@ const Pages = ({ data, update, ...props }) => {
             className={`${classes.avatar} ${activePageId === 'home' ? classes.avatarActive : ''}`}
             onClick={() => onAvatarClick('home')}
             src={
-              essentials.home?.meta?.coverEnabled
+              essentials.home?.meta?.coverEnabled && essentials.home?.meta?.coverImage?.name
                 ? `file:///${basepath}/src/essentials/home/${essentials.home?.meta?.coverImage?.name}`
                 : null
             }>
@@ -175,7 +175,7 @@ const Pages = ({ data, update, ...props }) => {
                             className={`${classes.avatar} ${activePageId === meta.uid ? classes.avatarActive : ''}`}
                             onClick={() => onAvatarClick(meta.uid)}
                             src={
-                              meta.coverEnabled
+                              meta.coverEnabled && meta.coverImage.name
                                 ? `file:///${basepath}/src/pages/${meta.uid}/${meta.coverImage.name}`
                                 : null
                             }>
@@ -200,7 +200,7 @@ const Pages = ({ data, update, ...props }) => {
             className={`${classes.avatar} ${activePageId === 'credits' ? classes.avatarActive : ''}`}
             onClick={() => onAvatarClick('credits')}
             src={
-              essentials.credits?.meta?.coverEnabled
+              essentials.credits?.meta?.coverEnabled && essentials.credits?.meta?.coverImage?.name
                 ? `file:///${basepath}/src/essentials/credits/${essentials.credits?.meta?.coverImage?.name}`
                 : null
             }>
