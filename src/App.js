@@ -13,8 +13,6 @@ import { remote, shell } from 'electron';
 import NewWindow from 'react-new-window';
 
 import Button from '@material-ui/core/Button';
-import StylesProvider from '@material-ui/styles/StylesProvider';
-import createGenerateClassName from '@material-ui/styles/createGenerateClassName';
 
 import { update } from './reducers/data';
 import ErrorBoundary from './ErrorBoundary';
@@ -29,11 +27,6 @@ const node = 'node'; // remote.getGlobal('node');
 
 const WINDOWS = is.windows();
 const D = WINDOWS ? '\\' : '/';
-
-const generateClassName = createGenerateClassName({
-  productionPrefix: 'c',
-  disableGlobal: true,
-});
 
 class App extends React.Component {
   constructor(props) {
@@ -258,12 +251,12 @@ class App extends React.Component {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
 
-    console.group('App.js:');
-    console.log('data:', data);
-    console.groupEnd();
+    // console.group('App.js:');
+    // console.log('data:', data);
+    // console.groupEnd();
 
     return (
-      <StylesProvider generateClassName={generateClassName}>
+      <>
         <ErrorBoundary>
           <Interface
             hasProject={data?.currentProject}
@@ -289,7 +282,7 @@ class App extends React.Component {
             </Button>
           </NewWindow>
         ) : null}
-      </StylesProvider>
+      </>
     );
   }
 }

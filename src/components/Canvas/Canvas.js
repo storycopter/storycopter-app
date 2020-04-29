@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { update } from '../../reducers/data';
 
 import Grid from '@material-ui/core/Grid';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import { componentMap, constructTheme } from '@storycopter/idoc';
 
@@ -100,46 +100,46 @@ const Canvas = ({ data, update }) => {
   return (
     <div className={classes.root} onClick={activeElementId ? e => onInspectElement(e, null) : null}>
       <Grid className={classes.elements} ref={canvasNode}>
-        {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
-          const Component = componentMap[type];
-          const isElementActive = activeElementId === id;
+        <ThemeProvider theme={constructTheme(site.brand)}>
+          {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
+            const Component = componentMap[type];
+            const isElementActive = activeElementId === id;
 
-          // construct backgImage object
-          const backgImage = {
-            ...settings?.backgImage,
-            publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${settings?.backgImage?.name}`,
-          };
+            // construct backgImage object
+            const backgImage = {
+              ...settings?.backgImage,
+              publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${settings?.backgImage?.name}`,
+            };
 
-          const images = settings?.images?.map(image => ({
-            ...image,
-            publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
-          }));
+            const images = settings?.images?.map(image => ({
+              ...image,
+              publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
+            }));
 
-          const isFirstChild = i === 0;
-          const isLastChild = i === activePage.elements.length - 1;
-          const activeMargin = isElementActive
-            ? {
-                marginTop: isFirstChild ? 0 : '20px',
-                marginBottom: isLastChild ? 0 : '20px',
-              }
-            : null;
+            const isFirstChild = i === 0;
+            const isLastChild = i === activePage.elements.length - 1;
+            const activeMargin = isElementActive
+              ? {
+                  marginTop: isFirstChild ? 0 : '20px',
+                  marginBottom: isLastChild ? 0 : '20px',
+                }
+              : null;
 
-          return (
-            <Grid
-              className={classes.elementWrap}
-              item
-              key={`${activePageId}-${id}`}
-              onClick={e => onInspectElement(e, id)}>
-              <div
-                style={{
-                  ...activeMargin,
-                  backgroundColor: currentProject.site.brand.backgColor,
-                  boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[2],
-                  position: 'relative',
-                  transition: 'margin 0.5s',
-                  zIndex: 1,
-                }}>
-                <ThemeProvider theme={constructTheme(site.brand)}>
+            return (
+              <Grid
+                className={classes.elementWrap}
+                item
+                key={`${activePageId}-${id}`}
+                onClick={e => onInspectElement(e, id)}>
+                <div
+                  style={{
+                    ...activeMargin,
+                    backgroundColor: currentProject.site.brand.backgColor,
+                    boxShadow: isElementActive ? `0 0 0 5px ${theme.palette.primary.main}` : theme.shadows[2],
+                    position: 'relative',
+                    transition: 'margin 0.5s',
+                    zIndex: 1,
+                  }}>
                   <Component
                     {...settings}
                     backgImage={settings.backgImageEnabled ? backgImage : null}
@@ -151,11 +151,11 @@ const Canvas = ({ data, update }) => {
                       minHeight: settings.fullSize ? `${canvasHeight}px` || 'auto' : 'auto',
                     }}
                   />
-                </ThemeProvider>
-              </div>
-            </Grid>
-          );
-        })}
+                </div>
+              </Grid>
+            );
+          })}
+        </ThemeProvider>
       </Grid>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -7,10 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListItemText from '@material-ui/core/ListItemText';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import Canvas from './Canvas/Canvas';
 import Inspector from './Inspector/Inspector';
