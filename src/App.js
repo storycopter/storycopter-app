@@ -25,7 +25,10 @@ import './App.css';
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
 const node = 'node'; // remote.getGlobal('node');
-console.log({ node });
+// console.log({ node });
+
+const WINDOWS = is.windows();
+const D = WINDOWS ? '\\' : '/';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
@@ -68,17 +71,17 @@ class App extends React.Component {
 
   openProject = path => {
     // these file names should be always the same. we could rely on them to detect if the app is opening a Storycopter project and—if not—feed back to the user.
-    const contentsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/contents.json`, 'utf8'));
-    const creditsJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/credits.json`, 'utf8'));
-    const errorJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/error.json`, 'utf8'));
-    const homeJSON = JSON.parse(fs.readFileSync(`${path}/src/essentials/home.json`, 'utf8'));
-    const siteJSON = JSON.parse(fs.readFileSync(`${path}/src/site/site.json`, 'utf8'));
+    const contentsJSON = JSON.parse(fs.readFileSync(`${path}${D}src${D}essentials${D}contents.json`, 'utf8'));
+    const creditsJSON = JSON.parse(fs.readFileSync(`${path}${D}src${D}essentials${D}credits.json`, 'utf8'));
+    const errorJSON = JSON.parse(fs.readFileSync(`${path}${D}src${D}essentials${D}error.json`, 'utf8'));
+    const homeJSON = JSON.parse(fs.readFileSync(`${path}${D}src${D}essentials${D}home.json`, 'utf8'));
+    const siteJSON = JSON.parse(fs.readFileSync(`${path}${D}src${D}site${D}site.json`, 'utf8'));
 
     // these file names depend on page title that is user-generated, if page title changes after the page has been created, the id will not, hence the file name should not change after being created.
     const pages = fs
-      .readdirSync(`${path}/src/pages`)
+      .readdirSync(`${path}${D}src${D}pages`)
       .filter(name => name.match(/^(.*).json/i) && name !== `schema.json`) // skip gatsby dummy page
-      .map(name => JSON.parse(fs.readFileSync(`${path}/src/pages/${name}`, 'utf8')));
+      .map(name => JSON.parse(fs.readFileSync(`${path}${D}src${D}pages${D}${name}`, 'utf8')));
 
     const currentProject = {
       basepath: path,
@@ -104,18 +107,21 @@ class App extends React.Component {
       },
     } = this.props;
 
-    fs.writeFileSync(`${basepath}/src/site/site.json`, JSON.stringify(site, null, 2));
+    fs.writeFileSync(`${basepath}${D}src${D}site${D}site.json`, JSON.stringify(site, null, 2));
     ['contents', 'credits', 'error', 'home'].forEach(essential =>
-      fs.writeFileSync(`${basepath}/src/essentials/${essential}.json`, JSON.stringify(essentials[essential], null, 2))
+      fs.writeFileSync(
+        `${basepath}${D}src${D}essentials${D}${essential}.json`,
+        JSON.stringify(essentials[essential], null, 2)
+      )
     );
     pages.forEach(page =>
-      fs.writeFileSync(`${basepath}/src/pages/${page.meta.uid}.json`, JSON.stringify(page, null, 2))
+      fs.writeFileSync(`${basepath}${D}src${D}pages${D}${page.meta.uid}.json`, JSON.stringify(page, null, 2))
     );
   };
 
   previewProject = () => {
     const path = this.props.data.currentProject.basepath;
-    const child = process.spawn('./preview.sh', { cwd: path });
+    const child = process.spawn(WINDOWS ? `scripts${D}preview.bat` : './scripts/preview.sh', { cwd: path });
 
     child.stdin.setEncoding('utf-8');
 
@@ -149,7 +155,7 @@ class App extends React.Component {
 
   buildProject = () => {
     const path = this.props.data.currentProject.basepath;
-    const child = process.spawn('./build.sh', { cwd: path });
+    const child = process.spawn(WINDOWS ? `scripts${D}build.bat` : './scripts/build.sh', { cwd: path });
 
     child.stdin.setEncoding('utf-8');
 
@@ -186,46 +192,45 @@ class App extends React.Component {
         uri: 'https://github.com/storycopter/storycopter-idoc/archive/next.zip',
       });
 
-      fs.mkdirSync(`${path}/idoc-temp-${now}`);
+      fs.mkdirSync(`${path}${D}idoc-temp-${now}`);
 
-      const out = fs.createWriteStream(`${path}/idoc-temp-${now}/next.zip`);
+      const out = fs.createWriteStream(`${path}${D}idoc-temp-${now}${D}next.zip`);
       req.pipe(out);
 
       req.on('end', () => {
-        const zip = new admZip(`${path}/idoc-temp-${now}/next.zip`);
-        zip.extractAllTo(`${path}/idoc-temp-${now}`, true);
+        const zip = new admZip(`${path}${D}idoc-temp-${now}${D}next.zip`);
+        zip.extractAllTo(`${path}${D}idoc-temp-${now}`, true);
 
-        fs.renameSync(`${path}/idoc-temp-${now}/storycopter-idoc-next`, `${path}/storycopter-idoc-${now}`);
-        fs.chmodSync(`${path}/storycopter-idoc-${now}`, 0o777);
-        fs.chmodSync(`${path}/storycopter-idoc-${now}/setup.sh`, 0o755);
-        fs.chmodSync(`${path}/storycopter-idoc-${now}/preview.sh`, 0o755);
-        fs.chmodSync(`${path}/storycopter-idoc-${now}/build.sh`, 0o755);
-        fs.unlinkSync(`${path}/idoc-temp-${now}/next.zip`);
-        fs.rmdirSync(`${path}/idoc-temp-${now}`);
+        fs.renameSync(`${path}${D}idoc-temp-${now}${D}storycopter-idoc-next`, `${path}${D}storycopter-idoc-${now}`);
+        fs.chmodSync(`${path}${D}storycopter-idoc-${now}`, 0o777);
+        fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}preview.sh`, 0o755);
+        fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}build.sh`, 0o755);
+        fs.unlinkSync(`${path}${D}idoc-temp-${now}${D}next.zip`);
+        fs.rmdirSync(`${path}${D}idoc-temp-${now}`);
 
-        this.openProject(`${path}/storycopter-idoc-${now}`);
+        this.openProject(`${path}${D}storycopter-idoc-${now}`);
 
-        const child = process.spawn('./setup.sh', { cwd: `${path}/storycopter-idoc-${now}` });
-        child.stdin.setEncoding('utf-8');
-        this.setState({ child });
+        // const child = process.spawn('./setup.sh', { cwd: `${path}/storycopter-idoc-${now}` });
+        // child.stdin.setEncoding('utf-8');
+        // this.setState({ child });
 
-        child.on('error', err => {
-          this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
-        });
+        // child.on('error', err => {
+        //   this.setState({ log: `${this.state.log}\nstderr: <${err}>` });
+        // });
 
-        child.stdout.on('data', data => {
-          this.setState({ log: `${this.state.log}${data}` });
-          if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
-        });
+        // child.stdout.on('data', data => {
+        //   this.setState({ log: `${this.state.log}${data}` });
+        //   if (data.indexOf('Y/n') !== -1) child.stdin.write('Y');
+        // });
 
-        child.stderr.on('data', data => {
-          this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
-        });
+        // child.stderr.on('data', data => {
+        //   this.setState({ log: `${this.state.log}\nstderr: <${data}>` });
+        // });
 
-        child.on('close', code => {
-          this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
-          this.setState({ child: null, src: null, log: '' });
-        });
+        // child.on('close', code => {
+        //   this.setState({ status: code === 0 ? 'child process complete.' : `child process exited with code ${code}` });
+        //   this.setState({ child: null, src: null, log: '' });
+        // });
       });
     }
   };
