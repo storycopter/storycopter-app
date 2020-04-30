@@ -1,11 +1,11 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import { colors } from '@storycopter/idoc';
+import { colors, setType } from '@storycopter/idoc';
 
-const muiTheme = createMuiTheme();
+const mui = createMuiTheme();
 
 // console.group('appTheme.js');
-// console.log('muiTheme:', muiTheme);
+// console.log('mui:', mui);
 // console.groupEnd();
 
 export default createMuiTheme({
@@ -30,6 +30,11 @@ export default createMuiTheme({
     //     },
     //   },
     // },
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: colors.mono[800],
+      },
+    },
 
     // Tabs
 
@@ -37,16 +42,38 @@ export default createMuiTheme({
       root: {
         minWidth: 'none',
       },
+      outlined: {},
+      outlinedPrimary: {},
+      outlinedSecondary: {
+        backgroundColor: colors.primary[500],
+      },
+      contained: {
+        backgroundColor: colors.mono[700],
+        color: colors.mono[200],
+        '&:hover': {
+          backgroundColor: colors.mono[600],
+          color: colors.mono[100],
+        },
+      },
+      containedPrimary: {
+        backgroundColor: colors.secondary[500],
+        color: colors.mono[100],
+        '&:hover': {
+          backgroundColor: colors.secondary[500],
+          color: mui.palette.common.white,
+        },
+      },
+      containedSecondary: {},
     },
 
     MuiTab: {
       root: {
         minWidth: 64,
         padding: '6px',
-        [muiTheme.breakpoints.up('sm')]: {
+        [mui.breakpoints.up('sm')]: {
           padding: '6px',
         },
-        [muiTheme.breakpoints.up('sm')]: {
+        [mui.breakpoints.up('sm')]: {
           minWidth: 64,
         },
       },
@@ -55,22 +82,26 @@ export default createMuiTheme({
     // Forms
     MuiFilledInput: {
       root: {
-        borderBottomLeftRadius: muiTheme.shape.borderRadius,
-        borderBottomRightRadius: muiTheme.shape.borderRadius,
+        borderBottomLeftRadius: mui.shape.borderRadius,
+        borderBottomRightRadius: mui.shape.borderRadius,
       },
     },
 
     // Tooltips
     MuiTooltip: {
       tooltip: {
-        ...muiTheme.typography.body2,
+        ...setType(100),
+        backgroundColor: colors.mono[800],
+        color: colors.mono[100],
+        fontWeight: 'normal',
+        letterSpacing: '0',
       },
     },
 
     // Expansion Panels
     MuiExpansionPanel: {
       root: {
-        background: muiTheme.palette.background.default,
+        background: mui.palette.background.default,
         '&:before': {
           top: 'auto',
           bottom: 1,
@@ -96,17 +127,17 @@ export default createMuiTheme({
     MuiExpansionPanelSummary: {
       root: {
         padding: '0',
-        marginLeft: `${muiTheme.spacing(3)}px`,
-        marginRight: `${muiTheme.spacing(3)}px`,
+        marginLeft: `${mui.spacing(3)}px`,
+        marginRight: `${mui.spacing(3)}px`,
         '&$expanded': {
-          borderBottom: `1px solid ${muiTheme.palette.divider}`,
-          marginLeft: `${muiTheme.spacing(3)}px`,
-          marginRight: `${muiTheme.spacing(3)}px`,
+          borderBottom: `1px solid ${mui.palette.divider}`,
+          marginLeft: `${mui.spacing(3)}px`,
+          marginRight: `${mui.spacing(3)}px`,
           minHeight: 8 * 6,
           padding: '0',
         },
         '&$focused': {
-          backgroundColor: muiTheme.palette.grey[300],
+          backgroundColor: mui.palette.grey[300],
         },
       },
       content: {
@@ -119,7 +150,7 @@ export default createMuiTheme({
 
     MuiExpansionPanelDetails: {
       root: {
-        padding: `${muiTheme.spacing(2)}px ${muiTheme.spacing(3)}px`,
+        padding: `${mui.spacing(2)}px ${mui.spacing(3)}px`,
       },
     },
   },
