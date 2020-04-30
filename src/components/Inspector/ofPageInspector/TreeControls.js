@@ -188,6 +188,7 @@ const TreeControls = ({ data, update, ...props }) => {
             {(provided, droppableSnapshot) => (
               <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
                 {_.sortBy(activePage?.elements, o => o.order).map((element, index) => {
+                  if (element.type === 'slideshow') return;
                   return (
                     <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
                       {(provided, draggableSnapshot) => (

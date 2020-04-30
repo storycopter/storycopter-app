@@ -102,6 +102,8 @@ const Canvas = ({ data, update }) => {
       <Grid className={classes.elements} ref={canvasNode}>
         <ThemeProvider theme={constructTheme(site.brand)}>
           {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
+            if (type === 'slideshow') return;
+
             const Component = componentMap[type];
             const isElementActive = activeElementId === id;
 
