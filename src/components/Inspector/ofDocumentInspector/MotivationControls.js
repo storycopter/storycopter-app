@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../../reducers/data';
+import { update } from '@reducers/data';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';

@@ -1,7 +1,7 @@
 import React from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../reducers/data';
+import { update } from '@reducers/data';
 
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

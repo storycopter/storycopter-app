@@ -35,6 +35,7 @@ module.exports = config => {
     '@formulas': path.resolve(__dirname, 'src/formulas'),
     '@material-ui/core': path.resolve('node_modules', '@material-ui/core'),
     '@material-ui/icons': path.resolve('node_modules', '@material-ui/icons'),
+    '@reducers': path.resolve(__dirname, 'src/reducers'),
     'react-dom': path.resolve('./node_modules/react-dom'),
     react: path.resolve('./node_modules/react'),
   };

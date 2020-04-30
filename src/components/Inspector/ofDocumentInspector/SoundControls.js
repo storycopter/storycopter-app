@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import produce from 'immer';
 import uploadFile from '../../../utils/uploadFile';
 import { connect } from 'react-redux';
-import { update } from '../../../reducers/data';
+import { update } from '@reducers/data';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';

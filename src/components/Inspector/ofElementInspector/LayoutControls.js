@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../../reducers/data';
+import { update } from '@reducers/data';
 
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Grid from '@material-ui/core/Grid';

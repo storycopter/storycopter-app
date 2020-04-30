@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../../reducers/data';
+import { update } from '@reducers/data';
 import uploadFile from '../../../utils/uploadFile';
 
 import { colors } from '@storycopter/idoc';

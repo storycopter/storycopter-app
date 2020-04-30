@@ -1,7 +1,7 @@
 import React from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../reducers/data';
+import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 
 import AppBar from '@material-ui/core/AppBar';

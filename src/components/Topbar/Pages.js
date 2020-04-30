@@ -5,7 +5,7 @@ import produce from 'immer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { bindHover, bindPopover, usePopupState } from 'material-ui-popup-state/hooks';
 import { connect } from 'react-redux';
-import { update } from '../../reducers/data';
+import { update } from '@reducers/data';
 
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';

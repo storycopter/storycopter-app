@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '../../reducers/data';
+import { update } from '@reducers/data';
 import { usePopupState, bindHover, bindMenu } from 'material-ui-popup-state/hooks';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';

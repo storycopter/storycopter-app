@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { update } from '../../reducers/data';
+import { update } from '@reducers/data';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';

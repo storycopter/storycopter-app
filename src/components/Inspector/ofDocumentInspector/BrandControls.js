@@ -3,7 +3,7 @@ import produce from 'immer';
 import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
-import { update } from '../../../reducers/data';
+import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
 import { colors } from '@storycopter/idoc';
