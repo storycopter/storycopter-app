@@ -116,6 +116,13 @@ const Canvas = ({ data, update }) => {
               publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${image?.name}`,
             }));
 
+            const image = settings?.image?.name
+              ? {
+                  ...settings.image,
+                  publicURL: `file://${basepath}/src/${targetEntity}/${activePageId}/${settings.image?.name}`,
+                }
+              : settings.image;
+
             const isFirstChild = i === 0;
             const isLastChild = i === activePage.elements.length - 1;
             const activeMargin = isElementActive
@@ -144,6 +151,7 @@ const Canvas = ({ data, update }) => {
                     {...settings}
                     backgImage={settings.backgImageEnabled ? backgImage : null}
                     canvasHeight={canvasHeight}
+                    image={image}
                     images={images}
                     isEditable
                     onElementUpdate={onElementUpdate}
