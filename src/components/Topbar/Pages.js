@@ -130,7 +130,6 @@ const Pages = ({ data, update, ...props }) => {
 
   // console.group('Pages.js');
   // console.log('pageDetails:', pageDetails);
-  // console.log('elementMap:', elementMap);
   // console.groupEnd();
 
   return (

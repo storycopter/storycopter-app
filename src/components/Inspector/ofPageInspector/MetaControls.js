@@ -134,8 +134,8 @@ const MetaControls = ({ data, update, ...props }) => {
         nextData.editor.activePageId = null;
         nextData.editor.activeElementId = null;
         nextData.currentProject.pages = [
-          ...nextData.currentProject.pages.slice(0, activePageIndex),
-          ...nextData.currentProject.pages.slice(activePageIndex + 1),
+          ...nextData.currentProject.pages.image(0, activePageIndex),
+          ...nextData.currentProject.pages.image(activePageIndex + 1),
         ];
       }),
     });
