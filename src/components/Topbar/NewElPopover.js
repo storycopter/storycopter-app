@@ -45,9 +45,10 @@ const NewElementPopup = ({ data, update, ...props }) => {
     if (!newPage) return;
     update({
       ...produce(data, nextData => {
+        nextData.editor.activeElementId = null;
         nextData.currentProject.pages.push(newPage);
-        nextData.editor.activePageId = newPage.meta.uid;
         nextData.inspector.activeInspector = 'page';
+        nextData.editor.activePageId = newPage.meta.uid;
       }),
     });
   };
