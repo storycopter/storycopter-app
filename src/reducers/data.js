@@ -13,10 +13,13 @@ const initialState = {
       sound: false,
       motivation: false,
     },
-    elementInspector: {},
+    elementInspector: {
+      details: true,
+      slices: true,
+    },
     pageInspector: {
       meta: true,
-      tree: false,
+      tree: true,
     },
   },
 };
