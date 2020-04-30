@@ -194,12 +194,16 @@ class App extends React.Component {
         const zip = new admZip(`${path}${D}idoc-temp-${now}${D}next.zip`);
         zip.extractAllTo(`${path}${D}idoc-temp-${now}`, true);
 
-        fs.renameSync(`${path}${D}idoc-temp-${now}${D}storycopter-idoc-next`, `${path}${D}storycopter-idoc-${now}`);
-        fs.chmodSync(`${path}${D}storycopter-idoc-${now}`, 0o777);
-        fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}preview.sh`, 0o755);
-        fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}build.sh`, 0o755);
-        fs.unlinkSync(`${path}${D}idoc-temp-${now}${D}next.zip`);
-        fs.rmdirSync(`${path}${D}idoc-temp-${now}`);
+        try {
+          fs.renameSync(`${path}${D}idoc-temp-${now}${D}storycopter-idoc-next`, `${path}${D}storycopter-idoc-${now}`);
+          fs.chmodSync(`${path}${D}storycopter-idoc-${now}`, 0o777);
+          fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}preview.sh`, 0o755);
+          fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}build.sh`, 0o755);
+          fs.unlinkSync(`${path}${D}idoc-temp-${now}${D}next.zip`);
+          fs.rmdirSync(`${path}${D}idoc-temp-${now}`);
+        } catch (error) {
+          console.error(error);
+        }
 
         this.openProject(`${path}${D}storycopter-idoc-${now}`);
 
