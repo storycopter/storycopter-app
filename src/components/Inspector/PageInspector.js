@@ -39,7 +39,7 @@ const PageInspector = ({ data, update }) => {
     update({
       ...produce(data, nextData => {
         nextData.inspector.pageInspector = {
-          ...nextData.inspector.pageInspector,
+          ...data.inspector.pageInspector,
           ...payload,
         };
       }),

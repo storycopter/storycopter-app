@@ -2,8 +2,11 @@ import React from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
-import { update } from '@reducers/data';
 import { usePopupState, bindHover, bindMenu } from 'material-ui-popup-state/hooks';
+
+import formulas from '@formulas/map';
+import { createPage } from '@utils';
+import { update } from '@reducers/data';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -14,9 +17,6 @@ import Menu from 'material-ui-popup-state/HoverMenu';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import formulas from '@formulas/map';
-import createPage from '../../utils/createPage';
 
 const ParentPopupState = React.createContext(null);
 
@@ -84,11 +84,17 @@ const NewElementPopup = ({ data, update, ...props }) => {
           {activePageId && !isEssential
             ? [
                 <Submenu key="submenu" popupId="moreChoicesMenu" title="Add page element">
-                  {_.sortBy(Object.keys(formulas), o => o.name).map(o => (
-                    <MenuItem dense key={formulas[o].schema.type} onClick={() => onElementAdd(formulas[o].schema.type)}>
-                      {formulas[o].name}
-                    </MenuItem>
-                  ))}
+                  {_.sortBy(Object.keys(formulas), o => o.name).map(o => {
+                    if (o === 'slideshow') return null;
+                    return (
+                      <MenuItem
+                        dense
+                        key={formulas[o].schema.type}
+                        onClick={() => onElementAdd(formulas[o].schema.type)}>
+                        {formulas[o].name}
+                      </MenuItem>
+                    );
+                  })}
                 </Submenu>,
                 <Divider className={classes.divider} key="divider" />,
               ]

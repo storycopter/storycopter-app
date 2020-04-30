@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import produce from 'immer';
 import { connect } from 'react-redux';
+
 import { update } from '@reducers/data';
-import uploadFile from '../../../utils/uploadFile';
+import { uploadFile } from '@utils';
 
 import { colors } from '@storycopter/idoc';
 
@@ -52,7 +53,7 @@ const MetaControls = ({ data, update, ...props }) => {
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.meta = {
-          ...nextData.currentProject.site.meta,
+          ...data.currentProject.site.meta,
           ...payload,
         };
       }),

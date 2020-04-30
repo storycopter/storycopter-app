@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
 import { connect } from 'react-redux';
+
+import { uploadFile } from '@utils';
 import { update } from '@reducers/data';
 
 import Grid from '@material-ui/core/Grid';
@@ -40,9 +42,11 @@ const Canvas = ({ data, update }) => {
 
   const activePage = isEssential ? essentials[activePageId] : _.find(pages, o => o.meta.uid === activePageId);
   const activePageIndex = _.findIndex(pages, o => o.meta.uid === activePageId);
+  const activeElementIndex = _.findIndex(activePage?.elements, o => o.id === activeElementId);
 
   const onInspectElement = (e, elementId) => {
     e.stopPropagation();
+    if (elementId === activeElementId) return;
     update({
       ...produce(data, nextData => {
         nextData.editor.activeElementId = elementId;
@@ -52,27 +56,35 @@ const Canvas = ({ data, update }) => {
   };
 
   const onElementUpdate = payload => {
-    const componentIndex = _.findIndex(activePage.elements, o => o.id === activeElementId);
-    if (isEssential) {
-      update({
-        ...produce(data, nextData => {
-          nextData.currentProject.essentials[activePageId].elements[componentIndex].settings = {
-            ...nextData.currentProject.essentials[activePageId].elements[componentIndex].settings,
+    if (!activeElementId) return null;
+    update({
+      ...produce(data, nextData => {
+        if (isEssential) {
+          nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
             ...payload,
           };
-        }),
-      });
-    } else {
-      update({
-        ...produce(data, nextData => {
-          nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings = {
-            ...nextData.currentProject.pages[activePageIndex].elements[componentIndex].settings,
+        } else {
+          nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
+            ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
             ...payload,
           };
-        }),
+        }
+      }),
+    });
+  };
+
+  const onFigureImageUpload = () => {
+    const destination = `src/pages/${activePage.meta.uid}`;
+    const file = uploadFile(basepath, destination, ['jpg', 'png']);
+    if (file) {
+      console.log(file);
+      onElementUpdate({
+        image: {
+          name: file.name,
+        },
       });
     }
-    return null;
   };
 
   // TODO: scroll to active element on activeElementId change
@@ -94,7 +106,7 @@ const Canvas = ({ data, update }) => {
   });
 
   // console.group('Canvas.js');
-  // console.log('constructTheme:', constructTheme(site.brand));
+  // console.log('data:', data);
   // console.groupEnd();
 
   return (
@@ -102,7 +114,7 @@ const Canvas = ({ data, update }) => {
       <Grid className={classes.elements} ref={canvasNode}>
         <ThemeProvider theme={constructTheme(site.brand)}>
           {_.sortBy(activePage?.elements, [o => o.order]).map(({ id, order, settings, type }, i) => {
-            if (type === 'slideshow') return;
+            if (type === 'slideshow') return null;
 
             const Component = componentMap[type];
             const isElementActive = activeElementId === id;
@@ -156,7 +168,9 @@ const Canvas = ({ data, update }) => {
                     image={image}
                     images={images}
                     isEditable
+                    isActivelyEditable={activeElementId === id}
                     onElementUpdate={onElementUpdate}
+                    onImageUpload={type === 'figure' ? onFigureImageUpload : null}
                     style={{
                       minHeight: settings.fullSize ? `${canvasHeight}px` || 'auto' : 'auto',
                     }}

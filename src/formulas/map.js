@@ -17,7 +17,7 @@ export default {
     },
   },
   figure: {
-    name: 'Figure',
+    name: 'Image',
     schema: figure,
     settings: {
       backgColor: true,

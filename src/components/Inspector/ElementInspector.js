@@ -17,7 +17,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import AdvancedControls from './ofElementInspector/AdvancedControls';
 import DecorControls from './ofElementInspector/DecorControls';
 import LayoutControls from './ofElementInspector/LayoutControls';
-import SlicesControls from './ofElementInspector/SlicesControls';
+// import SlicesControls from './ofElementInspector/SlicesControls';
 
 import formulas from '@formulas/map';
 
@@ -62,12 +62,12 @@ const ElementInspector = ({ data, update, ...props }) => {
     });
   };
 
-  console.group('ElementInspector.js');
+  // console.group('ElementInspector.js');
   // console.log('activeElement:', activeElementId);
   // console.log('activePageId:', activePageId);
-  console.log('activePage:', activePage);
-  console.log('activeElement:', activeElement);
-  console.groupEnd();
+  // console.log('activePage:', activePage);
+  // console.log('activeElement:', activeElement);
+  // console.groupEnd();
 
   const expansionPanelProps = {
     square: true,
@@ -134,7 +134,7 @@ const ElementInspector = ({ data, update, ...props }) => {
             </Grid>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
-            <SlicesControls className={classes.slicesControls} />
+            {/* <SlicesControls className={classes.slicesControls} /> */}
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ) : null}

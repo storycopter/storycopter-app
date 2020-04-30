@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import produce from 'immer';
-import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
-import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
+
+import { uploadFile } from '@utils';
+import { update } from '@reducers/data';
 
 import { colors } from '@storycopter/idoc';
 
@@ -90,7 +91,7 @@ const BrandControls = ({ data, update, ...props }) => {
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.brand = {
-          ...nextData.currentProject.site.brand,
+          ...data.currentProject.site.brand,
           ...payload,
         };
       }),

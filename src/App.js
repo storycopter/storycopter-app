@@ -14,7 +14,7 @@ import NewWindow from 'react-new-window';
 
 import Button from '@material-ui/core/Button';
 
-import { update } from './reducers/data';
+import { update } from '@reducers/data';
 import ErrorBoundary from './ErrorBoundary';
 import Interface from './components/Interface';
 
@@ -22,7 +22,7 @@ import './App.css';
 
 const dialog = remote.dialog;
 const WIN = remote.getCurrentWindow();
-const node = 'node'; // remote.getGlobal('node');
+// const node = 'node'; // remote.getGlobal('node');
 // console.log({ node });
 
 const WINDOWS = is.windows();
@@ -251,9 +251,9 @@ class App extends React.Component {
     const { child, log, status, src } = this.state;
     const { data } = this.props;
 
-    console.group('App.js:');
-    console.log('data:', data);
-    console.groupEnd();
+    // console.group('App.js:');
+    // console.log('data:', data);
+    // console.groupEnd();
 
     return (
       <>

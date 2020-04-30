@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import produce from 'immer';
-import uploadFile from '../../../utils/uploadFile';
 import { SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
-import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
+
+import { update } from '@reducers/data';
+import { uploadFile } from '@utils';
 
 import formulas from '@formulas/map';
 
@@ -90,7 +91,7 @@ const DecorControls = ({ data, update, ...props }) => {
       update({
         ...produce(data, nextData => {
           nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings = {
-            ...nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
+            ...data.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
             ...payload,
           };
         }),
@@ -99,7 +100,7 @@ const DecorControls = ({ data, update, ...props }) => {
       update({
         ...produce(data, nextData => {
           nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
-            ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
+            ...data.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
             ...payload,
           };
         }),
@@ -111,7 +112,6 @@ const DecorControls = ({ data, update, ...props }) => {
   const onAddBackgImage = () => {
     const destination = `src/${targetEntity}/${activePage.meta.uid}`;
     const file = uploadFile(basepath, destination, ['jpg', 'png', 'svg']);
-    console.log('onAddBackgImage', { file });
     if (file) {
       onElementUpdate({
         backgImage: {

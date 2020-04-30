@@ -26,7 +26,7 @@ const MotivationControls = ({ data, update, ...props }) => {
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.motivation = {
-          ...nextData.currentProject.site.motivation,
+          ...data.currentProject.site.motivation,
           ...payload,
         };
       }),

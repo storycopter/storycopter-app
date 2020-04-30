@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import produce from 'immer';
-import uploadFile from '../../../utils/uploadFile';
 import { connect } from 'react-redux';
+
 import { update } from '@reducers/data';
+import { uploadFile } from '@utils';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -53,7 +54,7 @@ const SoundControls = ({ data, update, ...props }) => {
     update({
       ...produce(data, nextData => {
         nextData.currentProject.site.sound = {
-          ...nextData.currentProject.site.sound,
+          ...data.currentProject.site.sound,
           ...payload,
         };
       }),

@@ -3,7 +3,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import { save, load } from 'redux-localstorage-simple';
 
-import rootReducer from './reducers';
+import rootReducer from '@reducers';
 
 // const SENTRY_DSN = null;
 
@@ -42,7 +42,7 @@ export const configureAppStore = preloadedState => {
   });
 
   if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer));
+    module.hot.accept('@reducers', () => store.replaceReducer(rootReducer));
   }
 
   return store;

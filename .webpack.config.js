@@ -36,6 +36,7 @@ module.exports = config => {
     '@material-ui/core': path.resolve('node_modules', '@material-ui/core'),
     '@material-ui/icons': path.resolve('node_modules', '@material-ui/icons'),
     '@reducers': path.resolve(__dirname, 'src/reducers'),
+    '@utils': path.resolve(__dirname, 'src/utils'),
     'react-dom': path.resolve('./node_modules/react-dom'),
     react: path.resolve('./node_modules/react'),
   };

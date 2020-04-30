@@ -50,7 +50,7 @@ const LayoutControls = ({ data, update, ...props }) => {
       update({
         ...produce(data, nextData => {
           nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings = {
-            ...nextData.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
+            ...data.currentProject.essentials[activePageId].elements[activeElementIndex].settings,
             ...payload,
           };
         }),
@@ -59,7 +59,7 @@ const LayoutControls = ({ data, update, ...props }) => {
       update({
         ...produce(data, nextData => {
           nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings = {
-            ...nextData.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
+            ...data.currentProject.pages[activePageIndex].elements[activeElementIndex].settings,
             ...payload,
           };
         }),

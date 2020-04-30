@@ -30,9 +30,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { colors } from '@storycopter/idoc';
 
-import deletePage from '../../../utils/deletePage';
-import duplicatePage from '../../../utils/duplicatePage';
-import uploadFile from '../../../utils/uploadFile';
+import { deletePage, duplicatePage, uploadFile } from '@utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,14 +85,16 @@ const MetaControls = ({ data, update, ...props }) => {
       ...produce(data, nextData => {
         if (isEssential) {
           nextData.currentProject.essentials[activePageId].meta = {
-            ...nextData.currentProject.essentials[activePageId].meta,
+            ...data.currentProject.essentials[activePageId].meta,
             ...payload,
           };
+          return;
         } else {
           nextData.currentProject.pages[activePageIndex].meta = {
-            ...nextData.currentProject.pages[activePageIndex].meta,
+            ...data.currentProject.pages[activePageIndex].meta,
             ...payload,
           };
+          return;
         }
       }),
     });
@@ -134,8 +134,8 @@ const MetaControls = ({ data, update, ...props }) => {
         nextData.editor.activePageId = null;
         nextData.editor.activeElementId = null;
         nextData.currentProject.pages = [
-          ...nextData.currentProject.pages.image(0, activePageIndex),
-          ...nextData.currentProject.pages.image(activePageIndex + 1),
+          ...data.currentProject.pages.slice(0, activePageIndex),
+          ...data.currentProject.pages.slice(activePageIndex + 1),
         ];
       }),
     });
