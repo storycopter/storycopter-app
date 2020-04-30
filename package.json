@@ -15,7 +15,10 @@
     "copyright": "Copyright ©2020 ${author}",
     "mac": {
       "category": "public.app-category.utilities",
-      "hardenedRuntime": true
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
     },
     "files": [
       "build/**/*",
@@ -24,12 +27,6 @@
     "directories": {
       "buildResources": "assets"
     },
-    "asarUnpack": [
-      "node_modules/npm/**/*",
-      "node_modules/gatsby/**/*",
-      "node_modules/gatsby-cli/**/*",
-      "scripts/**/*"
-    ],
     "afterSign": "scripts/notarize.js"
   },
   "dependencies": {
