@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks';
 
-import elementMap from '../../../elements/elementMap';
+import formulas from '@formulas/map';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -66,7 +66,7 @@ const DecorControls = ({ data, update, ...props }) => {
   const activeElement = isEssential
     ? activePage.elements[activeElementIndex]
     : pages[activePageIndex].elements[activeElementIndex];
-  const availableSettings = elementMap[activeElement?.type]?.settings;
+  const availableSettings = formulas[activeElement?.type]?.settings;
 
   const [backgColor, setBackgColor] = useState(activeElement.settings.backgColor);
   const [maskColor, setMaskColor] = useState(activeElement.settings.maskColor);
@@ -166,7 +166,7 @@ const DecorControls = ({ data, update, ...props }) => {
         label="Text color"
         InputProps={{
           disableUnderline: true,
-          disabled: !availableSettings.includes('textColor'),
+          disabled: !availableSettings['textColor'],
           endAdornment: (
             <InputAdornment position="end">
               <Avatar
@@ -198,7 +198,7 @@ const DecorControls = ({ data, update, ...props }) => {
           }}
         />
       </Popover>
-      {availableSettings.includes('backgColor') ? (
+      {availableSettings['backgColor'] ? (
         <>
           <TextField
             {...bindTrigger(backgPickerState)}
@@ -239,7 +239,7 @@ const DecorControls = ({ data, update, ...props }) => {
           </Popover>
         </>
       ) : null}
-      {availableSettings.includes('maskColor') ? (
+      {availableSettings['maskColor'] ? (
         <>
           <TextField
             {...bindTrigger(maskPickerState)}
@@ -281,14 +281,14 @@ const DecorControls = ({ data, update, ...props }) => {
         </>
       ) : null}
 
-      {availableSettings.includes('backgImage') ? (
+      {availableSettings['backgImage'] ? (
         <>
           <FormControlLabel
             control={
               <Checkbox
                 checked={activeElement.settings.backgImageEnabled}
                 color="primary"
-                disabled={!availableSettings.includes('backgImage')}
+                disabled={!availableSettings['backgImage']}
                 id="backgImageEnabled"
                 name="backgImageEnabled"
                 onChange={e => onElementUpdate({ backgImageEnabled: e.target.checked })}

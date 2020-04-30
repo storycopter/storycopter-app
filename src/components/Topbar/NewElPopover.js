@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import elementMap from '../../elements/elementMap';
+import formulas from '@formulas/map';
 import createPage from '../../utils/createPage';
 
 const ParentPopupState = React.createContext(null);
@@ -55,7 +55,7 @@ const NewElementPopup = ({ data, update, ...props }) => {
   const onElementAdd = type => {
     popupState.close();
     if (isEssential) return;
-    const payload = elementMap[type].schema;
+    const payload = formulas[type].schema;
     const activePageIndex = _.findIndex(currentProject.pages, o => o.meta.uid === activePageId);
     console.log({ activePageIndex });
     update({
@@ -84,12 +84,9 @@ const NewElementPopup = ({ data, update, ...props }) => {
           {activePageId && !isEssential
             ? [
                 <Submenu key="submenu" popupId="moreChoicesMenu" title="Add page element">
-                  {_.sortBy(Object.keys(elementMap), o => o.name).map(o => (
-                    <MenuItem
-                      dense
-                      key={elementMap[o].schema.type}
-                      onClick={() => onElementAdd(elementMap[o].schema.type)}>
-                      {elementMap[o].name}
+                  {_.sortBy(Object.keys(formulas), o => o.name).map(o => (
+                    <MenuItem dense key={formulas[o].schema.type} onClick={() => onElementAdd(formulas[o].schema.type)}>
+                      {formulas[o].name}
                     </MenuItem>
                   ))}
                 </Submenu>,

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { update } from '@reducers/data';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 
-import elementMap from '../../../elements/elementMap';
+import formulas from '@formulas/map';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
@@ -66,6 +66,7 @@ const TreeListItem = ({
     const activeElIndex = findIndex(data.currentProject.pages[activePageIndex].elements, o => o.id === elementId);
     update({
       ...produce(data, nextData => {
+        if (data.editor.activeElementId === elementId) nextData.editor.activeElementId = null;
         nextData.currentProject.pages[activePageIndex].elements = [
           ...data.currentProject.pages[activePageIndex].elements.slice(0, activeElIndex),
           ...data.currentProject.pages[activePageIndex].elements.slice(activeElIndex + 1),
@@ -101,7 +102,7 @@ const TreeListItem = ({
           )}
         </Typography>
       </ListItemAvatar>
-      <ListItemText primary={elementMap[element.type].name} />
+      <ListItemText primary={formulas[element.type].name} />
       {!droppableSnapshot.isDraggingOver ? (
         <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
           <IconButton
@@ -110,11 +111,6 @@ const TreeListItem = ({
             disableFocusRipple
             disableRipple
             edge="end"
-            // onClick={() => {
-            //   moreActionsPopupState.setAnchorEl();
-            //   setActivePopup(element.id);
-            //   moreActionsPopupState.open();
-            // }}
             size="small">
             <MoreHorizIcon fontSize="inherit" />
           </IconButton>
@@ -157,7 +153,7 @@ const TreeControls = ({ data, update, ...props }) => {
 
   const onElementAdd = type => {
     newElPopupState.close();
-    const payload = elementMap[type].schema;
+    const payload = formulas[type].schema;
     update({
       ...produce(data, nextData => {
         nextData.currentProject.pages[activePageIndex].elements.push({
@@ -191,7 +187,7 @@ const TreeControls = ({ data, update, ...props }) => {
           <Droppable droppableId="droppable">
             {(provided, droppableSnapshot) => (
               <List {...provided.droppableProps} className={classes.list} dense disablePadding ref={provided.innerRef}>
-                {activePage?.elements.map((element, index) => {
+                {_.sortBy(activePage?.elements, o => o.order).map((element, index) => {
                   return (
                     <Draggable key={`${activePageId}${element.id}`} draggableId={element.id} index={index}>
                       {(provided, draggableSnapshot) => (
@@ -229,9 +225,9 @@ const TreeControls = ({ data, update, ...props }) => {
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}>
-          {_.sortBy(Object.keys(elementMap), o => o.name).map(o => (
-            <MenuItem dense key={elementMap[o].schema.type} onClick={() => onElementAdd(elementMap[o].schema.type)}>
-              {elementMap[o].name}
+          {_.sortBy(Object.keys(formulas), o => o.name).map(o => (
+            <MenuItem dense key={formulas[o].schema.type} onClick={() => onElementAdd(formulas[o].schema.type)}>
+              {formulas[o].name}
             </MenuItem>
           ))}
         </Menu>
