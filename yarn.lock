@@ -1980,10 +1980,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@storycopter/idoc@0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@storycopter/idoc/-/idoc-0.0.18.tgz#bd2f11e7183bc2397c521957f73e4852e6f76075"
-  integrity sha512-Rc2J4ISdkT2tFWCnNvv51pIBeOiTtR4CFtr7CCfxqLI7oDvqk3DMAit2kBiAM3sc/SuGzN9wldNOrqQ87mg+VA==
+"@storycopter/idoc@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@storycopter/idoc/-/idoc-0.0.19.tgz#93907b9a061845592dd0a99b454c91f918e5d013"
+  integrity sha512-Xebgslhjxy4beRaIG7TsuZqqp4QXsU33SHxjXikEfNnMxuN1fmWcfD8hhsOTI5w563FMCfB8S6IdNLpxvzDlOQ==
   dependencies:
     "@material-ui/core" "4.9.12"
     "@material-ui/icons" "4.9.1"
