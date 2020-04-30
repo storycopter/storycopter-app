@@ -17,8 +17,8 @@ export default function uploadFile(basePath, toPath, extensions) {
     const timestamp = Date.now();
     const srcExtension = path.extname(src);
     const srcName = path.basename(src, srcExtension);
-    const newName = `${srcName.replace(/\s/g, '-')}-${timestamp}${srcExtension}`;
-    const newPath = path.join(toPath, sanitize(newName.toLowerCase()));
+    const newName = `${srcName.replace(/\s/g, '-')}-${timestamp}${srcExtension}`.toLowerCase();
+    const newPath = path.join(toPath, sanitize(newName));
     fs.copyFileSync(src, path.join(basePath, newPath));
     return {
       name: newName,
