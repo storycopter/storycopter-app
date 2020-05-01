@@ -66,7 +66,7 @@ const SoundControls = ({ data, update, ...props }) => {
     const file = uploadFile(basepath, destination, ['mp3']);
     if (file) {
       onSoundUpdate({
-        favicon: {
+        track: {
           name: file.name,
         },
       });
