@@ -1,5 +1,5 @@
 {
-  "name": "@storycopter/app",
+  "name": "Storycopter",
   "version": "0.0.1",
   "main": "public/electron.js",
   "license": "BSD-3-Clause",
@@ -10,7 +10,7 @@
     "url": "https://storycopter.com"
   },
   "build": {
-    "appId": "com.storycopter.storycopter",
+    "appId": "com.storycopter.app",
     "productName": "Storycopter",
     "copyright": "Copyright ©2020 ${author}",
     "mac": {

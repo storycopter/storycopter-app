@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { notarize } = require('electron-notarize');
+const APPLESECRETS = require('../.apple/secrets.json');
 
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context;
@@ -10,9 +11,9 @@ exports.default = async function notarizing(context) {
   const appName = context.packager.appInfo.productFilename;
 
   return await notarize({
-    appBundleId: 'com.storycopter.storycopter',
+    appBundleId: APPLESECRETS.appleBundleId,
     appPath: `${appOutDir}/${appName}.app`,
-    appleId: process.env.APPLEID,
-    appleIdPassword: process.env.APPLEIDPASS,
+    appleId: APPLESECRETS.appleId,
+    appleIdPassword: APPLESECRETS.appleIdPass,
   });
 };
