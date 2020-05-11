@@ -182,7 +182,7 @@ class App extends React.Component {
       const now = Date.now();
       const req = request({
         method: 'GET',
-        uri: 'https://github.com/storycopter/storycopter-idoc/archive/next.zip',
+        uri: 'https://github.com/storycopter/gatsby-starter-storycopter/archive/next.zip',
       });
 
       fs.mkdirSync(`${path}${D}idoc-temp-${now}`);

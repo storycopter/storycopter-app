@@ -11,7 +11,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-import { AlignCenterHorizontalIcon, AlignLeftIcon, AlignRightIcon } from '@storycopter/idoc';
+import { AlignCenterHorizontalIcon, AlignLeftIcon, AlignRightIcon } from '@storycopter/gatsby-starter-storycopter';
 
 const useStyles = makeStyles(theme => ({
   root: {

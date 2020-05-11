@@ -28,7 +28,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { colors } from '@storycopter/idoc';
+import { colors } from '@storycopter/gatsby-starter-storycopter';
 
 import { deletePage, duplicatePage, uploadFile } from '@utils';
 
