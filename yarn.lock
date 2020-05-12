@@ -1980,10 +1980,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@storycopter/gatsby-starter-storycopter@0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@storycopter/gatsby-starter-storycopter/-/gatsby-starter-storycopter-0.0.21.tgz#ed3009a335dadc05b44e6e14c76f8a97185ff0da"
-  integrity sha512-Qk4oZmquh/g+QQaEclxeDlANevoom5TYncbnKiACcohrCx3G5/SemLAMPUjkD176hLEBVwzuPaTM/+j1diamyg==
+"@storycopter/storycopter-gatsby-starter@0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@storycopter/storycopter-gatsby-starter/-/storycopter-gatsby-starter-0.0.22.tgz#f52a5780fa79c4ffa346bbb73e24cd8ffef4448c"
+  integrity sha512-7gkpfSzI5EHI3wqUo2VNUqq9mcLbHUtownT5ggs46zvWew2XJD78ORlc4V5zuLGZdD2ENER2KnrU3QQGFBZJgQ==
   dependencies:
     "@material-ui/core" "4.9.12"
     "@material-ui/icons" "4.9.1"

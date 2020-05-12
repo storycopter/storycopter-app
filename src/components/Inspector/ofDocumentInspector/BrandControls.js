@@ -7,7 +7,7 @@ import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state
 import { uploadFile } from '@utils';
 import { update } from '@reducers/data';
 
-import { colors } from '@storycopter/gatsby-starter-storycopter';
+import { colors } from '@storycopter/storycopter-gatsby-starter';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';

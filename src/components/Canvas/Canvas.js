@@ -11,7 +11,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import { componentMap, constructTheme } from '@storycopter/gatsby-starter-storycopter';
+import { componentMap, constructTheme } from '@storycopter/storycopter-gatsby-starter';
 
 const useStyles = makeStyles(theme => ({
   root: {

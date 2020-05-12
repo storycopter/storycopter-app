@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { update } from '@reducers/data';
 import { uploadFile } from '@utils';
 
-import { colors } from '@storycopter/gatsby-starter-storycopter';
+import { colors } from '@storycopter/storycopter-gatsby-starter';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';

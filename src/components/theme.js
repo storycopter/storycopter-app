@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import { colors, setType } from '@storycopter/gatsby-starter-storycopter';
+import { colors, setType } from '@storycopter/storycopter-gatsby-starter';
 
 const mui = createMuiTheme();
 
