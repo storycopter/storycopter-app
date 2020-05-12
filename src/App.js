@@ -195,19 +195,22 @@ class App extends React.Component {
         zip.extractAllTo(`${path}${D}idoc-temp-${now}`, true);
 
         try {
-          fs.renameSync(`${path}${D}idoc-temp-${now}${D}storycopter-idoc-next`, `${path}${D}storycopter-idoc-${now}`);
-          fs.chmodSync(`${path}${D}storycopter-idoc-${now}`, 0o777);
-          fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}preview.sh`, 0o755);
-          fs.chmodSync(`${path}${D}storycopter-idoc-${now}${D}scripts${D}build.sh`, 0o755);
+          fs.renameSync(
+            `${path}${D}idoc-temp-${now}${D}storycopter-gatsby-starter-next`,
+            `${path}${D}storycopter-gatsby-starter-${now}`
+          );
+          fs.chmodSync(`${path}${D}storycopter-gatsby-starter-${now}`, 0o777);
+          fs.chmodSync(`${path}${D}storycopter-gatsby-starter-${now}${D}scripts${D}preview.sh`, 0o755);
+          fs.chmodSync(`${path}${D}storycopter-gatsby-starter-${now}${D}scripts${D}build.sh`, 0o755);
           fs.unlinkSync(`${path}${D}idoc-temp-${now}${D}next.zip`);
           fs.rmdirSync(`${path}${D}idoc-temp-${now}`);
         } catch (error) {
           console.error(error);
         }
 
-        this.openProject(`${path}${D}storycopter-idoc-${now}`);
+        this.openProject(`${path}${D}storycopter-gatsby-starter-${now}`);
 
-        // const child = process.spawn('./setup.sh', { cwd: `${path}/storycopter-idoc-${now}` });
+        // const child = process.spawn('./setup.sh', { cwd: `${path}/storycopter-gatsby-starter-${now}` });
         // child.stdin.setEncoding('utf-8');
         // this.setState({ child });
 
