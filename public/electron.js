@@ -11,7 +11,7 @@ function createWindow() {
     icon: `${__dirname}/icon.icns`,
     minHeight: 800,
     minWidth: 1000,
-    webPreferences: { nodeIntegration: true, webSecurity: false, nativeWindowOpen: true },
+    webPreferences: { nodeIntegration: true, webSecurity: false, nativeWindowOpen: true, enableRemoteModule: true },
     width: 1100,
   });
 
